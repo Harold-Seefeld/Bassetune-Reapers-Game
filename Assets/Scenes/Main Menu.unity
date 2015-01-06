@@ -19108,9 +19108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92496ace4912d14994e8330cbdbc58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockedItems:
-  - sa
-  - asf
+  unlockedItems: []
   invisibleString: <color=#ffffffff>N/A</color>
 --- !u!114 &743467929
 MonoBehaviour:
@@ -26097,7 +26095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &996954586
 RectTransform:
   m_ObjectHideFlags: 0

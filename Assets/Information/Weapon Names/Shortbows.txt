@@ -1,0 +1,52 @@
+Wooden x 
+Iron x 
+Steel x 
+Nentile-Print Raw x 
+Nentile-Print Thick x 
+Nentile-Print Steel x 
+Nentile-Print x 
+Ayapakun Raw x 
+Ayapakun Thick x 
+Ayapakun Steel x 
+Rusty Ayapakun x 
+Ayapakun Shortbow 
+Ayapakun Horseback Bow 
+Ayapakun composite 
+Ayapakun reverse 
+Longbows
+Wooden Longbow 
+Iron Longbow 
+Steel Longbow 
+Nentile-Print Raw Longbow 
+Nentile-Print Thick Longbow 
+Nentile-Print Steel Longbow 
+Nentile-Print Longbow 
+Ayapakun Raw Longbow 
+Ayapakun Thick Longbow 
+Ayapakun Steel Longbow 
+Rusty Ayapakun Longbow 
+Ayapakun Longbow 
+Wooden Goatbow 
+Iron Goatbow 
+Steel Goatbow 
+Nentile-Print Raw Goatbow 
+Nentile-Print Thick Goatbow 
+Nentile-Print Steel Goatbow 
+Nentile-Print Goatbow 
+Goh-Print Raw Goatbow 
+Goh-Print Thick Goatbow 
+Goh-Print Steel Goatbow 
+Rusty Goh-Print Goatbow 
+Goh-Print Goatbow 
+Wooden Sightline Bow 
+Iron Sightline Bow 
+Steel Sightline Bow 
+Nentile-Print Raw Sightline Bow 
+Nentile-Print Thick Sightline Bow 
+Nentile-Print Steel Sightline Bow 
+Nentile-Print Sightline Bow 
+Ayapakun Raw Sightline Bow 
+Ayapakun Thick Sightline Bow 
+Ayapakun Steel Sightline Bow 
+Rusty Ayapakun Sightline Bow 
+Ayapakun Sightline Bow 

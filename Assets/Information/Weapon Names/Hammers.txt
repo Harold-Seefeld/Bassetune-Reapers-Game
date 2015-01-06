@@ -1,0 +1,45 @@
+Wooden Hammer 
+Dual Wooden Hammer and Axe [AKA Dual-Form. This has the exact same base dmg and lvl requirement as the above normal hammer] 
+Wooden Smallhammer 
+Iron Hammer 
+Dual Form 
+Steel Hammer 
+Dual Form 
+Iron Smallhammer 
+Nentile-Print Raw Hammer 
+Dual Form 
+Steel Smallhammer 
+Nentile-Print Thick Hammer 
+Dual Form 
+Nentile-Print Hammer 
+Dual Form 
+Nentile-Print Raw Smallhammer 
+Ayapakun Raw Hammer 
+Dual Form 
+Nentile-Print Thick Smallhammer 
+Nentile-Print Steel Smallhammer 
+Ayapakun Thick Hammer 
+Dual Form 
+Rusty Ayapakun Hammer 
+Dual Form 
+Nentile-Print Smallhammer 
+Goh-Print Raw Hammer 
+Dual Form 
+Goh-Print Thick Hammer 
+Dual Form 
+Beyew Raw Smallhammer 
+Beyew Thick Smallhammer 
+Ayapakun Hammer 
+Dual Form 
+Beyew Smallhammer 
+Beyew Hammer 
+Dual Form 
+Greathammers:
+Iron Greathammer 
+Rusty Steel Greathammer 
+Steel Greathammer 
+Goh-Print Raw Greathammer 
+Goh-Print Thick Greathammer 
+Goh-Print Steel Greathammer 
+Rusty Goh-Print Greathammer 
+Goh-Print Greathammer 

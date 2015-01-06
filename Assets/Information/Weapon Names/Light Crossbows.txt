@@ -1,0 +1,36 @@
+Wooden x 
+Iron x 
+Steel x 
+Nentile-Print Raw x 
+Nentile-Print Thick x 
+Nentile-Print Steel x 
+Nentile-Print x 
+Ayapakun Raw x 
+Ayapakun Thick x 
+Ayapakun Steel x 
+Rusty Ayapakun x 
+Ayapakun Light Crossbow 
+Ayapakun Repeater Crossbow 
+Heavy Crossbows
+Uses x again for norm heavy crossbow and arbalest and antiarmor and assault 
+Wooden x 
+Iron x 
+Steel x 
+Ayapakun Raw x 
+Ayapakun Thick x 
+Beyew Raw x 
+Ayapakun x 
+Beyew Thick x 
+Goh-Print Raw x 
+Ayapakun x 
+Beyew x 
+Rusty Goh-Print x 
+Goh-Print Heavy Crossbow 
+Goh-Print Arbalest 
+Goh-Print Anti-Armor Crossbow 
+Goh-Print Assault Crossbow 
+Wooden Headhunter Crossbow 
+Iron Headhunter Crossbow 
+Steel Headhunter Crossbow 
+Rusty Bassetune Headhunter Crossbow 
+Bassetune Headhunter Crossbow 

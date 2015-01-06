@@ -1,0 +1,49 @@
+Rope Whip 
+Thick Rope Whip 
+Heavy-Woven Rope Whip 
+Finely-Spun Rope Whip 
+Finely-Spun Thick Rope Whip 
+Finely-Spun and Heavily-Woven Rope Whip 
+Lashing Whip 
+Thick Lashing Whip 
+Heavy-Woven Lashing Whip 
+Finely-Spun Lashing Whip 
+Finely-Spun and Heavily-Woven Lashing Whip 
+Three-Tailed Whip 
+Thick Three-Tailed Whip 
+Heavy-Woven Three-Trailed Whip 
+Torturer’s Three-Tailed Whip 
+Wooden-Spiked Whip 
+Iron-Spiked Whip 
+Rusty Steel-Spiked Whip 
+Steel-Spiked Whip 
+Nentile-Print Raw Spiked Whip 
+Nentile-Print Thick Whip 
+Nentile-Print Steel Whip 
+Rusty Nentile-Print Whip 
+Nentile-Print Whip 
+Beyew Raw Spiked Whip 
+Beyew Thick Spiked Whip Whip 
+Beyew Steel Spiked Whip 
+Rusty Beyew Spiked Whip 
+Beyew Spiked Whip 
+Rusty Iron Flail 
+Iron Flail 
+Steel Flail 
+Nentile-Print Raw Flail 
+Nentile-Print Flail 
+Ayapakun Raw Flail 
+Ayapakun Thick Flail 
+Rusty Ayapakun Flail 
+Beyew Thick Flail 
+Rusty Beyew Flail 
+Beyew Flail 
+Wooden Ball-and-Chain
+Iron Ball-and-Chain 
+Rusty Steel Ball-and-Chain 
+Steel Ball-and-Chain 
+Goh-Print Raw Ball-and-Chain 
+Goh-Print Thick Ball-and-Chain 
+Goh-Print Steel Ball-and-Chain 
+Rusty Goh-Print Ball-and-Chain 
+Goh-Print Ball-and-Chain 
