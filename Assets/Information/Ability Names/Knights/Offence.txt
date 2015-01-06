@@ -1,0 +1,77 @@
+Fast Attack
+Sudden Attack
+Flick
+Fast Slice
+Sudden-Cut
+Sudden-Sweeping Attack
+Fast-Stab
+Fast Bash
+Fast Slash
+Slice
+Stab
+Sweeping Attack
+Bash
+Sweeping Attack II
+Slash
+Swing
+Very Heavy Attack
+Heavy Slice
+Heavy Stab
+Heavy Sweeping Attack
+Heavy Bash
+Heavy Sweeping Attack II
+Heavy Slash
+Very Heavy Slash
+Heavy Swing
+Heavy Swing II
+Very Heavy Swing
+Smash
+Bleed
+Stagger
+Piercing Attack
+Bleeding Pierce
+Skewer
+Leaping Attack
+Charging Attack
+Bleeding Sweep
+Staggering Sweep
+Mainhand Gouge
+Bone-Cracking Maneuver
+Counter-Slice
+Last Attack
+Fast Vertical Slice
+Fast Headbash
+Heavy Vertical Slice
+Heavy Headbash
+Lunge
+Thrust
+Swift Slash
+Spinning Blades
+Multiblades
+Afterslash
+Long Ranged Shot
+Bolted Long Ranged Shot
+Sniper’s Long Ranged Shot
+Steady Shot
+Longest Shot
+Medium Ranged Shot
+Piercing Shot
+Skewering Shot
+Crippling Shot
+Bowman’s Shot
+Detonator’s Arrow
+Shorthand’s Bow
+Shorthand’s Crossbow
+Assault’s Arrow
+Piercer’s Arrow
+Splintering Arrow
+Quick-Shot
+Defender’s Shot
+Overhand’s Arrow
+Repeater’s Arrows
+Moderate Shot
+Moderate-Shot
+Pullback Arrow
+Slow-Shot
+Heaviest Arrow
+Heaviest Pull
