@@ -1,0 +1,8 @@
+Dual-Handed
+Sweep Axe
+Slam Axe
+Stomp
+Jump
+Call Skeletal Soldier
+Call Skeletal Archer
+Call Skeletal Horserider
