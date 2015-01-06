@@ -6,6 +6,7 @@ CalculateElo("Jay","Andrew","Jay",1);
 
 function GetPlayersElo($player){
 	return 1;
+	//Should check DB to get players starting elo.
 }
 
 //$player1 and $player2 would be the users username or ID.
