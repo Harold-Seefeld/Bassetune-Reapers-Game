@@ -9,7 +9,7 @@ public class MD5String : MonoBehaviour {
 		System.Text.UTF8Encoding ue = new System.Text.UTF8Encoding();
 		byte[] bytes = ue.GetBytes(strToEncrypt);
 		
-		// encrypt bytes
+		// Encrypt bytes
 		System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
 		byte[] hashBytes = md5.ComputeHash(bytes);
 		
