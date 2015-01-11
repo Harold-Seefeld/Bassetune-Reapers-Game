@@ -5,12 +5,6 @@ using System.Collections;
 
 public class ButtonSet : MonoBehaviour, IPointerClickHandler {
 
-
-	public void OnEnable()
-	{
-
-	}
-
 	public void OnPointerClick (PointerEventData eventData)
 	{
 		GameObject parentObject = transform.parent.gameObject;
