@@ -3,12 +3,14 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Slideshow : MonoBehaviour {
-	public Sprite[] Images;
-	public float SecondsBetweenImages;
 
 	private int currentImageIndex;
 	private float lastImageSetTime;
 	private Image imageObject;
+
+	public Sprite[] Images;
+	[Range(0.1f, 1000f)]
+	public float SecondsBetweenImages;
 
 	// Use this for initialization
 	void Start () {
