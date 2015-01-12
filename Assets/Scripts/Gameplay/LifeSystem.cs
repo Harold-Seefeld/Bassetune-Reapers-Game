@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class RPG_LifeSystem : MonoBehaviour {
+public class LifeSystem : MonoBehaviour {
 	
 	// Health
 	public float health = 100; // 100 by Default
