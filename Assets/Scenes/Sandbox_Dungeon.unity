@@ -63,7 +63,7 @@ LightmapSettings:
 NavMeshSettings:
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    agentRadius: .300000012
+    agentRadius: .5
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0
@@ -73,7 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
-  m_NavMesh: {fileID: 19400000, guid: bdbb21b08a63f9e4695879201a4eeb19, type: 2}
+  m_NavMesh: {fileID: 19400000, guid: 985c423fa1eded34b9dde504587741ea, type: 2}
 --- !u!1 &16041547
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,7 +899,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 370268540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.1999998, y: 2.31999993, z: -15.4300003}
+  m_LocalPosition: {x: -14.1999998, y: 2.48000002, z: -15.3999996}
   m_LocalScale: {x: 1.4832685, y: 5.01755238, z: 18.8951511}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2551,8 +2551,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1264730520}
   distance: 10
-  height: 8
-  heightDamping: 5
+  height: 15
+  heightDamping: 10
   rotationDamping: 0
 --- !u!81 &880040753
 AudioListener:
@@ -3722,7 +3722,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1264730520}
   - 33: {fileID: 1264730519}
-  - 136: {fileID: 1264730518}
   - 23: {fileID: 1264730517}
   - 195: {fileID: 1264730516}
   - 114: {fileID: 1264730515}
@@ -3785,19 +3784,6 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!136 &1264730518
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1264730514}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1264730519
 MeshFilter:
   m_ObjectHideFlags: 0
