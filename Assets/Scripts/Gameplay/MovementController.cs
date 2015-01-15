@@ -44,7 +44,7 @@ public class MovementController : MonoBehaviour {
 	Vector3 ScreenToNavPos(Vector3 pos){
 		Ray r = Camera.main.ScreenPointToRay(pos);
 		RaycastHit hit;
-		if(Physics.Raycast(r, out hit)){
+		if(Physics.Raycast(r, out hit, 30, 1 << 8)){	// 1 << 8 is Terrain layer mask
 			return hit.point;
 		}
 		return transform.position;
