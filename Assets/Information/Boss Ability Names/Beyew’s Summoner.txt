@@ -1,8 +1,0 @@
-Swarm
-Destroy
-Lifesteal Attribute
-Blood Attribute
-Speed Attribute
-Armored Attribute
-Acid Attribute
-Healing Attribute
