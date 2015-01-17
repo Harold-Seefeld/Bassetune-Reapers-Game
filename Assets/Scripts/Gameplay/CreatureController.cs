@@ -5,6 +5,7 @@ using System.Collections;
 public class CreatureController : MonoBehaviour {
 	public Transform target;
 	public Transform [] patrolWaypoints;
+	public Transform randomAnchor;
 	public float attackRange = 1f;
 	public float idleTime = 1f;
 	public float attackTime = 0.1f;
@@ -88,20 +89,33 @@ public class CreatureController : MonoBehaviour {
 	}
 
 	void Patrol(){
-		if (patrolWaypoints.Length > 1){
-			if (agent.remainingDistance <= float.Epsilon){
-				if (timer > idleTime){
+		if (agent.remainingDistance <= float.Epsilon){
+			if (timer > idleTime){
+				if (patrolWaypoints.Length > 1){
 					currentWaypoint = (currentWaypoint + 1) < patrolWaypoints.Length ? currentWaypoint + 1 : 0;
 					agent.SetDestination(patrolWaypoints[currentWaypoint].position);
 					timer = 0f;
+				} else {
+					if (!randomAnchor){
+						Debug.LogWarning("Warning, Random Anchor is not set");
+						return;
+					}
+					RaycastHit rHit;
+					Vector3 randomPosition = Random.insideUnitSphere * 20 + randomAnchor.position;
+					if (Physics.Raycast (randomAnchor.position, Random.insideUnitSphere, out rHit, 20)){
+						randomPosition = rHit.point;
+					} 
+
+					Debug.Log(randomPosition);
+
+					NavMeshHit hit;
+					NavMesh.SamplePosition(randomPosition, out hit, 20, 1);
+					agent.SetDestination(hit.position);
+					timer = 0f;
 				}
-				timer += Time.deltaTime;
 			}
-			Debug.DrawLine(transform.position, agent.destination, Color.red);
-		} else {
-			Vector3 randomPos = Random.insideUnitSphere + (transform.forward * 2f);
-			agent.SetDestination(transform.position + new Vector3(randomPos.x, 0, randomPos.z));
-			Debug.DrawRay(transform.position, new Vector3(randomPos.x, 0, randomPos.z));
+			timer += Time.deltaTime;
 		}
+		Debug.DrawLine(transform.position, agent.destination, Color.red);
 	}
 }
