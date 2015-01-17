@@ -119,7 +119,6 @@ public class CreatureController : MonoBehaviour {
 		if (other.tag == "Knight"){
 			target.Add(other.transform);
 		}
-		Debug.Log (other.tag);
 	}
 	
 	void OnTriggerExit(Collider other) {
