@@ -12,6 +12,7 @@ public class CreatureController : MonoBehaviour {
 
 	NavMeshAgent agent;
 	bool isAttacking = false;
+	int currentWaypoint = 0;
 	float timer = 0f;
 	
 	public GameObject debugLabel;
@@ -21,6 +22,12 @@ public class CreatureController : MonoBehaviour {
 	void Start () {
 		agent = GetComponent<NavMeshAgent> ();
 
+		// Initialize path
+		if (patrolWaypoints.Length > 1){
+			agent.SetDestination(patrolWaypoints[0].position);
+		} else {
+			// Random
+		}
 		
 		#if UNITY_EDITOR
 		debugLabel = Instantiate (debugLabel) as GameObject;
@@ -81,5 +88,20 @@ public class CreatureController : MonoBehaviour {
 	}
 
 	void Patrol(){
+		if (patrolWaypoints.Length > 1){
+			if (agent.remainingDistance <= float.Epsilon){
+				if (timer > idleTime){
+					currentWaypoint = (currentWaypoint + 1) < patrolWaypoints.Length ? currentWaypoint + 1 : 0;
+					agent.SetDestination(patrolWaypoints[currentWaypoint].position);
+					timer = 0f;
+				}
+				timer += Time.deltaTime;
+			}
+			Debug.DrawLine(transform.position, agent.destination, Color.red);
+		} else {
+			Vector3 randomPos = Random.insideUnitSphere + (transform.forward * 2f);
+			agent.SetDestination(transform.position + new Vector3(randomPos.x, 0, randomPos.z));
+			Debug.DrawRay(transform.position, new Vector3(randomPos.x, 0, randomPos.z));
+		}
 	}
 }
