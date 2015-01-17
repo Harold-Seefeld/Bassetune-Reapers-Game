@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CreatureController : MonoBehaviour {
-	public Transform target;
+	public List<Transform> target;
 	public Transform [] patrolWaypoints;
 	public Transform randomAnchor;
+	public float sightDistance = 10f;
 	public float attackRange = 1f;
 	public float idleTime = 1f;
 	public float attackTime = 0.1f;
@@ -23,13 +25,6 @@ public class CreatureController : MonoBehaviour {
 	void Start () {
 		agent = GetComponent<NavMeshAgent> ();
 
-		// Initialize path
-		if (patrolWaypoints.Length > 1){
-			agent.SetDestination(patrolWaypoints[0].position);
-		} else {
-			// Random
-		}
-		
 		#if UNITY_EDITOR
 		debugLabel = Instantiate (debugLabel) as GameObject;
 		debugLabelText = debugLabel.GetComponent<Text> ();
@@ -39,8 +34,8 @@ public class CreatureController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (target) {
-			if (Vector3.Distance(target.transform.position, transform.position) > attackRange){
+		if (target.Count > 0) {
+			if (Vector3.Distance(target[0].position, transform.position) > attackRange){
 				Chase();
 
 				#if UNITY_EDITOR
@@ -85,7 +80,7 @@ public class CreatureController : MonoBehaviour {
 			return;
 		}
 
-		agent.SetDestination(target.position);
+		agent.SetDestination(target[0].position);
 	}
 
 	void Patrol(){
@@ -105,9 +100,7 @@ public class CreatureController : MonoBehaviour {
 					randomPosition.Set(randomPosition.x, 0, randomPosition.z);
 					if (Physics.Raycast (randomAnchor.position, randomPosition, out rHit)){
 						randomPosition = rHit.point;
-						Debug.Log("Hit");
 					} else {
-						Debug.Log("Not Hit");
 						randomPosition += randomAnchor.position;
 					}
 
@@ -120,5 +113,18 @@ public class CreatureController : MonoBehaviour {
 			timer += Time.deltaTime;
 		}
 		Debug.DrawLine(transform.position, agent.destination, Color.red);
+	}
+	
+	void OnTriggerEnter(Collider other) {
+		if (other.tag == "Knight"){
+			target.Add(other.transform);
+		}
+		Debug.Log (other.tag);
+	}
+	
+	void OnTriggerExit(Collider other) {
+		if (other.tag == "Knight"){
+			target.Remove(other.transform);
+		}
 	}
 }
