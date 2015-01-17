@@ -101,12 +101,15 @@ public class CreatureController : MonoBehaviour {
 						return;
 					}
 					RaycastHit rHit;
-					Vector3 randomPosition = Random.insideUnitSphere * 20 + randomAnchor.position;
-					if (Physics.Raycast (randomAnchor.position, Random.insideUnitSphere, out rHit, 20)){
+					Vector3 randomPosition = Random.insideUnitSphere * 20;
+					randomPosition.Set(randomPosition.x, 0, randomPosition.z);
+					if (Physics.Raycast (randomAnchor.position, randomPosition, out rHit)){
 						randomPosition = rHit.point;
-					} 
-
-					Debug.Log(randomPosition);
+						Debug.Log("Hit");
+					} else {
+						Debug.Log("Not Hit");
+						randomPosition += randomAnchor.position;
+					}
 
 					NavMeshHit hit;
 					NavMesh.SamplePosition(randomPosition, out hit, 20, 1);
