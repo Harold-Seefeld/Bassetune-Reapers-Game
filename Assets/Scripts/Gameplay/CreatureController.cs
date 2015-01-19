@@ -71,6 +71,10 @@ public class CreatureController : MonoBehaviour {
 		// TODO: Attack Code
 		timer = 0f;
 		isAttacking = !isAttacking;
+
+		// (dmongs) knight is attacked
+		Knight.Instance.SetAniParamAttacked( isAttacking );
+
 		return isAttacking;
 	}
 

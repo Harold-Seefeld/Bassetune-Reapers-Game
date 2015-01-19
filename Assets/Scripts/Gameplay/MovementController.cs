@@ -2,18 +2,21 @@
 using System.Collections;
 
 public class MovementController : MonoBehaviour {
+
 	public GameObject cursor;
 	NavMeshAgent agent;
+
+	Knight knight; // (dmongs)
 
 	float mouseDownTimer = 0f;
 	bool useDirectMouseControl = false;
 
-	// Use this for initialization
+
 	void Start () {
 		agent = GetComponent<NavMeshAgent> ();
+		knight = GetComponent<Knight> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (Input.GetMouseButtonDown(0)){
 			Vector3 destination = ScreenToNavPos(Input.mousePosition);
@@ -36,6 +39,10 @@ public class MovementController : MonoBehaviour {
 			agent.SetDestination(destination);
 			mouseDownTimer = 0f;	// only calculate path every 0.25f seconds
 		}
+
+		// knight
+		knight.SetAniParamMoveSpeed (agent.velocity.magnitude);
+
 
 		Debug.DrawRay (transform.position, agent.velocity);
 		mouseDownTimer += Time.deltaTime;
