@@ -17,6 +17,9 @@ public class Register : MonoBehaviour {
 	private bool IsValidEmail(string strIn){return Regex.IsMatch(strIn, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");}
 	
 	private void OnGUI(){
+		/*
+		 * WARNING : PLEASE DON'T USE OUTDATED AND EXPENSIVE UNITY GUI FUNCTION
+		 */
 		
 		GUILayout.BeginArea (new Rect ((Screen.width / 2) + 94, (Screen.height / 2) - 40, 256, 24), GUIContent.none, "box");
 		GUILayout.Label ("Register", GUITitle);

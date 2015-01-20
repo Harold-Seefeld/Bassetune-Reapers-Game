@@ -1,23 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovementController : MonoBehaviour {
+/*
+ * This is base Actor for all controllable actor.
+ * If you overriding Unity function from this class, don't forget to call Base[FunctionToOverride] before writing your scripts.
+ * Remember base.[FunctionToOverride] won't work due to unity reflection architectures.
+ */
+
+[AddComponentMenu("Actor/PlayerBase")]
+public class PlayerBase : MonoBehaviour {
 
 	public GameObject cursor;
-	NavMeshAgent agent;
+	protected NavMeshAgent agent;
 
-	Knight knight; // (dmongs)
-
-	float mouseDownTimer = 0f;
-	bool useDirectMouseControl = false;
+	protected float mouseDownTimer = 0f;
+	protected bool useDirectMouseControl = false;
 
 
 	void Start () {
-		agent = GetComponent<NavMeshAgent> ();
-		knight = GetComponent<Knight> ();
+		BaseStart ();
 	}
 
-	void Update () {
+	protected void BaseStart(){
+		agent = GetComponent<NavMeshAgent> ();
+	}
+
+	void Update(){
+		BaseUpdate ();
+	}
+
+	protected void BaseUpdate () {
 		if (Input.GetMouseButtonDown(0)){
 			Vector3 destination = ScreenToNavPos(Input.mousePosition);
 			agent.SetDestination (destination);
@@ -40,15 +52,11 @@ public class MovementController : MonoBehaviour {
 			mouseDownTimer = 0f;	// only calculate path every 0.25f seconds
 		}
 
-		// knight
-		knight.SetAniParamMoveSpeed (agent.velocity.magnitude);
-
-
 		Debug.DrawRay (transform.position, agent.velocity);
 		mouseDownTimer += Time.deltaTime;
 	}
 
-	Vector3 ScreenToNavPos(Vector3 pos){
+	protected Vector3 ScreenToNavPos(Vector3 pos){
 		Ray r = Camera.main.ScreenPointToRay(pos);
 		RaycastHit hit;
 		if(Physics.Raycast(r, out hit, 100, 1 << 8)){	// 1 << 8 is Terrain layer mask
