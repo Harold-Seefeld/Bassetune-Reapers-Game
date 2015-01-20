@@ -50,11 +50,15 @@ public class CreatureBase : MonoBehaviour {
 	// Base function of Start
 	protected void BaseStart(){
 		agent = GetComponent<NavMeshAgent> ();
+		agent.stoppingDistance = attackRange;
 		
 		#if UNITY_EDITOR
 		debugLabel = Instantiate (debugLabel) as GameObject;
 		debugLabelText = debugLabel.GetComponent<Text> ();
 		debugLabel.transform.SetParent (GameObject.Find ("InGameCanvas").transform);
+		#else
+		debugLabel.SetActive(false);
+		debugLabelText.text = "";
 		#endif
 	}
 
@@ -116,7 +120,7 @@ public class CreatureBase : MonoBehaviour {
 	}
 
 	protected virtual void Patrol(){
-		if (agent.remainingDistance <= float.Epsilon){
+		if (agent.remainingDistance <= agent.stoppingDistance){
 			if (timer > idleTime){
 				if (patrolWaypoints.Length > 1){
 					currentWaypoint = (currentWaypoint + 1) < patrolWaypoints.Length ? currentWaypoint + 1 : 0;

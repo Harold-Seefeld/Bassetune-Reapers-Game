@@ -13,7 +13,7 @@ public class Login : MonoBehaviour {
 	
 	private void OnGUI(){
 		/*
-		 * WARNING : PLEASE DON'T USE OUTDATED AND EXPENSIVE UNITY GUI FUNCTION
+		 * WARNING : PLEASE DON'T USE OUTDATED AND EXPENSIVE UNITY GUI FUNCTION - SURYA
 		 */
 
 		GUILayout.BeginArea (new Rect ((Screen.width / 2) - 350, (Screen.height / 2) - 40, 256, 24), GUIContent.none, "box");
