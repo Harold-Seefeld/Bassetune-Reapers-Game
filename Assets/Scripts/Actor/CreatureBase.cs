@@ -29,7 +29,9 @@ public class CreatureBase : MonoBehaviour {
 	public float cooldownTime = 1.5f;
 
 	// This hold all characters that currently inside creature sight
-	List<Transform> target = new List<Transform> ();
+	public List<Transform> target = new List<Transform> ();
+	// Current target
+	Transform currentTarget = null;
 	// Agent for pathfinding and movement
 	NavMeshAgent agent;
 	// Attacking flag
@@ -38,6 +40,8 @@ public class CreatureBase : MonoBehaviour {
 	int currentWaypoint = 0;
 	// Timer for used internally
 	float timer = 0f;
+	// Picking Target Couroutine flag
+	bool isPickTargetRunning = false;
 	// Debug AI
 	public GameObject debugLabel;
 	Text debugLabelText;
@@ -69,8 +73,8 @@ public class CreatureBase : MonoBehaviour {
 
 	// Base function of update
 	protected void BaseUpdate(){
-		if (target.Count > 0) {
-			if (Vector3.Distance(target[0].position, transform.position) > attackRange){
+		if (currentTarget) {
+			if (Vector3.Distance(currentTarget.position, transform.position) > attackRange){
 				Chase();
 				
 				#if UNITY_EDITOR
@@ -116,7 +120,7 @@ public class CreatureBase : MonoBehaviour {
 			return;
 		}
 
-		agent.SetDestination(target[0].position);
+		agent.SetDestination(currentTarget.position);
 	}
 
 	protected virtual void Patrol(){
@@ -148,9 +152,35 @@ public class CreatureBase : MonoBehaviour {
 			}
 			timer += Time.deltaTime;
 		}
+
+		// Look for target
+		if (!isPickTargetRunning && target.Count > 0){
+			StartCoroutine("PickTarget");
+		}
 		Debug.DrawLine(transform.position, agent.destination, Color.red);
 	}
-	
+
+	IEnumerator PickTarget(){
+		isPickTargetRunning = true;
+		Transform t = null;
+		float closestDistance = float.MaxValue;
+		IEnumerator<Transform> e = target.GetEnumerator ();
+
+		while (e.MoveNext()){
+			RaycastHit hit;
+			if (Physics.Linecast(transform.position, e.Current.position, out hit)){
+				if (hit.transform.tag == "Knight" && hit.distance < closestDistance){
+					t = e.Current.transform;
+					closestDistance = hit.distance;
+				}
+			}
+
+			yield return null;
+		}
+		currentTarget = t;
+		isPickTargetRunning = false;
+	}
+
 	void OnTriggerEnter(Collider other) {
 		BaseOnTriggerEnter (other);
 	}
@@ -158,6 +188,10 @@ public class CreatureBase : MonoBehaviour {
 	protected void BaseOnTriggerEnter(Collider other){
 		if (other.tag == "Knight"){
 			target.Add(other.transform);
+
+			// Stop Couroutine
+			StopCoroutine("PickTarget");
+			isPickTargetRunning = false;
 		}
 	}
 	
@@ -168,6 +202,14 @@ public class CreatureBase : MonoBehaviour {
 	protected void BaseOnTriggerExit(Collider other){
 		if (other.tag == "Knight"){
 			target.Remove(other.transform);
+			
+			// Stop Couroutine
+			StopCoroutine("PickTarget");
+			isPickTargetRunning = false;
+
+			if (currentTarget && currentTarget.gameObject == other.gameObject){
+				currentTarget = null;
+			}
 		}
 	}
 }
