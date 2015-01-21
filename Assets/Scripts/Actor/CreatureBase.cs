@@ -34,6 +34,8 @@ public class CreatureBase : MonoBehaviour {
 	Transform currentTarget = null;
 	// Agent for pathfinding and movement
 	NavMeshAgent agent;
+	// Obstacle for avoidance
+	NavMeshObstacle obstacle;
 	// Attacking flag
 	bool isAttacking = false;
 	// Track current waypoint index
@@ -54,6 +56,7 @@ public class CreatureBase : MonoBehaviour {
 	// Base function of Start
 	protected void BaseStart(){
 		agent = GetComponent<NavMeshAgent> ();
+		obstacle = GetComponent<NavMeshObstacle> ();
 		agent.stoppingDistance = attackRange;
 		
 		#if UNITY_EDITOR
@@ -75,12 +78,21 @@ public class CreatureBase : MonoBehaviour {
 	protected void BaseUpdate(){
 		if (currentTarget) {
 			if (Vector3.Distance(currentTarget.position, transform.position) > attackRange){
+				// Disable obstacle and activate agent since this actor will move around
+				agent.enabled = true;
+				obstacle.enabled = false;
+
+				// Chase
 				Chase();
 				
 				#if UNITY_EDITOR
 				debugLabelText.text = "Chasing";
 				#endif
 			} else {
+				// Agent will now stay in place, we'll treat it as obstacle
+				agent.enabled = false;
+				obstacle.enabled = true;
+
 				bool status = Attack();
 				
 				#if UNITY_EDITOR
@@ -88,6 +100,10 @@ public class CreatureBase : MonoBehaviour {
 				#endif
 			}
 		} else {
+			// Disable obstacle and activate agent since this actor will move around
+			agent.enabled = true;
+			obstacle.enabled = false;
+
 			Patrol();
 			
 			#if UNITY_EDITOR

@@ -116,7 +116,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47aeef9054e5dae44bd1f02e82c7726f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolWaypoints: []
+  patrolWaypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   creatureAnchor: {fileID: 0}
   anchorRange: 20
   sightDistance: 10
@@ -124,6 +129,7 @@ MonoBehaviour:
   idleTime: 3
   attackTime: .100000001
   cooldownTime: 1
+  target: []
   debugLabel: {fileID: 100000, guid: ee8135c7bfa0b2c4aa2087397dc4baba, type: 2}
 --- !u!135 &13500000
 SphereCollider:
