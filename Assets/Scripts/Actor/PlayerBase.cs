@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 /*
@@ -16,6 +17,11 @@ public class PlayerBase : MonoBehaviour {
 	protected float mouseDownTimer = 0f;
 	protected bool useDirectMouseControl = false;
 
+    //by sonarsound---
+    //for debugging purposes
+    public GameObject debugLabel;
+    public Text debugLabelText;
+
 
 	void Start () {
 		BaseStart ();
@@ -23,6 +29,14 @@ public class PlayerBase : MonoBehaviour {
 
 	protected void BaseStart(){
 		agent = GetComponent<NavMeshAgent> ();
+        
+        #if UNITY_EDITOR
+            debugLabel = Instantiate(debugLabel) as GameObject;
+            debugLabelText = debugLabel.GetComponent<Text>();
+            debugLabel.transform.SetParent(GameObject.Find("InGameCanvas").transform);
+        #else
+
+        #endif
 	}
 
 	void Update(){
@@ -64,4 +78,10 @@ public class PlayerBase : MonoBehaviour {
 		}
 		return transform.position;
 	}
+
+    //called from the ui whenever an ability's slot is changed.
+    public void OnAbilityAssign(AbilityBase ability, int targetSlot)
+    {
+        ability.slotAssigned = targetSlot;
+    }
 }

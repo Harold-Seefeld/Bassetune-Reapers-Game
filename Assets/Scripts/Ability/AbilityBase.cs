@@ -31,13 +31,23 @@ public class AbilityBase : MonoBehaviour {
 	// Timer for use internally
 	float timer;
 
+    //by sonarsound---
+    public int slotAssigned;
+
 	void Start(){
 		BaseStart ();
 	}
 
 	protected void BaseStart(){
 		// TODO: Register ability to the ability controller or actor
+        //by sonarsound---
+        AddAbilityToIndex(gameObject.GetComponent<Knight>(), slotAssigned);
 	}
+
+    public void AddAbilityToIndex(Knight k, int index)
+    {
+        k.abilities[index] = this;
+    }
 
 	void Update(){
 		BaseUpdate ();
