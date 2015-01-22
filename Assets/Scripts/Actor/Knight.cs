@@ -30,12 +30,11 @@ public class Knight : PlayerBase {
 		// Set animation movement variable
 		anim.SetFloat (AniMoveSpeedName, agent.velocity.magnitude);
         //if any pressed ability hotkey
-        onPressedAbilityHotkey();
+        OnPressedAbilityHotkey();
 	}
 
-    void onPressedAbilityHotkey()
+    void OnPressedAbilityHotkey()
     {
-        //by sonarsound
         //invokes the ability when the button is pressed
         if (Input.GetAxis("Attack1") > 0)
         {

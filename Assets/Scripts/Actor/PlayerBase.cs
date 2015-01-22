@@ -17,7 +17,6 @@ public class PlayerBase : MonoBehaviour {
 	protected float mouseDownTimer = 0f;
 	protected bool useDirectMouseControl = false;
 
-    //by sonarsound---
     //for debugging purposes
     public GameObject debugLabel;
     public Text debugLabelText;

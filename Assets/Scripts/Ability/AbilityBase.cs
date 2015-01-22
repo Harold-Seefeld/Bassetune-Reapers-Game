@@ -31,7 +31,7 @@ public class AbilityBase : MonoBehaviour {
 	// Timer for use internally
 	float timer;
 
-    //by sonarsound---
+    //slot of the inventory assigned to the ability
     public int slotAssigned;
 
 	void Start(){
@@ -39,8 +39,7 @@ public class AbilityBase : MonoBehaviour {
 	}
 
 	protected void BaseStart(){
-		// TODO: Register ability to the ability controller or actor
-        //by sonarsound---
+		//currently it only registers the ability to the knights since we still dont have the boss script.
         AddAbilityToIndex(gameObject.GetComponent<Knight>(), slotAssigned);
 	}
 
