@@ -1,20 +1,48 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class MovementController : MonoBehaviour {
+/*
+ * This is base Actor for all controllable actor.
+ * If you overriding Unity function from this class, don't forget to call Base[FunctionToOverride] before writing your scripts.
+ * Remember base.[FunctionToOverride] won't work due to unity reflection architectures.
+ */
+
+[AddComponentMenu("Actor/PlayerBase")]
+public class PlayerBase : MonoBehaviour {
+
 	public GameObject cursor;
-	NavMeshAgent agent;
+	protected NavMeshAgent agent;
 
-	float mouseDownTimer = 0f;
-	bool useDirectMouseControl = false;
+	protected float mouseDownTimer = 0f;
+	protected bool useDirectMouseControl = false;
 
-	// Use this for initialization
+    //for debugging purposes
+    public GameObject debugLabel;
+    public Text debugLabelText;
+
+
 	void Start () {
-		agent = GetComponent<NavMeshAgent> ();
+		BaseStart ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	protected void BaseStart(){
+		agent = GetComponent<NavMeshAgent> ();
+        
+        #if UNITY_EDITOR
+            debugLabel = Instantiate(debugLabel) as GameObject;
+            debugLabelText = debugLabel.GetComponent<Text>();
+            debugLabel.transform.SetParent(GameObject.Find("InGameCanvas").transform);
+        #else
+
+        #endif
+	}
+
+	void Update(){
+		BaseUpdate ();
+	}
+
+	protected void BaseUpdate () {
 		if (Input.GetMouseButtonDown(0)){
 			Vector3 destination = ScreenToNavPos(Input.mousePosition);
 			agent.SetDestination (destination);
@@ -41,7 +69,7 @@ public class MovementController : MonoBehaviour {
 		mouseDownTimer += Time.deltaTime;
 	}
 
-	Vector3 ScreenToNavPos(Vector3 pos){
+	protected Vector3 ScreenToNavPos(Vector3 pos){
 		Ray r = Camera.main.ScreenPointToRay(pos);
 		RaycastHit hit;
 		if(Physics.Raycast(r, out hit, 100, 1 << 8)){	// 1 << 8 is Terrain layer mask
@@ -49,4 +77,10 @@ public class MovementController : MonoBehaviour {
 		}
 		return transform.position;
 	}
+
+    //called from the ui whenever an ability's slot is changed.
+    public void OnAbilityAssign(AbilityBase ability, int targetSlot)
+    {
+        ability.slotAssigned = targetSlot;
+    }
 }
