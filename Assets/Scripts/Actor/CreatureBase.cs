@@ -46,7 +46,7 @@ public class CreatureBase : MonoBehaviour {
 	bool isPickTargetRunning = false;
 	// Debug AI
 	public GameObject debugLabel;
-	Text debugLabelText;
+	protected Text debugLabelText;
 
 	// Unity Start function
 	void Start () {
@@ -112,6 +112,7 @@ public class CreatureBase : MonoBehaviour {
 		}
 		
 		#if UNITY_EDITOR
+		// Update Debug Label position
 		Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint (Camera.main, gameObject.transform.position);
 		debugLabelText.rectTransform.anchoredPosition = screenPoint - debugLabelText.canvas.GetComponent<RectTransform> ().sizeDelta / 2f;
 		#endif
