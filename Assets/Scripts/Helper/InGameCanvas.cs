@@ -7,7 +7,7 @@ using System;
 public class InGameCanvas : MonoBehaviour {
 	[System.NonSerialized] public AbilityIcon[] abilities;
 
-	void Start(){
+	void Awake(){
 		// Cache reference
 		abilities = transform.FindChild("Skill Panel").GetComponentsInChildren<AbilityIcon>();
 

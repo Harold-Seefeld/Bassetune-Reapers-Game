@@ -4,13 +4,17 @@ using System.Collections;
 
 [AddComponentMenu("Helper/AbilityIcon")]
 public class AbilityIcon : MonoBehaviour {
-	public static Sprite iconNone = Resources.Load<Sprite> ("Materials/UI/Ability/_none");
+	public static Sprite iconNone;
 
-	[System.NonSerialized] public Image icon;
-	[System.NonSerialized] public Text timer;
+	public Image icon;
+	public Text timer;
 
-	void Start () {
-		icon = GetComponent<Image> ();
+	void Awake () {
+		if (iconNone == null) {
+			iconNone = Resources.Load<Sprite> ("Materials/UI/Ability/_none");
+		}
+
+		icon = GetComponentInChildren<Image> ();
 		timer = GetComponentInChildren<Text> ();
 	}
 }
