@@ -7,6 +7,7 @@ public class AbilityIcon : MonoBehaviour {
 	public static Sprite iconNone;
 
 	public Image icon;
+	public Outline outline;
 	public Text timer;
 
 	void Awake () {
@@ -15,6 +16,7 @@ public class AbilityIcon : MonoBehaviour {
 		}
 
 		icon = GetComponentInChildren<Image> ();
+		outline = GetComponent<Outline> ();
 		timer = GetComponentInChildren<Text> ();
 	}
 }

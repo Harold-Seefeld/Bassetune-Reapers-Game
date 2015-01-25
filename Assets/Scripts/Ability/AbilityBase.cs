@@ -64,7 +64,8 @@ public class AbilityBase : MonoBehaviour {
 			if (timer < 0){
 				state = AbilityState.Cooldown;
 				timer = cooldownTime;
-				actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (0.3f, 0.3f, 0.3f);
+				actor.inGameCanvas.abilities [abilityIndex].outline.enabled = false;
+				actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (0.4f, 0.4f, 0.4f);
 				OnCastEnd();
 			}
 			break;
@@ -89,7 +90,7 @@ public class AbilityBase : MonoBehaviour {
 			return;
 
 		state = AbilityState.Cast;
-		actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (0.7f, 0.7f, 0.7f);
+		actor.inGameCanvas.abilities [abilityIndex].outline.enabled = true;
 		timer = castTime;
 
 		// Begin Casting
