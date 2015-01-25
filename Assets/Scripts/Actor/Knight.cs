@@ -17,7 +17,14 @@ public class Knight : PlayerBase {
 		
 		// initialize references
 		anim = GetComponent<Animator> ();
-		abilities = new AbilityBase[8];
+		inGameCanvas = GameObject.Find ("Knight Canvas").GetComponent<InGameCanvas> ();
+
+		for (int i = 0; i < abilities.Length; ++i){
+			if (abilities[i]){
+				abilities[i] = Instantiate(abilities[i]) as AbilityBase;
+				abilities[i].OnEquipBegin(this, i);
+			}
+		}
 	}
 	
 	void Update(){
@@ -35,74 +42,74 @@ public class Knight : PlayerBase {
 		//invokes the ability when the button is pressed
 		if (Input.GetAxis("Attack1") > 0)
 		{
-			abilities[0].Invoke(gameObject.GetComponent<PlayerBase>());
+			if (abilities.Length > 0 && abilities[0]) 
+				abilities[0].Cast();
+
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 1";
-			#else
-			
 			#endif
 		}
 		else if (Input.GetAxis("Attack2") > 0)
 		{
-			abilities[1].Invoke(gameObject.GetComponent<PlayerBase>());
+			if (abilities.Length > 1 && abilities[1]) 
+				abilities[1].Cast();
+			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 2";
-			#else
-			
 			#endif
 		}
 		else if (Input.GetAxis("Attack3") > 0)
 		{
-			abilities[2].Invoke(gameObject.GetComponent<PlayerBase>());
+			if (abilities.Length > 2 && abilities[2]) 
+				abilities[2].Cast();
+			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 3";
-			#else
-			
 			#endif
 		}
 		else if (Input.GetAxis("Attack4") > 0)
 		{
-			abilities[3].Invoke(gameObject.GetComponent<PlayerBase>());
+			if (abilities.Length > 3 && abilities[3]) 
+				abilities[3].Cast();
+			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 4";
-			#else
-			
 			#endif
 		}
 		else if (Input.GetAxis("Attack5") > 0)
 		{
-			abilities[4].Invoke(gameObject.GetComponent<PlayerBase>());
+			if (abilities.Length > 4 && abilities[4]) 
+				abilities[4].Cast();
+			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 5";
-			#else
-			
 			#endif
 		}
 		else if (Input.GetAxis("Attack6") > 0)
 		{
-			abilities[5].Invoke(gameObject.GetComponent<PlayerBase>());
+			if (abilities.Length > 5 && abilities[5]) 
+				abilities[5].Cast();
+			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 6";
-			#else
-			
 			#endif
 		}
 		else if (Input.GetAxis("Attack7") > 0)
 		{
-			abilities[6].Invoke(gameObject.GetComponent<PlayerBase>());
+			if (abilities.Length > 6 && abilities[6]) 
+				abilities[6].Cast();
+			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 7";
-			#else
-			
 			#endif
 		}
 		else if (Input.GetAxis("Attack8") > 0)
 		{
-			abilities[7].Invoke(gameObject.GetComponent<PlayerBase>());
+			if (abilities.Length > 7 && abilities[7]) 
+				abilities[7].Cast();
+			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 8";
-			#else
-			
 			#endif
 		}
 	}

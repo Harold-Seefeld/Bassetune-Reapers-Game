@@ -12,6 +12,8 @@ using System.Collections;
 public class PlayerBase : MonoBehaviour {
 	
 	public GameObject cursor;
+	public InGameCanvas inGameCanvas = null;
+
 	protected NavMeshAgent agent;
 	
 	protected float mouseDownTimer = 0f;
@@ -98,11 +100,5 @@ public class PlayerBase : MonoBehaviour {
 			return hit.point;
 		}
 		return transform.position;
-	}
-	
-	//called from the ui whenever an ability's slot is changed.
-	public void OnAbilityAssign(AbilityBase ability, int targetSlot)
-	{
-		ability.slotAssigned = targetSlot;
 	}
 }

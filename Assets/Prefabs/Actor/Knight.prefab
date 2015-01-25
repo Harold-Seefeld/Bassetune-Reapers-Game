@@ -1475,8 +1475,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 100000, guid: d790936ca4151704d9f4ab6a619d2b9f, type: 2}
+  inGameCanvas: {fileID: 0}
   debugLabel: {fileID: 100000, guid: ee8135c7bfa0b2c4aa2087397dc4baba, type: 2}
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
