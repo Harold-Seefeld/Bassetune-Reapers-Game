@@ -4,16 +4,13 @@ using System.Collections;
 
 [AddComponentMenu("Actor/Knight")]
 public class Knight : PlayerBase {
+	public AbilityBase[] abilities;
+
 	Animator anim;
-	
 	// animation parmeters
 	const string AniMoveSpeedName = "MoveSpeed";
 	const string AniAttackedName = "Attacked";
-	
-	//by sonarsound---
-	public AbilityBase[] abilities;
-	//---
-	
+
 	void Start () {
 		// Call base start function
 		BaseStart ();

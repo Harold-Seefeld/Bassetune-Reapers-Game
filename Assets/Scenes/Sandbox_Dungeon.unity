@@ -3898,6 +3898,7 @@ GameObject:
   - 223: {fileID: 758048991}
   - 114: {fileID: 758048990}
   - 114: {fileID: 758048989}
+  - 114: {fileID: 758048993}
   m_Layer: 0
   m_Name: Knight Canvas
   m_TagString: Untagged
@@ -3981,6 +3982,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &758048993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 758048988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b84e91eaf04154d91f6d735e90d461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &791699309
 GameObject:
   m_ObjectHideFlags: 0
@@ -7104,7 +7116,7 @@ GameObject:
   - 114: {fileID: 1431458041}
   - 114: {fileID: 1431458040}
   m_Layer: 0
-  m_Name: Offensive Skills
+  m_Name: Defensive Skills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
