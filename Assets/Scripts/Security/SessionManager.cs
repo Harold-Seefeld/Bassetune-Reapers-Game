@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.Text.RegularExpressions;
 using System.Collections;
 
 public class SessionManager : MonoBehaviour {
@@ -19,8 +21,7 @@ public class SessionManager : MonoBehaviour {
 	public Text textHelp1;
 	public Text textHelp2;
 	public Text textHelp3;
-	public Text textHelp4;
-	
+	public Text textHelp4;	
 	
 	public Canvas current;
 	public Canvas next;
@@ -33,6 +34,19 @@ public class SessionManager : MonoBehaviour {
 		return SessionId;
 	}
 
+	private bool IsValidEmail(string strIn)
+	{
+		// Return true if strIn is in valid e-mail format.
+		return Regex.IsMatch(strIn, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" +
+		                     "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$"); 
+	}
+
+	private bool IsValidUsername(string strIn)
+	{
+		// Return true if strIn is in valid
+		return Regex.IsMatch(strIn, "^[a-zA-Z0-9]{2,15}$"); 
+	}
+	
 	public void Start()
 	{
 		DontDestroyOnLoad(this);
@@ -132,7 +146,38 @@ public class SessionManager : MonoBehaviour {
 			return;
 		}
 
-			DoRegister(usernameText.text, nicknameText.text, passwordText.text, emailText.text, bDayYText.text, bDayMText.text, bDayDText.text);
+		if (nicknameText.text == "")
+		{
+			notification.text = "Please specify a nickname.";
+			return;
+		}
+
+		if (bDayDText.text == "" || bDayMText.text == "" || bDayYText.text == "" || Convert.ToInt16(bDayYText.text) < 1920 ||
+		    bDayDText.text.Length != 2 || bDayMText.text.Length != 2 || bDayYText.text.Length != 4)
+		{
+			notification.text = "Please specify a valid birthdate.";
+			return;
+		}
+
+		if (!IsValidEmail(emailText.text))
+		{
+			notification.text = "Please specify a valid email.";
+			return;
+		}
+
+		if (usernameText.text.Length < 3)
+		{
+			notification.text = "Usernames must be a minimum of 3 characters long.";
+			return;
+		}
+
+		if (passwordText.text.Length < 6)
+		{
+			notification.text = "Passwords must be a minimum of 3 characters long.";
+			return;
+		}
+
+		DoRegister(usernameText.text, nicknameText.text, passwordText.text, emailText.text, bDayYText.text, bDayMText.text, bDayDText.text);
 	}
 	
 	public void DoRegister(string User, string Nickname, string Pass, string Email, string BdayY, string BdayM, string BdayD) {

@@ -19390,13 +19390,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 394346578}
   m_TextComponent: {fileID: 628077523}
   m_Placeholder: {fileID: 119340360}
-  m_ContentType: 0
+  m_ContentType: 4
   m_InputType: 0
-  m_KeyboardType: 0
+  m_KeyboardType: 1
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterValidation: 3
+  m_CharacterLimit: 16
   m_EndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -68498,7 +68498,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 16
   m_EndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -77884,13 +77884,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1517792231}
   m_TextComponent: {fileID: 809247941}
   m_Placeholder: {fileID: 632631726}
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterValidation: 1
+  m_CharacterLimit: 2
   m_EndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -79232,13 +79232,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1544240257}
   m_TextComponent: {fileID: 1088848943}
   m_Placeholder: {fileID: 1525994664}
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterValidation: 1
+  m_CharacterLimit: 4
   m_EndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -84999,13 +84999,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1652715831}
   m_TextComponent: {fileID: 1858195896}
   m_Placeholder: {fileID: 217035096}
-  m_ContentType: 0
+  m_ContentType: 4
   m_InputType: 0
-  m_KeyboardType: 0
+  m_KeyboardType: 1
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterValidation: 3
+  m_CharacterLimit: 16
   m_EndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -95261,13 +95261,13 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1871838817}
   m_TextComponent: {fileID: 1158391941}
   m_Placeholder: {fileID: 1354715030}
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
-  m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterValidation: 1
+  m_CharacterLimit: 2
   m_EndEdit:
     m_PersistentCalls:
       m_Calls: []
