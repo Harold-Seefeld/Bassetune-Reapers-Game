@@ -196,20 +196,16 @@ public class SessionManager : MonoBehaviour {
 	IEnumerator Register(WWW w) 
 	{
 		yield return w;
-		Debug.Log (w.text);
-		if (w.text == "User has been created!") 
+		if (w.text == "Registration Succeeded.") 
 		{
-			Debug.Log ("Registration Succeeded");
-			notification.text = "Registration Completed";
+			notification.text = "Registration Complete. A verification email has been sent to the email address provided.";
 		}
-		if (w.text == "A user with this name already exists, please choose another one!") 
+		if (w.text.Contains("username_UNIQUE")) 
 		{
-			Debug.Log ("Username has already been taken");
-			notification.text = "This username already exists!";
+			notification.text = "This username already exists. Please choose another one.";
 		}
-		if (w.text == "A user with this email already exists, please choose another one!") 
+		if (w.text.Contains("email_UNIQUE")) 
 		{
-			Debug.Log ("Email has already been taken");
 			notification.text = "This email already exists!";
 		}
 		if (w.error != null){
