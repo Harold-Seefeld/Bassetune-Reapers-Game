@@ -1,5 +1,4 @@
-﻿// by dmongs
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("Actor/Knight")]
@@ -133,7 +132,7 @@ public class Knight : PlayerBase {
     {
         Debug.Log("Mouse Down");
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+//        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (targetActor != null)
         {
@@ -149,7 +148,7 @@ public class Knight : PlayerBase {
             }
             else if(hit.collider.gameObject.tag == "Knight" || hit.collider.gameObject.tag == "Boss")
             {
-                abilities[currentAbility].Cast(hit.collider.gameObject);
+                abilities[currentAbility].Cast();
                 abilityTargetFound = true;
                 targetActor = hit.collider.gameObject;
                 #if UNITY_EDITOR
@@ -161,7 +160,7 @@ public class Knight : PlayerBase {
                 //as this detects the child capsule collider, we must get the parent object. note that if you make changes
                 //to the creature prefab it may not work if you add more colliders as child objects with different sizes.
                 //please make those child objects' layer "Ignore Raycast"
-                abilities[currentAbility].Cast(hit.collider.gameObject.transform.parent.gameObject);
+                abilities[currentAbility].Cast();
                 abilityTargetFound = true;
                 targetActor = hit.collider.gameObject.transform.parent.gameObject;
                 #if UNITY_EDITOR
