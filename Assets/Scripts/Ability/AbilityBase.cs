@@ -91,6 +91,7 @@ public class AbilityBase : MonoBehaviour {
 
 		state = AbilityState.Cast;
 		actor.inGameCanvas.abilities [abilityIndex].outline.enabled = true;
+		actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (1f, 1f, 1f);
 		timer = castTime;
 
 		// Begin Casting

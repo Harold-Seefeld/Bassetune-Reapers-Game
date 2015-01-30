@@ -110,15 +110,19 @@ public class PlayerBase : MonoBehaviour {
 	protected bool ScreenToNavPos(Vector3 pos, ref Vector3 position, ref Transform target){
 		Ray r = Camera.main.ScreenPointToRay(pos);
 		RaycastHit hit;
-		if(Physics.Raycast(r, out hit, 100, 1 << 8 | 1 << 9)){	// 1 << 8 is Terrain layer mask
+		if(Physics.Raycast(r, out hit, 100, 1 << 8 | 1 << 9)){	// Terrain and Character layer mask
 			// Check wheter it's cast to other actor
 			if ((hit.transform.tag == "Boss" || 
 			    hit.transform.tag == "Knight" || 
 			    hit.transform.tag == "Creature") &&
 			    hit.transform.GetInstanceID() != transform.GetInstanceID()){
 				target = hit.transform;
+				position = hit.transform.position;
+			} else if (hit.transform.GetInstanceID() == transform.GetInstanceID()){
+				position = hit.transform.position;
+			} else {
+				position = hit.point;
 			}
-			position = hit.point;
 			return true;
 		}
 		return false;
