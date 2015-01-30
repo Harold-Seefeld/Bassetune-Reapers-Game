@@ -34,6 +34,7 @@ public class PlayerBase : MonoBehaviour {
 	protected void BaseStart(){
 		agent = GetComponent<NavMeshAgent> ();
 		targetCursor = Instantiate (targetCursor, Vector3.zero, targetCursor.transform.rotation) as GameObject;
+		targetCursor.SetActive (false);
 		
 		#if UNITY_EDITOR
 		debugLabel = Instantiate(debugLabel) as GameObject;
@@ -92,6 +93,7 @@ public class PlayerBase : MonoBehaviour {
 
 		// Update Target Cursor
 		if (target){
+			targetCursor.SetActive(true);
 			targetCursor.transform.position = target.transform.position;
 		}
 		
