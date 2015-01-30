@@ -11,13 +11,16 @@ using System.Collections;
 [AddComponentMenu("Actor/PlayerBase")]
 public class PlayerBase : MonoBehaviour {
 	
-	public GameObject cursor;
+	public GameObject movecursor;
+	public GameObject targetCursor;
 	public InGameCanvas inGameCanvas = null;
-
+	
 	protected NavMeshAgent agent;
 	
 	protected float mouseDownTimer = 0f;
 	protected bool useDirectMouseControl = false;
+
+	protected Transform target;
 	
 	// for debugging purposes
 	public GameObject debugLabel;
@@ -30,6 +33,7 @@ public class PlayerBase : MonoBehaviour {
 	
 	protected void BaseStart(){
 		agent = GetComponent<NavMeshAgent> ();
+		targetCursor = Instantiate (targetCursor, Vector3.zero, targetCursor.transform.rotation) as GameObject;
 		
 		#if UNITY_EDITOR
 		debugLabel = Instantiate(debugLabel) as GameObject;
@@ -48,15 +52,17 @@ public class PlayerBase : MonoBehaviour {
 	protected void BaseUpdate () {
 		if (Input.GetMouseButtonDown(0)){
 			// Go to position after receiving single click input
-			Vector3 destination = ScreenToNavPos(Input.mousePosition);
-			agent.SetDestination (destination);
-			mouseDownTimer = 0f;
-			
-			Destroy((GameObject)GameObject.Instantiate(cursor, destination, Quaternion.identity), 0.5f);
-			
-			#if UNITY_EDITOR
-			debugLabelText.text = "Move To " + destination;
-			#endif
+			Vector3 destination = Vector3.zero;
+			if (ScreenToNavPos(Input.mousePosition, ref destination, ref target)){
+				agent.SetDestination (destination);
+				mouseDownTimer = 0f;
+				
+				Destroy((GameObject)GameObject.Instantiate(movecursor, destination, Quaternion.identity), 0.5f);
+				
+				#if UNITY_EDITOR
+				debugLabelText.text = "Move To " + destination;
+				#endif
+			}
 		} else if (Input.GetMouseButtonUp(0) && useDirectMouseControl){
 			// Stop following cursor since mouse already up
 			// If it's using direct mouse control and the mouse button no longer down. reset the path
@@ -70,18 +76,24 @@ public class PlayerBase : MonoBehaviour {
 			// Start following cursor
 			// Update new path every 0.25 second
 			useDirectMouseControl = true;
-			Vector3 destination = ScreenToNavPos(Input.mousePosition);
-			
-			// Uncomment this code if you want to directly manipulate the move and comment the code below this. not recomended
-			// agent.Move((destination - transform.position).normalized * agent.speed * Time.deltaTime);
-			
-			agent.SetDestination(destination);
-			mouseDownTimer = 0f;	// only calculate path every 0.25f seconds
-			
-			#if UNITY_EDITOR
-			debugLabelText.text = "Follow Cursor";
-			#endif
-		} 
+			Vector3 destination = Vector3.zero;
+			if (ScreenToNavPos(Input.mousePosition, ref destination, ref target)){
+				// Uncomment this code if you want to directly manipulate the move and comment the code below this. not recomended
+				// agent.Move((destination - transform.position).normalized * agent.speed * Time.deltaTime);
+				
+				agent.SetDestination(destination);
+				mouseDownTimer = 0f;	// only calculate path every 0.25f seconds
+				
+				#if UNITY_EDITOR
+				debugLabelText.text = "Follow Cursor";
+				#endif
+			}	
+		}
+
+		// Update Target Cursor
+		if (target){
+			targetCursor.transform.position = target.transform.position;
+		}
 		
 		Debug.DrawRay (transform.position, agent.velocity);
 		mouseDownTimer += Time.deltaTime;
@@ -93,12 +105,20 @@ public class PlayerBase : MonoBehaviour {
 		#endif
 	}
 	
-	protected Vector3 ScreenToNavPos(Vector3 pos){
+	protected bool ScreenToNavPos(Vector3 pos, ref Vector3 position, ref Transform target){
 		Ray r = Camera.main.ScreenPointToRay(pos);
 		RaycastHit hit;
-		if(Physics.Raycast(r, out hit, 100, 1 << 8)){	// 1 << 8 is Terrain layer mask
-			return hit.point;
+		if(Physics.Raycast(r, out hit, 100, 1 << 8 | 1 << 9)){	// 1 << 8 is Terrain layer mask
+			// Check wheter it's cast to other actor
+			if ((hit.transform.tag == "Boss" || 
+			    hit.transform.tag == "Knight" || 
+			    hit.transform.tag == "Creature") &&
+			    hit.transform.GetInstanceID() != transform.GetInstanceID()){
+				target = hit.transform;
+			}
+			position = hit.point;
+			return true;
 		}
-		return transform.position;
+		return false;
 	}
 }
