@@ -40,9 +40,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 4086a25a6f6a4fe4cb85f2d7ceecc73d, type: 3}
-  title: 
+  abilityName: Attack Dummy
   abilityType: 0
-  description: 
+  description: Do dummy Attack to Opponent
   requiredWeapons: 0
   damageRatio: 0
   castTime: 5

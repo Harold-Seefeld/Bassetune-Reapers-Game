@@ -24,7 +24,7 @@ public enum AbilityState{
 public class AbilityBase : MonoBehaviour {
 	// About the ability, used in UI
 	public Sprite icon;
-	public string title;
+	public string abilityName;
 	public AbilityType abilityType;
 	public string description;
 
@@ -100,11 +100,11 @@ public class AbilityBase : MonoBehaviour {
 	public void OnEquipBegin(PlayerBase a, int i){
 		actor = a;
 		abilityIndex = i;
-		actor.inGameCanvas.abilities[abilityIndex].icon.sprite = icon;
+		actor.inGameCanvas.abilities [abilityIndex].ability = this;
 	}
 
 	public void OnEquipEnd(){
-		actor.inGameCanvas.abilities[abilityIndex].icon.sprite = AbilityIcon.iconNone;
+		actor.inGameCanvas.abilities [abilityIndex].ability = null;
 		actor = null;
 		abilityIndex = 0;
 	}
