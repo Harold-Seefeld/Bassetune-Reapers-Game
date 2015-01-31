@@ -45,7 +45,9 @@ public class AbilityBase : MonoBehaviour {
 	// Prefabs for effects
 	public GameObject effect;
 	
-	PlayerBase actor = null;
+	protected PlayerBase actor = null;
+	protected Transform target = null;
+	protected Vector3 targetPos;
 	int abilityIndex;
 	AbilityState state = AbilityState.Idle;
 	// Timer for use internally
@@ -86,13 +88,15 @@ public class AbilityBase : MonoBehaviour {
 		}
 	}
 	
-	public void Cast(){
+	public void Cast(Transform _target, Vector3 _targetPos){
 		// Check if ability is usable. TODO: replace 10 with weapon flags
 //		if (!IsUsable(10)) return;
 
 		if (state != AbilityState.Idle)
 			return;
 
+		target = _target;
+		targetPos = _targetPos;
 		state = AbilityState.Cast;
 		actor.inGameCanvas.abilities [abilityIndex].outline.enabled = true;
 		actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (1f, 1f, 1f);

@@ -103,7 +103,7 @@ public class PlayerBase : MonoBehaviour {
 		}
 
 		if (target || smartcast){
-			OnCastHotkey(smartcast, target, targetPos);
+			OnCastHotkey(target, targetPos);
 			targetCursor.SetActive(true);
 			targetCursor.transform.position = target ? target.transform.position : targetPos + new Vector3(0, 0.01f);
 		} else {
@@ -120,10 +120,8 @@ public class PlayerBase : MonoBehaviour {
 		#endif
 	}
 
-	protected virtual void OnCastHotkey(bool smartcast, Transform target, Vector3 position){
-		// Don't do anything unless have target or in smartcast mode
-		if (!target || !smartcast) return;
-	}
+	// Override this function to provide different keybind setup
+	protected virtual void OnCastHotkey(Transform target, Vector3 position){}
 	
 	protected bool ScreenToNavPos(Vector3 pos, ref Vector3 position, ref Transform target){
 		Ray r = Camera.main.ScreenPointToRay(pos);

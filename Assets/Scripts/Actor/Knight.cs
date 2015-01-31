@@ -35,12 +35,12 @@ public class Knight : PlayerBase {
 		anim.SetFloat (AniMoveSpeedName, agent.velocity.magnitude);
 	}
 	
-	protected override void OnCastHotkey(bool smartcast, Transform target, Vector3 position){
+	protected override void OnCastHotkey(Transform target, Vector3 position){
 		//invokes the ability when the button is pressed
 		if (Input.GetAxis("Attack1") > 0)
 		{
             if (abilities.Length > 0 && abilities[0])
-				abilities[0].Cast();
+				abilities[0].Cast(target, position);
 
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 1";
@@ -49,7 +49,7 @@ public class Knight : PlayerBase {
 		else if (Input.GetAxis("Attack2") > 0)
 		{
 			if (abilities.Length > 1 && abilities[1])
-				abilities[1].Cast();
+				abilities[1].Cast(target, position);
 			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 2";
@@ -58,7 +58,7 @@ public class Knight : PlayerBase {
 		else if (Input.GetAxis("Attack3") > 0)
 		{
 			if (abilities.Length > 2 && abilities[2])
-				abilities[2].Cast();
+				abilities[2].Cast(target, position);
 			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 3";
@@ -67,7 +67,7 @@ public class Knight : PlayerBase {
 		else if (Input.GetAxis("Attack4") > 0)
 		{
 			if (abilities.Length > 3 && abilities[3])
-				abilities[3].Cast();
+				abilities[3].Cast(target, position);
 			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 4";
@@ -76,7 +76,7 @@ public class Knight : PlayerBase {
 		else if (Input.GetAxis("Attack5") > 0)
 		{
 			if (abilities.Length > 4 && abilities[4])
-				abilities[4].Cast();
+				abilities[4].Cast(target, position);
 			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 5";
@@ -85,7 +85,7 @@ public class Knight : PlayerBase {
 		else if (Input.GetAxis("Attack6") > 0)
 		{
 			if (abilities.Length > 5 && abilities[5])
-				abilities[5].Cast();
+				abilities[5].Cast(target, position);
 			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 6";
@@ -94,7 +94,7 @@ public class Knight : PlayerBase {
 		else if (Input.GetAxis("Attack7") > 0)
 		{
 			if (abilities.Length > 6 && abilities[6])
-				abilities[6].Cast();
+				abilities[6].Cast(target, position);
 			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 7";
@@ -103,7 +103,7 @@ public class Knight : PlayerBase {
 		else if (Input.GetAxis("Attack8") > 0)
 		{
 			if (abilities.Length > 7 && abilities[7])
-				abilities[7].Cast();
+				abilities[7].Cast(target, position);
 			
 			#if UNITY_EDITOR
 			debugLabelText.text = "Use Ability 8";
