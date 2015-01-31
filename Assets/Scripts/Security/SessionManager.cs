@@ -6,8 +6,8 @@ using System.Collections;
 
 public class SessionManager : MonoBehaviour {
 
-	private string loginSite = "http://ec2-54-173-162-102.compute-1.amazonaws.com/login";
-	private string registerSite = "http://ec2-54-173-162-102.compute-1.amazonaws.com/register";
+	private string loginSite = "http://ec2-54-152-118-98.compute-1.amazonaws.com/login";
+	private string registerSite = "http://ec2-54-152-118-98.compute-1.amazonaws.com/register";
 
 	// Reference
 	public Text usernameText;
@@ -25,6 +25,8 @@ public class SessionManager : MonoBehaviour {
 	
 	public Canvas current;
 	public Canvas next;
+
+	public InventoryManager inventoryManager;
 
 	// About Session : 0 means not in session, positive = auth success, negative failed to auth
 	private string SessionId = "0";
@@ -125,6 +127,7 @@ public class SessionManager : MonoBehaviour {
 		{
 			notification.text = "Successful Login.";
 			SessionId = w.text;
+			inventoryManager.UpdateInventory();
 			yield return new WaitForSeconds (1);
 			current.enabled = false;
 			next.enabled = true;
