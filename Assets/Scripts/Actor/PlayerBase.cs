@@ -61,8 +61,8 @@ public class PlayerBase : MonoBehaviour {
 			// Reset path
 			agent.ResetPath();
 			// Rotate actor toward cursor
-			if (targetPos != Vector3.zero){
-				Vector3 direction = (targetPos - transform.position).normalized;
+			Vector3 direction = (targetPos - transform.position).normalized;
+			if (direction != Vector3.zero){
 				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5);
 			}
 		} else if (Input.GetMouseButtonDown(0)){
