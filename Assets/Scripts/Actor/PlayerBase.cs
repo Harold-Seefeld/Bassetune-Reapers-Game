@@ -65,6 +65,9 @@ public class PlayerBase : MonoBehaviour {
 			if (direction != Vector3.zero){
 				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5);
 			}
+			#if UNITY_EDITOR
+			debugLabelText.text = "SmartCast Mode";
+			#endif
 		} else if (Input.GetMouseButtonDown(0)){
 			if (ScreenToNavPos(Input.mousePosition, ref targetPos, ref target)){
 				agent.SetDestination (targetPos);
@@ -137,6 +140,7 @@ public class PlayerBase : MonoBehaviour {
 				position = hit.transform.position;
 			} else if (hit.transform.GetInstanceID() == transform.GetInstanceID()){
 				position = hit.transform.position;
+				return false;
 			} else {
 				position = hit.point;
 			}

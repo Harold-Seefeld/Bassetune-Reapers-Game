@@ -1480,11 +1480,11 @@ MonoBehaviour:
   debugLabel: {fileID: 100000, guid: ee8135c7bfa0b2c4aa2087397dc4baba, type: 2}
   abilities:
   - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
   - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
-  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
-  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
-  - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
   - {fileID: 11400000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
 --- !u!136 &13600000
@@ -1590,7 +1590,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 1000
+  m_AngularSpeed: 10000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
