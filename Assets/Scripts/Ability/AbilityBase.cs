@@ -4,6 +4,10 @@ using System.Collections;
 /*
  * This is base Ability class, to create custom ability simply override this class.
  * This class will be utilized by Inventory System or Ability system or Actor class which hold all it's ability scripts and will invoke the ability.
+ * Logic of Ability can be custimized by overriding this three function :
+ * - OnCastBegin() : This function will be called once when ability began to cast
+ * - OnCast()      : This function is called everytime as long as attack time
+ * - OnCastEnd()   : This function is called once when the abiility cast ended
  * 
  * If you overriding Unity function from this class, don't forget to call Base[FunctionToOverride] before writing your scripts.
  * Remember base.[FunctionToOverride] won't work due to unity reflection architectures.
@@ -41,7 +45,9 @@ public class AbilityBase : MonoBehaviour {
 	// Prefabs for effects
 	public GameObject effect;
 	
-	PlayerBase actor = null;
+	protected PlayerBase actor = null;
+	protected Transform target = null;
+	protected Vector3 targetPos;
 	int abilityIndex;
 	AbilityState state = AbilityState.Idle;
 	// Timer for use internally
@@ -82,13 +88,15 @@ public class AbilityBase : MonoBehaviour {
 		}
 	}
 	
-	public void Cast(){
+	public void Cast(Transform _target, Vector3 _targetPos){
 		// Check if ability is usable. TODO: replace 10 with weapon flags
 //		if (!IsUsable(10)) return;
 
 		if (state != AbilityState.Idle)
 			return;
 
+		target = _target;
+		targetPos = _targetPos;
 		state = AbilityState.Cast;
 		actor.inGameCanvas.abilities [abilityIndex].outline.enabled = true;
 		actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (1f, 1f, 1f);
@@ -115,7 +123,7 @@ public class AbilityBase : MonoBehaviour {
 	}
 
 	// Logic for casting : Override below function
-	public virtual void OnCastBegin(){}
-	public virtual void OnCast(){}
-	public virtual void OnCastEnd(){}
+	protected virtual void OnCastBegin(){}
+	protected virtual void OnCast(){}
+	protected virtual void OnCastEnd(){}
 }
