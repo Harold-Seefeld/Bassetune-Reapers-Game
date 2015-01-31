@@ -33,15 +33,9 @@ public class Knight : PlayerBase {
 		
 		// Set animation movement variable
 		anim.SetFloat (AniMoveSpeedName, agent.velocity.magnitude);
-		//if any pressed ability hotkey
-		OnPressedAbilityHotkey();
 	}
 	
-	void OnPressedAbilityHotkey()
-	{
-		// Don't do anything unless have target
-		if (!target) return;
-
+	protected override void OnCastHotkey(bool smartcast, Transform target, Vector3 position){
 		//invokes the ability when the button is pressed
 		if (Input.GetAxis("Attack1") > 0)
 		{

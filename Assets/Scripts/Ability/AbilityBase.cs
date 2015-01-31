@@ -4,6 +4,10 @@ using System.Collections;
 /*
  * This is base Ability class, to create custom ability simply override this class.
  * This class will be utilized by Inventory System or Ability system or Actor class which hold all it's ability scripts and will invoke the ability.
+ * Logic of Ability can be custimized by overriding this three function :
+ * - OnCastBegin() : This function will be called once when ability began to cast
+ * - OnCast()      : This function is called everytime as long as attack time
+ * - OnCastEnd()   : This function is called once when the abiility cast ended
  * 
  * If you overriding Unity function from this class, don't forget to call Base[FunctionToOverride] before writing your scripts.
  * Remember base.[FunctionToOverride] won't work due to unity reflection architectures.
@@ -115,7 +119,7 @@ public class AbilityBase : MonoBehaviour {
 	}
 
 	// Logic for casting : Override below function
-	public virtual void OnCastBegin(){}
-	public virtual void OnCast(){}
-	public virtual void OnCastEnd(){}
+	protected virtual void OnCastBegin(){}
+	protected virtual void OnCast(){}
+	protected virtual void OnCastEnd(){}
 }

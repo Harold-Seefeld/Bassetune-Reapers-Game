@@ -6,11 +6,11 @@ using System.Collections;
 public class AbilityIcon : MonoBehaviour {
 	public static Sprite iconNone;
 
-	public AbilityBase _ability;
 	public RectTransform rectTransform;
 	public Image icon;
 	public Outline outline;
 	public Text timer;
+	AbilityBase _ability;
 
 	void Awake () {
 		if (iconNone == null) {
