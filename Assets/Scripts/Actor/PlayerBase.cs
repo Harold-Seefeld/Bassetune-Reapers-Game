@@ -134,8 +134,7 @@ public class PlayerBase : MonoBehaviour {
 			// Check wheter it's cast to other actor
 			if ((hit.transform.tag == "Boss" || 
 			    hit.transform.tag == "Knight" || 
-			    hit.transform.tag == "Creature") &&
-			    hit.transform.GetInstanceID() != transform.GetInstanceID()){
+			    hit.transform.tag == "Creature")){
 				target = hit.transform;
 				position = hit.transform.position;
 			} else if (hit.transform.GetInstanceID() == transform.GetInstanceID()){
