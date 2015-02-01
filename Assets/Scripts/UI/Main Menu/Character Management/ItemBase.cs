@@ -3,13 +3,13 @@ using System.Collections;
 
 public class ItemBase : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	public enum ItemSide {
+		Knight,
+		Boss
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public string itemName;
+	public string itemBuyPrice;
+	public string itemSellPrice;
+	public string itemDescription;
 }

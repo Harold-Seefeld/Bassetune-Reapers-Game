@@ -32,7 +32,10 @@ public class WeaponBase : MonoBehaviour {
 	}
 	public WeaponType weaponType;
 
-	public string model;
-	public string description;
+	public GameObject weaponModel;
+	public string weaponName;
+	public string weaponDescription;
+	public string weaponBuyPrice;
+	public string weaponSellPrice;
 
 }
