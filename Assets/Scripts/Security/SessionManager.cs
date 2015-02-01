@@ -103,7 +103,6 @@ public class SessionManager : MonoBehaviour {
 	
 	void DoLogin(string User, string Pass) 
 	{
-
 		WWWForm www = new WWWForm();
 		www.AddField("username",User);
 		www.AddField("password",Pass);

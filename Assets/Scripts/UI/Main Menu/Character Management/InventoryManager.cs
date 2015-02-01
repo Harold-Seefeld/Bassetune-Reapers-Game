@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using UnityEditor;
+using UnityEngine.UI;
 using System.Collections;
-using System;
 
 public class InventoryManager : MonoBehaviour {
 
@@ -39,19 +38,97 @@ public class InventoryManager : MonoBehaviour {
 	{
 		yield return w;
 		inventoryJSON = new JSONObject(w.text);
-		for (int i = 0; i < inventoryJSON.Count - 1; i++)
+
+		// Clear all text on lists
+		ClearText(equipmentShop.GetComponentsInChildren<Text>());
+		ClearText(equipmentInventory.GetComponentsInChildren<Text>());
+		ClearText(bossShop.GetComponentsInChildren<Text>());
+		ClearText(bossInventory.GetComponentsInChildren<Text>());
+		ClearText(minibossShop.GetComponentsInChildren<Text>());
+		ClearText(minibossInventory.GetComponentsInChildren<Text>());
+		ClearText(trapShop.GetComponentsInChildren<Text>());
+		ClearText(trapInventory.GetComponentsInChildren<Text>());
+		ClearText(creatureShop.GetComponentsInChildren<Text>());
+		ClearText(creatureInventory.GetComponentsInChildren<Text>());
+		ClearText(abilityShop.GetComponentsInChildren<Text>());
+		ClearText(abilityInventory.GetComponentsInChildren<Text>());
+		
+//		// Set all weapon text invisible
+//		for (int i = 0; i < textList.Length; i++)
+//		{
+//			if (textList[l].transform.parent == transform)
+//			{
+//				textList[l].text = "<color=#ffffffff>N/A</color>";
+//			}
+//		}
+//
+//		// Set all ability text invisible
+//		for (int i = 0; i < textList.Length; i++)
+//		{
+//			if (textList[l].transform.parent == transform)
+//			{
+//				textList[l].text = "<color=#ffffffff>N/A</color>";
+//			}
+//		}
+
+		//		for (int i = 0; i < inventoryJSON.Count - 1; i++)
+//		{
+//			if (inventoryJSON[i][0].ToString() != "null")
+//			{
+//				Text[] textList = GetComponentsInChildren<Text>() as Text[];
+//				
+//				// Set all text invisible
+//				for (int l = 0; i < textList.Length; i++)
+//				{
+//					if (textList[l].transform.parent == transform)
+//						textList[l].text = "<color=#ffffffff>N/A</color>";
+//				}
+//				
+//				// Set the item text
+//				int il = 0;
+//				for (int l = 0; i < itemList.Length - 1; i++)
+//				{
+//					if (textList[il].transform.parent == transform)
+//					{
+//						textList[il].text = itemList[il].GetComponent<ItemBase>().itemName;
+//						textList[il].gameObject.GetComponentsInChildren<Button>(true)[0].gameObject.SetActive(true);
+//					} else {
+//						l--;
+//					}
+//					il++;
+//				}
+//				
+//				// Disable non-active buttons
+//				for (int l = 0; i < textList.Length; i++)
+//				{
+//					if (textList[l].text == "<color=#ffffffff>N/A</color>")
+//					{
+//						textList[l].gameObject.GetComponentsInChildren<Button>(true)[0].gameObject.SetActive(false);
+//					}
+//					else
+//					{
+//						textList[l].gameObject.GetComponentsInChildren<Button>(true)[0].gameObject.SetActive(true);
+//					}
+//				}
+//			}
+//			if (inventoryJSON[i][2].ToString() != "null")
+//			{
+//				// Implement code for sorting prefabs
+//			}			
+//			if (inventoryJSON[i][3].ToString() != "null")
+//			{
+//				// Implement code for sorting prefabs
+//			}
+//		}
+	}
+
+	void ClearText(Text[] textToClear)
+	{
+		for (int i = 0; i < textToClear.Length; i++)
 		{
-			if (inventoryJSON[i][0].ToString() != "null")
+			if (textToClear[i].transform.parent == transform)
 			{
-				// Implement code for sorting prefabs
-			}
-			if (inventoryJSON[i][2].ToString() != "null")
-			{
-				// Implement code for sorting prefabs
-			}			
-			if (inventoryJSON[i][3].ToString() != "null")
-			{
-				// Implement code for sorting prefabs
+				textToClear[i].text = "<color=#ffffffff>N/A</color>";
 			}
 		}
 	}

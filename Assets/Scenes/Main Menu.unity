@@ -2785,7 +2785,7 @@ GameObject:
   - 114: {fileID: 48965995}
   - 114: {fileID: 48965994}
   m_Layer: 5
-  m_Name: Boss List
+  m_Name: Equipment List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12003,7 +12003,7 @@ GameObject:
   - 114: {fileID: 262967221}
   - 114: {fileID: 262967220}
   m_Layer: 5
-  m_Name: Boss List
+  m_Name: Creatures List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20043,7 +20043,7 @@ GameObject:
   - 114: {fileID: 409095956}
   - 114: {fileID: 409095955}
   m_Layer: 5
-  m_Name: Boss List
+  m_Name: Minibosses List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24267,7 +24267,7 @@ GameObject:
   - 114: {fileID: 499883940}
   - 114: {fileID: 499883942}
   m_Layer: 5
-  m_Name: Boss List
+  m_Name: Minibosses List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33836,7 +33836,7 @@ GameObject:
   - 114: {fileID: 671739859}
   - 114: {fileID: 671739861}
   m_Layer: 5
-  m_Name: Boss List
+  m_Name: Equipment List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36436,7 +36436,7 @@ GameObject:
   - 114: {fileID: 743467929}
   - 114: {fileID: 743467928}
   m_Layer: 5
-  m_Name: Boss List
+  m_Name: Abilities List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47753,7 +47753,7 @@ GameObject:
   - 114: {fileID: 973207607}
   - 114: {fileID: 973207609}
   m_Layer: 5
-  m_Name: Boss List
+  m_Name: Traps List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55242,21 +55242,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c65b43efc2dcf4789e31c119399cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList: []
-  weaponList: []
-  abilityList: []
-  equipmentShop: {fileID: 274088308}
-  equipmentInventory: {fileID: 996954585}
-  abilityShop: {fileID: 816289660}
-  abilityInventory: {fileID: 1888934503}
-  bossShop: {fileID: 1866941005}
-  bossInventory: {fileID: 245904021}
-  minibossShop: {fileID: 2124094578}
-  minibossInventory: {fileID: 1280121278}
-  trapShop: {fileID: 1061263075}
-  trapInventory: {fileID: 251825603}
-  creatureShop: {fileID: 996050418}
-  creatureInventory: {fileID: 747947334}
+  itemList:
+  - {fileID: 112958, guid: 5596390fee3fe044b923d0a685450f85, type: 2}
+  - {fileID: 102428, guid: 92f4ff486c0394b429d0dbc8af8d8432, type: 2}
+  - {fileID: 160504, guid: 43eb2ea6d577c604ca2956c695d3de98, type: 2}
+  - {fileID: 109812, guid: 8d328eb703f20834c9a19185aea7a7f1, type: 2}
+  - {fileID: 145174, guid: eeef6f5502d08c240a8741143dab8270, type: 2}
+  weaponList:
+  - {fileID: 124116, guid: 1d20b01b99ec40e4188d801fc8115c34, type: 2}
+  abilityList:
+  - {fileID: 100000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  equipmentShop: {fileID: 48965992}
+  equipmentInventory: {fileID: 671739857}
+  abilityShop: {fileID: 1656187862}
+  abilityInventory: {fileID: 743467926}
+  bossShop: {fileID: 1772560876}
+  bossInventory: {fileID: 2097672051}
+  minibossShop: {fileID: 409095953}
+  minibossInventory: {fileID: 499883938}
+  trapShop: {fileID: 1537967625}
+  trapInventory: {fileID: 973207605}
+  creatureShop: {fileID: 262967218}
+  creatureInventory: {fileID: 1599087457}
   sessionManager: {fileID: 1100135875}
 --- !u!1 &1101036209
 GameObject:
@@ -81420,7 +81427,7 @@ GameObject:
   - 114: {fileID: 1599087459}
   - 114: {fileID: 1599087461}
   m_Layer: 5
-  m_Name: Boss List
+  m_Name: Creatures List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
