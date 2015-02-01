@@ -20,8 +20,11 @@ public class PlayerBase : MonoBehaviour {
 	protected float mouseDownTimer = 0f;
 	protected bool useDirectMouseControl = false;
 
+	protected int currentAbility;
+
 	// Used for target reference cache
-	protected Transform target;
+	protected Transform castTarget;
+	protected Vector3 castPosition;
 
 	// for debugging purposes
 	public GameObject debugLabel;
@@ -52,79 +55,36 @@ public class PlayerBase : MonoBehaviour {
 	}
 	
 	protected void BaseUpdate () {
+		// Control logic
 		bool smartcast = Input.GetButton ("SmartCast");
-		Vector3 targetPos = Vector3.zero;
-
 		if (smartcast){
-			// Update target and cursor position
-			ScreenToNavPos(Input.mousePosition, ref targetPos, ref target);
-			// Reset path
-			agent.ResetPath();
-			// Rotate actor toward cursor
-			Vector3 direction = (targetPos - transform.position).normalized;
-			if (direction != Vector3.zero){
-				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5);
-			}
-			#if UNITY_EDITOR
-			debugLabelText.text = "SmartCast Mode";
-			#endif
+			OnSmarCast();
 		} else if (Input.GetMouseButtonDown(0)){
-			if (ScreenToNavPos(Input.mousePosition, ref targetPos, ref target)){
-				agent.SetDestination (targetPos);
-				mouseDownTimer = 0f;
-				
-				Destroy((GameObject)GameObject.Instantiate(movecursor, targetPos, Quaternion.identity), 0.5f);
-				
-				#if UNITY_EDITOR
-				debugLabelText.text = "Move To " + targetPos;
-				#endif
-			}
+			OnMoveTo();
 		} else if (Input.GetMouseButtonUp(0) && useDirectMouseControl){
-			// Stop following cursor since mouse already up
-			// If it's using direct mouse control and the mouse button no longer down. reset the path
-			useDirectMouseControl = false;
-			agent.ResetPath();
-			
-			#if UNITY_EDITOR
-			debugLabelText.text = "Unfollow Cursor";
-			#endif
+			OnFollowCursorEnd();
 		} else if (Input.GetMouseButton(0) && mouseDownTimer > 0.25f){
-			// Start following cursor
-			// Update new path every 0.25 second
-			useDirectMouseControl = true;
-			if (ScreenToNavPos(Input.mousePosition, ref targetPos, ref target)){
-				// Uncomment this code if you want to directly manipulate the move and comment the code below this. not recomended
-				// agent.Move((destination - transform.position).normalized * agent.speed * Time.deltaTime);
-				
-				agent.SetDestination(targetPos);
-				mouseDownTimer = 0f;	// only calculate path every 0.25f seconds
-				
-				#if UNITY_EDITOR
-				debugLabelText.text = "Follow Cursor";
-				#endif
-			}	
+			OnFollowCursorBegin();
 		}
 
-		if (target || smartcast){
-			OnCastHotkey(target, targetPos);
+		if (castTarget || smartcast){
+			currentAbility = OnCastHotkey(castTarget, castPosition);
 			targetCursor.SetActive(true);
-			targetCursor.transform.position = target ? target.transform.position : targetPos + new Vector3(0, 0.01f);
+			targetCursor.transform.position = castTarget ? castTarget.transform.position : castPosition + new Vector3(0, 0.01f);
 		} else {
 			targetCursor.SetActive(false);
 		}
 		
-		Debug.DrawRay (transform.position, agent.velocity);
 		mouseDownTimer += Time.deltaTime;
-		
+
+		// Debug only
+		Debug.DrawRay (transform.position, agent.velocity);
 		#if UNITY_EDITOR
 		// Update Debug Label position
 		Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint (Camera.main, gameObject.transform.position);
 		debugLabelText.rectTransform.anchoredPosition = screenPoint - debugLabelText.canvas.GetComponent<RectTransform> ().sizeDelta / 2f;
 		#endif
 	}
-
-	// Override this function to provide different keybind setup
-	protected virtual void OnCastHotkey(Transform target, Vector3 position){}
 	
 	protected bool ScreenToNavPos(Vector3 pos, ref Vector3 position, ref Transform target){
 		Ray r = Camera.main.ScreenPointToRay(pos);
@@ -148,4 +108,64 @@ public class PlayerBase : MonoBehaviour {
 		}
 		return false;
 	}
+
+	protected virtual void OnSmarCast(){
+		// Update target and cursor position
+		ScreenToNavPos(Input.mousePosition, ref castPosition, ref castTarget);
+		// Reset path
+		agent.ResetPath();
+		// Rotate actor toward cursor
+		Vector3 direction = (castPosition - transform.position).normalized;
+		if (direction != Vector3.zero){
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5);
+		}
+		#if UNITY_EDITOR
+		debugLabelText.text = "SmartCast Mode";
+		#endif
+	}
+
+	protected virtual void OnMoveTo(){
+		// Go to position if receive valid input
+		if (ScreenToNavPos(Input.mousePosition, ref castPosition, ref castTarget)){
+			agent.SetDestination (castPosition);
+			mouseDownTimer = 0f;
+			
+			Destroy((GameObject)GameObject.Instantiate(movecursor, castPosition, Quaternion.identity), 0.5f);
+			
+			#if UNITY_EDITOR
+			debugLabelText.text = "Move To " + castPosition;
+			#endif
+		}
+	}
+
+	protected virtual void OnFollowCursorBegin(){
+		// Start following cursor
+		// Update new path every 0.25 second
+		useDirectMouseControl = true;
+		if (ScreenToNavPos(Input.mousePosition, ref castPosition, ref castTarget)){
+			// Uncomment this code if you want to directly manipulate the move and comment the code below this. not recomended
+			// agent.Move((destination - transform.position).normalized * agent.speed * Time.deltaTime);
+			
+			agent.SetDestination(castPosition);
+			mouseDownTimer = 0f;	// only calculate path every 0.25f seconds
+			
+			#if UNITY_EDITOR
+			debugLabelText.text = "Follow Cursor";
+			#endif
+		}	
+	}
+
+	protected virtual void OnFollowCursorEnd(){
+		// Stop following cursor since mouse already up
+		// If it's using direct mouse control and the mouse button no longer down. reset the path
+		useDirectMouseControl = false;
+		agent.ResetPath();
+		
+		#if UNITY_EDITOR
+		debugLabelText.text = "Unfollow Cursor";
+		#endif
+	}
+	
+	// Override this function to provide different keybind setup
+	protected virtual int OnCastHotkey(Transform target, Vector3 position){ return -1; }
 }
