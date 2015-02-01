@@ -52627,7 +52627,7 @@ GameObject:
   - 114: {fileID: 1056162926}
   - 114: {fileID: 1056162925}
   m_Layer: 5
-  m_Name: Boss List Panel
+  m_Name: Equipment List Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55242,6 +55242,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c65b43efc2dcf4789e31c119399cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemList: []
+  weaponList: []
+  abilityList: []
+  equipmentShop: {fileID: 274088308}
+  equipmentInventory: {fileID: 996954585}
+  abilityShop: {fileID: 816289660}
+  abilityInventory: {fileID: 1888934503}
+  bossShop: {fileID: 1866941005}
+  bossInventory: {fileID: 245904021}
+  minibossShop: {fileID: 2124094578}
+  minibossInventory: {fileID: 1280121278}
+  trapShop: {fileID: 1061263075}
+  trapInventory: {fileID: 251825603}
+  creatureShop: {fileID: 996050418}
+  creatureInventory: {fileID: 747947334}
   sessionManager: {fileID: 1100135875}
 --- !u!1 &1101036209
 GameObject:
@@ -83353,7 +83368,7 @@ GameObject:
   - 114: {fileID: 1628292643}
   - 114: {fileID: 1628292642}
   m_Layer: 5
-  m_Name: Boss List Panel
+  m_Name: Equipment List Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,7 +7,8 @@ public class ItemBase : MonoBehaviour {
 		Knight,
 		Boss
 	}
-	
+
+	public string itemAnimation;
 	public string itemName;
 	public string itemBuyPrice;
 	public string itemSellPrice;
