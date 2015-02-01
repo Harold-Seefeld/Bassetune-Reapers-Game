@@ -106,6 +106,16 @@ public class AbilityBase : MonoBehaviour {
 		OnCastBegin ();
 	}
 
+	public void CancelCast(){
+		if (state == AbilityState.Cast){
+			state = AbilityState.Cooldown;
+			timer = cooldownTime;
+			actor.inGameCanvas.abilities [abilityIndex].outline.enabled = false;
+			actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (0.4f, 0.4f, 0.4f);
+		}
+		OnCastCancel ();
+	}
+
 	public void OnEquipBegin(PlayerBase a, int i){
 		actor = a;
 		abilityIndex = i;
@@ -126,4 +136,5 @@ public class AbilityBase : MonoBehaviour {
 	protected virtual void OnCastBegin(){}
 	protected virtual void OnCast(){}
 	protected virtual void OnCastEnd(){}
+	protected virtual void OnCastCancel(){}
 }
