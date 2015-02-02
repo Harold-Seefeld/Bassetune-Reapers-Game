@@ -7,6 +7,15 @@ public class ItemBase : MonoBehaviour {
 		Knight,
 		Boss
 	}
+	public ItemSide itemSide;
+
+	public enum BossItemType {
+		Boss,
+		Miniboss,
+		Trap,
+		Creature
+	}
+	public BossItemType bossItemType;
 
 	public string itemAnimation;
 	public string itemName;

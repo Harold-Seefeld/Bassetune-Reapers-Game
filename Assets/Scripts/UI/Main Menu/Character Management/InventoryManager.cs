@@ -40,36 +40,26 @@ public class InventoryManager : MonoBehaviour {
 		inventoryJSON = new JSONObject(w.text);
 
 		// Clear all text on lists
-		ClearText(equipmentShop.GetComponentsInChildren<Text>());
-		ClearText(equipmentInventory.GetComponentsInChildren<Text>());
-		ClearText(bossShop.GetComponentsInChildren<Text>());
-		ClearText(bossInventory.GetComponentsInChildren<Text>());
-		ClearText(minibossShop.GetComponentsInChildren<Text>());
-		ClearText(minibossInventory.GetComponentsInChildren<Text>());
-		ClearText(trapShop.GetComponentsInChildren<Text>());
-		ClearText(trapInventory.GetComponentsInChildren<Text>());
-		ClearText(creatureShop.GetComponentsInChildren<Text>());
-		ClearText(creatureInventory.GetComponentsInChildren<Text>());
-		ClearText(abilityShop.GetComponentsInChildren<Text>());
-		ClearText(abilityInventory.GetComponentsInChildren<Text>());
-		
-//		// Set all weapon text invisible
-//		for (int i = 0; i < textList.Length; i++)
-//		{
-//			if (textList[l].transform.parent == transform)
-//			{
-//				textList[l].text = "<color=#ffffffff>N/A</color>";
-//			}
-//		}
-//
-//		// Set all ability text invisible
-//		for (int i = 0; i < textList.Length; i++)
-//		{
-//			if (textList[l].transform.parent == transform)
-//			{
-//				textList[l].text = "<color=#ffffffff>N/A</color>";
-//			}
-//		}
+		ClearText(equipmentShop.GetComponentsInChildren<Text>(true));
+		ClearText(equipmentInventory.GetComponentsInChildren<Text>(true));
+		ClearText(bossShop.GetComponentsInChildren<Text>(true));
+		ClearText(bossInventory.GetComponentsInChildren<Text>(true));
+		ClearText(minibossShop.GetComponentsInChildren<Text>(true));
+		ClearText(minibossInventory.GetComponentsInChildren<Text>(true));
+		ClearText(trapShop.GetComponentsInChildren<Text>(true));
+		ClearText(trapInventory.GetComponentsInChildren<Text>(true));
+		ClearText(creatureShop.GetComponentsInChildren<Text>(true));
+		ClearText(creatureInventory.GetComponentsInChildren<Text>(true));
+		ClearText(abilityShop.GetComponentsInChildren<Text>(true));
+		ClearText(abilityInventory.GetComponentsInChildren<Text>(true));
+
+		// Set Shop Text
+		SetShopText(equipmentShop, itemList);
+		SetShopText(abilityShop, abilityList);
+		SetShopText(bossShop, itemList, ItemBase.BossItemType.Boss);
+		SetShopText(minibossShop, itemList, ItemBase.BossItemType.Miniboss);
+		SetShopText(trapShop, itemList, ItemBase.BossItemType.Trap);
+		SetShopText(creatureShop, itemList, ItemBase.BossItemType.Creature);
 
 		//		for (int i = 0; i < inventoryJSON.Count - 1; i++)
 //		{
@@ -126,10 +116,73 @@ public class InventoryManager : MonoBehaviour {
 	{
 		for (int i = 0; i < textToClear.Length; i++)
 		{
-			if (textToClear[i].transform.parent == transform)
+			if (textToClear[i].transform.parent.GetComponent<VerticalLayoutGroup>())
 			{
+				Debug.Log(i);
 				textToClear[i].text = "<color=#ffffffff>N/A</color>";
 			}
 		}
+	}
+
+	void SetShopText(GameObject shopList, GameObject[] items)
+	{
+		Text[] textList = shopList.GetComponentsInChildren<Text>(true);
+		for (int i = 0; i < items.Length; i++)
+		{
+			if (textList[i].transform.parent == shopList.transform && items[i].GetComponent<ItemBase>())
+			{
+				if (items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
+				{
+					textList[i].text = items[i].GetComponent<ItemBase>().itemName;
+				}
+			}
+			else if (textList[i].transform.parent == shopList.transform && items[i].GetComponent<WeaponBase>())
+			{
+				textList[i].text = items[i].GetComponent<WeaponBase>().weaponName;
+			}
+			else if (textList[i].transform.parent == shopList.transform && items[i].GetComponent<AbilityBase>())
+			{
+				textList[i].text = items[i].GetComponent<AbilityBase>().abilityName;
+			}
+		}
+	}
+
+	void SetShopText(GameObject shopList, GameObject[] items, ItemBase.BossItemType itemType)
+	{
+		Text[] textList = shopList.GetComponentsInChildren<Text>(true);
+		int il = 0;
+		for (int i = 0; i < items.Length; i++)
+		{
+			if (textList[i].transform.parent == shopList.transform && items[i].GetComponent<ItemBase>().bossItemType == itemType)
+			{
+				textList[il].text = items[i].GetComponent<ItemBase>().itemName;
+				il++;
+			}
+		}
+	}
+
+	void Start()
+	{
+		// Clear all text on lists
+		ClearText(equipmentShop.GetComponentsInChildren<Text>());
+		ClearText(equipmentInventory.GetComponentsInChildren<Text>());
+		ClearText(bossShop.GetComponentsInChildren<Text>());
+		ClearText(bossInventory.GetComponentsInChildren<Text>());
+		ClearText(minibossShop.GetComponentsInChildren<Text>());
+		ClearText(minibossInventory.GetComponentsInChildren<Text>());
+		ClearText(trapShop.GetComponentsInChildren<Text>());
+		ClearText(trapInventory.GetComponentsInChildren<Text>());
+		ClearText(creatureShop.GetComponentsInChildren<Text>());
+		ClearText(creatureInventory.GetComponentsInChildren<Text>());
+		ClearText(abilityShop.GetComponentsInChildren<Text>());
+		ClearText(abilityInventory.GetComponentsInChildren<Text>());
+		
+		// Set Shop Text
+		SetShopText(equipmentShop, itemList);
+		SetShopText(abilityShop, abilityList);
+		SetShopText(bossShop, itemList, ItemBase.BossItemType.Boss);
+		SetShopText(minibossShop, itemList, ItemBase.BossItemType.Miniboss);
+		SetShopText(trapShop, itemList, ItemBase.BossItemType.Trap);
+		SetShopText(creatureShop, itemList, ItemBase.BossItemType.Creature);
 	}
 }
