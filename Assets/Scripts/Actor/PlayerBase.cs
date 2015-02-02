@@ -15,12 +15,13 @@ public class PlayerBase : MonoBehaviour {
 	public GameObject targetCursor;
 	public InGameCanvas inGameCanvas = null;
 	
-	protected NavMeshAgent agent;
+	public NavMeshAgent agent;
 	
 	protected float mouseDownTimer = 0f;
 	protected bool useDirectMouseControl = false;
-
-	protected int currentAbility;
+	
+	public AbilityBase[] abilities;
+	protected int lastAbility = -1;
 
 	// Used for target reference cache
 	protected Transform castTarget;
@@ -30,7 +31,6 @@ public class PlayerBase : MonoBehaviour {
 	public GameObject debugLabel;
 	protected Text debugLabelText;
 	
-	
 	void Start () {
 		BaseStart ();
 	}
@@ -39,7 +39,7 @@ public class PlayerBase : MonoBehaviour {
 		agent = GetComponent<NavMeshAgent> ();
 		targetCursor = Instantiate (targetCursor, Vector3.zero, targetCursor.transform.rotation) as GameObject;
 		targetCursor.SetActive (false);
-		
+
 		#if UNITY_EDITOR
 		debugLabel = Instantiate(debugLabel) as GameObject;
 		debugLabelText = debugLabel.GetComponent<Text>();
@@ -68,7 +68,8 @@ public class PlayerBase : MonoBehaviour {
 		}
 
 		if (castTarget || smartcast){
-			currentAbility = OnCastHotkey(castTarget, castPosition);
+			var curAbility = OnCastHotkey(castTarget, castPosition);
+			lastAbility = curAbility >= 0 ? curAbility : lastAbility;
 			targetCursor.SetActive(true);
 			targetCursor.transform.position = castTarget ? castTarget.transform.position : castPosition + new Vector3(0, 0.01f);
 		} else {
@@ -131,7 +132,11 @@ public class PlayerBase : MonoBehaviour {
 			mouseDownTimer = 0f;
 			
 			Destroy((GameObject)GameObject.Instantiate(movecursor, castPosition, Quaternion.identity), 0.5f);
-			
+
+			// Cancel current ability cast if any
+			if ((lastAbility >= 0 && lastAbility < abilities.Length) && abilities[lastAbility])
+				abilities[lastAbility].CancelCast();
+
 			#if UNITY_EDITOR
 			debugLabelText.text = "Move To " + castPosition;
 			#endif

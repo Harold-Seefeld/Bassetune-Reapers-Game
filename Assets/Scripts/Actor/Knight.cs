@@ -3,8 +3,6 @@ using System.Collections;
 
 [AddComponentMenu("Actor/Knight")]
 public class Knight : PlayerBase {
-	public AbilityBase[] abilities;
-
 	Animator anim;
 
 	// animation parmeters
@@ -18,7 +16,7 @@ public class Knight : PlayerBase {
 		// initialize references
 		anim = GetComponent<Animator> ();
 		inGameCanvas = GameObject.Find ("Knight Canvas").GetComponent<InGameCanvas> ();
-
+		
 		for (int i = 0; i < abilities.Length; ++i){
 			if (abilities[i]){
 				abilities[i] = Instantiate(abilities[i]) as AbilityBase;

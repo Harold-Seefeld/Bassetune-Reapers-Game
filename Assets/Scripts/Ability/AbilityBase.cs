@@ -20,6 +20,7 @@ public enum AbilityType{
 
 public enum AbilityState{
 	Idle,
+	Prepare,
 	Cast,
 	Cooldown
 }
@@ -65,6 +66,18 @@ public class AbilityBase : MonoBehaviour {
 			actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (1f, 1f, 1f);
 			actor.inGameCanvas.abilities [abilityIndex].timer.text = "";
 			break;
+		case AbilityState.Prepare:
+
+			if (!actor.agent.hasPath){
+				state = AbilityState.Cast;
+				actor.inGameCanvas.abilities [abilityIndex].outline.enabled = true;
+				actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (1f, 1f, 1f);
+				timer = castTime;
+				
+				// Begin Casting
+				OnCastBegin ();
+			}
+			break;
 		case AbilityState.Cast:
 			OnCast();
 			if (timer < 0){
@@ -97,17 +110,17 @@ public class AbilityBase : MonoBehaviour {
 
 		target = _target;
 		targetPos = _targetPos;
-		state = AbilityState.Cast;
-		actor.inGameCanvas.abilities [abilityIndex].outline.enabled = true;
-		actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (1f, 1f, 1f);
-		timer = castTime;
-
-		// Begin Casting
-		OnCastBegin ();
+		actor.agent.SetDestination (target.position);
+		state = AbilityState.Prepare;
 	}
 
 	public void CancelCast(){
-		if (state == AbilityState.Cast){
+		Debug.Log ("Abort Cast");
+		if (state == AbilityState.Idle){
+			return;
+		} else if (state == AbilityState.Prepare){
+			state = AbilityState.Idle;
+		} else if (state == AbilityState.Cast){
 			state = AbilityState.Cooldown;
 			timer = cooldownTime;
 			actor.inGameCanvas.abilities [abilityIndex].outline.enabled = false;
