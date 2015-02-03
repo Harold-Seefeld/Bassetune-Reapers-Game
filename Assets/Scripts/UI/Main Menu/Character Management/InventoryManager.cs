@@ -26,6 +26,8 @@ public class InventoryManager : MonoBehaviour {
 
 	[SerializeField] SessionManager sessionManager;
 
+	private GameObject textObject;
+
 	public void UpdateInventory() 
 	{
 		WWWForm www = new WWWForm();
@@ -118,7 +120,6 @@ public class InventoryManager : MonoBehaviour {
 		{
 			if (textToClear[i].transform.parent.GetComponent<VerticalLayoutGroup>())
 			{
-				Debug.Log(i);
 				textToClear[i].text = "<color=#ffffffff>N/A</color>";
 			}
 		}
@@ -127,38 +128,73 @@ public class InventoryManager : MonoBehaviour {
 	void SetShopText(GameObject shopList, GameObject[] items)
 	{
 		Text[] textList = shopList.GetComponentsInChildren<Text>(true);
-		for (int i = 0; i < items.Length; i++)
+
+		for (int i = 0; i < textList.Length; i++)
 		{
-			if (textList[i].transform.parent == shopList.transform && items[i].GetComponent<ItemBase>())
+			if (textList[i].transform.parent == shopList.transform)
 			{
-				if (items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
-				{
-					textList[i].text = items[i].GetComponent<ItemBase>().itemName;
-				}
-			}
-			else if (textList[i].transform.parent == shopList.transform && items[i].GetComponent<WeaponBase>())
-			{
-				textList[i].text = items[i].GetComponent<WeaponBase>().weaponName;
-			}
-			else if (textList[i].transform.parent == shopList.transform && items[i].GetComponent<AbilityBase>())
-			{
-				textList[i].text = items[i].GetComponent<AbilityBase>().abilityName;
+				textObject = textList[i].gameObject;
+				break;
 			}
 		}
+
+		for (int i = 0; i < items.Length; i++)
+		{
+			if (items[i].GetComponent<ItemBase>() && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
+			{
+				GameObject newObject = (GameObject)Object.Instantiate(textObject);
+				newObject.transform.SetParent(shopList.transform);
+				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
+				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
+				newObject.GetComponent<Text>().text = items[i].GetComponent<ItemBase>().itemName;
+			}
+			else if (items[i].GetComponent<WeaponBase>())
+			{
+				GameObject newObject = (GameObject)Object.Instantiate(textObject);
+				newObject.transform.SetParent(shopList.transform);
+				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
+				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
+				newObject.GetComponent<Text>().text = items[i].GetComponent<WeaponBase>().weaponName;
+			}
+			else if (items[i].GetComponent<AbilityBase>())
+			{
+				GameObject newObject = (GameObject)Object.Instantiate(textObject);
+				newObject.transform.SetParent(shopList.transform);
+				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
+				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
+				newObject.GetComponent<Text>().text = items[i].GetComponent<AbilityBase>().abilityName;
+			}
+		}
+
+		Destroy (textObject);
 	}
 
 	void SetShopText(GameObject shopList, GameObject[] items, ItemBase.BossItemType itemType)
 	{
 		Text[] textList = shopList.GetComponentsInChildren<Text>(true);
-		int il = 0;
-		for (int i = 0; i < items.Length; i++)
+
+		for (int i = 0; i < textList.Length; i++)
 		{
-			if (textList[i].transform.parent == shopList.transform && items[i].GetComponent<ItemBase>().bossItemType == itemType)
+			if (textList[i].transform.parent == shopList.transform)
 			{
-				textList[il].text = items[i].GetComponent<ItemBase>().itemName;
-				il++;
+				textObject = textList[i].gameObject;
+				break;
 			}
 		}
+
+		for (int i = 0; i < items.Length; i++)
+		{
+			if (items[i].GetComponent<ItemBase>().bossItemType == itemType && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss)
+			{
+				GameObject newObject = (GameObject)Object.Instantiate(textObject);
+				newObject.transform.SetParent(shopList.transform);
+				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
+				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
+				newObject.GetComponent<Text>().text = items[i].GetComponent<ItemBase>().itemName;
+			}
+		}
+
+		Destroy (textObject);
 	}
 
 	void Start()
