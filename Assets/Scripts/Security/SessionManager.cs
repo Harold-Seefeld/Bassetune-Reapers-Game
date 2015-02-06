@@ -6,8 +6,8 @@ using System.Collections;
 
 public class SessionManager : MonoBehaviour {
 
-	private string loginSite = "http://ec2-54-152-118-98.compute-1.amazonaws.com/login";
-	private string registerSite = "http://ec2-54-152-118-98.compute-1.amazonaws.com/register";
+	private string loginSite = "ec2-52-0-51-109.compute-1.amazonaws.com/login";
+	private string registerSite = "ec2-52-0-51-109.compute-1.amazonaws.com/register";
 
 	// Reference
 	public Text usernameText;

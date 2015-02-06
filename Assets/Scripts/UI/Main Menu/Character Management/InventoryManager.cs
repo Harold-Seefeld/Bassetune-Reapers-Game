@@ -5,7 +5,7 @@ using System;
 
 public class InventoryManager : MonoBehaviour {
 
-	private string inventorySite = "ec2-54-152-118-98.compute-1.amazonaws.com/inventory";
+	private string inventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/inventory";
 	public JSONObject inventoryJSON;
 
 	public GameObject[] itemList;
@@ -43,26 +43,35 @@ public class InventoryManager : MonoBehaviour {
 		inventoryJSON = new JSONObject(w.text);
 
 		// Clear all text on lists
-		ClearText(equipmentShop.GetComponentsInChildren<Text>(true));
-		ClearText(equipmentInventory.GetComponentsInChildren<Text>(true));
-		ClearText(bossShop.GetComponentsInChildren<Text>(true));
-		ClearText(bossInventory.GetComponentsInChildren<Text>(true));
-		ClearText(minibossShop.GetComponentsInChildren<Text>(true));
-		ClearText(minibossInventory.GetComponentsInChildren<Text>(true));
-		ClearText(trapShop.GetComponentsInChildren<Text>(true));
-		ClearText(trapInventory.GetComponentsInChildren<Text>(true));
-		ClearText(creatureShop.GetComponentsInChildren<Text>(true));
-		ClearText(creatureInventory.GetComponentsInChildren<Text>(true));
-		ClearText(abilityShop.GetComponentsInChildren<Text>(true));
-		ClearText(abilityInventory.GetComponentsInChildren<Text>(true));
-
+		ClearText(equipmentShop.GetComponentsInChildren<Text>());
+		ClearText(equipmentInventory.GetComponentsInChildren<Text>());
+		ClearText(bossShop.GetComponentsInChildren<Text>());
+		ClearText(bossInventory.GetComponentsInChildren<Text>());
+		ClearText(minibossShop.GetComponentsInChildren<Text>());
+		ClearText(minibossInventory.GetComponentsInChildren<Text>());
+		ClearText(trapShop.GetComponentsInChildren<Text>());
+		ClearText(trapInventory.GetComponentsInChildren<Text>());
+		ClearText(creatureShop.GetComponentsInChildren<Text>());
+		ClearText(creatureInventory.GetComponentsInChildren<Text>());
+		ClearText(abilityShop.GetComponentsInChildren<Text>());
+		ClearText(abilityInventory.GetComponentsInChildren<Text>());
+		
 		// Set Shop Text
 		SetShopText(equipmentShop, itemList);
 		SetShopText(abilityShop, abilityList);
+		SetShopText(equipmentShop, weaponList);
 		SetShopText(bossShop, itemList, ItemBase.BossItemType.Boss);
 		SetShopText(minibossShop, itemList, ItemBase.BossItemType.Miniboss);
 		SetShopText(trapShop, itemList, ItemBase.BossItemType.Trap);
 		SetShopText(creatureShop, itemList, ItemBase.BossItemType.Creature);
+		
+		// Set Inventory Text
+		SetInventory(equipmentShop, equipmentInventory, itemList);
+		SetInventory(abilityShop, abilityInventory, abilityList);
+		SetInventory(bossShop, bossInventory, itemList, ItemBase.BossItemType.Boss);
+		SetInventory(minibossShop, minibossInventory, itemList, ItemBase.BossItemType.Miniboss);
+		SetInventory(trapShop, trapInventory, itemList, ItemBase.BossItemType.Trap);
+		SetInventory(creatureShop, creatureInventory, itemList, ItemBase.BossItemType.Creature);
 	}
 
 	void ClearText(Text[] textToClear)
@@ -120,7 +129,8 @@ public class InventoryManager : MonoBehaviour {
 			}
 		}
 
-		Destroy (textObject);
+		if (textObject.GetComponent<Text>().text == "<color=#ffffffff>N/A</color>")
+			Destroy (textObject);
 	}
 
 	void SetShopText(GameObject shopList, GameObject[] items, ItemBase.BossItemType itemType)
@@ -151,7 +161,8 @@ public class InventoryManager : MonoBehaviour {
 			}
 		}
 
-		Destroy (textObject);
+		if (textObject.GetComponent<Text>().text == "<color=#ffffffff>N/A</color>")
+			Destroy (textObject);
 	}
 
 	void SetInventory(GameObject shopList, GameObject inventoryList, GameObject[] items)
@@ -173,36 +184,52 @@ public class InventoryManager : MonoBehaviour {
 		
 		for (int i = 0; i < inventoryJSON.Count; i++)
 		{
-			if (inventoryJSON[i][0] != null && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
+			if (inventoryJSON[i][0] != null && items == itemList && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
+
+				for (int il = 0; il < shopTextList.Length; il++)
+				{
+					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName)
+					{
+						Destroy(shopTextList[il]);
+					}
+				}
 			}
-			else if (inventoryJSON[i][2] != null)
+			else if (inventoryJSON[i][2] != null && items == weaponList)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][2]) - 1].GetComponent<WeaponBase>().weaponName;
+
+				for (int il = 0; il < shopTextList.Length; il++)
+				{
+					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<WeaponBase>().weaponName)
+					{
+						Destroy(shopTextList[il]);
+					}
+				}
 			}
-			else if (inventoryJSON[i][3] != null)
+			else if (inventoryJSON[i][3] != null && items == abilityList)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][3]) - 1].GetComponent<AbilityBase>().abilityName;
-			}
 
-			for (int il = 0; il < shopTextList.Length; il++)
-			{
-				if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName)
+				for (int il = 0; il < shopTextList.Length; il++)
 				{
-					Destroy(shopTextList[il]);
+					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<AbilityBase>().abilityName)
+					{
+						Destroy(shopTextList[il]);
+					}
 				}
 			}
 		}
@@ -210,16 +237,21 @@ public class InventoryManager : MonoBehaviour {
 		RectTransform rectTransform = inventoryList.GetComponent<RectTransform>();
 		if (inventoryList.GetComponentsInChildren<Text>(true).Length > 5)
 		{
-			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, rectTransform.offsetMax.x - (inventoryList.GetComponentsInChildren<Text>(true).Length - 150 * 30));
-			rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, rectTransform.offsetMax.y);
+			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (inventoryList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
+		}
+	
+		rectTransform = shopList.GetComponent<RectTransform>();
+		if (shopList.GetComponentsInChildren<Text>(true).Length > 5)
+		{
+			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (shopList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
 		}
 
-		Destroy (textObject);
+		if (textObject.GetComponent<Text>().text == "<color=#ffffffff>N/A</color>")
+			Destroy (textObject);
 	}
 
 	void SetInventory(GameObject shopList, GameObject inventoryList, GameObject[] items, ItemBase.BossItemType itemType)
 	{
-		// TODO THIS ITEMTYPE THINGY
 		Text[] shopTextList = shopList.GetComponentsInChildren<Text>(true);
 		Text[] inventoryTextList = inventoryList.GetComponentsInChildren<Text>(true);
 		
@@ -237,29 +269,13 @@ public class InventoryManager : MonoBehaviour {
 		
 		for (int i = 0; i < inventoryJSON.Count; i++)
 		{
-			if (inventoryJSON[i][0] != null && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
+			if (inventoryJSON[i][0] != null && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss && items[i].GetComponent<ItemBase>().bossItemType == itemType)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
-			}
-			else if (inventoryJSON[i][2] != null)
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
-				newObject.transform.SetParent(inventoryList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][2]) - 1].GetComponent<WeaponBase>().weaponName;
-			}
-			else if (inventoryJSON[i][3] != null)
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
-				newObject.transform.SetParent(inventoryList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][3]) - 1].GetComponent<AbilityBase>().abilityName;
 			}
 			
 			for (int il = 0; il < shopTextList.Length; il++)
@@ -277,32 +293,8 @@ public class InventoryManager : MonoBehaviour {
 			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, rectTransform.offsetMax.x - (inventoryList.GetComponentsInChildren<Text>(true).Length - 150 * 30));
 			rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, rectTransform.offsetMax.y);
 		}
-		
-		Destroy (textObject);
-	}
 
-	void Update()
-	{
-		// Clear all text on lists
-		ClearText(equipmentShop.GetComponentsInChildren<Text>());
-		ClearText(equipmentInventory.GetComponentsInChildren<Text>());
-		ClearText(bossShop.GetComponentsInChildren<Text>());
-		ClearText(bossInventory.GetComponentsInChildren<Text>());
-		ClearText(minibossShop.GetComponentsInChildren<Text>());
-		ClearText(minibossInventory.GetComponentsInChildren<Text>());
-		ClearText(trapShop.GetComponentsInChildren<Text>());
-		ClearText(trapInventory.GetComponentsInChildren<Text>());
-		ClearText(creatureShop.GetComponentsInChildren<Text>());
-		ClearText(creatureInventory.GetComponentsInChildren<Text>());
-		ClearText(abilityShop.GetComponentsInChildren<Text>());
-		ClearText(abilityInventory.GetComponentsInChildren<Text>());
-		
-		// Set Shop Text
-		SetShopText(equipmentShop, itemList);
-		SetShopText(abilityShop, abilityList);
-		SetShopText(bossShop, itemList, ItemBase.BossItemType.Boss);
-		SetShopText(minibossShop, itemList, ItemBase.BossItemType.Miniboss);
-		SetShopText(trapShop, itemList, ItemBase.BossItemType.Trap);
-		SetShopText(creatureShop, itemList, ItemBase.BossItemType.Creature);
+		if (textObject.GetComponent<Text>().text == "<color=#ffffffff>N/A</color>")
+			Destroy (textObject);
 	}
 }
