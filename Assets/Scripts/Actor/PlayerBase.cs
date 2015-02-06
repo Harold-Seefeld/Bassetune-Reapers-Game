@@ -20,8 +20,13 @@ public class PlayerBase : MonoBehaviour {
 	protected float mouseDownTimer = 0f;
 	protected bool useDirectMouseControl = false;
 
+    //using these vars to set in the options which target system to use
+    public bool useLegacySystem;
+    protected bool settingTargetLegacy;
+
 	// Used for target reference cache
 	protected Transform target;
+    protected Vector3 targetPos;
 
 	// for debugging purposes
 	public GameObject debugLabel;
@@ -53,7 +58,7 @@ public class PlayerBase : MonoBehaviour {
 	
 	protected void BaseUpdate () {
 		bool smartcast = Input.GetButton ("SmartCast");
-		Vector3 targetPos = Vector3.zero;
+        targetPos = Vector3.zero;
 
 		if (smartcast){
 			// Update target and cursor position
@@ -104,6 +109,10 @@ public class PlayerBase : MonoBehaviour {
 				#endif
 			}	
 		}
+        else if (useLegacySystem)
+        {
+            OnCastLegacy();
+        }
 
 		if (target || smartcast){
 			OnCastHotkey(target, targetPos);
@@ -125,13 +134,15 @@ public class PlayerBase : MonoBehaviour {
 
 	// Override this function to provide different keybind setup
 	protected virtual void OnCastHotkey(Transform target, Vector3 position){}
+    protected virtual void OnCastLegacy(){}
+    protected virtual void setTarget(ref Transform target, ref Vector3 position) { }
 	
 	protected bool ScreenToNavPos(Vector3 pos, ref Vector3 position, ref Transform target){
 		Ray r = Camera.main.ScreenPointToRay(pos);
 		RaycastHit hit;
 		if(Physics.Raycast(r, out hit, 100, 1 << 8 | 1 << 9)){	// Terrain and Character layer mask
 			target = null;
-			// Check wheter it's cast to other actor
+			// Check wheter it's cast to another actor
 			if ((hit.transform.tag == "Boss" || 
 			    hit.transform.tag == "Knight" || 
 			    hit.transform.tag == "Creature")){
