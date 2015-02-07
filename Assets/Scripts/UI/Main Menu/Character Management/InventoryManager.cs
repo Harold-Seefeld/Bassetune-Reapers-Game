@@ -42,6 +42,8 @@ public class InventoryManager : MonoBehaviour {
 		yield return w;
 		inventoryJSON = new JSONObject(w.text);
 
+		Debug.Log("Downloaded Inventory Successfully.");
+
 		// Clear all text on lists
 		ClearText(equipmentShop.GetComponentsInChildren<Text>());
 		ClearText(equipmentInventory.GetComponentsInChildren<Text>());
@@ -59,7 +61,6 @@ public class InventoryManager : MonoBehaviour {
 		// Set Shop Text
 		SetShopText(equipmentShop, itemList);
 		SetShopText(abilityShop, abilityList);
-		SetShopText(equipmentShop, weaponList);
 		SetShopText(bossShop, itemList, ItemBase.BossItemType.Boss);
 		SetShopText(minibossShop, itemList, ItemBase.BossItemType.Miniboss);
 		SetShopText(trapShop, itemList, ItemBase.BossItemType.Trap);
@@ -72,6 +73,8 @@ public class InventoryManager : MonoBehaviour {
 		SetInventory(minibossShop, minibossInventory, itemList, ItemBase.BossItemType.Miniboss);
 		SetInventory(trapShop, trapInventory, itemList, ItemBase.BossItemType.Trap);
 		SetInventory(creatureShop, creatureInventory, itemList, ItemBase.BossItemType.Creature);
+
+		Debug.Log ("Filtered Inventory Successfully.");
 	}
 
 	void ClearText(Text[] textToClear)
@@ -100,7 +103,8 @@ public class InventoryManager : MonoBehaviour {
 
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperLeft;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandHeight = false;
-
+		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandWidth = true;
+		
 		for (int i = 0; i < items.Length; i++)
 		{
 			if (items[i].GetComponent<ItemBase>() && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
@@ -129,8 +133,7 @@ public class InventoryManager : MonoBehaviour {
 			}
 		}
 
-		if (textObject.GetComponent<Text>().text == "<color=#ffffffff>N/A</color>")
-			Destroy (textObject);
+		Destroy (textObject);
 	}
 
 	void SetShopText(GameObject shopList, GameObject[] items, ItemBase.BossItemType itemType)
@@ -148,6 +151,7 @@ public class InventoryManager : MonoBehaviour {
 
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperLeft;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandHeight = false;
+		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandWidth = true;
 
 		for (int i = 0; i < items.Length; i++)
 		{
@@ -161,8 +165,7 @@ public class InventoryManager : MonoBehaviour {
 			}
 		}
 
-		if (textObject.GetComponent<Text>().text == "<color=#ffffffff>N/A</color>")
-			Destroy (textObject);
+		Destroy (textObject);
 	}
 
 	void SetInventory(GameObject shopList, GameObject inventoryList, GameObject[] items)
@@ -181,10 +184,11 @@ public class InventoryManager : MonoBehaviour {
 		
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperLeft;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandHeight = false;
+		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandWidth = true;
 		
 		for (int i = 0; i < inventoryJSON.Count; i++)
 		{
-			if (inventoryJSON[i][0] != null && items == itemList && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
+			if (inventoryJSON[i][0].ToString() != "null" && items == itemList && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
@@ -196,11 +200,12 @@ public class InventoryManager : MonoBehaviour {
 				{
 					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName)
 					{
-						Destroy(shopTextList[il]);
+						Destroy(shopTextList[il].gameObject);
+						break;
 					}
 				}
 			}
-			else if (inventoryJSON[i][2] != null && items == weaponList)
+			else if (inventoryJSON[i][2].ToString() != "null" && items == weaponList)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
@@ -210,13 +215,14 @@ public class InventoryManager : MonoBehaviour {
 
 				for (int il = 0; il < shopTextList.Length; il++)
 				{
-					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<WeaponBase>().weaponName)
+					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][2]) - 1].GetComponent<WeaponBase>().weaponName)
 					{
-						Destroy(shopTextList[il]);
+						Destroy(shopTextList[il].gameObject);
+						break;
 					}
 				}
 			}
-			else if (inventoryJSON[i][3] != null && items == abilityList)
+			else if (inventoryJSON[i][3].ToString() != "null" && items == abilityList)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
@@ -226,9 +232,10 @@ public class InventoryManager : MonoBehaviour {
 
 				for (int il = 0; il < shopTextList.Length; il++)
 				{
-					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<AbilityBase>().abilityName)
+					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][3]) - 1].GetComponent<AbilityBase>().abilityName)
 					{
-						Destroy(shopTextList[il]);
+						Destroy(shopTextList[il].gameObject);
+						break;
 					}
 				}
 			}
@@ -246,8 +253,7 @@ public class InventoryManager : MonoBehaviour {
 			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (shopList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
 		}
 
-		if (textObject.GetComponent<Text>().text == "<color=#ffffffff>N/A</color>")
-			Destroy (textObject);
+		Destroy (textObject);
 	}
 
 	void SetInventory(GameObject shopList, GameObject inventoryList, GameObject[] items, ItemBase.BossItemType itemType)
@@ -266,23 +272,26 @@ public class InventoryManager : MonoBehaviour {
 		
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperLeft;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandHeight = false;
+		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandWidth = true;
 		
 		for (int i = 0; i < inventoryJSON.Count; i++)
 		{
-			if (inventoryJSON[i][0] != null && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss && items[i].GetComponent<ItemBase>().bossItemType == itemType)
+			if (inventoryJSON[i][0].ToString() != "null" && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss && items[i].GetComponent<ItemBase>().bossItemType == itemType)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
-			}
-			
-			for (int il = 0; il < shopTextList.Length; il++)
-			{
-				if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName)
+
+				
+				for (int il = 0; il < shopTextList.Length; il++)
 				{
-					Destroy(shopTextList[il]);
+					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName)
+					{
+						Destroy(shopTextList[il].gameObject);
+						break;
+					}
 				}
 			}
 		}
@@ -294,7 +303,6 @@ public class InventoryManager : MonoBehaviour {
 			rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, rectTransform.offsetMax.y);
 		}
 
-		if (textObject.GetComponent<Text>().text == "<color=#ffffffff>N/A</color>")
-			Destroy (textObject);
+		Destroy (textObject);
 	}
 }
