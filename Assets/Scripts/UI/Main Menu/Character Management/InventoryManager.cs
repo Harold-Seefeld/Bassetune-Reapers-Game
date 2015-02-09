@@ -5,7 +5,7 @@ using System;
 
 public class InventoryManager : MonoBehaviour {
 
-	private string inventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/inventory";
+	private string getInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/getinventory";
 	public JSONObject inventoryJSON;
 
 	public GameObject[] itemList;
@@ -33,7 +33,7 @@ public class InventoryManager : MonoBehaviour {
 	{
 		WWWForm www = new WWWForm();
 		www.AddField("uuid", sessionManager.GetSession());
-		WWW w = new WWW (inventorySite, www.data);
+		WWW w = new WWW (getInventorySite, www.data);
 		StartCoroutine(UpdateInventory(w));
 	}
 	
@@ -188,7 +188,7 @@ public class InventoryManager : MonoBehaviour {
 		
 		for (int i = 0; i < inventoryJSON.Count; i++)
 		{
-			if (inventoryJSON[i][0].ToString() != "null" && items == itemList && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
+			if (inventoryJSON[i][0].ToString() != "null" && items == itemList && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
@@ -276,7 +276,7 @@ public class InventoryManager : MonoBehaviour {
 		
 		for (int i = 0; i < inventoryJSON.Count; i++)
 		{
-			if (inventoryJSON[i][0].ToString() != "null" && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss && items[i].GetComponent<ItemBase>().bossItemType == itemType)
+			if (inventoryJSON[i][0].ToString() != "null" && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().bossItemType == itemType)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(textObject);
 				newObject.transform.SetParent(inventoryList.transform);
