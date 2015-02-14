@@ -44,6 +44,9 @@ public class AbilityBase : MonoBehaviour {
 	public string anim;
 	// Prefabs for effects
 	public GameObject effect;
+
+	public string buyPrice = "1000";
+	public string sellPrice = "1000";
 	
 	protected PlayerBase actor = null;
 	protected Transform target = null;

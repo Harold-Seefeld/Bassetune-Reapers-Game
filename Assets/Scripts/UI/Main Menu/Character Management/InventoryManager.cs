@@ -6,6 +6,7 @@ using System;
 public class InventoryManager : MonoBehaviour {
 
 	private string getInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/getinventory";
+	private string setInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/setinventory";
 	public JSONObject inventoryJSON;
 
 	public GameObject[] itemList;
@@ -24,6 +25,10 @@ public class InventoryManager : MonoBehaviour {
 	public GameObject trapInventory;
 	public GameObject creatureShop;
 	public GameObject creatureInventory;
+	public Text notificationText;
+	public Button notificationButton;
+	public RectTransform notificationRect;
+	public RectTransform shopRightClickMenu;
 
 	[SerializeField] SessionManager sessionManager;
 
@@ -114,6 +119,23 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[i].GetComponent<ItemBase>().itemName;
+
+				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
+				foreach(Button newObjectButton in newObjectButtons)
+				{
+					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
+					{
+						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
+						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<ItemBase>().itemBuyPrice;
+					}
+					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
+					{
+						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
+						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<ItemBase>().itemSellPrice;
+					}
+				}
 			}
 			else if (items[i].GetComponent<WeaponBase>())
 			{
@@ -130,6 +152,23 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[i].GetComponent<AbilityBase>().abilityName;
+
+				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
+				foreach(Button newObjectButton in newObjectButtons)
+				{
+					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
+					{
+						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
+						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<AbilityBase>().buyPrice.ToString();
+					}
+					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
+					{
+						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
+						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<AbilityBase>().sellPrice.ToString();
+					}
+				}
 			}
 		}
 
@@ -303,6 +342,80 @@ public class InventoryManager : MonoBehaviour {
 			rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, rectTransform.offsetMax.y);
 		}
 
+		rectTransform = shopList.GetComponent<RectTransform>();
+		if (shopList.GetComponentsInChildren<Text>(true).Length > 5)
+		{
+			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (shopList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
+		}
+
 		Destroy (textObject);
 	}
+
+	void BuyItem(int itemIndex, GameObject[] itemList, int itemAmount, string itemType)
+	{
+		WWWForm www = new WWWForm();
+		www.AddField("uuid", sessionManager.GetSession());
+		www.AddField("itemAmount", itemAmount);
+		www.AddField("commandType", "Buy");
+		www.AddField("itemType", itemType);
+		www.AddField("item", itemIndex);
+		WWW w = new WWW (setInventorySite, www.data);
+		StartCoroutine(BuyItem(w));
+	}
+
+	IEnumerator BuyItem(WWW w)
+	{
+		yield return w;
+
+		if (w.text == "Successfully Purchased.")
+		{
+			notificationRect.transform.gameObject.SetActive(true);
+			notificationRect.SetAsLastSibling();
+			notificationText.text = "Successfully Purchased.";
+			notificationButton.onClick.RemoveAllListeners();
+			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+		}
+		else if (w.text == "Account ID is undefined.")
+		{
+			sessionManager.next.enabled = false;
+			sessionManager.current.enabled = true;
+			sessionManager.notification.text = "You have been logged out. Please log in again.";
+		}
+		else if (w.text == "Not enough gold.")
+		{
+			notificationRect.transform.gameObject.SetActive(true);
+			notificationRect.SetAsLastSibling();
+			notificationText.text = "Not enough gold.";
+			notificationButton.onClick.RemoveAllListeners();
+			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+		}
+		else
+		{
+			notificationRect.transform.gameObject.SetActive(true);
+			notificationRect.SetAsLastSibling();
+			notificationText.text = "An error occurred";
+			notificationButton.onClick.RemoveAllListeners();
+			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+		}
+
+	}
+
+	void SellItem(int itemIndex, GameObject[] itemList, int itemAmount, string itemType)
+	{
+		WWWForm www = new WWWForm();
+		www.AddField("uuid", sessionManager.GetSession());
+		www.AddField("itemAmount", itemAmount);
+		www.AddField("commandType", "Buy");
+		www.AddField("itemType", itemType);
+		www.AddField("item", itemIndex);
+		WWW w = new WWW (setInventorySite, www.data);
+		StartCoroutine(SellItem(w));
+	}
+
+	IEnumerator SellItem(WWW w)
+	{
+		yield return w;
+	}
+
+
 }
