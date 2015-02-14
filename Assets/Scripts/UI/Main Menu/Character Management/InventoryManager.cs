@@ -144,6 +144,23 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[i].GetComponent<WeaponBase>().weaponName;
+
+				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
+				foreach(Button newObjectButton in newObjectButtons)
+				{
+					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
+					{
+						newObjectButton.onClick.RemoveAllListeners();
+						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Weapon");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
+					}
+					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Weapon")
+					{
+						newObjectButton.onClick.RemoveAllListeners();
+						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
+					}
+				}
 			}
 			else if (items[i].GetComponent<AbilityBase>())
 			{
@@ -158,14 +175,14 @@ public class InventoryManager : MonoBehaviour {
 				{
 					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
 					{
-						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Item");});;
+						newObjectButton.onClick.RemoveAllListeners();
+						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Ability");});;
 						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<AbilityBase>().buyPrice.ToString();
 					}
 					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
 					{
-						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Item");});;
+						newObjectButton.onClick.RemoveAllListeners();
+						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Ability");});;
 						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<AbilityBase>().sellPrice.ToString();
 					}
 				}
@@ -201,6 +218,23 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[i].GetComponent<ItemBase>().itemName;
+
+				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
+				foreach(Button newObjectButton in newObjectButtons)
+				{
+					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
+					{
+						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
+						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<ItemBase>().itemBuyPrice;
+					}
+					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
+					{
+						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
+						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<ItemBase>().itemSellPrice;
+					}
+				}
 			}
 		}
 
@@ -405,7 +439,7 @@ public class InventoryManager : MonoBehaviour {
 		WWWForm www = new WWWForm();
 		www.AddField("uuid", sessionManager.GetSession());
 		www.AddField("itemAmount", itemAmount);
-		www.AddField("commandType", "Buy");
+		www.AddField("commandType", "Sell");
 		www.AddField("itemType", itemType);
 		www.AddField("item", itemIndex);
 		WWW w = new WWW (setInventorySite, www.data);
@@ -415,6 +449,45 @@ public class InventoryManager : MonoBehaviour {
 	IEnumerator SellItem(WWW w)
 	{
 		yield return w;
+
+		if (w.text == "Successfully sold.")
+		{
+			notificationRect.transform.gameObject.SetActive(true);
+			notificationRect.SetAsLastSibling();
+			notificationText.text = "Successfully Sold.";
+			notificationButton.onClick.RemoveAllListeners();
+			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+		}
+		else if (w.text == "Account ID is undefined.")
+		{
+			sessionManager.next.enabled = false;
+			sessionManager.current.enabled = true;
+			sessionManager.notification.text = "You have been logged out. Please log in again.";
+		}
+		else if (w.text == "Couldn't find item." || w.text == "Could not retrieve any item results.")
+		{
+			notificationRect.transform.gameObject.SetActive(true);
+			notificationRect.SetAsLastSibling();
+			notificationText.text = "Item doesn't exist.";
+			notificationButton.onClick.RemoveAllListeners();
+			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+		}
+		else if (w.text == "Sell amount too big.")
+		{
+			notificationRect.transform.gameObject.SetActive(true);
+			notificationRect.SetAsLastSibling();
+			notificationText.text = "You don't have enough items.";
+			notificationButton.onClick.RemoveAllListeners();
+			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+		}
+		else
+		{
+			notificationRect.transform.gameObject.SetActive(true);
+			notificationRect.SetAsLastSibling();
+			notificationText.text = "An error occurred";
+			notificationButton.onClick.RemoveAllListeners();
+			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+		}
 	}
 
 
