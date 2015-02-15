@@ -106,6 +106,14 @@ public class InventoryManager : MonoBehaviour {
 			}
 		}
 
+		for (int i = 0; i < textList.Length; i++)
+		{
+			if (textObject.GetComponent<Text>() != textList[i] && textList[i].transform.parent != textObject.transform && textList[i].transform.parent.parent != textObject.transform)
+			{
+				Destroy(textList[i].gameObject); 	
+			}
+		}
+
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperLeft;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandHeight = false;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandWidth = true;
@@ -123,17 +131,18 @@ public class InventoryManager : MonoBehaviour {
 				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
 				foreach(Button newObjectButton in newObjectButtons)
 				{
+					int itemIndex = i;
 					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
 					{
 						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Item");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<ItemBase>().itemBuyPrice;
+						newObjectButton.onClick.AddListener(() => {BuyItem(itemIndex, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemBuyPrice;
 					}
 					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
 					{
 						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Item");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<ItemBase>().itemSellPrice;
+						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemSellPrice;
 					}
 				}
 			}
@@ -148,17 +157,18 @@ public class InventoryManager : MonoBehaviour {
 				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
 				foreach(Button newObjectButton in newObjectButtons)
 				{
+					int itemIndex = i;
 					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
 					{
 						newObjectButton.onClick.RemoveAllListeners();
-						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Weapon");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
+						newObjectButton.onClick.AddListener(() => {BuyItem(itemIndex, itemList, 1, "Weapon");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
 					}
 					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Weapon")
 					{
 						newObjectButton.onClick.RemoveAllListeners();
-						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Item");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
+						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
 					}
 				}
 			}
@@ -173,17 +183,18 @@ public class InventoryManager : MonoBehaviour {
 				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
 				foreach(Button newObjectButton in newObjectButtons)
 				{
+					int itemIndex = i;
 					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
 					{
 						newObjectButton.onClick.RemoveAllListeners();
-						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Ability");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<AbilityBase>().buyPrice.ToString();
+						newObjectButton.onClick.AddListener(() => {BuyItem(itemIndex, itemList, 1, "Ability");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().buyPrice.ToString();
 					}
 					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
 					{
 						newObjectButton.onClick.RemoveAllListeners();
-						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Ability");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<AbilityBase>().sellPrice.ToString();
+						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Ability");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
 					}
 				}
 			}
@@ -205,6 +216,15 @@ public class InventoryManager : MonoBehaviour {
 			}
 		}
 
+		for (int i = 0; i < textList.Length; i++)
+		{
+
+			if (textObject.GetComponent<Text>() != textList[i] && textList[i].transform.parent != textObject.transform && textList[i].transform.parent.parent != textObject.transform)
+			{
+				Destroy(textList[i].gameObject);
+			}
+		}
+
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperLeft;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandHeight = false;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandWidth = true;
@@ -222,17 +242,18 @@ public class InventoryManager : MonoBehaviour {
 				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
 				foreach(Button newObjectButton in newObjectButtons)
 				{
+					int itemIndex = i;
 					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Buy")
 					{
 						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButton.onClick.AddListener(() => {BuyItem(i, itemList, 1, "Item");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<ItemBase>().itemBuyPrice;
+						newObjectButton.onClick.AddListener(() => {BuyItem(itemIndex, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemBuyPrice;
 					}
 					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
 					{
 						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButton.onClick.AddListener(() => {SellItem(i, itemList, 1, "Item");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = items[i].GetComponent<ItemBase>().itemSellPrice;
+						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Item");});;
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemSellPrice;
 					}
 				}
 			}
@@ -254,7 +275,7 @@ public class InventoryManager : MonoBehaviour {
 				break;
 			}
 		}
-		
+
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childAlignment = TextAnchor.UpperLeft;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandHeight = false;
 		textObject.transform.parent.GetComponent<VerticalLayoutGroup>().childForceExpandWidth = true;
@@ -408,6 +429,7 @@ public class InventoryManager : MonoBehaviour {
 			notificationText.text = "Successfully Purchased.";
 			notificationButton.onClick.RemoveAllListeners();
 			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+			UpdateInventory();
 		}
 		else if (w.text == "Account ID is undefined.")
 		{
@@ -430,6 +452,7 @@ public class InventoryManager : MonoBehaviour {
 			notificationText.text = "An error occurred";
 			notificationButton.onClick.RemoveAllListeners();
 			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
+			Debug.LogWarning(w.text);
 		}
 
 	}
