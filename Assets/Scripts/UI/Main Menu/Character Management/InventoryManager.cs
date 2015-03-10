@@ -138,11 +138,6 @@ public class InventoryManager : MonoBehaviour {
 						newObjectButton.onClick.AddListener(() => {BuyItem(itemIndex, itemList, 1, "Item");});;
 						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemBuyPrice;
 					}
-					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
-					{
-						newObjectButton.onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemSellPrice;
-					}
 				}
 			}
 			else if (items[i].GetComponent<WeaponBase>())
@@ -161,11 +156,6 @@ public class InventoryManager : MonoBehaviour {
 					{
 						newObjectButton.onClick.RemoveAllListeners();
 						newObjectButton.onClick.AddListener(() => {BuyItem(itemIndex, itemList, 1, "Weapon");});;
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
-					}
-					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Weapon")
-					{
-						newObjectButton.onClick.RemoveAllListeners();
 						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
 					}
 				}
@@ -187,11 +177,6 @@ public class InventoryManager : MonoBehaviour {
 						newObjectButton.onClick.RemoveAllListeners();
 						newObjectButton.onClick.AddListener(() => {BuyItem(itemIndex, itemList, 1, "Ability");});;
 						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().buyPrice.ToString();
-					}
-					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
-					{
-						newObjectButton.onClick.RemoveAllListeners();
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
 					}
 				}
 			}
@@ -294,6 +279,18 @@ public class InventoryManager : MonoBehaviour {
 						break;
 					}
 				}
+				
+			    Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
+				foreach(Button newObjectButton in newObjectButtons)
+				{
+					int itemIndex = i;
+					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
+					{
+						newObjectButton.onClick.RemoveAllListeners();
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
+						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Item");});;
+					}
+				}
 			}
 			else if (inventoryJSON[i][2].ToString() != "null" && items == weaponList)
 			{
@@ -311,6 +308,18 @@ public class InventoryManager : MonoBehaviour {
 						break;
 					}
 				}
+				
+				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
+				foreach(Button newObjectButton in newObjectButtons)
+				{
+					int itemIndex = i;
+					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
+					{
+						newObjectButton.onClick.RemoveAllListeners();
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
+						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Weapon");});;
+					}
+				}
 			}
 			else if (inventoryJSON[i][3].ToString() != "null" && items == abilityList)
 			{
@@ -326,6 +335,18 @@ public class InventoryManager : MonoBehaviour {
 					{
 						Destroy(shopTextList[il].gameObject);
 						break;
+					}
+				}
+				
+				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
+				foreach(Button newObjectButton in newObjectButtons)
+				{
+					int itemIndex = i;
+					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
+					{
+						newObjectButton.onClick.RemoveAllListeners();
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
+						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Ability");});;
 					}
 				}
 			}
@@ -381,6 +402,18 @@ public class InventoryManager : MonoBehaviour {
 					{
 						Destroy(shopTextList[il].gameObject);
 						break;
+					}
+				}
+				
+				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
+				foreach(Button newObjectButton in newObjectButtons)
+				{
+					int itemIndex = i;
+					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
+					{
+						newObjectButton.onClick.RemoveAllListeners();
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
+						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Item");});;
 					}
 				}
 			}
