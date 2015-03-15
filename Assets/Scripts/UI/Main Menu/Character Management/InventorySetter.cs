@@ -23,7 +23,7 @@ public class InventorySetter : MonoBehaviour {
 					if (inventoryManager.itemList[i].GetComponent<ItemBase>().itemName == itemBase.itemName)
 					{
 						JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
-						jsonObject.AddField(i.ToString(), arr);
+						jsonObject.AddField((transform.parent.GetSiblingIndex() * 3 + transform.GetSiblingIndex()).ToString(), arr);
 						
 						arr.Add((x + 1).ToString());
 						arr.Add("item");
@@ -38,7 +38,7 @@ public class InventorySetter : MonoBehaviour {
 					if (inventoryManager.itemList[i].GetComponent<WeaponBase>().weaponName == weaponBase.weaponName)
 					{
 						JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
-						jsonObject.AddField(i.ToString(), arr);
+						jsonObject.AddField((transform.parent.GetSiblingIndex() * 3 + transform.GetSiblingIndex() + 1).ToString(), arr);
 						
 						arr.Add((x + 1).ToString());
 						arr.Add("weapon");
@@ -47,7 +47,7 @@ public class InventorySetter : MonoBehaviour {
 			}
 			else
 			{
-				jsonObject.AddField((i + 1).ToString(), "null");
+				jsonObject.AddField((transform.parent.GetSiblingIndex() * 3 + transform.GetSiblingIndex() + 1).ToString(), "null");
 			}
 		}
 		Debug.Log(jsonObject.Print());

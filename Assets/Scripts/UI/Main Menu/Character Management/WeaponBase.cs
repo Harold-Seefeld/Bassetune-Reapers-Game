@@ -32,6 +32,7 @@ public class WeaponBase : MonoBehaviour {
 	}
 	public WeaponType weaponType;
 
+	public Sprite weaponIcon;
 	public string weaponName;
 	public string weaponDescription;
 	public string weaponBuyPrice;
