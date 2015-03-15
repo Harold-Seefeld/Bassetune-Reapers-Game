@@ -6,8 +6,8 @@ using System.Collections;
 
 public class SessionManager : MonoBehaviour {
 
-	private string loginSite = "ec2-52-0-51-109.compute-1.amazonaws.com/login";
-	private string registerSite = "ec2-52-0-51-109.compute-1.amazonaws.com/register";
+	[SerializeField] string loginSite = "ec2-52-0-51-109.compute-1.amazonaws.com/login";
+	[SerializeField] string registerSite = "ec2-52-0-51-109.compute-1.amazonaws.com/register";
 
 	// Reference
 	public Text usernameText;
@@ -155,7 +155,8 @@ public class SessionManager : MonoBehaviour {
 		}
 
 		if (bDayDText.text == "" || bDayMText.text == "" || bDayYText.text == "" || Convert.ToInt16(bDayYText.text) < 1920 ||
-		    bDayDText.text.Length != 2 || bDayMText.text.Length != 2 || bDayYText.text.Length != 4)
+		    bDayDText.text.Length != 2 || bDayMText.text.Length != 2 || bDayYText.text.Length != 4 || bDayDText.text.Contains("-") ||
+		    bDayYText.text.Contains("-") || bDayMText.text.Contains("-") || Convert.ToInt16(bDayMText.text) > 12 || Convert.ToInt16(bDayDText.text) > 31)
 		{
 			notification.text = "Please specify a valid birthdate.";
 			return;

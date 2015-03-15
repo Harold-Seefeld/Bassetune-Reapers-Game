@@ -5,8 +5,8 @@ using System;
 
 public class InventoryManager : MonoBehaviour {
 
-	private string getInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/getinventory";
-	private string setInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/setinventory";
+	[SerializeField] string getInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/getinventory";
+	[SerializeField] string setInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/setinventory";
 	public JSONObject inventoryJSON;
 
 	public GameObject[] itemList;
@@ -28,9 +28,8 @@ public class InventoryManager : MonoBehaviour {
 	public Text notificationText;
 	public Button notificationButton;
 	public RectTransform notificationRect;
-	public RectTransform shopRightClickMenu;
 
-	[SerializeField] SessionManager sessionManager;
+	public SessionManager sessionManager;
 
 	private GameObject textObject;
 
@@ -231,11 +230,6 @@ public class InventoryManager : MonoBehaviour {
 						newObjectButton.onClick.AddListener(() => {BuyItem(itemIndex, itemList, 1, "Item");});;
 						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemBuyPrice;
 					}
-					else if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
-					{
-						newObjectButton.onClick.RemoveAllListeners();
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemSellPrice;
-					}
 				}
 			}
 		}
@@ -270,15 +264,6 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
-
-				for (int il = 0; il < shopTextList.Length; il++)
-				{
-					if (shopTextList[il].text == items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName)
-					{
-						Destroy(shopTextList[il].gameObject);
-						break;
-					}
-				}
 				
 			    Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
 				foreach(Button newObjectButton in newObjectButtons)
