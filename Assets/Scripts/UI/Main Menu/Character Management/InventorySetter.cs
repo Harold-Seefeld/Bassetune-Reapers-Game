@@ -35,7 +35,7 @@ public class InventorySetter : MonoBehaviour {
 				WeaponBase weaponBase = inventoryIcons[i].GetComponent<WeaponBase>();
 				for (int x = 0; i < inventoryManager.itemList.Length; i++)
 				{
-					if (inventoryManager.itemList[i].GetComponent<WeaponBase>().weaponName == weaponBase.weaponName)
+					if (inventoryManager.weaponList[i].GetComponent<WeaponBase>().weaponName == weaponBase.weaponName)
 					{
 						JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
 						jsonObject.AddField((transform.parent.GetSiblingIndex() * 3 + transform.GetSiblingIndex() + 1).ToString(), arr);
