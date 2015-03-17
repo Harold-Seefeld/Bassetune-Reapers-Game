@@ -264,6 +264,8 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
+				ItemBase itemBase = newObject.AddComponent<ItemBase>();
+				CopyItemBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>(), itemBase);
 				
 			    Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
 				foreach(Button newObjectButton in newObjectButtons)
@@ -272,7 +274,7 @@ public class InventoryManager : MonoBehaviour {
 					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
 					{
 						newObjectButton.onClick.RemoveAllListeners();
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemSellPrice.ToString();
 						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Item");});;
 					}
 				}
@@ -284,6 +286,8 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][2]) - 1].GetComponent<WeaponBase>().weaponName;
+				WeaponBase weaponBase = newObject.AddComponent<WeaponBase>();
+				CopyWeaponBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<WeaponBase>(), weaponBase);
 
 				for (int il = 0; il < shopTextList.Length; il++)
 				{
@@ -301,7 +305,7 @@ public class InventoryManager : MonoBehaviour {
 					if (newObjectButton.GetComponentsInChildren<Text>(true)[0].text == "Sell")
 					{
 						newObjectButton.onClick.RemoveAllListeners();
-						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
+						newObjectButton.GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponSellPrice.ToString();
 						newObjectButton.onClick.AddListener(() => {SellItem(itemIndex, itemList, 1, "Weapon");});;
 					}
 				}
@@ -313,6 +317,8 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][3]) - 1].GetComponent<AbilityBase>().abilityName;
+				AbilityBase abilityBase = newObject.AddComponent<AbilityBase>();
+				CopyAbilityBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<AbilityBase>(), abilityBase);
 
 				for (int il = 0; il < shopTextList.Length; il++)
 				{
@@ -379,6 +385,8 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
+				ItemBase itemBase = newObject.AddComponent<ItemBase>();
+				CopyItemBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>(), itemBase);
 
 				
 				for (int il = 0; il < shopTextList.Length; il++)
@@ -525,6 +533,36 @@ public class InventoryManager : MonoBehaviour {
 			notificationButton.onClick.RemoveAllListeners();
 			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
 		}
+	}
+
+	public void CopyItemBase(ItemBase oldBase, ItemBase newBase)
+	{
+		newBase.itemIcon = oldBase.itemIcon;
+		newBase.itemName = oldBase.itemName;
+		newBase.itemSide = oldBase.itemSide;
+		newBase.itemDescription = oldBase.itemDescription;
+		newBase.itemSellPrice = oldBase.itemSellPrice;
+		newBase.itemBuyPrice = oldBase.itemBuyPrice;
+		newBase.itemAnimation = oldBase.itemAnimation;
+	}
+
+	public void CopyWeaponBase(WeaponBase oldBase, WeaponBase newBase)
+	{
+		newBase.weaponIcon = oldBase.weaponIcon;
+		newBase.weaponName = oldBase.weaponName;
+		newBase.weaponDescription = oldBase.weaponDescription;
+		newBase.weaponSellPrice = oldBase.weaponSellPrice;
+		newBase.weaponBuyPrice = oldBase.weaponBuyPrice;
+	}
+
+	public void CopyAbilityBase(AbilityBase oldBase, AbilityBase newBase)
+	{
+		newBase.icon = oldBase.icon;
+		newBase.abilityName = oldBase.abilityName;
+		newBase.buyPrice = oldBase.buyPrice;
+		newBase.sellPrice = oldBase.sellPrice;
+		newBase.description = oldBase.description;
+		newBase.abilityType = oldBase.abilityType;
 	}
 
 

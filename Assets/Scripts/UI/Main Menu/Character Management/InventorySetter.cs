@@ -94,5 +94,7 @@ public class InventorySetter : MonoBehaviour {
 				Destroy(inventoryIcons[i].GetComponent<AbilityBase>());
 			}
 		}
+
+		inventoryManager.UpdateInventory();
 	}
 }
