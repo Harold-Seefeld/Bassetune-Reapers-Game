@@ -49,6 +49,22 @@ public class InventoryManager : MonoBehaviour {
 		inventoryJSON = new JSONObject(w.text);
 
 		Debug.Log("Downloaded Inventory Successfully.");
+
+		// Clear all existing texts
+		ClearText(abilityShop.GetComponentsInChildren<Text>());
+		ClearText(weaponShop.GetComponentsInChildren<Text>());
+		ClearText(creatureShop.GetComponentsInChildren<Text>());
+		ClearText(equipmentShop.GetComponentsInChildren<Text>());
+		ClearText(minibossShop.GetComponentsInChildren<Text>());
+		ClearText(bossShop.GetComponentsInChildren<Text>());
+		ClearText(trapShop.GetComponentsInChildren<Text>());
+		ClearText(abilityInventory.GetComponentsInChildren<Text>());
+		ClearText(weaponInventory.GetComponentsInChildren<Text>());
+		ClearText(creatureInventory.GetComponentsInChildren<Text>());
+		ClearText(equipmentInventory.GetComponentsInChildren<Text>());
+		ClearText(minibossInventory.GetComponentsInChildren<Text>());
+		ClearText(bossInventory.GetComponentsInChildren<Text>());
+		ClearText(trapInventory.GetComponentsInChildren<Text>());
 		
 		// Set Shop Text
 		SetShopText(equipmentShop, itemList);
@@ -69,6 +85,14 @@ public class InventoryManager : MonoBehaviour {
 		SetInventory(creatureShop, creatureInventory, itemList, ItemBase.BossItemType.Creature);
 
 		Debug.Log ("Filtered Inventory Successfully.");
+	}
+
+	void ClearText(Text[] textsToClear)
+	{
+		for (int i = 0; i < textsToClear.Length; i++)
+		{
+			Destroy(textsToClear[i].gameObject);
+		}
 	}
 
 	void SetShopText(GameObject shopList, GameObject[] items)
@@ -117,7 +141,6 @@ public class InventoryManager : MonoBehaviour {
 			}
 			else if (items[i].GetComponent<AbilityBase>())
 			{
-				Debug.Log("Found one ability");
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
 				newObject.transform.SetParent(shopList.transform);
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
