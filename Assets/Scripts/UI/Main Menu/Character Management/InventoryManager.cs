@@ -17,6 +17,8 @@ public class InventoryManager : MonoBehaviour {
 	public GameObject equipmentInventory;
 	public GameObject abilityShop;
 	public GameObject abilityInventory;
+	public GameObject weaponShop;
+	public GameObject weaponInventory;
 	public GameObject bossShop;
 	public GameObject bossInventory;
 	public GameObject minibossShop;
@@ -51,6 +53,7 @@ public class InventoryManager : MonoBehaviour {
 		// Set Shop Text
 		SetShopText(equipmentShop, itemList);
 		SetShopText(abilityShop, abilityList);
+		SetShopText(weaponShop, weaponList);
 		SetShopText(bossShop, itemList, ItemBase.BossItemType.Boss);
 		SetShopText(minibossShop, itemList, ItemBase.BossItemType.Miniboss);
 		SetShopText(trapShop, itemList, ItemBase.BossItemType.Trap);
@@ -59,6 +62,7 @@ public class InventoryManager : MonoBehaviour {
 		// Set Inventory Text
 		SetInventory(equipmentShop, equipmentInventory, itemList);
 		SetInventory(abilityShop, abilityInventory, abilityList);
+		SetInventory(weaponShop, weaponInventory, weaponList);
 		SetInventory(bossShop, bossInventory, itemList, ItemBase.BossItemType.Boss);
 		SetInventory(minibossShop, minibossInventory, itemList, ItemBase.BossItemType.Miniboss);
 		SetInventory(trapShop, trapInventory, itemList, ItemBase.BossItemType.Trap);
@@ -113,6 +117,7 @@ public class InventoryManager : MonoBehaviour {
 			}
 			else if (items[i].GetComponent<AbilityBase>())
 			{
+				Debug.Log("Found one ability");
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
 				newObject.transform.SetParent(shopList.transform);
 				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
