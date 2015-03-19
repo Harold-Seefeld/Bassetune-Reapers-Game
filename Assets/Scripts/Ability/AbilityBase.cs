@@ -31,6 +31,7 @@ public class AbilityBase : MonoBehaviour {
 	public string abilityName;
 	public AbilityType abilityType;
 	public string description;
+	public bool onMainMenu = false;
 
 	// Required weapons, use bitwise format
 	public int requiredWeapons;
@@ -57,7 +58,8 @@ public class AbilityBase : MonoBehaviour {
 	float timer = 0f;
 	
 	void Update(){
-		BaseUpdate ();
+		if (!onMainMenu)
+			BaseUpdate ();
 	}
 	
 	protected void BaseUpdate(){
