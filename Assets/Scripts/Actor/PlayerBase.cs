@@ -15,7 +15,7 @@ public class PlayerBase : MonoBehaviour {
 	public GameObject targetCursor;
 	public InGameCanvas inGameCanvas = null;
 	
-	protected NavMeshAgent agent;
+	public NavMeshAgent agent;
 	
 	protected float mouseDownTimer = 0f;
 	protected bool useDirectMouseControl = false;
