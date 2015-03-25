@@ -15,12 +15,12 @@ public class InventorySetter : MonoBehaviour {
 
 		for (int i = 0; i < inventoryIcons.Length; i++)
 		{
-			if (inventoryIcons[i].GetComponent<ItemBase>())
+			if (inventoryIcons[i].GetComponentsInChildren<ItemBase>(true).Length > 0)
 			{
-				ItemBase itemBase = inventoryIcons[i].GetComponent<ItemBase>();
+				ItemBase[] itemBase = inventoryIcons[i].GetComponentsInChildren<ItemBase>(true);
 				for (int x = 0; i < inventoryManager.itemList.Length; i++)
 				{
-					if (inventoryManager.itemList[i].GetComponent<ItemBase>().itemName == itemBase.itemName)
+					if (inventoryManager.itemList[i].GetComponent<ItemBase>().itemName == itemBase[0].itemName)
 					{
 						JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
 						jsonObject.AddField((inventoryIcons[i].transform.parent.GetSiblingIndex() * 3 + inventoryIcons[i].transform.GetSiblingIndex()).ToString(), arr);
@@ -30,12 +30,12 @@ public class InventorySetter : MonoBehaviour {
 					}
 				}
 			}
-			else if (inventoryIcons[i].GetComponent<WeaponBase>())
+			else if (inventoryIcons[i].GetComponentsInChildren<WeaponBase>(true).Length > 0)
 			{
-				WeaponBase weaponBase = inventoryIcons[i].GetComponent<WeaponBase>();
+				WeaponBase[] weaponBase = inventoryIcons[i].GetComponentsInChildren<WeaponBase>(true);
 				for (int x = 0; i < inventoryManager.itemList.Length; i++)
 				{
-					if (inventoryManager.weaponList[i].GetComponent<WeaponBase>().weaponName == weaponBase.weaponName)
+					if (inventoryManager.weaponList[i].GetComponentsInChildren<WeaponBase>()[0].weaponName == weaponBase[0].weaponName)
 					{
 						JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
 						jsonObject.AddField((inventoryIcons[i].transform.parent.GetSiblingIndex() * 3 + inventoryIcons[i].transform.GetSiblingIndex() + 1).ToString(), arr);

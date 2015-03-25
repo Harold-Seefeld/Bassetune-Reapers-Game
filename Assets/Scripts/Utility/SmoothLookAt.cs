@@ -11,8 +11,8 @@ public class SmoothLookAt : MonoBehaviour {
 	public bool smooth = true;
 
 	void Start () {
-		if (rigidbody)
-			rigidbody.freezeRotation = true;
+		if (GetComponent<Rigidbody>())
+			GetComponent<Rigidbody>().freezeRotation = true;
 	}
 	
 	void LateUpdate () {
