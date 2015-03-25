@@ -1,0 +1,4 @@
+language: csharp
+solution: BessetuneReapers.sln
+notifications:
+  slack: bassetune:PuJXSSUKbgTPVEtyLKUjbOEk
