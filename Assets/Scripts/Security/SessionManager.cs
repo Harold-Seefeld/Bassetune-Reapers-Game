@@ -6,8 +6,8 @@ using System.Collections;
 
 public class SessionManager : MonoBehaviour {
 
-	private string loginSite = "http://ec2-54-173-162-102.compute-1.amazonaws.com/login";
-	private string registerSite = "http://ec2-54-173-162-102.compute-1.amazonaws.com/register";
+	[SerializeField] string loginSite = "ec2-52-0-51-109.compute-1.amazonaws.com/login";
+	[SerializeField] string registerSite = "ec2-52-0-51-109.compute-1.amazonaws.com/register";
 
 	// Reference
 	public Text usernameText;
@@ -25,6 +25,8 @@ public class SessionManager : MonoBehaviour {
 	
 	public Canvas current;
 	public Canvas next;
+
+	public InventoryManager inventoryManager;
 
 	// About Session : 0 means not in session, positive = auth success, negative failed to auth
 	private string SessionId = "0";
@@ -101,7 +103,6 @@ public class SessionManager : MonoBehaviour {
 	
 	void DoLogin(string User, string Pass) 
 	{
-
 		WWWForm www = new WWWForm();
 		www.AddField("username",User);
 		www.AddField("password",Pass);
@@ -125,6 +126,7 @@ public class SessionManager : MonoBehaviour {
 		{
 			notification.text = "Successful Login.";
 			SessionId = w.text;
+			inventoryManager.UpdateInventory();
 			yield return new WaitForSeconds (1);
 			current.enabled = false;
 			next.enabled = true;
@@ -153,7 +155,8 @@ public class SessionManager : MonoBehaviour {
 		}
 
 		if (bDayDText.text == "" || bDayMText.text == "" || bDayYText.text == "" || Convert.ToInt16(bDayYText.text) < 1920 ||
-		    bDayDText.text.Length != 2 || bDayMText.text.Length != 2 || bDayYText.text.Length != 4)
+		    bDayDText.text.Length != 2 || bDayMText.text.Length != 2 || bDayYText.text.Length != 4 || bDayDText.text.Contains("-") ||
+		    bDayYText.text.Contains("-") || bDayMText.text.Contains("-") || Convert.ToInt16(bDayMText.text) > 12 || Convert.ToInt16(bDayDText.text) > 31)
 		{
 			notification.text = "Please specify a valid birthdate.";
 			return;

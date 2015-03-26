@@ -32,6 +32,7 @@ public class AbilityBase : MonoBehaviour {
 	public string abilityName;
 	public AbilityType abilityType;
 	public string description;
+	public bool onMainMenu = false;
 
 	// Required weapons, use bitwise format
 	public int requiredWeapons;
@@ -45,6 +46,9 @@ public class AbilityBase : MonoBehaviour {
 	public string anim;
 	// Prefabs for effects
 	public GameObject effect;
+
+	public string buyPrice = "1000";
+	public string sellPrice = "1000";
 	
 	protected PlayerBase actor = null;
 	protected Transform target = null;
@@ -55,7 +59,8 @@ public class AbilityBase : MonoBehaviour {
 	float timer = 0f;
 	
 	void Update(){
-		BaseUpdate ();
+		if (!onMainMenu)
+			BaseUpdate ();
 	}
 	
 	protected void BaseUpdate(){
