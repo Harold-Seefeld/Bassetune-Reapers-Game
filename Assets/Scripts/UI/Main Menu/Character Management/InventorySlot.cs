@@ -19,7 +19,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
 		{
 			item.transform.SetParent(transform);
 			gameObject.GetComponent<Image>().sprite = item.GetComponent<WeaponBase>().weaponIcon;
-			item.SetActive(true);
+			item.SetActive(false);
 		}
 	}
 
