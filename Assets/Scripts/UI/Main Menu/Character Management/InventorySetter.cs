@@ -50,7 +50,6 @@ public class InventorySetter : MonoBehaviour {
 				jsonObject.AddField((inventoryIcons[i].transform.parent.GetSiblingIndex() * 3 + inventoryIcons[i].transform.GetSiblingIndex() + 1).ToString(), "null");
 			}
 		}
-		Debug.Log(jsonObject.Print());
 
 		WWWForm www = new WWWForm();
 		www.AddField("uuid", inventoryManager.sessionManager.GetSession());
