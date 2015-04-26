@@ -22,17 +22,24 @@ public class Room : MonoBehaviour
     /// </summary>
     public void Generate()
     {
-        var roomBase = ((MinSize + 1) / 2);
-        var roomRadix = ((MaxSize - MinSize) / 2) + 1;
-        Size.x = Random.Range(0, roomRadix) + roomBase;
-        Size.z = Random.Range(0, roomRadix) + roomBase;
-        var i = dungeonPrefab.size.x / 2;
-        var j = dungeonPrefab.size.z / 2;
-        StartPoints.x = Random.Range(0, i - Size.x);
-        StartPoints.z = Random.Range(0, j - Size.z);
-
+        CreateRoomBoundaries();
         CreateCells();
     }
+
+    private void CreateRoomBoundaries()
+    {
+        var roomBase = ((MinSize + 1) / 2);
+        var roomRadix = ((MaxSize - MinSize) / 2) + 1;
+        
+        var i = dungeonPrefab.size.x / 2;
+        Size.x = Random.Range(0, roomRadix) + roomBase;
+        StartPoints.x = Random.Range(0, i - Size.x);
+        
+        var j = dungeonPrefab.size.z / 2;
+        Size.z = Random.Range(0, roomRadix) + roomBase;
+        StartPoints.z = Random.Range(0, j - Size.z);
+    }
+
     private void CreateCells()
     {
         cells = new MazeCell[Size.x,Size.z];
