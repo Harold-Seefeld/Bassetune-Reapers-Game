@@ -6,7 +6,8 @@ using System.Collections.Generic;
 /// <summary>
 /// Class handles the DungeonMap and its Contents
 /// </summary>
-public class DungeonMap : MonoBehaviour {
+public class DungeonMap : MonoBehaviour
+{
 
     public Room roomPrefab;
     public float generationStepDelay;
@@ -33,10 +34,36 @@ public class DungeonMap : MonoBehaviour {
             var room = Instantiate(roomPrefab) as Room;
             room.Generate();
             room.transform.parent = transform;
-            room.name = "RoomId: " + (i + 1);
-            rooms.Add(room);
+            room.name = "RoomId: " + (rooms.Count + 1);
+            if (SoundRoom(room))
+            {
+                rooms.Add(room);
+            }
+            else
+            {
+
+                Destroy(room.gameObject);
+            }
+
             yield return delay;
         }
 
+    }
+
+    private bool SoundRoom(Room room)
+    {
+        for (int i = 0; i < room.Size.x; i++)
+        {
+            for (int j = 0; j < room.Size.z; j++)
+            {
+                if (cells[i + room.StartPoints.x, j + room.StartPoints.z] != null)
+                {
+                    Debug.Log("Room hit");
+                    return false;
+                }
+                cells[i + room.StartPoints.x, j + room.StartPoints.z] = room.cells[i, j];
+            }
+        }
+        return true;
     }
 }
