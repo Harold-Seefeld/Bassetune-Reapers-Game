@@ -20,6 +20,29 @@ sysinfo.txt
 /*.unityproj
 /*.booproj
  
+ # Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+x64/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+ 
+ #NUNIT
+*.VisualState.xml
+TestResult.xml
+
+# NuGet Packages Directory
+DungeonGenerator/packages/*
+ 
+ 
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+ 
 # ============ #
 # OS generated #
 # ============ #
