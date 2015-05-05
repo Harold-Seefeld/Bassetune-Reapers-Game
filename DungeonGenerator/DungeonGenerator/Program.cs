@@ -7,11 +7,16 @@ namespace DungeonGenerator
 {
     public class Program
     {
-        public static void Main(string[] args) {
-            var dungeon = new Dungeon();
-            dungeon.Create();
-            dungeon.PrintMap();
-            Console.ReadLine();
+        public static void Main(string[] args)
+        {
+            do
+            {
+                Console.Clear();
+                var dungeon = new Dungeon();
+                dungeon.Create();
+                dungeon.PrintMap();
+            } while ((Console.ReadKey().Key == ConsoleKey.Spacebar));
+
         }
     }
 }

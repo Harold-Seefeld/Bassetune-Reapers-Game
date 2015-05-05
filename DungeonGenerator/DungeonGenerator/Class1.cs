@@ -148,15 +148,15 @@ public class Dungeon
             for (int j = 0; j < Map.GetLength(1); j++)
             {
                 Console.SetCursorPosition(j + 1, i + 1);
-                if ((Map[i, j] & Cells.Perimeter) == Cells.Perimeter)
+                if ((Map[i, j] & Cells.Perimeter) != 0)
                 {
                     Console.Write('P');
                 }
-                else if ((Map[i, j] & Cells.Entrance) == Cells.Entrance)
+                else if ((Map[i, j] & Cells.DoorSpace) != 0)
                 {
                     Console.Write('E');
                 }
-                else if ((Map[i, j] & Cells.Corridor) == Cells.Corridor)
+                else if ((Map[i, j] & Cells.Corridor) != 0)
                 {
                     if ((Map[i, j] & Cells.Room) == 0)
                     {
@@ -289,11 +289,11 @@ public class Dungeon
         {
             for (var c = WestPerimeter; c <= EastPerimeter; c++)
             {
-                if ((cell[r, c] & Cells.Entrance) == Cells.Entrance)
+                if ((cell[r, c] & Cells.Entrance) != 0)
                 {
                     cell[r, c] &= ~Cells.ESpace;
                 }
-                else if ((cell[r, c] & Cells.Perimeter) == Cells.Perimeter)
+                else if ((cell[r, c] & Cells.Perimeter) != 0)
                 {
                     cell[r, c] &= ~Cells.Perimeter;
                 }
@@ -316,22 +316,22 @@ public class Dungeon
 
         for (var r = NorthPerimeter - 1; r <= SouthPerimeter + 1; r++)
         {
-            if (!((long)(cell[r, WestPerimeter - 1] & (Cells.Room | Cells.Entrance)) != 0))
+            if ((long)(cell[r, WestPerimeter - 1] & (Cells.Room | Cells.Entrance)) == 0)
             {
                 cell[r, WestPerimeter - 1] |= Cells.Perimeter;
             }
-            if (!((long)(cell[r, EastPerimeter + 1] & (Cells.Room | Cells.Entrance)) != 0))
+            if ((long)(cell[r, EastPerimeter + 1] & (Cells.Room | Cells.Entrance)) == 0)
             {
                 cell[r, EastPerimeter + 1] |= Cells.Perimeter;
             }
         }
         for (var c = WestPerimeter - 1; c <= EastPerimeter + 1; c++)
         {
-            if (!((long)(cell[NorthPerimeter - 1, c] & (Cells.Room | Cells.Entrance)) != 0))
+            if ((long)(cell[NorthPerimeter - 1, c] & (Cells.Room | Cells.Entrance)) == 0)
             {
                 cell[NorthPerimeter - 1, c] |= Cells.Perimeter;
             }
-            if (!((long)(cell[SouthPerimeter + 1, c] & (Cells.Room | Cells.Entrance)) != 0))
+            if ((long)(cell[SouthPerimeter + 1, c] & (Cells.Room | Cells.Entrance)) == 0)
             {
                 cell[SouthPerimeter + 1, c] |= Cells.Perimeter;
             }
@@ -402,12 +402,12 @@ public class Dungeon
         {
             for (var c = c1; c <= c2; c++)
             {
-                if ((cell[r, c] & Cells.Blocked) == Cells.Blocked)
+                if ((cell[r, c] & Cells.Blocked) != 0)
                 {
                     hit.Blocked = true;
                     return hit;
                 }
-                if ((cell[r, c] & Cells.Room) == Cells.Room)
+                if ((cell[r, c] & Cells.Room) != 0)
                 {
                     var id = (int)(cell[r, c] & Cells.RoomId) >> 6;
                     hit.Count += 1;
@@ -450,7 +450,7 @@ public class Dungeon
                 doorR = sill.DoorR;
                 doorC = sill.DoorC;
                 doorCell = cell[doorR, doorC];
-            } while ((doorCell & Cells.DoorSpace) == Cells.DoorSpace);
+            } while ((doorCell & Cells.DoorSpace) != 0);
 
             var outId = sill.OutId;
             if (outId != 0)  //TODO: correctly implemented
@@ -679,7 +679,7 @@ public class Dungeon
             for (var y = 1; y < j; y++)
             {
                 var c = (y * 2) + 1;
-                if ((cell[r, c] & Cells.Corridor) == Cells.Corridor)
+                if ((cell[r, c] & Cells.Corridor) != 0)
                 {
                     continue;
                 }
@@ -851,7 +851,7 @@ public class Dungeon
         var list = check.Walled;
         foreach (var p in list)
         {
-            if ((Map[r + p[0], c + p[1]] & Cells.OpenSpace) != null)
+            if ((Map[r + p[0], c + p[1]] & Cells.OpenSpace) != 0)
             {
                 return false;
             }
