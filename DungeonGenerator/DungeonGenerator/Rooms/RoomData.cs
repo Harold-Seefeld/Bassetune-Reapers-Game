@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using DungeonGenerator;
+using DungeonGenerator.Rooms;
 
 public class RoomData
 {

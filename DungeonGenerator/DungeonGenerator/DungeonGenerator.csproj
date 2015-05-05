@@ -43,16 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Door.cs" />
+    <Compile Include="Dungeon.cs" />
+    <Compile Include="Rooms\Directions.cs" />
+    <Compile Include="Rooms\Door.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="Hit.cs" />
+    <Compile Include="Rooms\Hit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Proto.cs" />
-    <Compile Include="RoomData.cs" />
-    <Compile Include="RoomLayouts.cs" />
-    <Compile Include="Sill.cs" />
+    <Compile Include="Rooms\Proto.cs" />
+    <Compile Include="Rooms\RoomData.cs" />
+    <Compile Include="Rooms\RoomGenerator.cs" />
+    <Compile Include="Rooms\RoomLayouts.cs" />
+    <Compile Include="Rooms\Sill.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonGenerator.Rooms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -24,5 +25,27 @@ namespace DungeonGenerator
                 list[n] = value;
             }
         }
+        public static List<T> Shuffle<T>(List<T> list)
+        {
+            var result = new List<T>(list);
+            result.Shuffle();
+            return result;
+        }
+
+        public static Dictionary<Directions, int> di = new Dictionary<Directions, int>()
+    {
+    {Directions.North,-1},
+    {Directions.South,1},
+    {Directions.West,0},
+    {Directions.East,0},
+    };
+        public static Dictionary<Directions, int> dj = new Dictionary<Directions, int>()
+    {
+    {Directions.North,0},
+    {Directions.South,0},
+    {Directions.West,-1},
+    {Directions.East,1},
+    };
+
     }
 }
