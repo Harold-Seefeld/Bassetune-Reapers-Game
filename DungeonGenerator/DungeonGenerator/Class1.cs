@@ -33,12 +33,6 @@ public class CloseEnd
     public int[] Close;
     public int[] Recurse;
 }
-public class MapStyle
-{
-    public string Fill = "000000";
-    public string Open = "FFFFFF";
-    public string OpenGrid = "CCCCCC";
-}
 
 [Flags]
 public enum Cells : long
@@ -71,24 +65,24 @@ public enum Cells : long
 
 public class Dungeon
 {
-
+    /// <summary>
+    /// Must be an odd number
+    /// </summary>
     private int rows = 39;
+    /// <summary>
+    /// Must be an odd number
+    /// </summary>
     private int cols = 39;
     private int roomMin = 3;
     private int roomMax = 9;
     private CorridorLayout corridorLayout = CorridorLayout.Bent;
     private int removeDeadEnds = 50; //in %
 
-    private int maxRow;
-    private int maxCol;
     public Cells[,] Map { get; set; }
-    private int seed;
     private int i;
     private int j;
     private int lastRoomId;
     private List<RoomData> room;
-    private int roomBase;
-    private int roomRadix;
     private int connect = 0;
     private Dictionary<Directions, int> di = new Dictionary<Directions, int>()
     {
@@ -164,11 +158,11 @@ public class Dungeon
                 }
                 else if ((Map[i, j] & Cells.Corridor) == Cells.Corridor)
                 {
-                    Console.Write('C');
+                    if ((Map[i, j] & Cells.Room) == 0)
+                    {
+                        Console.Write('C');
+                    }
                 }
-
-                //result += string.Format("{0:00} ", (long)Map[i, j]);
-                //Console.Write(string.Format("{0} ",(long) map[i, j]));
             }
 
             Console.Write(result + Environment.NewLine);
@@ -180,11 +174,6 @@ public class Dungeon
         Map = new Cells[rows + 1, cols + 1];
         i = rows / 2;
         j = cols / 2;
-        maxRow = rows - 1;
-        maxCol = cols - 1;
-
-        roomBase = ((roomMin + 1) / 2);
-        roomRadix = ((roomMax - roomMin) / 2) + 1;
 
         room = new List<RoomData>();
         InitCells();
@@ -199,18 +188,13 @@ public class Dungeon
 
     private void InitCells()
     {
-
         for (var r = 0; r <= rows; r++)
         {
-
             for (var c = 0; c <= cols; c++)
             {
                 Map[r, c] = Cells.Nothing;
             }
         }
-
-        System.Random rnd = new System.Random();
-        seed = rnd.Next();
 
         RoundMask();
     }
@@ -272,21 +256,21 @@ public class Dungeon
         var cell = Map;
         Proto proto = SetRoom();
 
-        var r1 = (proto.i * 2) + 1;
-        var c1 = (proto.j * 2) + 1;
-        var r2 = ((proto.i + proto.height) * 2) - 1;
-        var c2 = ((proto.j + proto.width) * 2) - 1;
+        var NorthPerimeter = (proto.i * 2) + 1;
+        var WestPerimeter = (proto.j * 2) + 1;
+        var SouthPerimeter = ((proto.i + proto.height) * 2) - 1;
+        var EastPerimeter = ((proto.j + proto.width) * 2) - 1;
 
-        if (r1 < 1 || r2 > maxRow)
+        if (NorthPerimeter < 1 || SouthPerimeter > rows - 1)
         {
             return;
         }
-        if (c1 < 1 || c2 > maxCol)
+        if (WestPerimeter < 1 || EastPerimeter > cols - 1)
         {
             return;
         }
 
-        Hit hit = SoundRoom(r1, c1, r2, c2);
+        Hit hit = SoundRoom(NorthPerimeter, WestPerimeter, SouthPerimeter, EastPerimeter);
         if (hit.Blocked)
         {
             return;
@@ -301,9 +285,9 @@ public class Dungeon
         roomId = room.Count + 1;
         lastRoomId = roomId;
 
-        for (var r = r1; r <= r2; r++)
+        for (var r = NorthPerimeter; r <= SouthPerimeter; r++)
         {
-            for (var c = c1; c <= c2; c++)
+            for (var c = WestPerimeter; c <= EastPerimeter; c++)
             {
                 if ((cell[r, c] & Cells.Entrance) == Cells.Entrance)
                 {
@@ -322,34 +306,34 @@ public class Dungeon
         var roomData = new RoomData
         {
             Id = roomId,
-            North = r1,
-            South = r2,
-            West = c1,
-            East = c2,
+            North = NorthPerimeter,
+            South = SouthPerimeter,
+            West = WestPerimeter,
+            East = EastPerimeter,
         };
 
         room.Add(roomData);
 
-        for (var r = r1 - 1; r <= r2 + 1; r++)
+        for (var r = NorthPerimeter - 1; r <= SouthPerimeter + 1; r++)
         {
-            if (!((long)(cell[r, c1 - 1] & (Cells.Room | Cells.Entrance)) != 0))
+            if (!((long)(cell[r, WestPerimeter - 1] & (Cells.Room | Cells.Entrance)) != 0))
             {
-                cell[r, c1 - 1] |= Cells.Perimeter;
+                cell[r, WestPerimeter - 1] |= Cells.Perimeter;
             }
-            if (!((long)(cell[r, c2 + 1] & (Cells.Room | Cells.Entrance)) != 0))
+            if (!((long)(cell[r, EastPerimeter + 1] & (Cells.Room | Cells.Entrance)) != 0))
             {
-                cell[r, c2 + 1] |= Cells.Perimeter;
+                cell[r, EastPerimeter + 1] |= Cells.Perimeter;
             }
         }
-        for (var c = c1 - 1; c <= c2 + 1; c++)
+        for (var c = WestPerimeter - 1; c <= EastPerimeter + 1; c++)
         {
-            if (!((long)(cell[r1 - 1, c] & (Cells.Room | Cells.Entrance)) != 0))
+            if (!((long)(cell[NorthPerimeter - 1, c] & (Cells.Room | Cells.Entrance)) != 0))
             {
-                cell[r1 - 1, c] |= Cells.Perimeter;
+                cell[NorthPerimeter - 1, c] |= Cells.Perimeter;
             }
-            if (!((long)(cell[r2 + 1, c] & (Cells.Room | Cells.Entrance)) != 0))
+            if (!((long)(cell[SouthPerimeter + 1, c] & (Cells.Room | Cells.Entrance)) != 0))
             {
-                cell[r2 + 1, c] |= Cells.Perimeter;
+                cell[SouthPerimeter + 1, c] |= Cells.Perimeter;
             }
         }
 
@@ -357,8 +341,8 @@ public class Dungeon
 
     private Proto SetRoom()
     {
-        var basee = roomBase;
-        var radix = roomRadix;
+        var basee = ((roomMin + 1) / 2);
+        var radix = ((roomMax - roomMin) / 2) + 1;
         Proto proto = new Proto();
         if (proto.height == 0)
         {
@@ -533,7 +517,6 @@ public class Dungeon
     public int AllocOpens(RoomData room)
     {
         var roomH = ((room.South - room.North) / 2) + 1;
-        //var random = new System.Random();
         var roomW = ((room.East - room.West) / 2) + 1;
         int flumph = (int)Math.Sqrt(roomW * roomH);
         return flumph + random.Next(flumph);
@@ -868,7 +851,7 @@ public class Dungeon
         var list = check.Walled;
         foreach (var p in list)
         {
-            if ((Map[r + p[0], c + p[1]] & Cells.OpenSpace)!= null)
+            if ((Map[r + p[0], c + p[1]] & Cells.OpenSpace) != null)
             {
                 return false;
             }
@@ -909,7 +892,7 @@ public class Dungeon
                 {
                     cell[r, c] = Cells.Nothing;
                 }
-                
+
             }
         }
     }
