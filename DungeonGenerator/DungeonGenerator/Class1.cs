@@ -295,14 +295,12 @@ public class Dungeon
         }
 
         int roomId;
-        if (hit.Count == 0)
-        {
-            roomId = room.Count + 1;
-        }
-        else
+        if (hit.Count != 0)
         {
             return;
         }
+
+        roomId = room.Count + 1;
         lastRoomId = roomId;
 
         for (var r = r1; r <= r2; r++)
@@ -321,21 +319,15 @@ public class Dungeon
             }
         }
 
-        var height = ((r2 - r1) + 1) * 10;
-        var width = ((c2 - c1) + 1) * 10;
+
 
         var roomData = new RoomData
         {
             Id = roomId,
-            Row = r1,
-            Col = c1,
             North = r1,
             South = r2,
             West = c1,
             East = c2,
-            Height = height,
-            Width = width,
-            Area = height * width,
         };
 
         room.Add(roomId, roomData);
@@ -369,7 +361,6 @@ public class Dungeon
     {
         var basee = roomBase;
         var radix = roomRadix;
-        //var random = new System.Random();
         Proto proto = new Proto();
         if (proto.height == 0)
         {
