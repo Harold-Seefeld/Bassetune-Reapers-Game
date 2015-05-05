@@ -12,7 +12,7 @@ public class RoomData
     public int East { get; set; }
     public int Height { get { return (South - North + 1) * 10; } }
     public int Width { get { return (East - West + 1) * 10; } }
-    public int Area { get { return Height * Width}  }
+    public int Area { get { return Height * Width; } }
     public Dictionary<Directions, List<Door>> Door = new Dictionary<Directions, List<Door>>();
 
     public void AddDoor(Door door, Directions direction)

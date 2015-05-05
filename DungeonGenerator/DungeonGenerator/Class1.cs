@@ -83,12 +83,10 @@ public class Dungeon
     private int maxCol;
     public Cells[,] Map { get; set; }
     private int seed;
-    private int centerR;
-    private int centerC;
     private int i;
     private int j;
     private int lastRoomId;
-    private Dictionary<int, RoomData> room;
+    private List<RoomData> room;
     private int roomBase;
     private int roomRadix;
     private int connect = 0;
@@ -188,7 +186,7 @@ public class Dungeon
         roomBase = ((roomMin + 1) / 2);
         roomRadix = ((roomMax - roomMin) / 2) + 1;
 
-        room = new Dictionary<int, RoomData>();
+        room = new List<RoomData>();
         InitCells();
         EmplaceRooms();
         OpenRooms();
@@ -219,8 +217,8 @@ public class Dungeon
 
     private void RoundMask()
     {
-        centerR = rows / 2;
-        centerC = cols / 2;
+        var centerR = rows / 2;
+        var centerC = cols / 2;
         for (var r = 0; r <= rows; r++)
         {
             for (var c = 0; c <= cols; c++)
@@ -330,7 +328,7 @@ public class Dungeon
             East = c2,
         };
 
-        room.Add(roomId, roomData);
+        room.Add(roomData);
 
         for (var r = r1 - 1; r <= r2 + 1; r++)
         {
@@ -438,7 +436,7 @@ public class Dungeon
 
     private void OpenRooms()
     {
-        for (var id = 1; id <= room.Count; id++)
+        for (var id = 0; id < room.Count; id++)
         {
             OpenRoom(room[id]);
         }
@@ -645,7 +643,6 @@ public class Dungeon
 
     private Cells DoorType()
     {
-        var random = new Random();
         var i = random.Next(110);
 
         if (i < 15)
@@ -674,7 +671,7 @@ public class Dungeon
     private void LabelRooms()
     {
         var cell = Map;
-        for (var id = 1; id <= room.Count; id++)
+        for (var id = 0; id < room.Count; id++)
         {
             var room1 = room[id];
             var label = room1.Id.ToString();
@@ -886,9 +883,9 @@ public class Dungeon
 
         foreach (var roomi in room)
         {
-            foreach (var dir in roomi.Value.Door.Keys)
+            foreach (var dir in roomi.Door.Keys)
             {
-                foreach (var door in roomi.Value.Door[dir])
+                foreach (var door in roomi.Door[dir])
                 {
                     var doorR = door.Row;
                     var doorC = door.Col;
