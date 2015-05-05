@@ -76,7 +76,6 @@ public class Dungeon
     private int cols = 39;
     private int roomMin = 3;
     private int roomMax = 9;
-    private int rooms = 0;
     private CorridorLayout corridorLayout = CorridorLayout.Bent;
     private int removeDeadEnds = 50; //in %
 
@@ -185,7 +184,6 @@ public class Dungeon
         j = cols / 2;
         maxRow = rows - 1;
         maxCol = cols - 1;
-        rooms = 0;
 
         roomBase = ((roomMin + 1) / 2);
         roomRadix = ((roomMax - roomMin) / 2) + 1;
@@ -269,7 +267,7 @@ public class Dungeon
 
     private void EmplaceRoom()
     {
-        if (rooms == 999)
+        if (room.Count == 999)
         {
             return;
         }
@@ -299,8 +297,7 @@ public class Dungeon
         int roomId;
         if (hit.Count == 0)
         {
-            roomId = rooms + 1;
-            rooms = roomId;
+            roomId = room.Count + 1;
         }
         else
         {
@@ -450,7 +447,7 @@ public class Dungeon
 
     private void OpenRooms()
     {
-        for (var id = 1; id <= rooms; id++)
+        for (var id = 1; id <= room.Count; id++)
         {
             OpenRoom(room[id]);
         }
@@ -686,7 +683,7 @@ public class Dungeon
     private void LabelRooms()
     {
         var cell = Map;
-        for (var id = 1; id <= rooms; id++)
+        for (var id = 1; id <= room.Count; id++)
         {
             var room1 = room[id];
             var label = room1.Id.ToString();
