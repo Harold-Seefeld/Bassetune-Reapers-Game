@@ -1,4 +1,8 @@
-﻿using DungeonGenerator.Rooms;
+﻿using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using Castle.Windsor.Installer;
+using DungeonGenerator.Corridors;
+using DungeonGenerator.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +14,14 @@ namespace DungeonGenerator
     {
         public static void Main(string[] args)
         {
-            IRoomGenerator Generator = new RoomGenerator();
+
+            var container = new WindsorContainer();
+            container.Install(FromAssembly.This());
+            var dungeon = container.Resolve<Dungeon>();
             do
             {
                 Console.Clear();
-                var dungeon = new Dungeon();
-                Generator.FillWithRooms(dungeon);
+                
                 dungeon.Create();
                 dungeon.PrintMap();
             } while ((Console.ReadKey().Key == ConsoleKey.Spacebar));

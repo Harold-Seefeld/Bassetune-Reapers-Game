@@ -34,6 +34,12 @@
     <StartupObject>DungeonGenerator.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.0\lib\net35\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net35\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Corridors\CorridorGenerator.cs" />
+    <Compile Include="Corridors\CorridorLayout.cs" />
+    <Compile Include="Corridors\ICorridorGenerator.cs" />
     <Compile Include="Dungeon.cs" />
     <Compile Include="Rooms\Directions.cs" />
     <Compile Include="Rooms\Door.cs" />
@@ -55,6 +64,10 @@
     <Compile Include="Rooms\RoomGenerator.cs" />
     <Compile Include="Rooms\RoomLayouts.cs" />
     <Compile Include="Rooms\Sill.cs" />
+    <Compile Include="WindsorInstaller.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
