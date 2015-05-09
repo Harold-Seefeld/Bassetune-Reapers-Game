@@ -11,11 +11,16 @@ public class CharacterLocation : MonoBehaviour {
 	[SerializeField] CharacterManager characterManager;
 
 	// Use this for initialization
-	void Start () {
+	IEnumerator Start () {
 		// Get socket object
 		GameObject go = GameObject.Find ("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
 		// Movement listener
+		while (!socket.IsConnected)
+		{
+			yield return new WaitForSeconds (0.2f);
+		}
+		yield return new WaitForSeconds (0.2f);
 		socket.On(SocketIOEvents.move, UpdateLocations);
 	}
 	
@@ -32,6 +37,8 @@ public class CharacterLocation : MonoBehaviour {
 
 	public void UpdateLocations (SocketIOEvent e) {
 		// Update locations based on the recieved json
+		Debug.Log (e.data);
+		Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);
 		for (int a = 0; a < e.data.Count; a++) {
 			for (int n = 0; n < characterManager.characterData.Count; n++) {
 				if (characterManager.characterData[n].CharacterID.ToString() == e.data[a].GetField("id").ToString()) {
