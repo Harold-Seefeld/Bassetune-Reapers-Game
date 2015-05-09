@@ -25,6 +25,12 @@ namespace DungeonGenerator
                 list[n] = value;
             }
         }
+        /// <summary>
+        /// Shuffles a list
+        /// </summary>
+        /// <typeparam name="T">Object which the list contains</typeparam>
+        /// <param name="list">which should be shuffled</param>
+        /// <returns>new list which is shuffled</returns>
         public static List<T> Shuffle<T>(List<T> list)
         {
             var result = new List<T>(list);

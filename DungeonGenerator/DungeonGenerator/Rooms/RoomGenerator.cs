@@ -9,21 +9,40 @@ namespace DungeonGenerator.Rooms
     public interface IRoomGenerator
     {
         void FillWithRooms(Dungeon dungeon);
-
         void FixDoors(Dungeon dungeon);
     }
+
     public class RoomGenerator : IRoomGenerator
     {
         #region Fields
         private List<RoomData> room;
         private Dungeon _dungeon;
-        private RoomLayouts RoomLayout = RoomLayouts.Scattered;
-        private Random random = new Random();
-        private int roomMin = 3;
-        private int roomMax = 9;
-        private int connect = 0;
+        private int connect = 0; //TODO: is that really needed?
         #endregion
 
+        #region Properties
+        public Random random { get; set; }
+
+        public RoomLayouts RoomLayout { get; set; }
+        /// <summary>
+        /// minimum size of a room
+        /// </summary>
+        public int roomMin { get; set; }
+        /// <summary>
+        /// Maximum size of a room
+        /// </summary>
+        public int roomMax { get; set; }
+
+        #endregion
+
+        #region Constructor
+        public RoomGenerator()
+        {
+            RoomLayout = RoomLayouts.Scattered;
+            roomMin = 3;
+            roomMax = 9;
+        }
+        #endregion
 
         public void FillWithRooms(Dungeon dungeon)
         {
