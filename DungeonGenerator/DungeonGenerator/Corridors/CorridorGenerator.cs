@@ -12,6 +12,7 @@ namespace DungeonGenerator.Corridors
 
         #region Fields
         private Dungeon _dungeon;
+        
         private Dictionary<Directions, int> di = new Dictionary<Directions, int>()
             {
                 {Directions.North,-1},
@@ -29,15 +30,47 @@ namespace DungeonGenerator.Corridors
         private List<Directions> jDirs;
 
         private CorridorLayout corridorLayout = CorridorLayout.Bent;
-        
+        private Dictionary<Directions, CloseEnd> closeEnd = new Dictionary<Directions, CloseEnd>()
+    {
+    {Directions.North,new CloseEnd{
+        Walled = new int[][]{ 
+            new int[]{0,-1},
+            new int[]{1,-1},
+            new int[]{1,0},
+            new int[]{1,1},
+            new int[]{0,1}},
+        Close = new int[]{0,0},
+        Recurse = new int[]{-1,0}
+    }},
+    {Directions.South,new CloseEnd{
+        Walled = new int[][]{new int[]{0,-1},new int[]{-1,-1},new int[]{-1,0},new int[]{-1,1},new int[]{0,1}},
+        Close = new int[]{0,0},
+        Recurse = new int[]{1,0}
+    }},
+    {Directions.West,new CloseEnd{
+        Walled = new int[][]{new int[]{-1,0},new int[]{-1,1},new int[]{0,1},new int[]{1,1},new int[]{1,0}},
+        Close = new int[]{0,0},
+        Recurse = new int[]{-1,0}
+    }},
+    {Directions.East,new CloseEnd{
+        Walled = new int[][]{new int[]{-1,0},new int[]{-1,-1},new int[]{0,-1},new int[]{1,-1},new int[]{1,0}},
+        Close = new int[]{0,0},
+        Recurse = new int[]{0,1}
+    }},
+    };
         #endregion
 
         #region Properties
         public Random random { get; set; }
+        /// <summary>
+        /// How many DeadEnds should be removed in %
+        /// </summary>
+        public int removeDeadEnds { get; set; }
         #endregion
 
         public CorridorGenerator()
         {
+            removeDeadEnds = 50;
             jDirs = dj.Keys.ToList();
             jDirs.Sort();
         }
@@ -60,7 +93,80 @@ namespace DungeonGenerator.Corridors
                 }
             }
         }
+        public void RemoveDeadEnds(Dungeon dungeon)
+        {
+            _dungeon = dungeon;
+            var p = removeDeadEnds;
+            CollapseTunnels(p);
+        }
 
+        private void CollapseTunnels(int p)
+        {
+            if (p == 0)
+            {
+                return;
+            }
+
+            var all = p == 100;
+            var cell = _dungeon.Map;
+            for (var x = 0; x < _dungeon.rows / 2; x++)
+            {
+                var r = (x * 2) + 1;
+                for (var y = 0; y < _dungeon.cols / 2; y++)
+                {
+                    var c = (y * 2) + 1;
+                    if ((cell[r, c] & Cells.OpenSpace) == 0)
+                    {
+                        continue;
+                    }
+                    if ((cell[r, c] & Cells.Stairs) != 0)
+                    {
+                        continue;
+                    }
+                    if (!all && random.Next(100) >= p)
+                    {
+                        continue;
+                    }
+                    Collapse(r, c);
+                }
+            }
+        }
+
+        private void Collapse(int r, int c)
+        {
+            var cell = _dungeon.Map;
+            if ((cell[r, c] & Cells.OpenSpace) == 0)
+            {
+                return;
+            }
+            foreach (var dir in closeEnd.Keys)
+            {
+                if (CheckTunnel(r, c, closeEnd[dir]))
+                {
+                    var p = closeEnd[dir].Close;
+                    cell[r + p[0], c + p[1]] = Cells.Nothing;
+                    p = closeEnd[dir].Recurse;
+                    if (p != null)
+                    {
+                        Collapse(r + p[0], c + p[1]);
+                    }
+                }
+            }
+        }
+
+        private bool CheckTunnel(int r, int c, CloseEnd check)
+        {
+            var list = check.Walled;
+            foreach (var p in list)
+            {
+                if ((_dungeon.Map[r + p[0], c + p[1]] & Cells.OpenSpace) != 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         private void Tunnel(int x, int y, Directions? lastDir = null)
         {
             List<Directions> dirs = TunnelDirs(lastDir);

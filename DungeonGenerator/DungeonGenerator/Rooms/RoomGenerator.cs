@@ -9,6 +9,8 @@ namespace DungeonGenerator.Rooms
     public interface IRoomGenerator
     {
         void FillWithRooms(Dungeon dungeon);
+
+        void FixDoors(Dungeon dungeon);
     }
     public class RoomGenerator : IRoomGenerator
     {
@@ -21,7 +23,7 @@ namespace DungeonGenerator.Rooms
         private int roomMax = 9;
         private int connect = 0;
         #endregion
-        
+
 
         public void FillWithRooms(Dungeon dungeon)
         {
@@ -31,6 +33,29 @@ namespace DungeonGenerator.Rooms
             EmplaceRooms();
             OpenRooms();
             LabelRooms();
+        }
+
+        public void FixDoors(Dungeon dungeon)
+        {
+            var cell = dungeon.Map;
+
+            //TODO: implement fixing of doors
+            foreach (var roomi in room)
+            {
+                foreach (var dir in roomi.Door.Keys)
+                {
+                    foreach (var door in roomi.Door[dir])
+                    {
+                        var doorR = door.Row;
+                        var doorC = door.Col;
+                        var doorCell = cell[doorR, doorC];
+                        if ((doorCell & Cells.OpenSpace) != 0)
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
         }
 
         private void InitCells()
@@ -197,7 +222,7 @@ namespace DungeonGenerator.Rooms
             {
                 if (proto.i != 0)
                 {
-                    var a = _dungeon.i - basee - proto.i;
+                    var a = _dungeon.rows / 2 - basee - proto.i;
                     if (a < 0)
                     {
                         a = 0;
@@ -215,7 +240,7 @@ namespace DungeonGenerator.Rooms
             {
                 if (proto.j != 0)
                 {
-                    var a = _dungeon.j - basee - proto.j;
+                    var a = _dungeon.cols / 2 - basee - proto.j;
                     if (a < 0)
                     {
                         a = 0;
@@ -232,11 +257,11 @@ namespace DungeonGenerator.Rooms
 
             if (proto.i == 0)
             {
-                proto.i = random.Next(_dungeon.i - proto.height);
+                proto.i = random.Next(_dungeon.rows / 2 - proto.height);
             }
             if (proto.j == 0)
             {
-                proto.j = random.Next(_dungeon.j - proto.width);
+                proto.j = random.Next(_dungeon.cols / 2 - proto.width);
             }
 
             return proto;

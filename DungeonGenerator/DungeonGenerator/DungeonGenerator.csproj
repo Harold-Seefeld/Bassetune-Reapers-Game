@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Corridors\CloseEnd.cs" />
     <Compile Include="Corridors\CorridorGenerator.cs" />
     <Compile Include="Corridors\CorridorLayout.cs" />
     <Compile Include="Corridors\ICorridorGenerator.cs" />
