@@ -39,6 +39,7 @@ namespace DungeonGenerator.Rooms
         public RoomGenerator()
         {
             RoomLayout = RoomLayouts.Scattered;
+            //RoomLayout = RoomLayouts.Packed;
             roomMin = 3;
             roomMax = 9;
         }
@@ -111,13 +112,41 @@ namespace DungeonGenerator.Rooms
 
         private void EmplaceRooms()
         {
-            if (RoomLayout == RoomLayouts.Packed)
+
+            switch (RoomLayout)
             {
-                //			PackRooms();
+                case RoomLayouts.Packed:
+                    PackRooms();
+                    break;
+                case RoomLayouts.Scattered:
+                    ScatterRooms();
+                    break;
+                default:
+                    break;
             }
-            else
+
+        }
+
+        private void PackRooms()
+        {
+            var cell = _dungeon.Map;
+            for (int i = 0; i < _dungeon.rows / 2; i++)
             {
-                ScatterRooms();
+                var r = (i * 2 + 1);
+                for (int j = 0; j < _dungeon.cols / 2; j++)
+                {
+                    var c = (j * 2) + 1;
+                    if ((cell[i, j] & Cells.Room) != 0)
+                    {
+                        continue;
+                    }
+                    if ((i == 0 || j == 0) && random.Next(2) == 0)
+                    {
+                        continue;
+                    }
+                    var proto = new Proto() { i = i, j = j };
+                    EmplaceRoom(proto);
+                }
             }
         }
 
@@ -140,14 +169,14 @@ namespace DungeonGenerator.Rooms
             return rooms;
         }
 
-        private void EmplaceRoom()
+        private void EmplaceRoom(Proto proto2 = null)
         {
             if (room.Count == 999)
             {
                 return;
             }
             var cell = _dungeon.Map;
-            Proto proto = SetRoom();
+            Proto proto = SetRoom(proto2);
 
             var NorthPerimeter = (proto.i * 2) + 1;
             var WestPerimeter = (proto.j * 2) + 1;
@@ -232,11 +261,20 @@ namespace DungeonGenerator.Rooms
 
         }
 
-        private Proto SetRoom()
+        private Proto SetRoom(Proto proto2 = null)
         {
             var basee = ((roomMin + 1) / 2);
             var radix = ((roomMax - roomMin) / 2) + 1;
-            Proto proto = new Proto();
+
+            Proto proto;
+            if (proto2 != null)
+            {
+                proto = proto2;
+            }
+            else
+            {
+                proto = new Proto();
+            }
             if (proto.height == 0)
             {
                 if (proto.i != 0)
@@ -337,7 +375,7 @@ namespace DungeonGenerator.Rooms
                 int doorC;
                 do
                 {
-                    var tobeRemoved = random.Next(list.Count - 1);
+                    var tobeRemoved = random.Next(list.Count - 1); //TODO: what if list.count == 0? can that happen?
                     sill = list[tobeRemoved];
                     list.Remove(sill);
                     doorR = sill.DoorR;
