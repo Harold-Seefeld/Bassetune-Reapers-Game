@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System;
 using SocketIO;
 
 public class CharacterLocation : MonoBehaviour {
@@ -11,17 +9,12 @@ public class CharacterLocation : MonoBehaviour {
 	[SerializeField] CharacterManager characterManager;
 
 	// Use this for initialization
-	IEnumerator Start () {
+	void Start () {
 		// Get socket object
 		GameObject go = GameObject.Find ("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
-		// Movement listener
-		while (!socket.IsConnected)
-		{
-			yield return new WaitForSeconds (0.2f);
-		}
-		yield return new WaitForSeconds (0.2f);
 		socket.On(SocketIOEvents.move, UpdateLocations);
+		
 	}
 	
 	// Update is called once per frame
@@ -37,18 +30,17 @@ public class CharacterLocation : MonoBehaviour {
 
 	public void UpdateLocations (SocketIOEvent e) {
 		// Update locations based on the recieved json
-		Debug.Log (e.data);
-		Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);Debug.Log (e.data);
-		for (int a = 0; a < e.data.Count; a++) {
+		JSONObject data = e.data.GetField("d");
+		for (int i = 0; i < data.Count; i++) {
 			for (int n = 0; n < characterManager.characterData.Count; n++) {
-				if (characterManager.characterData[n].CharacterID.ToString() == e.data[a].GetField("id").ToString()) {
+				if (characterManager.characterData[n].CharacterID.ToString() == data[i].GetField("i").str) {
 					// TODO: Assign locations to character movement agents for smoothness
-					characterManager.characterData[n].gameObject.transform.position = new Vector3(Convert.ToSingle(e.data[a].GetField("location").GetField("x")), 
-					                                                                              Convert.ToSingle(e.data[a].GetField("location").GetField("y")), 0f);
+					characterManager.characterData[n].gameObject.transform.position = new Vector3(data[i].GetField("l")[0].f, 
+					                                                                              data[i].GetField("l")[1].f, 0f);
 				}
 			}
 		}
-		// Example: ["m",[{"location":[0,6.025636]},{"location":[0,6.025636]}]]
+		// Example: {"d":[{"i":"1","l":[0,525.3192]},{"i":"2","l":[0,525.3192]}]}
 	}
 
 	public void AddLocation(string characterID, Vector2 location) {

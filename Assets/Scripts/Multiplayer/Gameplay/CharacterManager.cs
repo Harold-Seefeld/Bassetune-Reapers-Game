@@ -7,7 +7,7 @@ using SocketIO;
 public class CharacterManager : MonoBehaviour {
 
 	private SocketIOComponent socket;
-	public List<CharacterData> characterData = new List<CharacterData>();
+	public List<CharacterData> characterData;
 
 	// Use this for initialization
 	void Start () {
