@@ -35,8 +35,8 @@ public class CharacterLocation : MonoBehaviour {
 			for (int n = 0; n < characterManager.characterData.Count; n++) {
 				if (characterManager.characterData[n].CharacterID.ToString() == data[i].GetField("i").str) {
 					// TODO: Assign locations to character movement agents for smoothness
-					characterManager.characterData[n].gameObject.transform.position = new Vector3(data[i].GetField("l")[0].f, 
-					                                                                              data[i].GetField("l")[1].f, 0f);
+					characterManager.characterData[n].gameObject.transform.position = new Vector3(data[i].GetField("l")[0].n, 
+					                                                                              data[i].GetField("l")[1].n, 0f);
 				}
 			}
 		}
