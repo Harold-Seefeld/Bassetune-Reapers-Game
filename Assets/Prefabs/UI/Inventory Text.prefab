@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 22450544}
 --- !u!222 &22250544
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -272,4 +273,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 150544}
   m_IsPrefabParent: 1
-  m_IsExploded: 1
