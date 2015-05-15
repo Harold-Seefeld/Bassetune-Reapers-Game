@@ -36,32 +36,4 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
 			item.SetActive(false);
 		}
 	}
-
-	public void OnPointerEnter()
-	{
-		if (_weapon)
-		{
-			if(!Popup.instance)
-				Debug.LogError("Please make sure you have Popup Gameobject on your scene");
-
-			Popup.instance.gameObject.SetActive (true);
-			Popup.instance.Display (rectTransform.position + new Vector3 (0, 70),
-		                        	_weapon.weaponName,
-		                        	_weapon.weaponType.ToString(),
-		                        	_weapon.weaponDescription);
-		}
-		else if(_item)
-		{
-			if(!Popup.instance)
-				Debug.LogError("Please make sure you have Popup Gameobject on your scene");
-			
-			Popup.instance.gameObject.SetActive (true);
-			Popup.instance.Display (rectTransform.position + new Vector3 (0, 70),
-			                        _item.itemName,
-			                        _item.itemType.ToString(),
-			                        _item.itemDescription);
-		}
-		else
-			return;
-	}
 }

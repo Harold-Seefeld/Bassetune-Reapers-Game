@@ -50,8 +50,6 @@ public class InventoryManager : MonoBehaviour {
 
 		Debug.Log("Downloaded Inventory Successfully.");
 
-		Debug.Log(inventoryJSON.Print());
-
 		// Clear all existing texts
 		ClearText(abilityShop.GetComponentsInChildren<Text>());
 		ClearText(weaponShop.GetComponentsInChildren<Text>());
