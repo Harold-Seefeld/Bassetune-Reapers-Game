@@ -25,6 +25,7 @@ namespace DungeonGenerator
                     .LifestyleTransient());
             container.Register(Component.For<Dungeon>().ImplementedBy<Dungeon>());
             container.Register(Component.For<Random>().ImplementedBy<Random>().LifestyleSingleton());
+
         }
     }
 }

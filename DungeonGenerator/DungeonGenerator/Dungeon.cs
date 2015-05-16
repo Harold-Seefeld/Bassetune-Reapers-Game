@@ -65,23 +65,35 @@ public class Dungeon
     public void PrintMap()
     {
 
-        for (int i = 0; i < Map.GetLength(0); i++)
+        for (int i = 0; i <= Map.GetLength(0); i++)
         {
             string result = string.Empty;
-            for (int j = 0; j < Map.GetLength(1); j++)
+            for (int j = 0; j <= Map.GetLength(1); j++)
             {
-                Console.SetCursorPosition(j + 1, i + 1);
-                if ((Map[i, j] & Cells.Perimeter) != 0)
+                Console.SetCursorPosition(j, i);
+                if (i == 0)
+                {
+                    Console.Write(j - 1);
+                    continue;
+                }
+                else if (j == 0)
+                {
+                    Console.Write(i -1);
+                    continue;
+                }
+
+
+                if ((Map[i - 1, j - 1] & Cells.Perimeter) != 0)
                 {
                     Console.Write('P');
                 }
-                else if ((Map[i, j] & Cells.DoorSpace) != 0)
+                else if ((Map[i - 1, j - 1] & Cells.DoorSpace) != 0)
                 {
                     Console.Write('E');
                 }
-                else if ((Map[i, j] & Cells.Corridor) != 0)
+                else if ((Map[i - 1, j - 1] & Cells.Corridor) != 0)
                 {
-                    if ((Map[i, j] & Cells.Room) == 0)
+                    if ((Map[i - 1, j - 1] & Cells.Room) == 0)
                     {
                         Console.Write('C');
                     }

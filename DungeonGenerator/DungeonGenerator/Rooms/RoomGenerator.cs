@@ -360,8 +360,8 @@ namespace DungeonGenerator.Rooms
 
         private void OpenRoom(RoomData room)
         {
-            var list = DoorSills(room);
-            if (list == null)
+            var doorSills = DoorSills(room);
+            if (doorSills.Count == 0)
             {
                 return;
             }
@@ -375,13 +375,17 @@ namespace DungeonGenerator.Rooms
                 int doorC;
                 do
                 {
-                    var tobeRemoved = random.Next(list.Count - 1); //TODO: what if list.count == 0? can that happen?
-                    sill = list[tobeRemoved];
-                    list.Remove(sill);
+                    if (doorSills.Count == 0)
+                    {
+                        return;
+                    }
+                    var tobeRemoved = random.Next(doorSills.Count - 1);
+                    sill = doorSills[tobeRemoved];
+                    doorSills.Remove(sill);
                     doorR = sill.DoorR;
                     doorC = sill.DoorC;
                     doorCell = cell[doorR, doorC];
-                } while ((doorCell & Cells.DoorSpace) != 0);
+                } while ((doorCell & Cells.DoorSpace) != 0 && doorSills.Count > 0);
 
                 var outId = sill.OutId;
                 if (outId != 0)  //TODO: correctly implemented
@@ -507,6 +511,8 @@ namespace DungeonGenerator.Rooms
 
         private Sill CheckSill(Cells[,] cell, RoomData room, int sillR, int sillC, Directions dir)
         {
+            var result = new Sill();
+            
             var doorR = sillR + Helper.di[dir];
             var doorC = sillC + Helper.dj[dir];
             var doorCell = cell[doorR, doorC];

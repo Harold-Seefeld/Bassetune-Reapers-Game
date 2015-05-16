@@ -12,7 +12,7 @@ namespace DungeonGenerator.Corridors
 
         #region Fields
         private Dungeon _dungeon;
-        
+
         private Dictionary<Directions, int> di = new Dictionary<Directions, int>()
             {
                 {Directions.North,-1},
@@ -79,7 +79,7 @@ namespace DungeonGenerator.Corridors
         {
             _dungeon = dungeon;
             var cell = _dungeon.Map;
-            for (var x = 1; x < _dungeon.rows/2 ; x++)
+            for (var x = 1; x < _dungeon.rows / 2; x++)
             {
                 var r = (x * 2) + 1;
                 for (var y = 1; y < _dungeon.cols / 2; y++)
@@ -143,13 +143,10 @@ namespace DungeonGenerator.Corridors
             {
                 if (CheckTunnel(r, c, closeEnd[dir]))
                 {
-                    var p = closeEnd[dir].Close;
-                    cell[r + p[0], c + p[1]] = Cells.Nothing;
-                    p = closeEnd[dir].Recurse;
-                    if (p != null)
-                    {
-                        Collapse(r + p[0], c + p[1]);
-                    }
+                    var p = closeEnd[dir].Recurse;
+                    var x = r + p[0];
+                    var y = c + p[1];
+                    Collapse(x, y);
                 }
             }
         }
@@ -187,7 +184,7 @@ namespace DungeonGenerator.Corridors
             var dirs = Helper.Shuffle(jDirs);
             if (lastDir != null)
             {
-                if ( random.Next(100) < (int)p)
+                if (random.Next(100) < (int)p)
                 {
                     dirs.Insert(0, (Directions)lastDir);
                 }
