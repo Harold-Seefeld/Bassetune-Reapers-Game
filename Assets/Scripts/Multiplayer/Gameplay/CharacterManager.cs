@@ -15,7 +15,7 @@ public class CharacterManager : MonoBehaviour {
 		socket = go.GetComponent<SocketIOComponent>();
 		// Listen out for new character creations
 		socket.On(SocketIOEvents.Output.BossIO.SPAWN_CREATURE, CreateCharacter);
-
+		socket.On(SocketIOEvents.Input.HP, UpdateHP);
 	}
 	
 	// Update is called once per frame
@@ -34,5 +34,13 @@ public class CharacterManager : MonoBehaviour {
 		newCharacterData.CharacterType = e.data.GetField("Type").ToString();
 		// Add character data to the list
 		characterData.Add(newCharacterData);
+	}
+
+	void UpdateHP(SocketIOEvent e) {
+		for (int i = 0; i < characterData.Count; i++) {
+			if (e.data.GetField("i") == characterData[i].CharacterID) {
+				characterData[i].CharacterHP = e.data.GetField("h");
+			}
+		}
 	}
 }
