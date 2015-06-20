@@ -15367,23 +15367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   getInventorySite: ec2-52-7-69-101.compute-1.amazonaws.com/getInventory
   setInventorySite: ec2-52-7-69-101.compute-1.amazonaws.com/setInventory
-  itemList:
-  - {fileID: 112958, guid: 5596390fee3fe044b923d0a685450f85, type: 2}
-  - {fileID: 102428, guid: 92f4ff486c0394b429d0dbc8af8d8432, type: 2}
-  - {fileID: 160504, guid: 43eb2ea6d577c604ca2956c695d3de98, type: 2}
-  - {fileID: 109812, guid: 8d328eb703f20834c9a19185aea7a7f1, type: 2}
-  - {fileID: 145174, guid: eeef6f5502d08c240a8741143dab8270, type: 2}
-  weaponList:
-  - {fileID: 124116, guid: 1d20b01b99ec40e4188d801fc8115c34, type: 2}
-  - {fileID: 115954, guid: 0b8cbc838b7fcda4ba30509ff9d9546c, type: 2}
-  - {fileID: 153654, guid: 586953d9758336144b12ffb3e789a28d, type: 2}
-  - {fileID: 187994, guid: 09b79b81060309f49ba1fe7679be86af, type: 2}
-  abilityList:
-  - {fileID: 100000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
-  - {fileID: 100000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
-  - {fileID: 100000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
-  - {fileID: 100000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
-  - {fileID: 100000, guid: 5a197dcac2c8a7c4c84e2664670be3c8, type: 2}
+  inventoryList: {fileID: 11455296, guid: 6a295739c94dea046a5bee0842933cbe, type: 2}
   equipmentShop: {fileID: 48965992}
   equipmentInventory: {fileID: 141496884}
   abilityShop: {fileID: 1390783546}
