@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using System.Collections;
 
 [AddComponentMenu("Actor/Knight")]
@@ -209,3 +210,4 @@ public class Knight : PlayerBase {
         }
     }
 }
+*/

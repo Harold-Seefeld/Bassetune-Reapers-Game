@@ -9,9 +9,7 @@ public class InventoryManager : MonoBehaviour {
 	[SerializeField] string setInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/setinventory";
 	public JSONObject inventoryJSON;
 
-	public GameObject[] itemList;
-	public GameObject[] weaponList;
-	public GameObject[] abilityList; 
+	public InventoryList inventoryList;
 
 	public GameObject equipmentShop;
 	public GameObject equipmentInventory;
@@ -67,22 +65,22 @@ public class InventoryManager : MonoBehaviour {
 		ClearText(trapInventory.GetComponentsInChildren<Text>());
 		
 		// Set Shop Text
-		SetShopText(equipmentShop, itemList);
-		SetShopText(abilityShop, abilityList);
-		SetShopText(weaponShop, weaponList);
-		SetShopText(bossShop, itemList, ItemBase.BossItemType.Boss);
-		SetShopText(minibossShop, itemList, ItemBase.BossItemType.Miniboss);
-		SetShopText(trapShop, itemList, ItemBase.BossItemType.Trap);
-		SetShopText(creatureShop, itemList, ItemBase.BossItemType.Creature);
+		SetShopText(equipmentShop, inventoryList.itemList);
+		SetShopText(abilityShop, inventoryList.abilityList);
+		SetShopText(weaponShop, inventoryList.weaponList);
+		SetShopText(bossShop, inventoryList.itemList, ItemBase.BossItemType.Boss);
+		SetShopText(minibossShop, inventoryList.itemList, ItemBase.BossItemType.Miniboss);
+		SetShopText(trapShop, inventoryList.itemList, ItemBase.BossItemType.Trap);
+		SetShopText(creatureShop, inventoryList.itemList, ItemBase.BossItemType.Creature);
 		
 		// Set Inventory Text
-		SetInventory(equipmentShop, equipmentInventory, itemList);
-		SetInventory(abilityShop, abilityInventory, abilityList);
-		SetInventory(weaponShop, weaponInventory, weaponList);
-		SetInventory(bossShop, bossInventory, itemList, ItemBase.BossItemType.Boss);
-		SetInventory(minibossShop, minibossInventory, itemList, ItemBase.BossItemType.Miniboss);
-		SetInventory(trapShop, trapInventory, itemList, ItemBase.BossItemType.Trap);
-		SetInventory(creatureShop, creatureInventory, itemList, ItemBase.BossItemType.Creature);
+		SetInventory(equipmentShop, equipmentInventory, inventoryList.itemList);
+		SetInventory(abilityShop, abilityInventory, inventoryList.abilityList);
+		SetInventory(weaponShop, weaponInventory, inventoryList.weaponList);
+		SetInventory(bossShop, bossInventory, inventoryList.itemList, ItemBase.BossItemType.Boss);
+		SetInventory(minibossShop, minibossInventory, inventoryList.itemList, ItemBase.BossItemType.Miniboss);
+		SetInventory(trapShop, trapInventory, inventoryList.itemList, ItemBase.BossItemType.Trap);
+		SetInventory(creatureShop, creatureInventory, inventoryList.itemList, ItemBase.BossItemType.Creature);
 
 		Debug.Log ("Filtered Inventory Successfully.");
 	}
@@ -201,11 +199,11 @@ public class InventoryManager : MonoBehaviour {
 		}
 	}
 
-	void SetInventory(GameObject shopList, GameObject inventoryList, GameObject[] items)
+	void SetInventory(GameObject shopList, GameObject list, GameObject[] items)
 	{
 		for (int i = 0; i < inventoryJSON.Count; i++)
 		{
-			if (inventoryJSON[i][0].ToString() != "null" && items == itemList && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
+			if (inventoryJSON[i][0].ToString() != "null" && items == inventoryList.itemList && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
 				newObject.transform.SetParent(inventoryList.transform);
@@ -227,7 +225,7 @@ public class InventoryManager : MonoBehaviour {
 					}
 				}
 			}
-			else if (inventoryJSON[i][2].ToString() != "null" && items == weaponList)
+			else if (inventoryJSON[i][2].ToString() != "null" && items == inventoryList.weaponList)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
 				newObject.transform.SetParent(inventoryList.transform);
@@ -249,7 +247,7 @@ public class InventoryManager : MonoBehaviour {
 					}
 				}
 			}
-			else if (inventoryJSON[i][3].ToString() != "null" && items == abilityList)
+			else if (inventoryJSON[i][3].ToString() != "null" && items == inventoryList.abilityList)
 			{
 				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
 				newObject.transform.SetParent(inventoryList.transform);
@@ -257,7 +255,6 @@ public class InventoryManager : MonoBehaviour {
 				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
 				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][3]) - 1].GetComponent<AbilityBase>().abilityName;
 				AbilityBase abilityBase = newObject.AddComponent<AbilityBase>();
-				abilityBase.onMainMenu = true;
 				CopyAbilityBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<AbilityBase>(), abilityBase);
 				
 				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);

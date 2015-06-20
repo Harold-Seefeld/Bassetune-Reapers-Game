@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -20,9 +20,9 @@ public class AbilitySetter : MonoBehaviour
             if (abilityIcons[i].GetComponentsInChildren<ItemBase>(true).Length > 0)
             {
                 ItemBase[] itemBase = abilityIcons[i].GetComponentsInChildren<ItemBase>(true);
-                for (int x = 0; i < inventoryManager.itemList.Length; i++)
+                for (int x = 0; i < inventoryManager.inventoryList.itemList.Length; i++)
                 {
-                    if (inventoryManager.itemList[i].GetComponent<ItemBase>().itemName == itemBase[0].itemName)
+                    if (inventoryManager.inventoryList.itemList[i].GetComponent<ItemBase>().itemName == itemBase[0].itemName)
                     {
                         JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
                         jsonObject.AddField((abilityIcons[i].transform.parent.GetSiblingIndex() * 3 + abilityIcons[i].transform.GetSiblingIndex()).ToString(), arr);
@@ -35,9 +35,9 @@ public class AbilitySetter : MonoBehaviour
             else if (abilityIcons[i].GetComponentsInChildren<AbilityBase>(true).Length > 0)
             {
                 AbilityBase[] abilityBase = abilityIcons[i].GetComponentsInChildren<AbilityBase>(true);
-                for (int x = 0; i < inventoryManager.itemList.Length; i++)
+                for (int x = 0; i < inventoryManager.inventoryList.itemList.Length; i++)
                 {
-                    if (inventoryManager.abilityList[i].GetComponentsInChildren<AbilityBase>()[0].abilityName == abilityBase[0].abilityName)
+                    if (inventoryManager.inventoryList.abilityList[i].GetComponentsInChildren<AbilityBase>()[0].abilityName == abilityBase[0].abilityName)
                     {
                         JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
                         jsonObject.AddField((abilityIcons[i].transform.parent.GetSiblingIndex() * 3 + abilityIcons[i].transform.GetSiblingIndex() + 1).ToString(), arr);
