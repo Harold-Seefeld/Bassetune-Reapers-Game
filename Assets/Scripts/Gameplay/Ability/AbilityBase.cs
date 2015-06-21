@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum AbilityType {
-	Offensive,
-	Defensive
-}
-
-public enum AbilityState {
-	Idle,
-	Prepare,
-	Cast,
-	Cooldown
-}
-
 [AddComponentMenu("Ability/AbilityBase")]
 public class AbilityBase : MonoBehaviour {
+
+	public enum AbilityType {
+		Offensive,
+		Defensive
+	}
+	
+	public enum AbilityState {
+		Idle,
+		Prepare,
+		Cast,
+		Cooldown
+	}
+
 	// UI Variables
 	public Sprite icon;
 	public string abilityName;
@@ -39,4 +40,6 @@ public class AbilityBase : MonoBehaviour {
 	public GameObject duringEffect;
 	// Game state
 	public AbilityState abilityState;
+	// Index
+	public int abilityID;
 }

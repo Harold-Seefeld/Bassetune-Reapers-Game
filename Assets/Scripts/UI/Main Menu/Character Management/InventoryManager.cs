@@ -433,7 +433,6 @@ public class InventoryManager : MonoBehaviour {
 		newBase.itemDescription = oldBase.itemDescription;
 		newBase.itemSellPrice = oldBase.itemSellPrice;
 		newBase.itemBuyPrice = oldBase.itemBuyPrice;
-		newBase.itemAnimation = oldBase.itemAnimation;
 	}
 
 	public void CopyWeaponBase(WeaponBase oldBase, WeaponBase newBase)

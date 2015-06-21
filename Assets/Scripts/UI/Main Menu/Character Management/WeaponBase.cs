@@ -37,5 +37,7 @@ public class WeaponBase : MonoBehaviour {
 	public string weaponDescription;
 	public string weaponBuyPrice;
 	public string weaponSellPrice;
+	// Index
+	public int weaponID;
 
 }

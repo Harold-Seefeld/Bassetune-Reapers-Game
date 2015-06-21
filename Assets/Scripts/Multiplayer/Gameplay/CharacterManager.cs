@@ -14,7 +14,7 @@ public class CharacterManager : MonoBehaviour {
 		GameObject go = GameObject.Find ("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
 		// Listen out for new character creations
-		socket.On(SocketIOEvents.Output.BossIO.SPAWN_CREATURE, CreateCharacter);
+		socket.On(SocketIOEvents.Input.CHAR_CREATED, CreateCharacter);
 		socket.On(SocketIOEvents.Input.HP, UpdateHP);
 	}
 	
