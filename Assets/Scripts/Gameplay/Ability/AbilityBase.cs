@@ -42,4 +42,6 @@ public class AbilityBase : MonoBehaviour {
 	public AbilityState abilityState;
 	// Index
 	public int abilityID;
+	// Is the ability togglable?
+	public bool isTogglable;
 }
