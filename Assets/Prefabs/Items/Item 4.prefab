@@ -39,11 +39,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a9b0f10f3e1e84ab13611cfea9643c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemAnimation: default
+  itemSide: 0
+  bossItemType: 0
+  itemIcon: {fileID: 0}
+  itemEffect: {fileID: 0}
   itemName: item
   itemBuyPrice: 1000
   itemSellPrice: 1000
   itemDescription: default
+  itemType: 
+  itemID: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -55,4 +60,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 109812}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

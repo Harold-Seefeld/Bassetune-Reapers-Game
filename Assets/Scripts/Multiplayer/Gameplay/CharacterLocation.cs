@@ -6,15 +6,14 @@ public class CharacterLocation : MonoBehaviour {
 
 	private SocketIOComponent socket;
 	private JSONObject locationsToSend = new JSONObject(JSONObject.Type.OBJECT);
-	[SerializeField] CharacterManager characterManager;
+	[SerializeField] private CharacterManager characterManager;
 
 	// Use this for initialization
 	void Start () {
 		// Get socket object
 		GameObject go = GameObject.Find ("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
-		socket.On(SocketIOEvents.move, UpdateLocations);
-		
+		socket.On(SocketIOEvents.move, UpdateLocations);		
 	}
 	
 	// Update is called once per frame

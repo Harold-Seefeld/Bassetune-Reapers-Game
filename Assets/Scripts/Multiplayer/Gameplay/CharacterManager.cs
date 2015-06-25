@@ -6,7 +6,7 @@ using SocketIO;
 
 public class CharacterManager : MonoBehaviour {
 
-	private SocketIOComponent socket;
+	public SocketIOComponent socket;
 	public List<CharacterData> characterData;
 
 	// Use this for initialization
@@ -14,8 +14,8 @@ public class CharacterManager : MonoBehaviour {
 		GameObject go = GameObject.Find ("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
 		// Listen out for new character creations
-		socket.On(SocketIOEvents.Output.BossIO.SPAWN_CREATURE, CreateCharacter);
-
+		socket.On(SocketIOEvents.Input.CHAR_CREATED, CreateCharacter);
+		socket.On(SocketIOEvents.Input.HP, UpdateHP);
 	}
 	
 	// Update is called once per frame
@@ -27,12 +27,20 @@ public class CharacterManager : MonoBehaviour {
 		// TODO: Create character with given data (assign meshes, etc use a prefab)
 		GameObject newCharacter = new GameObject();
 		CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
-		newCharacterData.CharacterEntitity = Convert.ToInt16(e.data.GetField("Entity"));
-		newCharacterData.CharacterHP = Convert.ToInt16(e.data.GetField("HP").ToString());
-		newCharacterData.CharacterID = Convert.ToInt16(e.data.GetField("ID").ToString());
+		newCharacterData.CharacterEntitity = Convert.ToInt16(e.data.GetField("Entity").n);
+		newCharacterData.CharacterHP = Convert.ToInt16(e.data.GetField("HP").n);
+		newCharacterData.CharacterID = Convert.ToInt16(e.data.GetField("ID").n);
 		newCharacterData.CharacterOwner = e.data.GetField("Owner").ToString();
 		newCharacterData.CharacterType = e.data.GetField("Type").ToString();
 		// Add character data to the list
 		characterData.Add(newCharacterData);
+	}
+
+	void UpdateHP(SocketIOEvent e) {
+		for (int i = 0; i < characterData.Count; i++) {
+			if (e.data.GetField("i").str == characterData[i].CharacterID.ToString()) {
+				characterData[i].CharacterHP = Convert.ToInt16(e.data.GetField("h").n);
+			}
+		}
 	}
 }

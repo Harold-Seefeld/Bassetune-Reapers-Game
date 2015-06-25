@@ -13,7 +13,7 @@ public static class SocketIOEvents {
 		// Knight
 		public static class KnightIO 
 		{
-			public static string USE_ABILITY = "a";
+			public static string ABILITY_START = "as";
 			public static string USE_ITEM = "i";
 			public static string CHANGE_EQUIPPED = "ce";
 		}
@@ -21,9 +21,9 @@ public static class SocketIOEvents {
 		// Boss
 		public static class BossIO 
 		{
+			public static string ABILITY_START = "bs";
 			public static string TRIGGER_TRAP = "u";
 			public static string PUT_TRAP = "p";
-			public static string SPAWN_CREATURE = "s";
 		}
 	}
 	
@@ -34,6 +34,24 @@ public static class SocketIOEvents {
 		public static string PLAYER_LEAVES = "l";
 		public static string HP = "h";
 		public static string TRAP_TRIGGERED = "t";
+		public static string CHAR_CREATED = "nc";
+
+		// Knight
+		public static class KnightIO 
+		{
+			public static string ABILITY_START = "as";
+			public static string ABILITY_END = "ae";
+			public static string USE_ITEM = "i";
+			public static string CHANGE_EQUIPPED = "ce";
+		}
+		
+		// Boss
+		public static class BossIO 
+		{
+			public static string ABILITY_START = "bs";
+			public static string ABILITY_END = "be";
+			public static string PUT_TRAP = "p";
+		}
 	}
 
 }

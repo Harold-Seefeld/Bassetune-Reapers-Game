@@ -18,11 +18,13 @@ public class ItemBase : MonoBehaviour {
 	public BossItemType bossItemType;
 
 	public Sprite itemIcon;
-	public string itemAnimation;
+	public GameObject itemEffect;
 	public string itemName;
 	public string itemBuyPrice;
 	public string itemSellPrice;
 	public string itemDescription;
 	public string itemType;
+	// Index
+	public int itemID;
 
 }
