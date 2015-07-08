@@ -40,7 +40,7 @@ public class Dungeon
 {
 
     #region Properties
-    public Cells[,] Map { get; private set; }
+    public Cells[,] Map { get; set; }
     public IRoomGenerator RoomGen { get; set; }
     public ICorridorGenerator CorrGen { get; set; }
     public Random random { get; set; }
@@ -99,8 +99,9 @@ public class Dungeon
                     }
                 }
             }
-
+            Console.SetCursorPosition(0,Map.GetLength(1));
             Console.Write(result + Environment.NewLine);
+
         }
     }
 

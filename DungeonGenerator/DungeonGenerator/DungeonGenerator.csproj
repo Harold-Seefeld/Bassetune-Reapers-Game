@@ -65,6 +65,8 @@
     <Compile Include="Rooms\RoomGenerator.cs" />
     <Compile Include="Rooms\RoomLayouts.cs" />
     <Compile Include="Rooms\Sill.cs" />
+    <Compile Include="Vector.cs" />
+    <Compile Include="VectorGenerator.cs" />
     <Compile Include="WindsorInstaller.cs" />
   </ItemGroup>
   <ItemGroup>
