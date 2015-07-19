@@ -9,7 +9,10 @@ namespace DungeonGenerator
     {
         Vector northCorridor = null;
         Vector southCorridor = null;
-        Vector perimeter = null;
+        Vector EastWestperimeter = null;
+        Vector eastCorridor = null;
+        Vector westCorridor = null;
+        Vector NorthSouthperimeter = null;
         private Dungeon _dungeon;
         List<Vector> vectors;
 
@@ -18,70 +21,123 @@ namespace DungeonGenerator
             this._dungeon = test;
         }
 
-
-
         public List<Vector> GenerateVectors()
         {
             vectors = new List<Vector>();
-            for (int y = 0; y < _dungeon.Map.GetLength(1); y++)
+            var maxLength = Math.Max(_dungeon.Map.GetLength(0), _dungeon.Map.GetLength(1));
+            for (int y = 0; y < maxLength; y++)
             {
-                for (int x = 0; x < _dungeon.Map.GetLength(0); x++)
+                for (int x = 0; x < maxLength; x++)
                 {
-                    if ((_dungeon.Map[x, y] & Cells.Corridor) != 0)
+                    if (_dungeon.Map.GetLength(0) > y && _dungeon.Map.GetLength(1) > x)
                     {
-                        StartOrContinueNorthCorridor(x, y);
-                        StartOrContinueSouthCorridor(x, y);
-                        EndPerimeter();
-                    }
-                    else if ((_dungeon.Map[x, y] & Cells.Perimeter) != 0)
-                    {
+                        if ((_dungeon.Map[x, y] & Cells.Corridor) != 0)
+                        {
+                            StartOrContinueNorthCorridor(x, y);
+                            StartOrContinueSouthCorridor(x, y);
+                            EndEastWestPerimeter();
+                        }
+                        else if ((_dungeon.Map[x, y] & Cells.Perimeter) != 0)
+                        {
 
-                        StartPerimeter(x, y);
-                        EndCorridor();
+                            StartEastWestPerimeter(x, y);
+                            EndEastWestCorridor();
+                        }
+                        else
+                        {
+                            EndEastWestCorridor();
+                            EndEastWestPerimeter();
+                        }
                     }
-                    else
+                    if (_dungeon.Map.GetLength(0) > x && _dungeon.Map.GetLength(1) > y)
                     {
-                        EndCorridor();
-                        EndPerimeter();
-                    }
+                        if ((_dungeon.Map[y, x] & Cells.Corridor) != 0)
+                        {
+                            StartOrContinueEastCorridor(y, x);
+                            StartOrContinueWestCorridor(y, x);
+                            EndNorthSouthPerimeter();
+                        }
+                        else if ((_dungeon.Map[y, x] & Cells.Perimeter) != 0)
+                        {
 
+                            StartNorthSouthPerimeter(y, x);
+                            EndNorthSouthCorridor();
+                        }
+                        else
+                        {
+                            EndNorthSouthCorridor();
+                            EndNorthSouthPerimeter();
+                        }
+
+                    }
                 }
-                EndCorridor();
-                EndPerimeter();
+                EndEastWestCorridor();
+                EndEastWestPerimeter();
             }
 
             return vectors;
         }
 
-        private void EndPerimeter()
+        private void EndEastWestPerimeter()
         {
-            if (perimeter != null)
+            if (EastWestperimeter != null)
             {
-                if (perimeter.StartX != perimeter.EndX)
+                if (EastWestperimeter.StartX != EastWestperimeter.EndX)
                 {
-                    vectors.Add(perimeter);
+                    vectors.Add(EastWestperimeter);
                 }
 
-                perimeter = null;
+                EastWestperimeter = null;
             }
         }
 
-        private void StartPerimeter(int x, int y)
+        private void EndNorthSouthPerimeter()
         {
-            if (perimeter == null)
+            if (NorthSouthperimeter != null)
             {
-                perimeter = new Vector(x + 0.5M, y + 0.5M);
+                if (NorthSouthperimeter.StartX != NorthSouthperimeter.EndX)
+                {
+                    vectors.Add(NorthSouthperimeter);
+                }
+
+                NorthSouthperimeter = null;
+            }
+        }
+
+        private void StartEastWestPerimeter(int x, int y)
+        {
+            if (EastWestperimeter == null)
+            {
+                EastWestperimeter = new Vector(x + 0.5M, y + 0.5M);
             }
             else
             {
-                perimeter.EndX += 1;
+                EastWestperimeter.EndX += 1;
             }
         }
 
-        private void EndCorridor()
+        private void StartNorthSouthPerimeter(int x, int y)
+        {
+            if (NorthSouthperimeter == null)
+            {
+                NorthSouthperimeter = new Vector(x + 0.5M, y + 0.5M);
+            }
+            else
+            {
+                NorthSouthperimeter.EndY += 1;
+            }
+        }
+
+        private void EndEastWestCorridor()
         {
             EndNorthCorridor();
             EndSouthCorridor();
+        }
+
+        private void EndNorthSouthCorridor()
+        {
+            EndEastCorridor();
+            EndWestCorridor();
         }
 
         private void EndNorthCorridor()
@@ -103,6 +159,25 @@ namespace DungeonGenerator
             }
         }
 
+        private void EndEastCorridor()
+        {
+            if (eastCorridor != null)
+            {
+                vectors.Add(eastCorridor);
+                eastCorridor = null;
+            }
+        }
+
+        private void EndWestCorridor()
+        {
+
+            if (westCorridor != null)
+            {
+                vectors.Add(westCorridor);
+                westCorridor = null;
+            }
+        }
+
         private void StartOrContinueNorthCorridor(int x, int y)
         {
             if (y - 1 >= 0 && (_dungeon.Map[x, y - 1] & (Cells.Corridor | Cells.Door)) != 0)
@@ -111,7 +186,6 @@ namespace DungeonGenerator
             }
             else
             {
-                //north is no entrance and corridor
                 if (northCorridor == null)
                 {
                     northCorridor = new Vector(x, y);
@@ -127,7 +201,6 @@ namespace DungeonGenerator
             }
             else
             {
-                //north is no entrance and corridor
                 if (southCorridor == null)
                 {
                     southCorridor = new Vector(x, y + 1);
@@ -135,5 +208,37 @@ namespace DungeonGenerator
                 southCorridor.EndX += 1;
             }
         }
+
+        private void StartOrContinueEastCorridor(int x, int y)
+        {
+            if (x - 1 >= 0 && (_dungeon.Map[x - 1, y] & (Cells.Corridor | Cells.Door)) != 0)
+            {
+                EndEastCorridor();
+            }
+            else
+            {
+                if (eastCorridor == null)
+                {
+                    eastCorridor = new Vector(x, y);
+                }
+                eastCorridor.EndY += 1;
+            }
+        }
+        private void StartOrContinueWestCorridor(int x, int y)
+        {
+            if (x + 1 <= _dungeon.Map.GetLength(0) && (_dungeon.Map[x + 1, y] & (Cells.Corridor | Cells.Door)) != 0)
+            {
+                EndWestCorridor();
+            }
+            else
+            {
+                if (westCorridor == null)
+                {
+                    westCorridor = new Vector(x + 1, y);
+                }
+                westCorridor.EndY += 1;
+            }
+        }
+
     }
 }
