@@ -31,7 +31,7 @@ public class CharacterManager : MonoBehaviour {
 		newCharacterData.CharacterHP = Convert.ToInt16(e.data.GetField("HP").n);
 		newCharacterData.CharacterID = Convert.ToInt16(e.data.GetField("ID").n);
 		newCharacterData.CharacterOwner = e.data.GetField("Owner").str;
-		newCharacterData.CharacterOwnerNick = e.data.GetField("Owner").str;
+		newCharacterData.CharacterOwnerNick = e.data.GetField("Nick").str;
 		newCharacterData.CharacterType = e.data.GetField("Type").str;
 		// Add character data to the list
 		characterData.Add(newCharacterData);
