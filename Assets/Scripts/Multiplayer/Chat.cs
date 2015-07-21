@@ -22,7 +22,7 @@ public class Chat : MonoBehaviour {
 		// TODO: Make this work with a chatbox
 	}
 
-	void SendMessage (string message) {
+	void SendChatMessage (string message) {
 		JSONObject data = new JSONObject(JSONObject.Type.OBJECT);
 		data.AddField("message", message);
 		socket.Emit(SocketIOEvents.talk, data);
