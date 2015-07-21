@@ -22,7 +22,7 @@ public class Boss : MonoBehaviour {
 		abilityUsage.AddField("target", directionData);
 		abilityUsage.AddField("characterID", characterID);
 		abilityUsage.AddField("abilityID", ability.abilityID);
-		socket.Emit(SocketIOEvents.Output.BossIO.ABILITY_START, abilityUsage);
+		socket.Emit(SocketIOEvents.Output.Boss.ABILITY_START, abilityUsage);
 	}
 
 	public void UseAbility (AbilityBase ability, bool toggle, int characterID, int weaponID) {
@@ -30,6 +30,6 @@ public class Boss : MonoBehaviour {
 		abilityUsage.AddField("toggle", toggle);
 		abilityUsage.AddField("characterID", characterID);
 		abilityUsage.AddField("abilityID", ability.abilityID);
-		socket.Emit(SocketIOEvents.Output.BossIO.ABILITY_START, abilityUsage);
+		socket.Emit(SocketIOEvents.Output.Boss.ABILITY_START, abilityUsage);
 	}
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using SocketIO;
 
@@ -23,7 +23,7 @@ public class Knight : MonoBehaviour {
 		abilityUsage.AddField("characterID", characterID);
 		abilityUsage.AddField("abilityID", ability.abilityID);
 		abilityUsage.AddField("weapon", weaponID);
-		socket.Emit(SocketIOEvents.Output.KnightIO.ABILITY_START, abilityUsage);
+		socket.Emit(SocketIOEvents.Output.Knight.ABILITY_START, abilityUsage);
 	}
 
 	public void UseItem (ItemBase item, int characterID) {

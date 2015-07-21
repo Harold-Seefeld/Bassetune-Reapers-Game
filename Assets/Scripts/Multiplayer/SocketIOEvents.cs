@@ -11,7 +11,7 @@ public static class SocketIOEvents {
 	public static class Output 
 	{
 		// Knight
-		public static class KnightIO 
+		public static class Knight 
 		{
 			public static string ABILITY_START = "as";
 			public static string USE_ITEM = "i";
@@ -19,7 +19,7 @@ public static class SocketIOEvents {
 		}
 		
 		// Boss
-		public static class BossIO 
+		public static class Boss 
 		{
 			public static string ABILITY_START = "bs";
 			public static string TRIGGER_TRAP = "u";
@@ -35,9 +35,10 @@ public static class SocketIOEvents {
 		public static string HP = "h";
 		public static string TRAP_TRIGGERED = "t";
 		public static string CHAR_CREATED = "nc";
+		public static string EFFECT = "e";
 
 		// Knight
-		public static class KnightIO 
+		public static class Knight 
 		{
 			public static string ABILITY_START = "as";
 			public static string ABILITY_END = "ae";
@@ -46,7 +47,7 @@ public static class SocketIOEvents {
 		}
 		
 		// Boss
-		public static class BossIO 
+		public static class Boss 
 		{
 			public static string ABILITY_START = "bs";
 			public static string ABILITY_END = "be";
