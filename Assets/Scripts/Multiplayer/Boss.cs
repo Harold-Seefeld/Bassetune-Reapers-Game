@@ -14,11 +14,11 @@ public class Boss : MonoBehaviour {
 		socket = go.GetComponent<SocketIOComponent>();
 	}
 	
-	public void UseAbility (AbilityBase ability, Vector2 direction, int characterID, int weaponID) {
+	public void UseAbility (AbilityBase ability, Vector2 target, int characterID, int weaponID) {
 		JSONObject abilityUsage = new JSONObject(JSONObject.Type.OBJECT);
 		JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
-		directionData.AddField("x", direction.x);
-		directionData.AddField("y", direction.y);
+		directionData.AddField("x", target.x);
+		directionData.AddField("y", target.y);
 		abilityUsage.AddField("target", directionData);
 		abilityUsage.AddField("characterID", characterID);
 		abilityUsage.AddField("abilityID", ability.abilityID);

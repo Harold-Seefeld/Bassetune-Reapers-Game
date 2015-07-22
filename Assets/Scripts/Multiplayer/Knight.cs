@@ -14,20 +14,26 @@ public class Knight : MonoBehaviour {
 		socket = go.GetComponent<SocketIOComponent>();
 	}
 
-	public void UseAbility (AbilityBase ability, Vector2 direction, int characterID, int weaponID) {
+	public void UseAbility (int abilityID, Vector2 target, int characterID, int weaponID) {
 		JSONObject abilityUsage = new JSONObject(JSONObject.Type.OBJECT);
 		JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
-		directionData.AddField("x", direction.x);
-		directionData.AddField("y", direction.y);
+		directionData.AddField("x", target.x);
+		directionData.AddField("y", target.y);
 		abilityUsage.AddField("target", directionData);
 		abilityUsage.AddField("characterID", characterID);
-		abilityUsage.AddField("abilityID", ability.abilityID);
+		abilityUsage.AddField("abilityID", abilityID);
 		abilityUsage.AddField("weapon", weaponID);
 		socket.Emit(SocketIOEvents.Output.Knight.ABILITY_START, abilityUsage);
 	}
 
-	public void UseItem (ItemBase item, int characterID) {
-
+	public void UseItem (int itemID, int characterID, Vector2 target) {
+		JSONObject itemUsage = new JSONObject(JSONObject.Type.OBJECT);
+		JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
+		directionData.AddField("x", target.x);
+		directionData.AddField("y", target.y);
+		itemUsage.AddField("characterID", characterID);
+		itemUsage.AddField("itemID", itemID);
+		socket.Emit(SocketIOEvents.Output.Knight.USE_ITEM, itemUsage);
 	}
 	
 }
