@@ -10,7 +10,7 @@ public class MapReciever : MonoBehaviour {
 	void Start () {
 		GameObject go = GameObject.Find ("SocketIO");
 		socket = go.GetComponent<SocketIOComponent>();
-		socket.On(SocketIOEvents.Input.MAP, CreateMap)
+		socket.On(SocketIOEvents.Input.MAP, CreateMap);
 	}
 	
 	// Update is called once per frame
