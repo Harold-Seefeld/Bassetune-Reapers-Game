@@ -36,6 +36,7 @@ public static class SocketIOEvents {
 		public static string TRAP_TRIGGERED = "t";
 		public static string CHAR_CREATED = "nc";
 		public static string EFFECT = "e";
+		public static string MAP = "m";
 
 		// Knight
 		public static class Knight 
