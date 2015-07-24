@@ -9,6 +9,6 @@ public class CharacterData : MonoBehaviour {
 	public string CharacterType;
 	public string CharacterOwner;
 	public string CharacterOwnerNick;
-	public int CharacterEntitity;
+	public int CharacterEntity;
 
 }

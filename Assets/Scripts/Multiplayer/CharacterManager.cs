@@ -17,17 +17,12 @@ public class CharacterManager : MonoBehaviour {
 		socket.On(SocketIOEvents.Input.CHAR_CREATED, CreateCharacter);
 		socket.On(SocketIOEvents.Input.HP, UpdateHP);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	void CreateCharacter(SocketIOEvent e) {
 		// TODO: Create character with given data (assign meshes, etc use a prefab)
 		GameObject newCharacter = new GameObject();
 		CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
-		newCharacterData.CharacterEntitity = Convert.ToInt16(e.data.GetField("Entity").n);
+		newCharacterData.CharacterEntity = Convert.ToInt16(e.data.GetField("Entity").n);
 		newCharacterData.CharacterHP = Convert.ToInt16(e.data.GetField("HP").n);
 		newCharacterData.CharacterID = Convert.ToInt16(e.data.GetField("ID").n);
 		newCharacterData.CharacterOwner = e.data.GetField("Owner").str;
@@ -38,10 +33,14 @@ public class CharacterManager : MonoBehaviour {
 	}
 
 	void UpdateHP(SocketIOEvent e) {
-		for (int i = 0; i < characterData.Count; i++) {
-			if (e.data.GetField("i").str == characterData[i].CharacterID.ToString()) {
-				characterData[i].CharacterHP = Convert.ToInt16(e.data.GetField("h").n);
+		for (int n = 0; n < e.data.Count; n++) {
+			for (int i = 0; i < characterData.Count; i++) {
+				if (e.data[n].GetField("i").str == characterData[i].CharacterID.ToString()) {
+					characterData[i].CharacterHP = Convert.ToInt16(e.data[n].GetField("h").n);
+					i = characterData.Count;
+				}
 			}
 		}
 	}
+
 }

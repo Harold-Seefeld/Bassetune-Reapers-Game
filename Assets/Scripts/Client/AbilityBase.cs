@@ -37,7 +37,6 @@ public class AbilityBase : MonoBehaviour {
 	// Prefabs for effects
 	public GameObject startEffect;
 	public GameObject endEffect;
-	public GameObject duringEffect;
 	// Game state
 	public AbilityState abilityState;
 	// Index
