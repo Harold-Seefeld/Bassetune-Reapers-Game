@@ -1,0 +1,14 @@
+﻿<Properties StartupItem="BassetuneReaperLauncher\BassetuneReaperLauncher.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BassetuneReaperLauncher\MainWindow.cs">
+    <Files>
+      <File FileName="BassetuneReaperLauncher\Program.cs" Line="12" Column="27" />
+      <File FileName="BassetuneReaperLauncher\MainWindow.cs" Line="32" Column="36" />
+      <File FileName="BassetuneReaperLauncher\Launcher.cs" Line="61" Column="39" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
