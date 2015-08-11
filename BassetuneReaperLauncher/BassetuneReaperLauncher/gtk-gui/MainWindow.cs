@@ -174,7 +174,6 @@ public partial class MainWindow
 		w10.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.hbox2 = new global::Gtk.HBox ();
-		this.hbox2.WidthRequest = 300;
 		this.hbox2.Name = "hbox2";
 		this.hbox2.Spacing = 6;
 		// Container child hbox2.Gtk.Box+BoxChild
@@ -284,9 +283,9 @@ public partial class MainWindow
 		this.scrolledWindow1.Name = "scrolledWindow1";
 		this.scrolledWindow1.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
 		this.scrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
+		this.scrolledWindow1.BorderWidth = ((uint)(5));
 		// Container child scrolledWindow1.Gtk.Container+ContainerChild
 		this.MainViewer = new global::Gtk.TextView ();
-		this.MainViewer.WidthRequest = 500;
 		this.MainViewer.CanFocus = true;
 		this.MainViewer.Name = "MainViewer";
 		this.scrolledWindow1.Add (this.MainViewer);
@@ -304,7 +303,7 @@ public partial class MainWindow
 		}
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
-		this.LaunchButton.Clicked += new global::System.EventHandler (this.OnClick);
+		this.LaunchButton.Clicked += new global::System.EventHandler (this.OnClickLaunchButton);
 		this.NewsTitle1.Clicked += new global::System.EventHandler (this.OnClickNews1);
 		this.NewsTitle2.Clicked += new global::System.EventHandler (this.OnClickNews2);
 		this.NewsTitle3.Clicked += new global::System.EventHandler (this.OnClickNews3);

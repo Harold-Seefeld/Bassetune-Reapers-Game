@@ -91,7 +91,7 @@
                 <property name="Type">TextOnly</property>
                 <property name="Label" translatable="yes">LAUNCH</property>
                 <property name="UseUnderline">True</property>
-                <signal name="Clicked" handler="OnClick" />
+                <signal name="Clicked" handler="OnClickLaunchButton" />
               </widget>
               <packing>
                 <property name="Position">2</property>
@@ -162,7 +162,6 @@
         <child>
           <widget class="Gtk.HBox" id="hbox2">
             <property name="MemberName" />
-            <property name="WidthRequest">300</property>
             <property name="Spacing">6</property>
             <child>
               <widget class="Gtk.VBox" id="vbox4">
@@ -311,10 +310,10 @@
                 <property name="MemberName" />
                 <property name="HscrollbarPolicy">Never</property>
                 <property name="ShadowType">In</property>
+                <property name="BorderWidth">5</property>
                 <child>
                   <widget class="Gtk.TextView" id="MainViewer">
                     <property name="MemberName" />
-                    <property name="WidthRequest">500</property>
                     <property name="CanFocus">True</property>
                     <property name="ShowScrollbars">True</property>
                     <property name="Text" translatable="yes" />
