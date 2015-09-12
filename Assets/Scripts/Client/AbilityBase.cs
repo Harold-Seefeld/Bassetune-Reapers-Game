@@ -25,7 +25,7 @@ public class AbilityBase : MonoBehaviour {
 	public string buyPrice;
 	public string sellPrice;
 	// Required weapons
-	public WeaponBase.WeaponType[] requiredWeapons;
+	public Weapon.WeaponType[] requiredWeapons;
 	// % of damage ratio
 	public float damageRatio;
 	// Time needed during cast

@@ -36,18 +36,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		if (GetComponent<WeaponBase>())
-		{
-			WeaponBase _weapon = GetComponent<WeaponBase>();
-
-			if(!Popup.instance)
-				Debug.LogError("Please make sure you have Popup Gameobject on your scene");
-			
-			Popup.instance.gameObject.SetActive (true);
-			Popup.instance.Display (rectTransform.position + new Vector3 (Screen.width / 21, -Screen.width / 85),
-			                        _weapon.weaponName, _weapon.weaponType.ToString(), _weapon.weaponDescription);
-		}
-		else if(GetComponent<ItemBase>())
+		if(GetComponent<ItemBase>())
 		{
 			ItemBase _item = GetComponent<ItemBase>();
 
@@ -57,7 +46,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 			
 			Popup.instance.gameObject.SetActive (true);
 			Popup.instance.Display (rectTransform.position + new Vector3 (Screen.width / 21, -Screen.width / 85),
-			                        _item.itemName, _item.itemType, _item.itemDescription);
+			                        _item.itemName, "type needs to be edited in script inventory drag", _item.itemDescription);
 		}
 		else
 			return;

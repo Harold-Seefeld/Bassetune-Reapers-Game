@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponBase : MonoBehaviour {
+public class Weapon : ItemBase {
 
 	public enum WeaponType {
 		Dagger,
@@ -30,14 +30,5 @@ public class WeaponBase : MonoBehaviour {
 		LightCrossbow,
 		HeavyCrossbow
 	}
-	public WeaponType weaponType;
-
-	public Sprite weaponIcon;
-	public string weaponName;
-	public string weaponDescription;
-	public string weaponBuyPrice;
-	public string weaponSellPrice;
-	// Index
-	public int weaponID;
-
+    public WeaponType weaponType;
 }

@@ -43,12 +43,18 @@ MonoBehaviour:
   abilityName: Attack Dummy
   abilityType: 0
   description: Do dummy Attack to Opponent
-  requiredWeapons: 0
+  buyPrice: 
+  sellPrice: 
+  requiredWeapons: 
   damageRatio: 0
   castTime: 5
   cooldownTime: 10
   anim: 
-  effect: {fileID: 0}
+  startEffect: {fileID: 0}
+  endEffect: {fileID: 0}
+  abilityState: 0
+  abilityID: 0
+  isTogglable: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -60,4 +66,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
-  m_IsExploded: 1
