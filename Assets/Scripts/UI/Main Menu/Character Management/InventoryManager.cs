@@ -21,13 +21,23 @@ public class InventoryManager : MonoBehaviour
     public Button notificationButton;
     public RectTransform notificationRect;
 
+    // Label to create an entry
+    public GameObject labelPrefab;
+
+    // All items and abilities
+    public PrefabStore[] items;
+    public PrefabStore abilities;
+
     [SerializeField]
-    public ClientData clientData;
+    private ClientData clientData;
 
     void Start()
     {
         setInventorySite = server + "/setInventory";
         getInventorySite = server + "/getInventory";
+
+        clientData = FindObjectOfType<ClientData>() as ClientData;
+        UpdateInventory();
     }
 
     public void UpdateInventory()
@@ -46,9 +56,83 @@ public class InventoryManager : MonoBehaviour
         Debug.Log("Downloaded Inventory Successfully.");
     }
 
+    private ItemBase GetItemInfo(string panel, int id)
+    {
+        for (int n = 0; n < items.Length; n++)
+        {
+            if (items[n].prefabs.Length > 0)
+            {
+                if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
+                {
+                    continue;
+                }
+                if (panel == "armor" && !items[n].prefabs[0].GetComponent<Armor>())
+                {
+                    continue;
+                }
+                if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
+                {
+                    continue;
+                }
+                if (panel == "equipable" && !items[n].prefabs[0].GetComponent<Equipable>())
+                {
+                    continue;
+                }
+                for (int i = 0; i < items[n].prefabs.Length; i++)
+                {
+                    ItemBase item = items[n].prefabs[i].GetComponent<ItemBase>();
+                    if (items[n].prefabs[i].GetComponent<ItemBase>().itemID == id)
+                    {
+                        return item;
+                    }
+                }
+            }
+        }
+        return new ItemBase();
+    }
+
+    private AbilityBase GetAbilityInfo(int id)
+    {
+        for (int i = 0; i < abilities.prefabs.Length; i++)
+        {
+            AbilityBase ability = abilities.prefabs[i].GetComponent<AbilityBase>();
+            if (abilities.prefabs[i].GetComponent<AbilityBase>().abilityID == id)
+            {
+                return ability;
+            }
+        }
+        return new AbilityBase();
+    }
+
     public void ShowInventory(string panel)
     {
+        int inventoryLength = inventoryJSON.Count;
+        for (int i = 0; i < inventoryLength; i++)
+        {
+            if (inventoryJSON[i][0].ToString() == "null")
+            {
+                continue;
+            }
+            // Create entry
+            GameObject newObject = Instantiate(labelPrefab);
+            newObject.transform.SetParent(inventoryPanel.transform);
 
+            // Get and set variables for the item entry
+            if (panel == "ability")
+            {
+                AbilityBase item = GetAbilityInfo(i);
+                newObject.GetComponentInChildren<Text>().text = item.abilityName;
+                newObject.GetComponentInChildren<Image>().sprite = item.icon;
+                newObject.AddComponent<AbilityBase>().abilityID = item.abilityID;
+            }
+            else
+            {
+                ItemBase item = GetItemInfo(panel, i);
+                newObject.GetComponentInChildren<Text>().text = item.itemName;
+                newObject.GetComponentInChildren<Image>().sprite = item.itemIcon;
+                newObject.AddComponent<ItemBase>().itemID = item.itemID;
+            }
+        }
     }
 
     public void ShowShop(string panel)
@@ -287,112 +371,112 @@ public class InventoryManager : MonoBehaviour
     //    }
     //}
 
-    //void BuyItem(int itemIndex, int itemAmount, string itemType)
-    //{
-    //    WWWForm www = new WWWForm();
-    //    www.AddField("uuid", clientData.GetSession());
-    //    www.AddField("itemAmount", itemAmount);
-    //    www.AddField("commandType", "Buy");
-    //    www.AddField("itemType", itemType);
-    //    www.AddField("item", itemIndex + 1);
-    //    WWW w = new WWW(setInventorySite, www.data);
-    //    StartCoroutine(BuyItem(w));
-    //}
+    void BuyItem(int itemIndex, int itemAmount, string itemType)
+    {
+        WWWForm www = new WWWForm();
+        www.AddField("uuid", clientData.GetSession());
+        www.AddField("itemAmount", itemAmount);
+        www.AddField("commandType", "Buy");
+        www.AddField("itemType", itemType);
+        www.AddField("item", itemIndex);
+        WWW w = new WWW(setInventorySite, www.data);
+        StartCoroutine(BuyItem(w));
+    }
 
-    //IEnumerator BuyItem(WWW w)
-    //{
-    //    yield return w;
+    IEnumerator BuyItem(WWW w)
+    {
+        yield return w;
 
-    //    if (w.text == "Successfully purchased.")
-    //    {
-    //        notificationRect.transform.gameObject.SetActive(true);
-    //        notificationRect.SetAsLastSibling();
-    //        notificationText.text = "Successfully Purchased.";
-    //        notificationButton.onClick.RemoveAllListeners();
-    //        notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
-    //        UpdateInventory();
-    //    }
-    //    else if (w.text == "Account ID is undefined.")
-    //    {
-    //        Application.Quit();
-    //    }
-    //    else if (w.text == "Not enough gold.")
-    //    {
-    //        notificationRect.transform.gameObject.SetActive(true);
-    //        notificationRect.SetAsLastSibling();
-    //        notificationText.text = "Not enough gold.";
-    //        notificationButton.onClick.RemoveAllListeners();
-    //        notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
-    //    }
-    //    else
-    //    {
-    //        notificationRect.transform.gameObject.SetActive(true);
-    //        notificationRect.SetAsLastSibling();
-    //        notificationText.text = "An error occurred";
-    //        notificationButton.onClick.RemoveAllListeners();
-    //        notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
-    //    }
-    //    Debug.Log(w.text);
-    //}
+        if (w.text == "Successfully purchased.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Successfully Purchased.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+            UpdateInventory();
+        }
+        else if (w.text == "Account ID is undefined.")
+        {
+            Application.Quit();
+        }
+        else if (w.text == "Not enough gold.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Not enough gold.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+        else
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "An error occurred";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+        Debug.Log(w.text);
+    }
 
-    //void SellItem(int itemIndex, int itemAmount, string itemType)
-    //{
-    //    WWWForm www = new WWWForm();
-    //    www.AddField("uuid", clientData.GetSession());
-    //    www.AddField("itemAmount", itemAmount);
-    //    www.AddField("commandType", "Sell");
-    //    www.AddField("itemType", itemType);
-    //    www.AddField("item", itemIndex + 1);
-    //    Debug.Log(itemIndex + 1);
-    //    WWW w = new WWW(setInventorySite, www.data);
-    //    StartCoroutine(SellItem(w));
-    //}
+    void SellItem(int itemIndex, int itemAmount, string itemType)
+    {
+        WWWForm www = new WWWForm();
+        www.AddField("uuid", clientData.GetSession());
+        www.AddField("itemAmount", itemAmount);
+        www.AddField("commandType", "Sell");
+        www.AddField("itemType", itemType);
+        www.AddField("item", itemIndex);
+        Debug.Log(itemIndex);
+        WWW w = new WWW(setInventorySite, www.data);
+        StartCoroutine(SellItem(w));
+    }
 
-    //IEnumerator SellItem(WWW w)
-    //{
-    //    yield return w;
+    IEnumerator SellItem(WWW w)
+    {
+        yield return w;
 
-    //    if (w.text == "Successfully sold.")
-    //    {
-    //        notificationRect.transform.gameObject.SetActive(true);
-    //        notificationRect.SetAsLastSibling();
-    //        notificationText.text = "Successfully Sold.";
-    //        notificationButton.onClick.RemoveAllListeners();
-    //        notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
-    //        UpdateInventory();
-    //    }
-    //    else if (w.text == "Account ID is undefined.")
-    //    {
-    //        Application.Quit();
-    //    }
-    //    else if (w.text == "Couldn't find item." || w.text == "Could not retrieve any item results.")
-    //    {
-    //        notificationRect.transform.gameObject.SetActive(true);
-    //        notificationRect.SetAsLastSibling();
-    //        notificationText.text = "Item doesn't exist.";
-    //        notificationButton.onClick.RemoveAllListeners();
-    //        notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
-    //        UpdateInventory();
-    //    }
-    //    else if (w.text == "Sell amount too big.")
-    //    {
-    //        notificationRect.transform.gameObject.SetActive(true);
-    //        notificationRect.SetAsLastSibling();
-    //        notificationText.text = "You don't have enough items.";
-    //        notificationButton.onClick.RemoveAllListeners();
-    //        notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
-    //    }
-    //    else
-    //    {
-    //        notificationRect.transform.gameObject.SetActive(true);
-    //        notificationRect.SetAsLastSibling();
-    //        notificationText.text = "An error occurred";
-    //        notificationButton.onClick.RemoveAllListeners();
-    //        notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
-    //    }
+        if (w.text == "Successfully sold.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Successfully Sold.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+            UpdateInventory();
+        }
+        else if (w.text == "Account ID is undefined.")
+        {
+            Application.Quit();
+        }
+        else if (w.text == "Couldn't find item." || w.text == "Could not retrieve any item results.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Item doesn't exist.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+            UpdateInventory();
+        }
+        else if (w.text == "Sell amount too big.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "You don't have enough items.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+        else
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "An error occurred";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
 
-    //    Debug.Log(w.text);
-    //}
+        Debug.Log(w.text);
+    }
 
     //public void CopyItemBase(ItemBase oldBase, ItemBase newBase)
     //{

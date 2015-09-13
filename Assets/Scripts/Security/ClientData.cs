@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ClientData : MonoBehaviour
+public class ClientData : ScriptableObject
 {
 
     private string sessionID;

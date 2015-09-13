@@ -33,7 +33,8 @@ public class AuthenticationManager : MonoBehaviour
     {
         loginSite = server + "/login";
         registerSite = server + "/register";
-        clientData = new ClientData();
+
+        clientData = ScriptableObject.CreateInstance(typeof(ClientData)) as ClientData;
     }
 
     private bool IsValidEmail(string strIn)
