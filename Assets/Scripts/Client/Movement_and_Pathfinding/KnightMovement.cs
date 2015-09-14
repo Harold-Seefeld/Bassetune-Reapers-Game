@@ -53,8 +53,11 @@ public class KnightMovement : MonoBehaviour
 			gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, endPoint, 1/(speed*(Vector3.Distance(gameObject.transform.position, endPoint))));
 
 			//send the emitting data
-			//socket.Emit("Emitting player's movement", EmitPlayerMovement);
-			//socket.Emit("it is working");
+			JSONObject locationData = new JSONObject(JSONObject.Type.OBJECT);
+			locationData.AddField("x", gameObject.transform.position.x);
+			locationData.AddField("y", gameObject.transform.position.y);
+			
+			socket.Emit("it is working", locationData);
 
 			Debug.Log ("Moving, sir!");
 		}
