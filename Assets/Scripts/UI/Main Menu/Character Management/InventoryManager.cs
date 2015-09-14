@@ -51,6 +51,7 @@ public class InventoryManager : MonoBehaviour
     IEnumerator UpdateInventory(WWW w)
     {
         yield return w;
+        Debug.Log(w.text);
         inventoryJSON = new JSONObject(w.text);
 
         Debug.Log("Downloaded Inventory Successfully.");
@@ -88,7 +89,7 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
-        return new ItemBase();
+        return null;
     }
 
     private AbilityBase GetAbilityInfo(int id)
@@ -101,53 +102,124 @@ public class InventoryManager : MonoBehaviour
                 return ability;
             }
         }
-        return new AbilityBase();
+        return null;
     }
 
     public void ShowInventory(string panel)
     {
         int inventoryLength = inventoryJSON.Count;
+        // Clear previous entries in inventory
+        foreach (Transform child in inventoryPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        // Start creating entries
         for (int i = 0; i < inventoryLength; i++)
         {
             if (inventoryJSON[i][0].ToString() == "null")
             {
                 continue;
             }
-            // Create entry
-            GameObject newObject = Instantiate(labelPrefab);
-            newObject.transform.SetParent(inventoryPanel.transform);
-
             // Get and set variables for the item entry
             if (panel == "ability")
             {
                 AbilityBase item = GetAbilityInfo(i);
-                newObject.GetComponentInChildren<Text>().text = item.abilityName;
-                newObject.GetComponentInChildren<Image>().sprite = item.icon;
-                newObject.AddComponent<AbilityBase>().abilityID = item.abilityID;
+                if (item != null)
+                {
+                    // Create entry
+                    GameObject newObject = Instantiate(labelPrefab);
+                    newObject.transform.SetParent(inventoryPanel.transform);
+
+                    newObject.GetComponentInChildren<Text>().text = item.abilityName;
+                    newObject.GetComponentsInChildren<Image>()[1].sprite = item.icon;
+                    newObject.AddComponent<AbilityBase>().abilityID = item.abilityID;
+                }
             }
             else
             {
                 ItemBase item = GetItemInfo(panel, i);
-                newObject.GetComponentInChildren<Text>().text = item.itemName;
-                newObject.GetComponentInChildren<Image>().sprite = item.itemIcon;
-                newObject.AddComponent<ItemBase>().itemID = item.itemID;
+                if (item != null)
+                {
+                    // Create entry
+                    GameObject newObject = Instantiate(labelPrefab);
+                    newObject.transform.SetParent(inventoryPanel.transform);
+
+                    newObject.GetComponentInChildren<Text>().text = item.itemName;
+                    newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
+                    newObject.AddComponent<ItemBase>().itemID = item.itemID;
+                }
             }
         }
     }
 
     public void ShowShop(string panel)
     {
+        // Clear previous entries in inventory
+        foreach (Transform child in shopPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        // Add all items based on respective list
+        if (panel == "ability")
+        {
+            for (int i = 0; i < abilities.prefabs.Length; i++)
+            {
+                // Create entry
+                AbilityBase item = abilities.prefabs[i].GetComponent<AbilityBase>();
+                GameObject newObject = Instantiate(labelPrefab);
+                newObject.transform.SetParent(shopPanel.transform);
 
+                newObject.GetComponentInChildren<Text>().text = item.abilityName;
+                newObject.GetComponentsInChildren<Image>()[1].sprite = item.icon;
+                newObject.AddComponent<AbilityBase>().abilityID = item.abilityID;
+            }
+        }
+        else
+        {
+            for (int n = 0; n < items.Length; n++)
+            {
+                if (items[n].prefabs.Length > 0)
+                {
+                    if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
+                    {
+                        continue;
+                    }
+                    if (panel == "armor" && !items[n].prefabs[0].GetComponent<Armor>())
+                    {
+                        continue;
+                    }
+                    if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
+                    {
+                        continue;
+                    }
+                    if (panel == "equipable" && !items[n].prefabs[0].GetComponent<Equipable>())
+                    {
+                        continue;
+                    }
+                    for (int i = 0; i < items[n].prefabs.Length; i++)
+                    {
+                        // Create Entry
+                        ItemBase item = items[n].prefabs[i].GetComponent<ItemBase>();
+                        GameObject newObject = Instantiate(labelPrefab);
+                        newObject.transform.SetParent(shopPanel.transform);
+
+                        newObject.GetComponentInChildren<Text>().text = item.itemName;
+                        newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
+                        newObject.AddComponent<ItemBase>().itemID = item.itemID;
+                    }
+                }
+            }
+        }
     }
 
     public void SortInventory(string filter)
     {
-
+        // TODO: Edit to include filters for sorting the inventory
     }
 
     public void SortShop(string filter)
     {
-
+        // TODO: Edit to include filters for sorting the inventory
     }
 
     //void SetShopText(GameObject shopList, GameObject[] items)
@@ -253,121 +325,6 @@ public class InventoryManager : MonoBehaviour
     //    if (shopList.GetComponentsInChildren<Text>(true).Length > 5)
     //    {
     //        rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (shopList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
-    //    }
-    //}
-
-    //void SetInventory(GameObject shopList, GameObject list, GameObject[] items)
-    //{
-    //    for (int i = 0; i < inventoryJSON.Count; i++)
-    //    {
-    //        if (inventoryJSON[i][0].ToString() != "null" && items == inventoryList.itemList && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
-    //        {
-    //            GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
-    //            newObject.transform.SetParent(inventoryList.transform);
-    //            newObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    //            newObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-    //            newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
-    //            ItemBase itemBase = newObject.AddComponent<ItemBase>();
-    //            CopyItemBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>(), itemBase);
-
-    //            Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-    //            for (int il = 0; il < newObjectButtons.Length; il++)
-    //            {
-    //                int itemIndex = Convert.ToInt16(inventoryJSON[i][0]) - 1;
-    //                if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Sell")
-    //                {
-    //                    newObjectButtons[il].onClick.RemoveAllListeners();
-    //                    newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemSellPrice.ToString();
-    //                    newObjectButtons[il].onClick.AddListener(() => { SellItem(itemIndex, 1, "Item"); }); ;
-    //                }
-    //            }
-    //        }
-    //        else if (inventoryJSON[i][2].ToString() != "null" && items == inventoryList.weaponList)
-    //        {
-    //            GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
-    //            newObject.transform.SetParent(inventoryList.transform);
-    //            newObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    //            newObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-    //            newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][2]) - 1].GetComponent<WeaponBase>().weaponName;
-    //            WeaponBase weaponBase = newObject.AddComponent<WeaponBase>();
-    //            CopyWeaponBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<WeaponBase>(), weaponBase);
-
-    //            Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-    //            for (int il = 0; il < newObjectButtons.Length; il++)
-    //            {
-    //                int itemIndex = Convert.ToInt16(inventoryJSON[i][2]) - 1;
-    //                if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Sell")
-    //                {
-    //                    newObjectButtons[il].onClick.RemoveAllListeners();
-    //                    newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponSellPrice.ToString();
-    //                    newObjectButtons[il].onClick.AddListener(() => { SellItem(itemIndex, 1, "Weapon"); }); ;
-    //                }
-    //            }
-    //        }
-    //        else if (inventoryJSON[i][3].ToString() != "null" && items == inventoryList.abilityList)
-    //        {
-    //            GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
-    //            newObject.transform.SetParent(inventoryList.transform);
-    //            newObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    //            newObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-    //            newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][3]) - 1].GetComponent<AbilityBase>().abilityName;
-    //            AbilityBase abilityBase = newObject.AddComponent<AbilityBase>();
-    //            CopyAbilityBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<AbilityBase>(), abilityBase);
-
-    //            Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-    //            for (int il = 0; il < newObjectButtons.Length; il++)
-    //            {
-    //                int itemIndex = Convert.ToInt16(inventoryJSON[i][3]) - 1;
-    //                if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Sell")
-    //                {
-    //                    newObjectButtons[il].onClick.RemoveAllListeners();
-    //                    newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
-    //                    newObjectButtons[il].onClick.AddListener(() => { SellItem(itemIndex, 1, "Ability"); }); ;
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    RectTransform rectTransform = inventoryList.GetComponent<RectTransform>();
-    //    if (inventoryList.GetComponentsInChildren<Text>(true).Length > 5)
-    //    {
-    //        rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (inventoryList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
-    //    }
-    //}
-
-    //void SetInventory(GameObject shopList, GameObject inventoryList, GameObject[] items, ItemBase.BossItemType itemType)
-    //{
-    //    for (int i = 0; i < inventoryJSON.Count; i++)
-    //    {
-    //        if (inventoryJSON[i][0].ToString() != "null" && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().bossItemType == itemType)
-    //        {
-    //            GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
-    //            newObject.transform.SetParent(inventoryList.transform);
-    //            newObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    //            newObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-    //            newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
-    //            ItemBase itemBase = newObject.AddComponent<ItemBase>();
-    //            CopyItemBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>(), itemBase);
-
-    //            Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-    //            for (int il = 0; il < newObjectButtons.Length; il++)
-    //            {
-    //                int itemIndex = Convert.ToInt16(inventoryJSON[i][0]) - 1;
-    //                if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Sell")
-    //                {
-    //                    newObjectButtons[il].onClick.RemoveAllListeners();
-    //                    newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
-    //                    newObjectButtons[il].onClick.AddListener(() => { SellItem(itemIndex, 1, "Item"); }); ;
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    RectTransform rectTransform = inventoryList.GetComponent<RectTransform>();
-    //    if (inventoryList.GetComponentsInChildren<Text>(true).Length > 5)
-    //    {
-    //        rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, rectTransform.offsetMax.x - (inventoryList.GetComponentsInChildren<Text>(true).Length - 150 * 30));
-    //        rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, rectTransform.offsetMax.y);
     //    }
     //}
 

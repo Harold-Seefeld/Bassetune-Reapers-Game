@@ -34,7 +34,7 @@ public class AuthenticationManager : MonoBehaviour
         loginSite = server + "/login";
         registerSite = server + "/register";
 
-        clientData = ScriptableObject.CreateInstance(typeof(ClientData)) as ClientData;
+        clientData = new GameObject().AddComponent<ClientData>();
     }
 
     private bool IsValidEmail(string strIn)

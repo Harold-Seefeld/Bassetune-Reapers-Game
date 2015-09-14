@@ -1294,7 +1294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58192bfb8ecc20748919bc7f5af7e7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  server: bassetune.com
+  server: localhost:3000
   usernameText: {fileID: 1072627373}
   passwordText: {fileID: 1683473162}
   nicknameText: {fileID: 700944015}
