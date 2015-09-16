@@ -19,27 +19,11 @@ public class Grid : MonoBehaviour
 		gridSizeY = Mathf.RoundToInt(gridWorld.y/nodeDiameter);
 		CreateGrid();
 	}
-	
-	void OnDrawGizmos()
-	{
-		Gizmos.DrawWireCube (transform.position, new Vector3(gridWorld.x, 1, gridWorld.y));
-
-		if(grid != null)
-		{
-			foreach(Node n in grid)
-			{
-				Gizmos.color = (n._walkable) ? Color.blue : Color.red;
-				Gizmos.DrawCube(n._worldPosition, Vector3.one * (nodeDiameter - .1f));
-
-			}
-		}
-
-	}
 
 	void CreateGrid()
 	{
 		grid = new Node[gridSizeX,gridSizeY];
-		Vector3 mapBottomLeft = transform.position - Vector3.right * gridWorld.x / 2 - Vector3.forward * gridWorld.y / 2;
+		Vector3 mapBottomLeft = transform.position-Vector3.right*gridWorld.x / 2-Vector3.forward*gridWorld.y / 2;
 
 
 		for(int x = 0; x < gridSizeX; x++)
@@ -54,4 +38,31 @@ public class Grid : MonoBehaviour
 		}
 	}
 
+	public Node NodeFromMapPoint(Vector3 mapPosition)
+	{
+		float percentX = (mapPosition.x + gridWorld.x / 2) / gridWorld.x;
+		float percentY = (mapPosition.z + gridWorld.y / 2) / gridWorld.y;
+		percentX = Mathf.Clamp01 (percentX);
+		percentY = Mathf.Clamp01 (percentY);
+
+		int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
+		int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
+
+		return grid [x,y];
+	}
+
+	void OnDrawGizmos()
+	{
+		Gizmos.DrawWireCube (transform.position, new Vector3(gridWorld.x, 1, gridWorld.y));
+
+		if(grid != null)
+		{
+			foreach(Node n in grid)
+			{
+				Gizmos.color = (n._walkable) ? Color.white : Color.red;
+				Gizmos.DrawCube(n._worldPosition, Vector3.one*(nodeDiameter-.1f));
+			}
+		}
+
+	}
 }
