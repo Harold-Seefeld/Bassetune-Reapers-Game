@@ -8,11 +8,19 @@ public class GridPlayer : Pathfinding
     public Camera playerCam;
     public Camera minimapCam;
 
-	//adding the socketIO
+	//adding the socketIO gameobject
 	private GameObject socketObject;
-	public SocketIO socket;
+	private SocketIOComponent socket;
+    
+	public GUIStyle bgStyle;
 
-    public GUIStyle bgStyle;
+	//this start function will initialize the socket emitter.
+	void Start()
+	{
+		socketObject = GameObject.Find ("SocketIO");
+		socket = socketObject.GetComponent<SocketIOComponent>();
+		socket.On("listening", OpenSocket);
+	}
 
 	void Update () 
     {
@@ -21,6 +29,11 @@ public class GridPlayer : Pathfinding
         {
             MoveMethod();
         }
+	}
+
+	private void OpenSocket(SocketIOEvent ev)
+	{
+		Debug.Log("listening for emitter");
 	}
 
     private void FindPath()
@@ -52,7 +65,8 @@ public class GridPlayer : Pathfinding
 
     private void MoveMethod()
     {
-        
+		//create a JSONobject that will catch the movement data for the players.  
+		JSONObject movementData = new JSONObject(JSONObject.Type.OBJECT);
 
 		if (Path.Count > 0)
         {
@@ -77,7 +91,15 @@ public class GridPlayer : Pathfinding
                 }
             }
             transform.position = new Vector3(transform.position.x, maxY + 1F, transform.position.z);
-        }
+        	
+			//adding some fields and emitting them from the socket
+			movementData.AddField("x", direction.x);
+			movementData.AddField("y", direction.y);
+			movementData.AddField("z", direction.z);
+
+			socket.Emit("making movement data", movementData);
+
+		}
     }
 
     void OnGUI()
