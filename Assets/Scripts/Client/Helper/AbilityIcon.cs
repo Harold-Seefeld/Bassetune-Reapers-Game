@@ -10,7 +10,7 @@ public class AbilityIcon : MonoBehaviour {
 	public Image icon;
 	public Outline outline;
 	public Text timer;
-	AbilityBase _ability;
+	Ability _ability;
 
 	void Awake () {
 		if (iconNone == null) {
@@ -23,14 +23,14 @@ public class AbilityIcon : MonoBehaviour {
 		timer = GetComponentInChildren<Text> ();
 	}
 
-	public AbilityBase ability {
+	public Ability ability {
 		get {
 			return _ability;
 		}
 		set {
 			_ability = value;
 			if (_ability)
-				icon.sprite = _ability.icon;
+				icon.sprite = _ability.itemIcon;
 			else 
 				icon.sprite = iconNone;
 		}
@@ -44,9 +44,9 @@ public class AbilityIcon : MonoBehaviour {
 
 		Popup.instance.gameObject.SetActive (true);
 		Popup.instance.Display (rectTransform.position + new Vector3 (0, 70),
-		                        _ability.abilityName,
-		                        _ability.abilityType.ToString(),
-		                        _ability.description);
+		                        _ability.itemName,
+		                        _ability.itemDescription.ToString(),
+		                        _ability.isTogglable.ToString());
 	}
 
 	public void OnPointerExit(){

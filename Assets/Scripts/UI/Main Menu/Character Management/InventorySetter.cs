@@ -2,98 +2,95 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class InventorySetter : MonoBehaviour {
+public class InventorySetter : MonoBehaviour
+{
 
-	[SerializeField] string slotInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/slotInventory";
-	public Sprite defaultImage;
-	public InventoryManager inventoryManager;
+    private string slotInventorySite = "";
+    private ClientData clientData;
 
-	//public void SetInventory()
-	//{
-	//	Image[] inventoryIcons = GetComponentsInChildren<Image>();
-	//	JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
+    public Sprite defaultImage;
+    public InventoryManager inventoryManager;
+    
 
-	//	for (int i = 0; i < inventoryIcons.Length; i++)
-	//	{
-	//		if (inventoryIcons[i].GetComponentsInChildren<ItemBase>(true).Length > 0)
-	//		{
-	//			ItemBase[] itemBase = inventoryIcons[i].GetComponentsInChildren<ItemBase>(true);
-	//			for (int x = 0; i < inventoryManager.inventoryList.itemList.Length; i++)
-	//			{
-	//				if (inventoryManager.inventoryList.itemList[i].GetComponent<ItemBase>().itemName == itemBase[0].itemName)
-	//				{
-	//					JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
-	//					jsonObject.AddField((inventoryIcons[i].transform.parent.GetSiblingIndex() * 3 + inventoryIcons[i].transform.GetSiblingIndex()).ToString(), arr);
-						
-	//					arr.Add((x + 1).ToString());
-	//					arr.Add("item");
-	//				}
-	//			}
-	//		}
-	//		else if (inventoryIcons[i].GetComponentsInChildren<WeaponBase>(true).Length > 0)
-	//		{
-	//			WeaponBase[] weaponBase = inventoryIcons[i].GetComponentsInChildren<WeaponBase>(true);
-	//			for (int x = 0; i < inventoryManager.inventoryList.itemList.Length; i++)
-	//			{
-	//				if (inventoryManager.inventoryList.weaponList[i].GetComponentsInChildren<WeaponBase>()[0].weaponName == weaponBase[0].weaponName)
-	//				{
-	//					JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
-	//					jsonObject.AddField((inventoryIcons[i].transform.parent.GetSiblingIndex() * 3 + inventoryIcons[i].transform.GetSiblingIndex() + 1).ToString(), arr);
-						
-	//					arr.Add((x + 1).ToString());
-	//					arr.Add("weapon");
-	//				}
-	//			}
-	//		}
-	//		else
-	//		{
-	//			jsonObject.AddField((inventoryIcons[i].transform.parent.GetSiblingIndex() * 3 + inventoryIcons[i].transform.GetSiblingIndex() + 1).ToString(), "null");
-	//		}
-	//	}
+    public void Start()
+    {
+        slotInventorySite = inventoryManager.server + "/slotInventory";
+        clientData = FindObjectOfType<ClientData>() as ClientData;
+    }
 
-	//	WWWForm www = new WWWForm();
-	//	www.AddField("uuid", inventoryManager.clientData.GetSession());
-	//	www.AddField("j", jsonObject.Print());
-	//	WWW w = new WWW (slotInventorySite, www.data);
-	//	StartCoroutine(SetInventorySlot(w));
-	//}
+    public void SetInventory()
+    {
+        Image[] inventoryIcons = GetComponentsInChildren<Image>();
+        // Create a json object for storing the json arrays
+        JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
 
-	//IEnumerator SetInventorySlot(WWW w)
-	//{
-	//	yield return w;
-		
-	//	if (w.text != "Successfully Updated.")
-	//	{
-	//		inventoryManager.notificationRect.transform.gameObject.SetActive(true);
-	//		inventoryManager.notificationRect.SetAsLastSibling();
-	//		inventoryManager.notificationText.text = "An error occurred";
-	//		inventoryManager.notificationButton.onClick.RemoveAllListeners();
-	//		inventoryManager.notificationButton.onClick.AddListener(() => {inventoryManager.notificationRect.transform.gameObject.SetActive(false);});;
-	//	}
-	//}
+        for (int i = 0; i < inventoryIcons.Length; i++)
+        {
+            if (inventoryIcons[i].GetComponentsInChildren<ItemBase>(true).Length > 0)
+            {
+                ItemBase[] itemBase = inventoryIcons[i].GetComponentsInChildren<ItemBase>(true);
+                for (int n = 0; n < inventoryManager.items.Length; n++)
+                {
+                    GameObject[] prefabList = inventoryManager.items[n].prefabs;
+                    for (int x = 0; i < prefabList.Length; i++)
+                    {
+                        ItemBase item = prefabList[x].GetComponent<ItemBase>();
+                        if (item.itemID == itemBase[0].itemID)
+                        {
+                            // Create a new JSON array for storing the fields
+                            JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
+                            // Add the item ID
+                            arr.Add(item.itemID.ToString());
+                            // TODO: Add item count
+                            arr.Add(item.itemCount.ToString());
+                            // Say that the type is an item
+                            arr.Add("i");
+                            // Add the position of the inventory and add it to the main json object
+                            jsonObject.AddField((inventoryIcons[i].transform.parent.GetSiblingIndex() * 3 + inventoryIcons[i].transform.GetSiblingIndex()).ToString(), arr);
+                        }
+                    }
+                }
+            }
+        }
 
-	//void ResetInventory()
-	//{
-	//	Image[] inventoryIcons = GetComponentsInChildren<Image>();
+        WWWForm www = new WWWForm();
+        www.AddField("uuid", clientData.GetSession());
+        www.AddField("j", jsonObject.Print());
+        WWW w = new WWW(slotInventorySite, www.data);
+        StartCoroutine(SetInventorySlot(w));
+    }
 
-	//	for (int i = 0; i < inventoryIcons.Length; i++)
-	//	{
-	//		inventoryIcons[i].sprite = defaultImage;
+    IEnumerator SetInventorySlot(WWW w)
+    {
+        yield return w;
 
-	//		if (inventoryIcons[i].GetComponent<ItemBase>())
-	//		{
-	//			Destroy(inventoryIcons[i].GetComponent<ItemBase>());
-	//		}
-	//		else if (inventoryIcons[i].GetComponent<WeaponBase>())
-	//		{
-	//			Destroy(inventoryIcons[i].GetComponent<WeaponBase>());
-	//		}
-	//		else if (inventoryIcons[i].GetComponent<AbilityBase>())
-	//		{
-	//			Destroy(inventoryIcons[i].GetComponent<AbilityBase>());
-	//		}
-	//	}
+        if (w.text != "Successfully Updated.")
+        {
+            inventoryManager.notificationRect.transform.gameObject.SetActive(true);
+            inventoryManager.notificationRect.SetAsLastSibling();
+            inventoryManager.notificationText.text = "An error occurred";
+            inventoryManager.notificationButton.onClick.RemoveAllListeners();
+            inventoryManager.notificationButton.onClick.AddListener(() => { inventoryManager.notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+    }
 
-	//	inventoryManager.UpdateInventory();
-	//}
+    void ResetInventory()
+    {
+        Image[] inventoryIcons = GetComponentsInChildren<Image>();
+
+        for (int i = 0; i < inventoryIcons.Length; i++)
+        {
+            inventoryIcons[i].sprite = defaultImage;
+
+            if (inventoryIcons[i].GetComponent<ItemBase>())
+            {
+                Destroy(inventoryIcons[i].GetComponent<ItemBase>());
+            }
+            else if (inventoryIcons[i].GetComponent<Ability>())
+            {
+                Destroy(inventoryIcons[i].GetComponent<Ability>());
+            }
+        }
+
+    }
 }

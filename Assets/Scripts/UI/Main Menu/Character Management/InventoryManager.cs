@@ -6,8 +6,7 @@ using System;
 public class InventoryManager : MonoBehaviour
 {
 
-    [SerializeField]
-    private string server = "bassetune.com";
+    public string server = "bassetune.com";
     private string getInventorySite = "";
     private string setInventorySite = "";
 
@@ -26,7 +25,6 @@ public class InventoryManager : MonoBehaviour
 
     // All items and abilities
     public PrefabStore[] items;
-    public PrefabStore abilities;
 
     [SerializeField]
     private ClientData clientData;
@@ -79,6 +77,10 @@ public class InventoryManager : MonoBehaviour
                 {
                     continue;
                 }
+                if (panel == "ability" && !items[n].prefabs[0].GetComponent<Ability>())
+                {
+                    continue;
+                }
                 for (int i = 0; i < items[n].prefabs.Length; i++)
                 {
                     ItemBase item = items[n].prefabs[i].GetComponent<ItemBase>();
@@ -87,19 +89,6 @@ public class InventoryManager : MonoBehaviour
                         return item;
                     }
                 }
-            }
-        }
-        return null;
-    }
-
-    private AbilityBase GetAbilityInfo(int id)
-    {
-        for (int i = 0; i < abilities.prefabs.Length; i++)
-        {
-            AbilityBase ability = abilities.prefabs[i].GetComponent<AbilityBase>();
-            if (abilities.prefabs[i].GetComponent<AbilityBase>().abilityID == id)
-            {
-                return ability;
             }
         }
         return null;
@@ -120,34 +109,17 @@ public class InventoryManager : MonoBehaviour
             {
                 continue;
             }
-            // Get and set variables for the item entry
-            if (panel == "ability")
+            // Get item info
+            ItemBase item = GetItemInfo(panel, i);
+            if (item != null)
             {
-                AbilityBase item = GetAbilityInfo(i);
-                if (item != null)
-                {
-                    // Create entry
-                    GameObject newObject = Instantiate(labelPrefab);
-                    newObject.transform.SetParent(inventoryPanel.transform);
+                // Create entry
+                GameObject newObject = Instantiate(labelPrefab);
+                newObject.transform.SetParent(inventoryPanel.transform);
 
-                    newObject.GetComponentInChildren<Text>().text = item.abilityName;
-                    newObject.GetComponentsInChildren<Image>()[1].sprite = item.icon;
-                    newObject.AddComponent<AbilityBase>().abilityID = item.abilityID;
-                }
-            }
-            else
-            {
-                ItemBase item = GetItemInfo(panel, i);
-                if (item != null)
-                {
-                    // Create entry
-                    GameObject newObject = Instantiate(labelPrefab);
-                    newObject.transform.SetParent(inventoryPanel.transform);
-
-                    newObject.GetComponentInChildren<Text>().text = item.itemName;
-                    newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
-                    newObject.AddComponent<ItemBase>().itemID = item.itemID;
-                }
+                newObject.GetComponentInChildren<Text>().text = item.itemName;
+                newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
+                newObject.AddComponent<ItemBase>().itemID = item.itemID;
             }
         }
     }
@@ -160,53 +132,40 @@ public class InventoryManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         // Add all items based on respective list
-        if (panel == "ability")
+        for (int n = 0; n < items.Length; n++)
         {
-            for (int i = 0; i < abilities.prefabs.Length; i++)
+            if (items[n].prefabs.Length > 0)
             {
-                // Create entry
-                AbilityBase item = abilities.prefabs[i].GetComponent<AbilityBase>();
-                GameObject newObject = Instantiate(labelPrefab);
-                newObject.transform.SetParent(shopPanel.transform);
-
-                newObject.GetComponentInChildren<Text>().text = item.abilityName;
-                newObject.GetComponentsInChildren<Image>()[1].sprite = item.icon;
-                newObject.AddComponent<AbilityBase>().abilityID = item.abilityID;
-            }
-        }
-        else
-        {
-            for (int n = 0; n < items.Length; n++)
-            {
-                if (items[n].prefabs.Length > 0)
+                if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
                 {
-                    if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
-                    {
-                        continue;
-                    }
-                    if (panel == "armor" && !items[n].prefabs[0].GetComponent<Armor>())
-                    {
-                        continue;
-                    }
-                    if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
-                    {
-                        continue;
-                    }
-                    if (panel == "equipable" && !items[n].prefabs[0].GetComponent<Equipable>())
-                    {
-                        continue;
-                    }
-                    for (int i = 0; i < items[n].prefabs.Length; i++)
-                    {
-                        // Create Entry
-                        ItemBase item = items[n].prefabs[i].GetComponent<ItemBase>();
-                        GameObject newObject = Instantiate(labelPrefab);
-                        newObject.transform.SetParent(shopPanel.transform);
+                    continue;
+                }
+                if (panel == "armor" && !items[n].prefabs[0].GetComponent<Armor>())
+                {
+                    continue;
+                }
+                if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
+                {
+                    continue;
+                }
+                if (panel == "equipable" && !items[n].prefabs[0].GetComponent<Equipable>())
+                {
+                    continue;
+                }
+                if (panel == "ability" && !items[n].prefabs[0].GetComponent<Ability>())
+                {
+                    continue;
+                }
+                for (int i = 0; i < items[n].prefabs.Length; i++)
+                {
+                    // Create Entry
+                    ItemBase item = items[n].prefabs[i].GetComponent<ItemBase>();
+                    GameObject newObject = Instantiate(labelPrefab);
+                    newObject.transform.SetParent(shopPanel.transform);
 
-                        newObject.GetComponentInChildren<Text>().text = item.itemName;
-                        newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
-                        newObject.AddComponent<ItemBase>().itemID = item.itemID;
-                    }
+                    newObject.GetComponentInChildren<Text>().text = item.itemName;
+                    newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
+                    newObject.AddComponent<ItemBase>().itemID = item.itemID;
                 }
             }
         }
@@ -434,33 +393,4 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log(w.text);
     }
-
-    //public void CopyItemBase(ItemBase oldBase, ItemBase newBase)
-    //{
-    //    newBase.itemIcon = oldBase.itemIcon;
-    //    newBase.itemName = oldBase.itemName;
-    //    newBase.itemSide = oldBase.itemSide;
-    //    newBase.itemDescription = oldBase.itemDescription;
-    //    newBase.itemSellPrice = oldBase.itemSellPrice;
-    //    newBase.itemBuyPrice = oldBase.itemBuyPrice;
-    //}
-
-    //public void CopyWeaponBase(WeaponBase oldBase, WeaponBase newBase)
-    //{
-    //    newBase.weaponIcon = oldBase.weaponIcon;
-    //    newBase.weaponName = oldBase.weaponName;
-    //    newBase.weaponDescription = oldBase.weaponDescription;
-    //    newBase.weaponSellPrice = oldBase.weaponSellPrice;
-    //    newBase.weaponBuyPrice = oldBase.weaponBuyPrice;
-    //}
-
-    //public void CopyAbilityBase(AbilityBase oldBase, AbilityBase newBase)
-    //{
-    //    newBase.icon = oldBase.icon;
-    //    newBase.abilityName = oldBase.abilityName;
-    //    newBase.buyPrice = oldBase.buyPrice;
-    //    newBase.sellPrice = oldBase.sellPrice;
-    //    newBase.description = oldBase.description;
-    //    newBase.abilityType = oldBase.abilityType;
-    //}
 }

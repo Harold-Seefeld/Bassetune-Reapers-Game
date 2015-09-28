@@ -28,19 +28,19 @@ public class AbilitySlot : MonoBehaviour, IDropHandler
         }
         else if (slotType == SlotType.Defence)
         {
-            if (item.GetComponent<AbilityBase>() && item.GetComponent<AbilityBase>().abilityType == AbilityBase.AbilityType.Defensive)
+            if (item.GetComponent<Ability>() && item.GetComponent<Ability>().abilityType == Ability.AbilityType.Defensive)
             {
                 item.transform.SetParent(transform);
-                gameObject.GetComponent<Image>().sprite = item.GetComponent<AbilityBase>().icon;
+                gameObject.GetComponent<Image>().sprite = item.GetComponent<Ability>().itemIcon;
                 item.SetActive(false);
             }
         }
         else if (slotType == SlotType.Offence)
         {
-            if (item.GetComponent<AbilityBase>() && item.GetComponent<AbilityBase>().abilityType == AbilityBase.AbilityType.Offensive)
+            if (item.GetComponent<Ability>() && item.GetComponent<Ability>().abilityType == Ability.AbilityType.Offensive)
             {
                 item.transform.SetParent(transform);
-                gameObject.GetComponent<Image>().sprite = item.GetComponent<AbilityBase>().icon;
+                gameObject.GetComponent<Image>().sprite = item.GetComponent<Ability>().itemIcon;
                 item.SetActive(false);
             }  
         }

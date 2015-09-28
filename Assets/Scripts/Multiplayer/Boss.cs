@@ -14,7 +14,7 @@ public class Boss : MonoBehaviour {
 		socket = go.GetComponent<SocketIOComponent>();
 	}
 	
-	public void UseAbility (AbilityBase ability, Vector2 target, int characterID, int weaponID) {
+	public void UseAbility (Ability ability, Vector2 target, int characterID, int weaponID) {
 		JSONObject abilityUsage = new JSONObject(JSONObject.Type.OBJECT);
 		JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
 		directionData.AddField("x", target.x);
@@ -25,7 +25,7 @@ public class Boss : MonoBehaviour {
 		socket.Emit(SocketIOEvents.Output.Boss.ABILITY_START, abilityUsage);
 	}
 
-	public void UseAbility (AbilityBase ability, bool toggle, int characterID, int weaponID) {
+	public void UseAbility (Ability ability, bool toggle, int characterID, int weaponID) {
 		JSONObject abilityUsage = new JSONObject(JSONObject.Type.OBJECT);
 		abilityUsage.AddField("toggle", toggle);
 		abilityUsage.AddField("characterID", characterID);

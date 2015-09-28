@@ -39,12 +39,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe6e941e592f984f92f511e207d7e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 4086a25a6f6a4fe4cb85f2d7ceecc73d, type: 3}
-  abilityName: Attack Dummy
+  itemIcon: {fileID: 21300000, guid: 4086a25a6f6a4fe4cb85f2d7ceecc73d, type: 3}
+  itemName: Attack
+  itemBuyPrice: 5
+  itemSellPrice: 5
+  itemDescription: Yoyo this is a description!
+  itemCount: 0
+  itemID: 10
   abilityType: 0
-  description: Do dummy Attack to Opponent
-  buyPrice: 
-  sellPrice: 
+  abilityState: 0
   requiredWeapons: 
   damageRatio: 0
   castTime: 5
@@ -52,7 +55,6 @@ MonoBehaviour:
   anim: 
   startEffect: {fileID: 0}
   endEffect: {fileID: 0}
-  abilityState: 0
   abilityID: 0
   isTogglable: 0
 --- !u!1001 &100100000
@@ -61,7 +63,32 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4086a25a6f6a4fe4cb85f2d7ceecc73d,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: itemName
+      value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemBuyPrice
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemSellPrice
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemDescription
+      value: Yoyo this is a description!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: itemID
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}

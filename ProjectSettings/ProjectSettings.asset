@@ -462,7 +462,7 @@ PlayerSettings:
   WebGL::template: APPLICATION:Default
   additionalIl2CppArgs::additionalIl2CppArgs: 
   firstStreamedSceneWithResources: 0
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudProjectId: 95bb9c26-fac2-4c5b-be86-332bd3d3d4ca
+  projectName: Bassetune Reapers
+  organizationId: saphrus
   cloudEnabled: 0

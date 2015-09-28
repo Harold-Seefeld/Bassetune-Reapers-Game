@@ -9,6 +9,7 @@ public class ItemBase : MonoBehaviour
     public string itemBuyPrice;
     public string itemSellPrice;
     public string itemDescription;
+    public int itemCount;
     public int itemID;
 
 }

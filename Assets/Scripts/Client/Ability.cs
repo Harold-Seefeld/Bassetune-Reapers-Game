@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[AddComponentMenu("Ability/AbilityBase")]
-public class AbilityBase : MonoBehaviour {
+public class Ability : ItemBase {
 
 	public enum AbilityType {
 		Offensive,
 		Defensive
 	}
+    public AbilityType abilityType;
 	
 	public enum AbilityState {
 		Idle,
@@ -15,17 +15,10 @@ public class AbilityBase : MonoBehaviour {
 		Cast,
 		Cooldown
 	}
+    public AbilityState abilityState;
 
-	// UI Variables
-	public Sprite icon;
-	public string abilityName;
-	public AbilityType abilityType;
-	public string description;
-	// Prices for UI
-	public string buyPrice;
-	public string sellPrice;
-	// Required weapons
-	public Weapon.WeaponType[] requiredWeapons;
+    // Required weapons for use
+    public Weapon.WeaponType[] requiredWeapons;
 	// % of damage ratio
 	public float damageRatio;
 	// Time needed during cast
@@ -37,8 +30,6 @@ public class AbilityBase : MonoBehaviour {
 	// Prefabs for effects
 	public GameObject startEffect;
 	public GameObject endEffect;
-	// Game state
-	public AbilityState abilityState;
 	// Index
 	public int abilityID;
 	// Is the ability togglable?
