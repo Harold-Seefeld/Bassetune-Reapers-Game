@@ -14,7 +14,7 @@ public class InventorySetter : MonoBehaviour
 
     public void Start()
     {
-        slotInventorySite = inventoryManager.server + "/slotInventory";
+        slotInventorySite = inventoryManager.server + "/slots";
         clientData = FindObjectOfType<ClientData>() as ClientData;
     }
 
