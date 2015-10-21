@@ -42,6 +42,7 @@ public class Matchmaker : MonoBehaviour {
         socket.On("found", MatchFound);
         socket.On("searching", MatchSearching);
         socket.On("int", MatchInterrupted);
+        socket.On("m", OnMatchCreation);
         // Set UUID
         uuid = ((ClientData)FindObjectOfType(typeof(ClientData))).GetSession();
     }
@@ -55,7 +56,11 @@ public class Matchmaker : MonoBehaviour {
         if (timeText.text != "")
         {
             float seconds = time - timeStart;
-            timeText.text = "Searching... " + string.Format("{0}:{1}", (int)seconds / 60, (int)seconds % 60);
+            System.TimeSpan t = System.TimeSpan.FromSeconds(seconds);
+            timeText.text = string.Format("Searching... " + "{0:D2}:{1:D2}:{2:D2}",
+                            t.Hours,
+                            t.Minutes,
+                            t.Seconds);
         }
     }
 	
@@ -87,7 +92,7 @@ public class Matchmaker : MonoBehaviour {
         buttonText.text = "Cancel";
         // Start updating the searching counter
         timeStart = Time.timeSinceLevelLoad;
-        timeText.text = "Searching... 0:00";
+        timeText.text = "Searching... 00:00:00";
     }
 
     // Called when a match found is interrupted
@@ -130,5 +135,24 @@ public class Matchmaker : MonoBehaviour {
         timeText.text = "";
         // Change button text back to start searching
         buttonText.text = "Find Match";
+    }
+
+    // Called when a match instance has been created
+    public void OnMatchCreation(SocketIOEvent socketEvent)
+    {
+        var matchIP = socketEvent.data.GetField("ip").str;
+        var matchPort = socketEvent.data.GetField("port").str;
+        var matchID = socketEvent.data.GetField("id").str;
+
+        // Create an object to store the data and make a new scene
+        GameObject matchObject = new GameObject();
+        matchObject.name = "Match Data";
+        Server matchData = matchObject.AddComponent<Server>();
+        matchData.serverIP = matchIP;
+        matchData.serverPort = matchPort;
+        matchData.matchID = matchID;
+
+        // Load the gameplay level
+        Application.LoadLevel(2);
     }
 }
