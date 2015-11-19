@@ -9,7 +9,7 @@ public class NoiseMaker : MonoBehaviour
 	public bool EnableHeight = true; 
 	public float ScaleModifier = 5f; 
 	public bool Move = false; 
-	public float OffSetHeight = 1.5f; 
+	public float OffSetHeight = 2.5f;
 
 	void Start () 
 	{ 
@@ -51,4 +51,25 @@ public class NoiseMaker : MonoBehaviour
 		Vector3 NewVec3 = new Vector3 (Child.transform.position.x, YValue, Child.transform.position.z); 
 		Child.transform.position = NewVec3; 
 	} 
+
+	float Seed(float Scale, float ScaleModifier)
+	{
+		int count = 1;
+		Random.seed = 89789;
+		while(count < Size)
+		{
+			this.RoomGeneration((Random.value/count));
+			count += 1;
+		}
+	
+	
+	}
+
+	int RoomGeneration(int value)
+	{
+		//researching the room creation with perlin-noise
+
+		return Random.value;
+	}
+
 }
