@@ -4,12 +4,13 @@ using System.Collections;
 public class NoiseMaker : MonoBehaviour 
 {
 	public GameObject PlatformType; 
-	public int Size = 50; 
+	public float Size = 50; 
 	public float Scale = 7.00f; 
 	public bool EnableHeight = true; 
 	public float ScaleModifier = 5f; 
 	public bool Move = false; 
 	public float OffSetHeight = 2.5f;
+	float seed;
 
 	void Start () 
 	{ 
@@ -55,17 +56,17 @@ public class NoiseMaker : MonoBehaviour
 	float Seed(float Scale, float ScaleModifier)
 	{
 		int count = 1;
-		Random.seed = 89789;
+		seed = Random.seed = 89789;
 		while(count < Size)
 		{
-			this.RoomGeneration((Random.value/count));
+			this.RoomGeneration(Random.value);
 			count += 1;
 		}
 	
-	
+		return seed;
 	}
 
-	int RoomGeneration(int value)
+	float RoomGeneration(float value)
 	{
 		//researching the room creation with perlin-noise
 
