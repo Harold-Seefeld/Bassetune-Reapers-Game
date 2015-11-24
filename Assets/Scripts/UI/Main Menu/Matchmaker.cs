@@ -155,4 +155,14 @@ public class Matchmaker : MonoBehaviour {
         // Load the gameplay level
         Application.LoadLevel(2);
     }
+
+    public void SetMatchType(string name)
+    {
+        matchType = name;
+    }
+
+    public void SetPlayerSide(string name)
+    {
+        side = name;
+    }
 }
