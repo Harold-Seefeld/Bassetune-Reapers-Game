@@ -4,7 +4,7 @@ using System.Collections;
 public class NoiseMaker : MonoBehaviour 
 {
 	public GameObject PlatformType; 
-	public float Size = 50; 
+	public int Size = 50; 
 	public float Scale = 7.00f; 
 	public bool EnableHeight = true; 
 	public float ScaleModifier = 5f; 
@@ -53,10 +53,17 @@ public class NoiseMaker : MonoBehaviour
 		Child.transform.position = NewVec3; 
 	} 
 
-	float Seed(float Scale, float ScaleModifier)
+	float Seed(float _scale, float _scaleModifier)
 	{
+		Scale = _scale;
+		ScaleModifier = _scaleModifier;
+
 		int count = 1;
 		seed = Random.seed = 89789;
+
+		_scale = seed;
+		_scaleModifier = seed;
+
 		while(count < Size)
 		{
 			this.RoomGeneration(Random.value);

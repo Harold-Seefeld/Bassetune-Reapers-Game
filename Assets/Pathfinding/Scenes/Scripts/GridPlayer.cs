@@ -103,8 +103,8 @@ public class GridPlayer : Pathfinding
 		}
     }
 
-    void OnGUI()
-    {
-        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "", bgStyle);
-    }
+//    void OnGUI()
+//    {
+//        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "", bgStyle);
+//    }
 }
