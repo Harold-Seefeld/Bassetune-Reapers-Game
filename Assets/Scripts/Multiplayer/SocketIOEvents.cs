@@ -56,4 +56,21 @@ public static class SocketIOEvents {
 		}
 	}
 
+    // Matchmaking Events
+    public static class Matchmaker
+    {
+        // Input
+        public static string SEARCHING = "s";
+        public static string INTERRUPTED = "i";
+        public static string MATCH_CREATION = "m";
+        public static string FOUND = "f";
+        public static string ACCEPTED = "a";
+
+        // Output
+        public static string START_SEARCH = "s";
+        public static string DECLINE = "m";
+        public static string CANCEL = "c";
+        public static string ACCEPT = "a";
+        public static string FIND = "f";
+    }
 }

@@ -34,15 +34,12 @@ public class Matchmaker : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        // Set the connection URL
-        //socket.url = server;
-        // Establish a connection with the server
-        // socket.Connect();
         // Set listeners for when a match is found
-        socket.On("found", MatchFound);
-        socket.On("searching", MatchSearching);
-        socket.On("int", MatchInterrupted);
-        socket.On("m", OnMatchCreation);
+        socket.On(SocketIOEvents.Matchmaker.FOUND, MatchFound);
+        socket.On(SocketIOEvents.Matchmaker.SEARCHING, MatchSearching);
+        socket.On(SocketIOEvents.Matchmaker.INTERRUPTED, MatchInterrupted);
+        socket.On(SocketIOEvents.Matchmaker.MATCH_CREATION, OnMatchCreation);
+        socket.On(SocketIOEvents.Matchmaker.ACCEPTED, OnPlayerAccept);
         // Set UUID
         uuid = ((ClientData)FindObjectOfType(typeof(ClientData))).GetSession();
     }
@@ -80,9 +77,15 @@ public class Matchmaker : MonoBehaviour {
             matchData.AddField("uuid", uuid);
             matchData.AddField("partyID", partyID);
             matchData.AddField("region", region);
-            socket.Emit("find", matchData);
+            socket.Emit(SocketIOEvents.Matchmaker.FIND, matchData);
         }
 
+    }
+
+    // Called when any user accepts a match
+    public void OnPlayerAccept(SocketIOEvent socketEvent)
+    {
+        // TODO: Show an indication of players that have accepted
     }
 
     // Called when a match is being searched for
@@ -98,6 +101,8 @@ public class Matchmaker : MonoBehaviour {
     // Called when a match found is interrupted
     public void MatchInterrupted(SocketIOEvent socketEvent)
     {
+        // Reset Timer
+        timeStart = Time.timeSinceLevelLoad;
         // Hide match panel
         matchFoundPanel.SetActive(false);
     }
@@ -112,7 +117,7 @@ public class Matchmaker : MonoBehaviour {
     // Called when a user wants to cancel a search
     public void CancelSearch()
     {
-        socket.Emit("cancel");
+        socket.Emit(SocketIOEvents.Matchmaker.CANCEL);
         // Set searching time text to nothing
         timeText.text = "";
         // Change button text back to start searching
@@ -124,13 +129,13 @@ public class Matchmaker : MonoBehaviour {
     // Called when a user wants to accept a match
     public void AcceptMatch()
     {
-        socket.Emit("accept");
+        socket.Emit(SocketIOEvents.Matchmaker.ACCEPT);
     }
 
     // Called when a user wants to decline a match
     public void DeclineMatch()
     {
-        socket.Emit("decline");
+        socket.Emit(SocketIOEvents.Matchmaker.DECLINE);
         // Set searching time text to nothing
         timeText.text = "";
         // Change button text back to start searching
@@ -151,6 +156,7 @@ public class Matchmaker : MonoBehaviour {
         matchData.serverIP = matchIP;
         matchData.serverPort = matchPort;
         matchData.matchID = matchID;
+        DontDestroyOnLoad(matchObject);
 
         // Load the gameplay level
         Application.LoadLevel(2);

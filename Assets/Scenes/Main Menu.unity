@@ -8755,11 +8755,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   socket: {fileID: 1100135880}
   matchType: normal
-  matchPlayers: 3v1
+  matchPlayers: 1v1
   side: knight
   uuid: 
   partyID: 0
-  region: US-East1
+  region: us-east-1
   timeText: {fileID: 1131786663}
   buttonText: {fileID: 372987330}
   matchFoundPanel: {fileID: 1136022246}
