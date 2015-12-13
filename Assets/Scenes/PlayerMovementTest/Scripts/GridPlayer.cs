@@ -20,6 +20,7 @@ public class GridPlayer : Pathfinding
 		socketObject = GameObject.Find ("SocketIO");
 		socket = socketObject.GetComponent<SocketIOComponent>();
 		socket.On("listening", OpenSocket);
+	
 	}
 
 	void Update () 
@@ -102,8 +103,8 @@ public class GridPlayer : Pathfinding
 		}
     }
 
-    void OnGUI()
-    {
-        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "", bgStyle);
-    }
+//    void OnGUI()
+//    {
+//        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "", bgStyle);
+//    }
 }
