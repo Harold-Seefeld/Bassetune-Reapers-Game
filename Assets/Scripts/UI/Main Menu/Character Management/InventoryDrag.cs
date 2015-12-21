@@ -6,6 +6,7 @@ using System.Collections;
 public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler{
 	
 	public static GameObject itemBeingDragged;
+    public static bool onInventoryDrag = false;
 	
 	private Vector3 startPosition;
 	private Transform startParent;
@@ -36,6 +37,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+        onInventoryDrag = true;
 		if(GetComponent<ItemBase>())
 		{
 			ItemBase _item = GetComponent<ItemBase>();
@@ -43,20 +45,31 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 			if(!Popup.instance)
 				Debug.LogError("Please make sure you have Popup Gameobject on your scene");
 
-			
 			Popup.instance.gameObject.SetActive (true);
-			Popup.instance.Display (rectTransform.position + new Vector3 (Screen.width / 21, -Screen.width / 85),
-			                        _item.itemName, "type needs to be edited in script inventory drag", _item.itemDescription);
+			Popup.instance.MenuDisplay (rectTransform.position + new Vector3 (Screen.width / 21, -Screen.width / 85),
+			                        _item);
 		}
-		else
-			return;
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
+        onInventoryDrag = false;
+
 		if(!Popup.instance)
-			Debug.LogError("Please make sure you have Popup Gameobject on your scene");
-		
-		Popup.instance.gameObject.SetActive (false);
+        {
+            Debug.LogError("Please make sure you have Popup Gameobject on your scene");
+        }
+
+        StartCoroutine(PointerExitHandler());
 	}
+
+    IEnumerator PointerExitHandler()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (!Popup.onPopup)
+        {
+            Popup.instance.gameObject.SetActive(false);
+        }
+    }
 }

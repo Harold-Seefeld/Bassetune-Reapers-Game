@@ -43,10 +43,8 @@ public class AbilityIcon : MonoBehaviour {
 			Debug.LogError("Please make sure you have Popup Gameobject on your scene");
 
 		Popup.instance.gameObject.SetActive (true);
-		Popup.instance.Display (rectTransform.position + new Vector3 (0, 70),
-		                        _ability.itemName,
-		                        _ability.itemDescription.ToString(),
-		                        _ability.isTogglable.ToString());
+		Popup.instance.MenuDisplay (rectTransform.position + new Vector3 (0, 70),
+		                       _ability);
 	}
 
 	public void OnPointerExit(){

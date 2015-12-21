@@ -35,6 +35,7 @@ public class AuthenticationManager : MonoBehaviour
         registerSite = server + "/register";
 
         clientData = new GameObject().AddComponent<ClientData>();
+        clientData.gameObject.name = "Client Data";
     }
 
     private bool IsValidEmail(string strIn)
@@ -144,9 +145,9 @@ public class AuthenticationManager : MonoBehaviour
             notification.text = "Usernames must be a minimum of 3 characters long.";
             return;
         }
-        else if (passwordText.text.Length < 6)
+        else if (passwordText.text.Length < 5)
         {
-            notification.text = "Passwords must be a minimum of 3 characters long.";
+            notification.text = "Passwords must be a minimum of 6 characters long.";
             return;
         }
 

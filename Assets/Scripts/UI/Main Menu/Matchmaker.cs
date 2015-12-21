@@ -112,6 +112,7 @@ public class Matchmaker : MonoBehaviour {
     {
         // Show match panel
         matchFoundPanel.SetActive(true);
+        matchFoundPanel.GetComponent<RectTransform>().SetAsLastSibling();
     }
 
     // Called when a user wants to cancel a search

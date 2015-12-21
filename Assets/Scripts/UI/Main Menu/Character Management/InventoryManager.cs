@@ -36,6 +36,8 @@ public class InventoryManager : MonoBehaviour
 
         clientData = FindObjectOfType<ClientData>() as ClientData;
         UpdateInventory();
+
+        ShowShop("ability");
     }
 
     public void UpdateInventory()
@@ -51,6 +53,8 @@ public class InventoryManager : MonoBehaviour
         yield return w;
         Debug.Log(w.text);
         inventoryJSON = new JSONObject(w.text);
+
+        ShowInventory("ability");
 
         Debug.Log("Downloaded Inventory Successfully.");
     }
@@ -119,7 +123,14 @@ public class InventoryManager : MonoBehaviour
 
                 newObject.GetComponentInChildren<Text>().text = item.itemName;
                 newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
-                newObject.AddComponent<ItemBase>().itemID = item.itemID;
+                ItemBase itemBase = newObject.AddComponent<ItemBase>();
+                itemBase.itemID = item.itemID;
+                itemBase.itemName = item.itemName;
+                itemBase.itemIcon = item.itemIcon;
+                itemBase.itemDescription = item.itemDescription;
+                itemBase.itemCount = item.itemCount;
+                itemBase.itemBuyPrice = item.itemBuyPrice;
+                itemBase.itemSellPrice = item.itemSellPrice;
             }
         }
     }
@@ -165,7 +176,14 @@ public class InventoryManager : MonoBehaviour
 
                     newObject.GetComponentInChildren<Text>().text = item.itemName;
                     newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
-                    newObject.AddComponent<ItemBase>().itemID = item.itemID;
+                    ItemBase itemBase = newObject.AddComponent<ItemBase>();
+                    itemBase.itemID = item.itemID;
+                    itemBase.itemName = item.itemName;
+                    itemBase.itemIcon = item.itemIcon;
+                    itemBase.itemDescription = item.itemDescription;
+                    itemBase.itemCount = item.itemCount;
+                    itemBase.itemBuyPrice = item.itemBuyPrice;
+                    itemBase.itemSellPrice = item.itemSellPrice;
                 }
             }
         }
@@ -181,119 +199,12 @@ public class InventoryManager : MonoBehaviour
         // TODO: Edit to include filters for sorting the inventory
     }
 
-    //void SetShopText(GameObject shopList, GameObject[] items)
-    //{
-    //    for (int i = 0; i < items.Length; i++)
-    //    {
-    //        if (items[i].GetComponent<ItemBase>() && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
-    //        {
-    //            GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
-    //            newObject.transform.SetParent(shopList.transform);
-    //            newObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    //            newObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-    //            newObject.GetComponent<Text>().text = items[i].GetComponent<ItemBase>().itemName;
-
-    //            Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-    //            for (int il = 0; il < newObjectButtons.Length; il++)
-    //            {
-    //                int itemIndex = i;
-    //                if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
-    //                {
-    //                    newObjectButtons[il].onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-    //                    newObjectButtons[il].onClick.AddListener(() => { BuyItem(itemIndex, 1, "Item"); }); ;
-    //                    newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemBuyPrice;
-    //                }
-    //            }
-    //        }
-    //        else if (items[i].GetComponent<WeaponBase>())
-    //        {
-    //            GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
-    //            newObject.transform.SetParent(shopList.transform);
-    //            newObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    //            newObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-    //            newObject.GetComponent<Text>().text = items[i].GetComponent<WeaponBase>().weaponName;
-
-    //            Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-    //            for (int il = 0; il < newObjectButtons.Length; il++)
-    //            {
-    //                int itemIndex = i;
-    //                if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
-    //                {
-    //                    newObjectButtons[il].onClick.RemoveAllListeners();
-    //                    newObjectButtons[il].onClick.AddListener(() => { BuyItem(itemIndex, 1, "Weapon"); }); ;
-    //                    newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
-    //                }
-    //            }
-    //        }
-    //        else if (items[i].GetComponent<AbilityBase>())
-    //        {
-    //            GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
-    //            newObject.transform.SetParent(shopList.transform);
-    //            newObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    //            newObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-    //            newObject.GetComponent<Text>().text = items[i].GetComponent<AbilityBase>().abilityName;
-
-    //            Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-    //            for (int il = 0; il < newObjectButtons.Length; il++)
-    //            {
-    //                int itemIndex = i;
-    //                if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
-    //                {
-    //                    newObjectButtons[il].onClick.RemoveAllListeners();
-    //                    newObjectButtons[il].onClick.AddListener(() => { BuyItem(itemIndex, 1, "Ability"); }); ;
-    //                    newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().buyPrice.ToString();
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    RectTransform rectTransform = shopList.GetComponent<RectTransform>();
-    //    if (shopList.GetComponentsInChildren<Text>(true).Length > 5)
-    //    {
-    //        rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (shopList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
-    //    }
-    //}
-
-    //void SetShopText(GameObject shopList, GameObject[] items, ItemBase.BossItemType itemType)
-    //{
-    //    for (int i = 0; i < items.Length; i++)
-    //    {
-    //        if (items[i].GetComponent<ItemBase>().bossItemType == itemType && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss)
-    //        {
-    //            GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
-    //            newObject.transform.SetParent(shopList.transform);
-    //            newObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-    //            newObject.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
-    //            newObject.GetComponent<Text>().text = items[i].GetComponent<ItemBase>().itemName;
-
-    //            Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-    //            for (int il = 0; il < newObjectButtons.Length; il++)
-    //            {
-    //                int itemIndex = i;
-    //                if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
-    //                {
-    //                    newObjectButtons[il].onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-    //                    newObjectButtons[il].onClick.AddListener(() => { BuyItem(itemIndex, 1, "Item"); }); ;
-    //                    newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemBuyPrice;
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    RectTransform rectTransform = shopList.GetComponent<RectTransform>();
-    //    if (shopList.GetComponentsInChildren<Text>(true).Length > 5)
-    //    {
-    //        rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (shopList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
-    //    }
-    //}
-
-    void BuyItem(int itemIndex, int itemAmount, string itemType)
+    public void BuyItem(int itemIndex, int itemAmount)
     {
         WWWForm www = new WWWForm();
         www.AddField("uuid", clientData.GetSession());
-        www.AddField("itemAmount", itemAmount);
+        www.AddField("amount", itemAmount);
         www.AddField("commandType", "Buy");
-        www.AddField("itemType", itemType);
         www.AddField("item", itemIndex);
         WWW w = new WWW(setInventorySite, www.data);
         StartCoroutine(BuyItem(w));
@@ -335,13 +246,12 @@ public class InventoryManager : MonoBehaviour
         Debug.Log(w.text);
     }
 
-    void SellItem(int itemIndex, int itemAmount, string itemType)
+    public void SellItem(int itemIndex, int itemAmount)
     {
         WWWForm www = new WWWForm();
         www.AddField("uuid", clientData.GetSession());
-        www.AddField("itemAmount", itemAmount);
+        www.AddField("amount", itemAmount);
         www.AddField("commandType", "Sell");
-        www.AddField("itemType", itemType);
         www.AddField("item", itemIndex);
         Debug.Log(itemIndex);
         WWW w = new WWW(setInventorySite, www.data);
