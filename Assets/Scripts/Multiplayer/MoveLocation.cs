@@ -19,8 +19,10 @@ public class MoveLocation : MonoBehaviour {
 		yield return new WaitForSeconds(1f);
 		while (true) {
 			yield return new WaitForSeconds(0.01f);
-			socket.GetComponent<CharacterLocation>().AddLocation("1", new Vector2(transform.position.x, transform.position.y + Time.time));	socket.GetComponent<CharacterLocation>().AddLocation("1", new Vector2(transform.position.x, transform.position.y + Time.time));
-			socket.GetComponent<CharacterLocation>().AddLocation("2", new Vector2(transform.position.x, transform.position.y + Time.time));	socket.GetComponent<CharacterLocation>().AddLocation("1", new Vector2(transform.position.x, transform.position.y + Time.time));
+			socket.GetComponent<CharacterManager>().AddLocation("1", new Vector2(transform.position.x, transform.position.y + Time.time));
+            socket.GetComponent<CharacterManager>().AddLocation("1", new Vector2(transform.position.x, transform.position.y + Time.time));
+			socket.GetComponent<CharacterManager>().AddLocation("2", new Vector2(transform.position.x, transform.position.y + Time.time));
+            socket.GetComponent<CharacterManager>().AddLocation("1", new Vector2(transform.position.x, transform.position.y + Time.time));
 		}	
 		
 	}
