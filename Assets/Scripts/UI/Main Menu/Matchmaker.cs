@@ -34,6 +34,8 @@ public class Matchmaker : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        socket.Connect();
+
         // Set listeners for when a match is found
         socket.On(SocketIOEvents.Matchmaker.FOUND, MatchFound);
         socket.On(SocketIOEvents.Matchmaker.SEARCHING, MatchSearching);

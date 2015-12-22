@@ -21,7 +21,9 @@ public class Server : MonoBehaviour {
 	}
 	public Player[] players;
 	public int currentPlayerID;
-    public string uuid;
+
+    private string uuid;
+    private SocketIOComponent connection = null;
 
     // Connects to the game server when the gameplay level was loaded
     void OnLevelWasLoaded(int level)
@@ -29,23 +31,26 @@ public class Server : MonoBehaviour {
         if (level == 2)
         {
             GameObject connectionManager = GameObject.Find("Connection Manager");
-            SocketIOComponent connection = connectionManager.GetComponent<SocketIOComponent>();
-            connection.url = serverIP + ":" + serverPort;
+            connection = connectionManager.GetComponent<SocketIOComponent>();
+            /*
+                TODO IMPORTANT: RE-ENABLE COMMENTED OUT CODE WHEN IN PRODUCTION MODE
+            */
+            connection.url = "ws://127.0.0.1:" + serverPort + "/socket.io/?EIO=4&transport=websocket";
+            //connection.url = "ws://" + serverIP + ":" + serverPort + "/?EIO=4&transport=websocket";
             connection.Connect();
+            connection.On("connect", GetServerData);
 
             uuid = GameObject.Find("Client Data").GetComponent<ClientData>().GetSession();
-            StartCoroutine(GetServerData(connection));
         }
     }
 
-    private IEnumerator GetServerData(SocketIOComponent connection)
+    private void GetServerData(SocketIOEvent socket)
     {
-        // Wait for 2 seconds for connection to establish
-        yield return new WaitForSeconds(2);
-        // Request Data
+        // Join the appropriate room
         JSONObject registerData = new JSONObject(JSONObject.Type.OBJECT);
         registerData.AddField("uuid", uuid);
-        connection.Emit("register", registerData);
+        registerData.AddField("matchID", matchID);
+        connection.Emit("join", registerData);
     }
 
 }
