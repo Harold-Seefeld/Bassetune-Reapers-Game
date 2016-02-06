@@ -18,7 +18,6 @@ public class CharacterManager : MonoBehaviour {
 		// Listen out for new character creations
 		socket.On(SocketIOEvents.Input.CHAR_CREATED, CreateCharacter);
 		socket.On(SocketIOEvents.Input.HP, UpdateHP);
-        socket = go.GetComponent<SocketIOComponent>();
         socket.On(SocketIOEvents.move, UpdateLocations);
     }
 
@@ -34,7 +33,8 @@ public class CharacterManager : MonoBehaviour {
         locationsToSend = new JSONObject(JSONObject.Type.OBJECT);
     }
 
-	void CreateCharacter(SocketIOEvent e) {
+	void CreateCharacter(SocketIOEvent e)
+    {
 		// TODO: Create character with given data (assign meshes, etc use a prefab)
 		GameObject newCharacter = new GameObject();
 		CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
@@ -46,10 +46,14 @@ public class CharacterManager : MonoBehaviour {
 		characterData.Add(newCharacterData);
 	}
 
-	void UpdateHP(SocketIOEvent e) {
-		for (int n = 0; n < e.data.Count; n++) {
-			for (int i = 0; i < characterData.Count; i++) {
-				if (e.data[n].GetField("i").str == characterData[i].CharacterID.ToString()) {
+	void UpdateHP(SocketIOEvent e)
+    {
+		for (int n = 0; n < e.data.Count; n++)
+        {
+			for (int i = 0; i < characterData.Count; i++)
+            {
+				if (e.data[n].GetField("i").str == characterData[i].CharacterID.ToString())
+                {
 					characterData[i].CharacterHP = Convert.ToInt16(e.data[n].GetField("h").n);
 					i = characterData.Count;
 				}

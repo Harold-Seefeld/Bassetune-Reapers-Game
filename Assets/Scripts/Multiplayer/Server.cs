@@ -46,6 +46,13 @@ public class Server : MonoBehaviour {
 
     private void GetServerData(SocketIOEvent socket)
     {
+        // Create the character manager
+        if (FindObjectsOfType<CharacterManager>() == null)
+        {
+            gameObject.AddComponent<CharacterManager>();
+            gameObject.AddComponent<MapReciever>();
+        }
+
         // Join the appropriate room
         JSONObject registerData = new JSONObject(JSONObject.Type.OBJECT);
         registerData.AddField("uuid", uuid);
