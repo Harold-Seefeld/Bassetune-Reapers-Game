@@ -79,13 +79,8 @@ public class MapGenerator : MonoBehaviour {
 		//create a json object to add a json object array
 		JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
 
-		//create a json object type array  
-		JSONObject regionsData = new JSONObject(JSONObject.Type.ARRAY);
-
 		for(int x = 0; x < width; x++)
 		{
-			regionsData.Add(x);
-
 			for(int y = 0; y < height; y++)
 			{
 				if(mapFlags[x,y] == 0 && map[x,y] == tileType)
@@ -96,17 +91,26 @@ public class MapGenerator : MonoBehaviour {
 					foreach(Coord tile in newRegion)
 					{
 						mapFlags[tile.tileX, tile.tileY] = 1;
-					}
-				}
-
-				regionsData.Add(y);
+                    }
+                }
 			}
 		}
 
-		jsonObject.AddField("regions data", regionsData);
+        foreach (var region in regions)
+        {
+            foreach (var tile in region)
+            {
+                JSONObject regionsData = new JSONObject(JSONObject.Type.ARRAY);
 
-		//emit the array of regions to the server
-		socket.Emit("making regions data", jsonObject);
+                regionsData.Add(tile.tileX);
+                regionsData.Add(tile.tileY);
+
+                jsonObject.Add(regionsData);
+            }
+        }
+
+        //emit the array of regions to the server
+        socket.Emit("making regions data " + tileType.ToString(), jsonObject);
 
 		return regions;
 	}
@@ -270,8 +274,9 @@ public class MapGenerator : MonoBehaviour {
 
 		if(useRandomSeed)
 		{
-			seed = Time.time.ToString();
-		}
+            seed = UnityEngine.Random.Range(1, 10000).ToString();
+
+        }
 
 		System.Random pRandom = new System.Random(seed.GetHashCode());
 

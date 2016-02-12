@@ -451,7 +451,7 @@ MonoBehaviour:
   seed: 1546
   useRandomSeed: 1
   socket: {fileID: 759881801}
-  randomFillPercent: 48
+  randomFillPercent: 46
 --- !u!4 &832823824
 Transform:
   m_ObjectHideFlags: 0
