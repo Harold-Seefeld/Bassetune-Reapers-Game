@@ -79,8 +79,13 @@ public class MapGenerator : MonoBehaviour {
 		//create a json object to add a json object array
 		JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
 
+		//create a json object type array  
+		JSONObject regionsData = new JSONObject(JSONObject.Type.ARRAY);
+
 		for(int x = 0; x < width; x++)
 		{
+			regionsData.Add(x);
+
 			for(int y = 0; y < height; y++)
 			{
 				if(mapFlags[x,y] == 0 && map[x,y] == tileType)
@@ -91,26 +96,17 @@ public class MapGenerator : MonoBehaviour {
 					foreach(Coord tile in newRegion)
 					{
 						mapFlags[tile.tileX, tile.tileY] = 1;
-                    }
-                }
+					}
+				}
+
+				regionsData.Add(y);
 			}
 		}
 
-        foreach (var region in regions)
-        {
-            foreach (var tile in region)
-            {
-                JSONObject regionsData = new JSONObject(JSONObject.Type.ARRAY);
+		jsonObject.AddField("regions data", regionsData);
 
-                regionsData.Add(tile.tileX);
-                regionsData.Add(tile.tileY);
-
-                jsonObject.Add(regionsData);
-            }
-        }
-
-        //emit the array of regions to the server
-        socket.Emit("making regions data " + tileType.ToString(), jsonObject);
+		//emit the array of regions to the server
+		socket.Emit("making regions data", jsonObject);
 
 		return regions;
 	}
@@ -153,15 +149,36 @@ public class MapGenerator : MonoBehaviour {
 		}
 
 		survivingRooms.Sort();
-		foreach(Room r in survivingRooms)
-		{
-			print (r.roomSize);
-		}
+		survivingRooms[0].isMainRoom = true;
+		survivingRooms[0].isAccessibleFromMainRoom = true;
+
 		ConnectClosestRooms(survivingRooms);
 	}
 
-	void ConnectClosestRooms(List<Room> allRooms)
+	void ConnectClosestRooms(List<Room> allRooms, bool forecAccessibilityFromMainRoom = false)
 	{
+		List<Room> roomListA = new List<Room>();
+
+		List<Room> roomListB = new List<Room>();
+
+		if(forecAccessibilityFromMainRoom)
+		{
+			foreach(Room room in allRooms)
+			{
+				if(room.isAccessibleFromMainRoom)
+				{
+					roomListB.Add(room);
+				}else
+				{
+					roomListA.Add(room);
+				}
+			}
+		}else
+		{
+			roomListA = allRooms;
+			roomListB = allRooms;
+		}
+
 		int bestDistance = 0;
 		Coord bestTileA = new Coord();
 		Coord bestTileB = new Coord();
@@ -169,21 +186,22 @@ public class MapGenerator : MonoBehaviour {
 		Room bestRoomB = new Room();
 		bool possibleConnectionFound = false;
 
-		foreach(Room roomA in allRooms)
+		foreach(Room roomA in roomListA)
 		{
-			possibleConnectionFound = false;
-
-			foreach(Room roomB in allRooms)
+			if(!forecAccessibilityFromMainRoom)
 			{
-				if(roomA == roomB)
+				possibleConnectionFound = false;
+				if(roomA.connectedRooms.Count > 0)
 				{
 					continue;
 				}
+			}
 
-				if(roomA.IsConnected(roomB))
+			foreach(Room roomB in roomListB)
+			{
+				if(roomA == roomB || roomA.IsConnected(roomB))
 				{
-					possibleConnectionFound = false;
-					break;
+					continue;
 				}
 
 				for(int tileIndexA = 0; tileIndexA < roomA.edgeTiles.Count; tileIndexA++)
@@ -207,10 +225,21 @@ public class MapGenerator : MonoBehaviour {
 				}
 			}
 		
-			if(possibleConnectionFound)
+			if(possibleConnectionFound && !forecAccessibilityFromMainRoom)
 			{
 				CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
 			}
+		}
+	
+		if(possibleConnectionFound && forecAccessibilityFromMainRoom)
+		{
+			CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
+			ConnectClosestRooms(allRooms, true);
+		}
+
+		if(!forecAccessibilityFromMainRoom)
+		{
+			ConnectClosestRooms(allRooms, true);
 		}
 	}
 
@@ -218,6 +247,76 @@ public class MapGenerator : MonoBehaviour {
 	{
 		Room.ConnectRooms(roomA, roomB);
 		Debug.DrawLine(CoordToWorldPoint(tileA), CoordToWorldPoint(tileB), Color.green, 100);
+	
+		List<Coord> line = GetLine (tileA, tileB);
+		foreach (Coord c in line) {
+			DrawCircle(c,5);
+		}
+	}
+
+	void DrawCircle(Coord c, int r) {
+		for (int x = -r; x <= r; x++) {
+			for (int y = -r; y <= r; y++) {
+				if (x*x + y*y <= r*r) {
+					int drawX = c.tileX + x;
+					int drawY = c.tileY + y;
+					if (IsInMapRange(drawX, drawY)) {
+						map[drawX,drawY] = 0;
+					}
+				}
+			}
+		}
+	}
+
+	List<Coord> GetLine(Coord from, Coord to) {
+		List<Coord> line = new List<Coord> ();
+		
+		int x = from.tileX;
+		int y = from.tileY;
+		
+		int dx = to.tileX - from.tileX;
+		int dy = to.tileY - from.tileY;
+		
+		bool inverted = false;
+		int step = Math.Sign (dx);
+		int gradientStep = Math.Sign (dy);
+		
+		int longest = Mathf.Abs (dx);
+		int shortest = Mathf.Abs (dy);
+		
+		if (longest < shortest) {
+			inverted = true;
+			longest = Mathf.Abs(dy);
+			shortest = Mathf.Abs(dx);
+			
+			step = Math.Sign (dy);
+			gradientStep = Math.Sign (dx);
+		}
+		
+		int gradientAccumulation = longest / 2;
+		for (int i =0; i < longest; i ++) {
+			line.Add(new Coord(x,y));
+			
+			if (inverted) {
+				y += step;
+			}
+			else {
+				x += step;
+			}
+			
+			gradientAccumulation += shortest;
+			if (gradientAccumulation >= longest) {
+				if (inverted) {
+					x += gradientStep;
+				}
+				else {
+					y += gradientStep;
+				}
+				gradientAccumulation -= longest;
+			}
+		}
+		
+		return line;
 	}
 
 	Vector3 CoordToWorldPoint(Coord tile)
@@ -274,9 +373,8 @@ public class MapGenerator : MonoBehaviour {
 
 		if(useRandomSeed)
 		{
-            seed = UnityEngine.Random.Range(1, 10000).ToString();
-
-        }
+			seed = Time.time.ToString();
+		}
 
 		System.Random pRandom = new System.Random(seed.GetHashCode());
 
@@ -370,6 +468,8 @@ public class MapGenerator : MonoBehaviour {
 		public List<Coord> edgeTiles;
 		public List<Room> connectedRooms;
 		public int roomSize;
+		public bool isAccessibleFromMainRoom;
+		public bool isMainRoom;
 
 		//adding the socketIO gameobject
 		private GameObject socketObject;
@@ -406,8 +506,27 @@ public class MapGenerator : MonoBehaviour {
 			}
 		}
 
+		public void SetAccessibleFromMainRoom()
+		{
+			if(!isAccessibleFromMainRoom)
+			{
+				isAccessibleFromMainRoom = true;
+				foreach(Room connectedRoom in connectedRooms)
+				{
+					connectedRoom.SetAccessibleFromMainRoom();
+				}
+			}
+		}
+
 		public static void ConnectRooms(Room roomA, Room roomB)
 		{
+			if(roomA.isAccessibleFromMainRoom)
+			{
+				roomB.SetAccessibleFromMainRoom();
+			}else if(roomB.isAccessibleFromMainRoom)
+			{
+				roomA.SetAccessibleFromMainRoom();
+			}
 			roomA.connectedRooms.Add(roomB);
 			roomB.connectedRooms.Add(roomA);
 		}
