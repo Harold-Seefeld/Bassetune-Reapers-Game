@@ -448,10 +448,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 128
   height: 72
-  seed: 1546
-  useRandomSeed: 1
+  seed: 1
   socket: {fileID: 759881801}
-  randomFillPercent: 46
+  randomFillPercent: 48
 --- !u!4 &832823824
 Transform:
   m_ObjectHideFlags: 0

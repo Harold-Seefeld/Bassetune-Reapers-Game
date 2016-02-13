@@ -50,7 +50,6 @@ public class Server : MonoBehaviour {
         if (FindObjectsOfType<CharacterManager>() == null)
         {
             gameObject.AddComponent<CharacterManager>();
-            gameObject.AddComponent<MapReciever>();
         }
 
         // Join the appropriate room
