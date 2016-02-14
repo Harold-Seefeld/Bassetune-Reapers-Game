@@ -9,8 +9,8 @@ public class MapGenerator : MonoBehaviour {
 	public int height;
 	public int seed;
 
-	//adding the socketIO gameobject
-	private GameObject socketObject;
+    public Pathfinder pathFinder;
+
 	public SocketIOComponent socket;
 
 	[Range(0,100)]
@@ -20,15 +20,13 @@ public class MapGenerator : MonoBehaviour {
 
 	void Start()
 	{
-		//initialize the socket emitter.
-		socketObject = GameObject.Find ("SocketIO");
-		socket = socketObject.GetComponent<SocketIOComponent>();
+        socket = FindObjectOfType<SocketIOComponent>();
 		socket.On("seed", seedRecieved);
 
 		//GenerateMap();
 	}
 
-	private void seedRecieved(SocketIOEvent ev)
+    private void seedRecieved(SocketIOEvent ev)
 	{
         seed = (int)ev.data.n;
         GenerateMap();
@@ -66,6 +64,9 @@ public class MapGenerator : MonoBehaviour {
 
         MeshGenerator meshGen = GetComponent<MeshGenerator>();
 		meshGen.GenerateMesh(borderedMap, 1);
+
+        // Enable pathfinder
+        pathFinder.enabled = true;
 	}
 
     List<List<Coord>> GetRegions(int tileType)

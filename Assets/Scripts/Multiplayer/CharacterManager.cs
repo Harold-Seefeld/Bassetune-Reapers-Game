@@ -13,8 +13,7 @@ public class CharacterManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		GameObject go = GameObject.Find ("SocketIO");
-		socket = go.GetComponent<SocketIOComponent>();
+		socket = FindObjectOfType<SocketIOComponent>();
 		// Listen out for new character creations
 		socket.On(SocketIOEvents.Input.CHAR_CREATED, CreateCharacter);
 		socket.On(SocketIOEvents.Input.HP, UpdateHP);

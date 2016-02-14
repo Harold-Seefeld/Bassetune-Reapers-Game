@@ -30,8 +30,7 @@ public class Server : MonoBehaviour {
     {
         if (level == 2)
         {
-            GameObject connectionManager = GameObject.Find("Connection Manager");
-            connection = connectionManager.GetComponent<SocketIOComponent>();
+            connection = FindObjectOfType<SocketIOComponent>();
             /*
                 TODO IMPORTANT: RE-ENABLE COMMENTED OUT CODE WHEN IN PRODUCTION MODE
             */

@@ -5,24 +5,17 @@ using SocketIO;
 
 public class GridPlayer : Pathfinding
 {
-    public Camera playerCam;
     public Camera minimapCam;
 
-	//adding the socketIO gameobject
-	private GameObject socketObject;
 	private SocketIOComponent socket;
    
 	public GUIStyle bgStyle;
 	Vector3 direction;
 	//Rigidbody rigidbody;
 
-	//this start function will initialize the socket emitter.
 	void Start()
 	{
-		//rigidbody = GetComponent<Rigidbody>(); 
-
-		socketObject = GameObject.Find ("SocketIO");
-		socket = socketObject.GetComponent<SocketIOComponent>();
+		socket = FindObjectOfType<SocketIOComponent>();
 		socket.On("listening", OpenSocket);
 	}
 
@@ -57,7 +50,7 @@ public class GridPlayer : Pathfinding
         else if (Input.GetButtonDown("Fire1"))
         {
             //Call minimap
-            Ray ray = playerCam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
