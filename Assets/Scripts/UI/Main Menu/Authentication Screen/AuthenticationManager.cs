@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class AuthenticationManager : MonoBehaviour
 {
@@ -102,10 +103,14 @@ public class AuthenticationManager : MonoBehaviour
         }
         else
         {
+            // Parse recieved data
+            JSONObject clientDetails = new JSONObject(w.text);
             // Set clients session
-            clientData.SetSession(w.text);
+            clientData.SetSession(clientDetails.GetField("uuid").str);
+            clientData.username = clientDetails.GetField("user").str;
+            clientData.nickname = clientDetails.GetField("nick").str;
             // Change scene to main menu which should be the next scene in the scene order
-            Application.LoadLevel(Application.loadedLevel + 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

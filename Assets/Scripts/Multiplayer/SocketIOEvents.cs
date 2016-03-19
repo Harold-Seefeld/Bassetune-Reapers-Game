@@ -32,7 +32,8 @@ public static class SocketIOEvents {
 	{
 		// General Input
 		public static string PLAYER_LEAVES = "l";
-		public static string HP = "h";
+        public static string PLAYER = "p";
+        public static string HP = "h";
 		public static string TRAP_TRIGGERED = "t";
 		public static string CHAR_CREATED = "nc";
 		public static string EFFECT = "e";
@@ -52,7 +53,6 @@ public static class SocketIOEvents {
 		{
 			public static string ABILITY_START = "bs";
 			public static string ABILITY_END = "be";
-			public static string PUT_TRAP = "p";
 		}
 	}
 

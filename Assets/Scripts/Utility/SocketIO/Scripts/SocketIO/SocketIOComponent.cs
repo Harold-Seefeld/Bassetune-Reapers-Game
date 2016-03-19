@@ -89,29 +89,6 @@ namespace SocketIO
 
 		#region Unity interface
 
-		public void Awake()
-		{
-			encoder = new Encoder();
-			decoder = new Decoder();
-			parser = new Parser();
-			handlers = new Dictionary<string, List<Action<SocketIOEvent>>>();
-			ackList = new List<Ack>();
-			sid = null;
-			packetId = 0;
-
-			eventQueueLock = new object();
-			eventQueue = new Queue<SocketIOEvent>();
-
-			ackQueueLock = new object();
-			ackQueue = new Queue<Packet>();
-
-			connected = false;
-
-			#if SOCKET_IO_DEBUG
-			if(debugMethod == null) { debugMethod = Debug.Log; };
-			#endif
-		}
-
 		public void Start()
 		{
 			if (autoConnect) { Connect(); }
@@ -171,6 +148,26 @@ namespace SocketIO
 		
 		public void Connect()
 		{
+            encoder = new Encoder();
+            decoder = new Decoder();
+            parser = new Parser();
+            handlers = new Dictionary<string, List<Action<SocketIOEvent>>>();
+            ackList = new List<Ack>();
+            sid = null;
+            packetId = 0;
+
+            eventQueueLock = new object();
+            eventQueue = new Queue<SocketIOEvent>();
+
+            ackQueueLock = new object();
+            ackQueue = new Queue<Packet>();
+
+            connected = false;
+
+            #if SOCKET_IO_DEBUG
+            if (debugMethod == null) { debugMethod = Debug.Log; };
+            #endif
+
             ws = new WebSocket(url);
             ws.OnOpen += OnOpen;
             ws.OnMessage += OnMessage;

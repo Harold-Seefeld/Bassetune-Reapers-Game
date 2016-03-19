@@ -1,18 +1,22 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 using SocketIO;
+using System.Collections.Generic;
 
 public class CharacterManager : MonoBehaviour {
 
     public SocketIOComponent socket;
 	public List<CharacterData> characterData;
 
+    public static CharacterManager instance;
+
     private JSONObject locationsToSend = new JSONObject(JSONObject.Type.OBJECT);
+    public GameObject characterPrefab;
 
     // Use this for initialization
     void Start () {
+        instance = this;
+
 		socket = FindObjectOfType<SocketIOComponent>();
 		// Listen out for new character creations
 		socket.On(SocketIOEvents.Input.CHAR_CREATED, CreateCharacter);
@@ -34,13 +38,23 @@ public class CharacterManager : MonoBehaviour {
 
 	void CreateCharacter(SocketIOEvent e)
     {
-		// TODO: Create character with given data (assign meshes, etc use a prefab)
-		GameObject newCharacter = new GameObject();
+        // Check if character already exists
+        for (var i = 0; i < characterData.Count; i++)
+        {
+            if (characterData[i].CharacterID == (int)e.data.GetField("I").n)
+            {
+                // Don't create a new character
+                return;
+            }
+        }
+        // TODO: Create character with given data (assign meshes, etc use a prefab)
+        Vector3 location = new Vector3(e.data.GetField("L").GetField("x").n, 5, e.data.GetField("L").GetField("y").n);
+        GameObject newCharacter = (GameObject)Instantiate(characterPrefab, location, Quaternion.identity);
 		CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
-		newCharacterData.CharacterEntity = Convert.ToInt16(e.data.GetField("Entity").n);
-		newCharacterData.CharacterHP = Convert.ToInt16(e.data.GetField("HP").n);
-		newCharacterData.CharacterID = Convert.ToInt16(e.data.GetField("ID").n);
-		newCharacterData.CharacterOwner = e.data.GetField("Owner").str;
+		newCharacterData.CharacterEntity = (int)e.data.GetField("E").n;
+		newCharacterData.CharacterHP = (int)e.data.GetField("H").n;
+		newCharacterData.CharacterID = (int)e.data.GetField("I").n;
+		newCharacterData.CharacterOwner = (int)e.data.GetField("O").n;
 		// Add character data to the list
 		characterData.Add(newCharacterData);
 	}
@@ -63,16 +77,19 @@ public class CharacterManager : MonoBehaviour {
     public void UpdateLocations(SocketIOEvent e)
     {
         // Update locations based on the recieved json
-        JSONObject data = e.data.GetField("d");
+        List<JSONObject> data = e.data.GetField("d").list;
         for (int i = 0; i < data.Count; i++)
         {
+            int recievedCharacterID = (int)data[i].GetField("i").n;
             for (int n = 0; n < characterData.Count; n++)
             {
-                if (characterData[n].CharacterID.ToString() == data[i].GetField("i").str)
+                if (characterData[n].CharacterID == recievedCharacterID)// && characterData[n].CharacterOwner != Server.instance.currentPlayerID)
                 {
                     // TODO: Assign locations to character movement agents for smoothness
-                    characterData[n].gameObject.transform.position = new Vector3(data[i].GetField("l")[0].n,
-                                                                                                  0f, data[i].GetField("l")[1].n);
+                    //characterData[n].gameObject.transform.position = new Vector3(data[i].GetField("l")[0].n,
+                    //                                                                              0f, data[i].GetField("l")[1].n);
+                    characterData[n].gridPlayer.FindPath(characterData[n].gameObject.transform.position,
+                        new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n));
                 }
             }
         }

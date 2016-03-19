@@ -8,15 +8,27 @@ public class GridPlayer : Pathfinding
     public Camera minimapCam;
 
 	private SocketIOComponent socket;
+    private CharacterData characterData;
    
 	public GUIStyle bgStyle;
-	Vector3 direction;
-	//Rigidbody rigidbody;
 
-	void Start()
+	private Vector3 direction;
+    //private Vector3 lastPositionMoved;
+    //private Vector3 lastPositionSent;
+    private Vector2 destination;
+
+    void Start()
 	{
-		socket = FindObjectOfType<SocketIOComponent>();
-		socket.On("listening", OpenSocket);
+        characterData = GetComponent<CharacterData>();
+
+        socket = FindObjectOfType<SocketIOComponent>();
+
+        minimapCam = GameObject.Find("MinimapCam").GetComponent<Camera>();
+
+        if (characterData.CharacterOwner == Server.instance.currentPlayerID)
+        {
+            StartCoroutine(SendDestination());
+        }
 	}
 
 	void Update () 
@@ -27,14 +39,13 @@ public class GridPlayer : Pathfinding
             MoveMethod();
         }
 	}
-	
-	private void OpenSocket(SocketIOEvent ev)
-	{
-		Debug.Log("listening for emitter");
-	}
 
     private void FindPath()
     {
+        if (Server.instance.currentPlayerID != characterData.CharacterOwner)
+        {
+            return;
+        }
 
         if (Input.GetButtonDown("Fire1") && Input.mousePosition.x > (Screen.width / 10) * 7F && Input.mousePosition.y < (Screen.height / 10) * 3.5F)
         {
@@ -43,8 +54,9 @@ public class GridPlayer : Pathfinding
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {             
-               FindPath(transform.position, hit.point);
+            {
+                destination = new Vector2(hit.point.x, hit.point.z);
+                //FindPath(transform.position, new Vector3(hit.point.x, 5, hit.point.z));
             }          
         }
         else if (Input.GetButtonDown("Fire1"))
@@ -55,16 +67,15 @@ public class GridPlayer : Pathfinding
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                FindPath(transform.position, hit.point);
+                destination = new Vector2(hit.point.x, hit.point.z);
+                //FindPath(transform.position, hit.point);
             }      
         }
     }
 
+
     private void MoveMethod()
     {
-		//create a JSONobject that will catch the movement data for the players.  
-		JSONObject movementData = new JSONObject(JSONObject.Type.OBJECT);
-
 		if (Path.Count > 0)
         {
             direction = (Path[0] - transform.position).normalized;
@@ -88,19 +99,47 @@ public class GridPlayer : Pathfinding
                 }
             }
             transform.position = new Vector3(transform.position.x, maxY + 1F, transform.position.z);
-        	
-			//adding some fields and emitting them from the socket
-			movementData.AddField("x", direction.x);
-			movementData.AddField("y", direction.y);
-			movementData.AddField("z", direction.z);
 
-			socket.Emit("making movement data", movementData);
-
+            //lastPositionMoved = transform.position;
 		}
     }
 
-//    void OnGUI()
-//    {
-//        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "", bgStyle);
-//    }
+    IEnumerator SendDestination()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (destination != Vector2.zero)//(lastPositionSent != lastPositionMoved)
+        {
+            // Emitting X, Z to server for verification
+            //new Vector2(lastPositionMoved.x, lastPositionMoved.z);
+            CharacterManager.instance.AddLocation(characterData.CharacterID.ToString(), destination);
+
+            destination = Vector2.zero;
+        }
+        StartCoroutine(SendDestination());
+    }
+
+    //IEnumerator SendMovement()
+    //{
+    //    if (characterData.CharacterOwner == Server.instance.currentPlayerID)
+    //    {
+    //        yield return new WaitForSeconds(0.1f);
+
+    //        if (Path.Count > 1)//(lastPositionSent != lastPositionMoved)
+    //        {
+    //            // Emitting X, Z to server for verification
+    //            Vector2 movementData = new Vector2(Path[0].x, Path[0].z); //new Vector2(lastPositionMoved.x, lastPositionMoved.z);
+    //            CharacterManager.instance.AddLocation(characterData.CharacterID.ToString(), movementData);
+    //            lastPositionSent = lastPositionMoved;
+    //        }
+
+    //        StartCoroutine(SendMovement());
+    //    }
+    //    yield return 0;
+    //}
+
+    //    void OnGUI()
+    //    {
+    //        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "", bgStyle);
+    //    }
 }

@@ -1,0 +1,1303 @@
+fileFormatVersion: 2
+guid: 9d1ab9494d360c64d8f0402986be61b8
+timeCreated: 1457749021
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: back
+    100004: Camera
+    100006: Character
+    100008: Chest
+    100010: Head
+    100012: ikHandle4
+    100014: joint1
+    100016: joint1_001
+    100018: joint2
+    100020: joint2_001
+    100022: joint3
+    100024: joint3_001
+    100026: joint4
+    100028: joint4_001
+    100030: Lamp
+    100032: left
+    100034: Left_Ankle
+    100036: Left_Ball
+    100038: Left_Clevical
+    100040: Left_Elbow
+    100042: Left_Hand_1
+    100044: Left_Hand_2
+    100046: Left_Hand_3
+    100048: Left_Hand_Cltr
+    100050: Left_Hip
+    100052: Left_Knee
+    100054: Left_Palm
+    100056: Left_Shoulder
+    100058: Left_Toe
+    100060: Left_Wrist
+    100062: Mesh
+    100064: Neck
+    100066: //RootNode
+    100068: Pelvis
+    100070: Right_Ankle
+    100072: Right_Ball
+    100074: Right_Clevical
+    100076: Right_Elbow
+    100078: Right_Hand_1
+    100080: Right_Hand_2
+    100082: Right_Hand_3
+    100084: Right_Hand_Cltr1
+    100086: Right_Hip
+    100088: Right_Knee
+    100090: Right_Palm
+    100092: Right_Shoulder
+    100094: Right_Toe
+    100096: Right_Wrist
+    100098: Root_Cltr
+    100100: Shield
+    100102: Spine_1
+    100104: Spine_2
+    100106: Sword
+    100108: transform4
+    400000: Armature
+    400002: back
+    400004: Camera
+    400006: Character
+    400008: Chest
+    400010: Head
+    400012: ikHandle4
+    400014: joint1
+    400016: joint1_001
+    400018: joint2
+    400020: joint2_001
+    400022: joint3
+    400024: joint3_001
+    400026: joint4
+    400028: joint4_001
+    400030: Lamp
+    400032: left
+    400034: Left_Ankle
+    400036: Left_Ball
+    400038: Left_Clevical
+    400040: Left_Elbow
+    400042: Left_Hand_1
+    400044: Left_Hand_2
+    400046: Left_Hand_3
+    400048: Left_Hand_Cltr
+    400050: Left_Hip
+    400052: Left_Knee
+    400054: Left_Palm
+    400056: Left_Shoulder
+    400058: Left_Toe
+    400060: Left_Wrist
+    400062: Mesh
+    400064: Neck
+    400066: //RootNode
+    400068: Pelvis
+    400070: Right_Ankle
+    400072: Right_Ball
+    400074: Right_Clevical
+    400076: Right_Elbow
+    400078: Right_Hand_1
+    400080: Right_Hand_2
+    400082: Right_Hand_3
+    400084: Right_Hand_Cltr1
+    400086: Right_Hip
+    400088: Right_Knee
+    400090: Right_Palm
+    400092: Right_Shoulder
+    400094: Right_Toe
+    400096: Right_Wrist
+    400098: Root_Cltr
+    400100: Shield
+    400102: Spine_1
+    400104: Spine_2
+    400106: Sword
+    400108: transform4
+    2300000: Shield
+    2300002: Sword
+    3300000: Shield
+    3300002: Sword
+    4300000: Character
+    4300002: Shield
+    4300004: Sword
+    7400000: T-Pose
+    7400002: Armature_Take_001_BaseLayer
+    7400004: Full Animation Cycle (0-140)
+    7400006: Run
+    7400008: Block
+    7400010: Stagger
+    7400012: Attack (Horizontal AOE Slash)
+    7400014: Death
+    7400016: Idle
+    9500000: //RootNode
+    13700000: Character
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: T-Pose
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 0
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: left
+        weight: 1
+      - path: Left_Hand_Cltr
+        weight: 1
+      - path: Left_Hand_Cltr/Shield
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Right_Hand_Cltr1
+        weight: 1
+      - path: Right_Hand_Cltr1/ikHandle4
+        weight: 1
+      - path: Right_Hand_Cltr1/Sword
+        weight: 1
+      - path: Root_Cltr
+        weight: 1
+      - path: Root_Cltr/Armature
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001/joint4_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Default Take
+      firstFrame: 3
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: left
+        weight: 1
+      - path: Left_Hand_Cltr
+        weight: 1
+      - path: Left_Hand_Cltr/Shield
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Right_Hand_Cltr1
+        weight: 1
+      - path: Right_Hand_Cltr1/ikHandle4
+        weight: 1
+      - path: Right_Hand_Cltr1/Sword
+        weight: 1
+      - path: Root_Cltr
+        weight: 1
+      - path: Root_Cltr/Armature
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001/joint4_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Run
+      takeName: Default Take
+      firstFrame: 33
+      lastFrame: 47
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: left
+        weight: 1
+      - path: Left_Hand_Cltr
+        weight: 1
+      - path: Left_Hand_Cltr/Shield
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Right_Hand_Cltr1
+        weight: 1
+      - path: Right_Hand_Cltr1/ikHandle4
+        weight: 1
+      - path: Right_Hand_Cltr1/Sword
+        weight: 1
+      - path: Root_Cltr
+        weight: 1
+      - path: Root_Cltr/Armature
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001/joint4_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Block
+      takeName: Default Take
+      firstFrame: 49
+      lastFrame: 70
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: left
+        weight: 1
+      - path: Left_Hand_Cltr
+        weight: 1
+      - path: Left_Hand_Cltr/Shield
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Right_Hand_Cltr1
+        weight: 1
+      - path: Right_Hand_Cltr1/ikHandle4
+        weight: 1
+      - path: Right_Hand_Cltr1/Sword
+        weight: 1
+      - path: Root_Cltr
+        weight: 1
+      - path: Root_Cltr/Armature
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001/joint4_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Stagger
+      takeName: Default Take
+      firstFrame: 72
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: left
+        weight: 1
+      - path: Left_Hand_Cltr
+        weight: 1
+      - path: Left_Hand_Cltr/Shield
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Right_Hand_Cltr1
+        weight: 1
+      - path: Right_Hand_Cltr1/ikHandle4
+        weight: 1
+      - path: Right_Hand_Cltr1/Sword
+        weight: 1
+      - path: Root_Cltr
+        weight: 1
+      - path: Root_Cltr/Armature
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001/joint4_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Attack (Horizontal AOE Slash)
+      takeName: Default Take
+      firstFrame: 92
+      lastFrame: 115
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: left
+        weight: 1
+      - path: Left_Hand_Cltr
+        weight: 1
+      - path: Left_Hand_Cltr/Shield
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Right_Hand_Cltr1
+        weight: 1
+      - path: Right_Hand_Cltr1/ikHandle4
+        weight: 1
+      - path: Right_Hand_Cltr1/Sword
+        weight: 1
+      - path: Root_Cltr
+        weight: 1
+      - path: Root_Cltr/Armature
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001/joint4_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Death
+      takeName: Default Take
+      firstFrame: 116
+      lastFrame: 140
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: left
+        weight: 1
+      - path: Left_Hand_Cltr
+        weight: 1
+      - path: Left_Hand_Cltr/Shield
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Right_Hand_Cltr1
+        weight: 1
+      - path: Right_Hand_Cltr1/ikHandle4
+        weight: 1
+      - path: Right_Hand_Cltr1/Sword
+        weight: 1
+      - path: Root_Cltr
+        weight: 1
+      - path: Root_Cltr/Armature
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001/joint4_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Full Animation Cycle (0-140)
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 140
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Character
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: left
+        weight: 1
+      - path: Left_Hand_Cltr
+        weight: 1
+      - path: Left_Hand_Cltr/Shield
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Right_Hand_Cltr1
+        weight: 1
+      - path: Right_Hand_Cltr1/ikHandle4
+        weight: 1
+      - path: Right_Hand_Cltr1/Sword
+        weight: 1
+      - path: Root_Cltr
+        weight: 1
+      - path: Root_Cltr/Armature
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/joint1/joint2/joint3/joint4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/joint1_001/joint2_001/joint3_001/joint4_001
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Root_Cltr/Armature/Pelvis/transform4/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

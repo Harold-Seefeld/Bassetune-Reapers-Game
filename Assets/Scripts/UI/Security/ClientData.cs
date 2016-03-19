@@ -3,9 +3,10 @@ using System.Collections;
 
 public class ClientData : MonoBehaviour
 {
+    public string username;
+    public string nickname;
 
     private string sessionID;
-
     private string gameVersion;
 
     public void Start()

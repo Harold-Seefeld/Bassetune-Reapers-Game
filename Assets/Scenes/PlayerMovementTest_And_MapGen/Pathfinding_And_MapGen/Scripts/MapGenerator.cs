@@ -28,11 +28,11 @@ public class MapGenerator : MonoBehaviour {
 
     private void seedRecieved(SocketIOEvent ev)
 	{
-        seed = (int)ev.data.n;
+        seed = (int)ev.data.GetField("s").n;
         GenerateMap();
 	}
 
-	void GenerateMap()
+	public void GenerateMap()
 	{
 		map = new int[width,height];
 		RandomFillMap();
@@ -44,7 +44,7 @@ public class MapGenerator : MonoBehaviour {
 
         ProcessMap();
 
-        int borderSize = 10;
+        int borderSize = 0;
 		int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
 		for(int x = 0; x < borderedMap.GetLength(0); x++)
 		{

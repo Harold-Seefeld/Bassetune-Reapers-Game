@@ -1,0 +1,173 @@
+fileFormatVersion: 2
+guid: 3fceb0250427f4b469f296fa4e360b4e
+timeCreated: 1457741388
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Be_Head
+    100002: Chest
+    100004: Head
+    100006: Left_Ankle
+    100008: Left_Ball
+    100010: Left_Clevical
+    100012: Left_Elbow
+    100014: Left_Hand_1
+    100016: Left_Hand_2
+    100018: Left_Hand_3
+    100020: Left_Hip
+    100022: Left_joint1
+    100024: Left_joint2
+    100026: Left_joint3
+    100028: Left_joint4
+    100030: Left_Knee
+    100032: Left_Palm
+    100034: Left_Shoulder
+    100036: Left_Toe
+    100038: Left_Wrist
+    100040: //RootNode
+    100042: Lightning Minion
+    100044: Main_Contriller
+    100046: Mesh
+    100048: Neck
+    100050: Pelvis
+    100052: Rig1
+    100054: Right_Ankle
+    100056: Right_Ball
+    100058: Right_Clevical
+    100060: Right_Elbow
+    100062: Right_Hand_1
+    100064: Right_Hand_2
+    100066: Right_Hand_3
+    100068: Right_Hip
+    100070: Right_joint1
+    100072: Right_joint2
+    100074: Right_joint3
+    100076: Right_joint4
+    100078: Right_Knee
+    100080: Right_Palm
+    100082: Right_Shoulder
+    100084: Right_Toe
+    100086: Right_Wrist
+    100088: Spine_1
+    100090: Spine_2
+    100092: Sword
+    100094: transform4
+    400000: Be_Head
+    400002: Chest
+    400004: Head
+    400006: Left_Ankle
+    400008: Left_Ball
+    400010: Left_Clevical
+    400012: Left_Elbow
+    400014: Left_Hand_1
+    400016: Left_Hand_2
+    400018: Left_Hand_3
+    400020: Left_Hip
+    400022: Left_joint1
+    400024: Left_joint2
+    400026: Left_joint3
+    400028: Left_joint4
+    400030: Left_Knee
+    400032: Left_Palm
+    400034: Left_Shoulder
+    400036: Left_Toe
+    400038: Left_Wrist
+    400040: Lightning Minion
+    400042: //RootNode
+    400044: Main_Contriller
+    400046: Mesh
+    400048: Neck
+    400050: Pelvis
+    400052: Rig1
+    400054: Right_Ankle
+    400056: Right_Ball
+    400058: Right_Clevical
+    400060: Right_Elbow
+    400062: Right_Hand_1
+    400064: Right_Hand_2
+    400066: Right_Hand_3
+    400068: Right_Hip
+    400070: Right_joint1
+    400072: Right_joint2
+    400074: Right_joint3
+    400076: Right_joint4
+    400078: Right_Knee
+    400080: Right_Palm
+    400082: Right_Shoulder
+    400084: Right_Toe
+    400086: Right_Wrist
+    400088: Spine_1
+    400090: Spine_2
+    400092: Sword
+    400094: transform4
+    2300000: Sword
+    3300000: Sword
+    4300000: Sword
+    4300002: Lightning Minion
+    9500000: //RootNode
+    13700000: Lightning Minion
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

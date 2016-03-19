@@ -41,20 +41,20 @@ public class RTSCamera : MonoBehaviour
                 transform.Translate(Vector3.right * Time.deltaTime * -PanSpeed, Space.Self);
             }
 
-            if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height * (1 - ScrollEdge))
+            if (Input.GetKey("w"))// || Input.mousePosition.y >= Screen.height * (1 - ScrollEdge))
             {
-                transform.Translate(Vector3.forward * Time.deltaTime * PanSpeed, Space.Self);
+                transform.Translate(Vector3.forward * Time.deltaTime * PanSpeed, Space.World);
             }
-            else if (Input.GetKey("s") || Input.mousePosition.y <= Screen.height * ScrollEdge)
+            else if (Input.GetKey("s"))// || Input.mousePosition.y <= Screen.height * ScrollEdge)
             {
-                transform.Translate(Vector3.forward * Time.deltaTime * -PanSpeed, Space.Self);
+                transform.Translate(Vector3.forward * Time.deltaTime * -PanSpeed, Space.World);
             }
 
-            if (Input.GetKey("q") || Input.mousePosition.x <= Screen.width * ScrollEdge)
+            if (Input.GetKey("q"))// || Input.mousePosition.x <= Screen.width * ScrollEdge)
             {
                 transform.Rotate(Vector3.up * Time.deltaTime * -rotateSpeed, Space.World);
             }
-            else if (Input.GetKey("e") || Input.mousePosition.x >= Screen.width * (1 - ScrollEdge))
+            else if (Input.GetKey("e"))// || Input.mousePosition.x >= Screen.width * (1 - ScrollEdge))
             {
                 transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed, Space.World);
             }

@@ -1,0 +1,173 @@
+fileFormatVersion: 2
+guid: 061f929ca811e874aba3936eac49e291
+timeCreated: 1457741387
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Be_Head
+    100002: Blade
+    100004: Chest
+    100006: Head
+    100008: Left_Ankle
+    100010: Left_Ball
+    100012: Left_Clevical
+    100014: Left_Elbow
+    100016: Left_Hand_1
+    100018: Left_Hand_2
+    100020: Left_Hand_3
+    100022: Left_Hip
+    100024: Left_joint1
+    100026: Left_joint2
+    100028: Left_joint3
+    100030: Left_joint4
+    100032: Left_Knee
+    100034: Left_Palm
+    100036: Left_Shoulder
+    100038: Left_Toe
+    100040: Left_Wrist
+    100042: Main_Contriller
+    100044: Mesh
+    100046: //RootNode
+    100048: Mist Thief
+    100050: Neck
+    100052: Pelvis
+    100054: Rig1
+    100056: Right_Ankle
+    100058: Right_Ball
+    100060: Right_Clevical
+    100062: Right_Elbow
+    100064: Right_Hand_1
+    100066: Right_Hand_2
+    100068: Right_Hand_3
+    100070: Right_Hip
+    100072: Right_joint1
+    100074: Right_joint2
+    100076: Right_joint3
+    100078: Right_joint4
+    100080: Right_Knee
+    100082: Right_Palm
+    100084: Right_Shoulder
+    100086: Right_Toe
+    100088: Right_Wrist
+    100090: Spine_1
+    100092: Spine_2
+    100094: transform4
+    400000: Be_Head
+    400002: Blade
+    400004: Chest
+    400006: Head
+    400008: Left_Ankle
+    400010: Left_Ball
+    400012: Left_Clevical
+    400014: Left_Elbow
+    400016: Left_Hand_1
+    400018: Left_Hand_2
+    400020: Left_Hand_3
+    400022: Left_Hip
+    400024: Left_joint1
+    400026: Left_joint2
+    400028: Left_joint3
+    400030: Left_joint4
+    400032: Left_Knee
+    400034: Left_Palm
+    400036: Left_Shoulder
+    400038: Left_Toe
+    400040: Left_Wrist
+    400042: Main_Contriller
+    400044: Mesh
+    400046: Mist Thief
+    400048: //RootNode
+    400050: Neck
+    400052: Pelvis
+    400054: Rig1
+    400056: Right_Ankle
+    400058: Right_Ball
+    400060: Right_Clevical
+    400062: Right_Elbow
+    400064: Right_Hand_1
+    400066: Right_Hand_2
+    400068: Right_Hand_3
+    400070: Right_Hip
+    400072: Right_joint1
+    400074: Right_joint2
+    400076: Right_joint3
+    400078: Right_joint4
+    400080: Right_Knee
+    400082: Right_Palm
+    400084: Right_Shoulder
+    400086: Right_Toe
+    400088: Right_Wrist
+    400090: Spine_1
+    400092: Spine_2
+    400094: transform4
+    2300000: Blade
+    3300000: Blade
+    4300000: Blade
+    4300002: Mist Thief
+    9500000: //RootNode
+    13700000: Mist Thief
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

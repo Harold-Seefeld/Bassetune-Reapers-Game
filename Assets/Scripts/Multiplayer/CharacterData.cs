@@ -3,12 +3,20 @@ using System.Collections;
 
 public class CharacterData : MonoBehaviour {
 
+    // Properties of character itself
 	public int CharacterID;
 	public int CharacterHP;
 	public int CharacterMaxHP;
-	public string CharacterType;
-	public string CharacterOwner;
-	public string CharacterOwnerNick;
+	public int CharacterOwner;
 	public int CharacterEntity;
+    public string CharacterType;
+
+    // Gameobject Properties
+    public GridPlayer gridPlayer;
+
+    void Start()
+    {
+        gridPlayer = GetComponent<GridPlayer>();
+    }
 
 }
