@@ -1,0 +1,978 @@
+fileFormatVersion: 2
+guid: 4089a5d58763e514a9f9511d6640b578
+timeCreated: 1458427384
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Chest
+    100002: Head
+    100004: Head_end
+    100006: //RootNode
+    100008: Lamp
+    100010: Lamp.001
+    100012: Lamp.002
+    100014: Left_Ankle
+    100016: Left_Ball
+    100018: Left_Clevical
+    100020: Left_Elbow
+    100022: Left_Hand_1
+    100024: Left_Hand_2
+    100026: Left_Hand_3
+    100028: Left_Hand_3_end
+    100030: Left_Hip
+    100032: Left_Joint_1
+    100034: Left_Joint_2
+    100036: Left_Joint_3
+    100038: Left_Joint_4
+    100040: Left_Joint_4_end
+    100042: Left_Knee
+    100044: Left_Palm
+    100046: Left_Shoulder
+    100048: Left_Toe
+    100050: Left_Toe_end
+    100052: Left_Wrist
+    100054: Main_Controller
+    100056: Mesh
+    100058: Mesh_Fleshminion
+    100060: Mesh_sword_fleshminion
+    100062: Neck
+    100064: Pelvis
+    100066: Rig_Fleshminion
+    100068: Right_Ankle
+    100070: Right_Ball
+    100072: Right_Clevical
+    100074: Right_Elbow
+    100076: Right_Hand_1
+    100078: Right_Hand_2
+    100080: Right_Hand_3
+    100082: Right_Hand_3_end
+    100084: Right_Hip
+    100086: Right_Joint_5
+    100088: Right_Joint_6
+    100090: Right_Joint_7
+    100092: Right_Joint_8
+    100094: Right_Joint_8_end
+    100096: Right_Knee
+    100098: Right_Palm
+    100100: Right_Shoulder
+    100102: Right_Toe
+    100104: Right_Toe_end
+    100106: Right_Wrist
+    100108: Spine_1
+    100110: Spine_2
+    100112: transform2
+    400000: Chest
+    400002: Head
+    400004: Head_end
+    400006: //RootNode
+    400008: Lamp
+    400010: Lamp.001
+    400012: Lamp.002
+    400014: Left_Ankle
+    400016: Left_Ball
+    400018: Left_Clevical
+    400020: Left_Elbow
+    400022: Left_Hand_1
+    400024: Left_Hand_2
+    400026: Left_Hand_3
+    400028: Left_Hand_3_end
+    400030: Left_Hip
+    400032: Left_Joint_1
+    400034: Left_Joint_2
+    400036: Left_Joint_3
+    400038: Left_Joint_4
+    400040: Left_Joint_4_end
+    400042: Left_Knee
+    400044: Left_Palm
+    400046: Left_Shoulder
+    400048: Left_Toe
+    400050: Left_Toe_end
+    400052: Left_Wrist
+    400054: Main_Controller
+    400056: Mesh
+    400058: Mesh_Fleshminion
+    400060: Mesh_sword_fleshminion
+    400062: Neck
+    400064: Pelvis
+    400066: Rig_Fleshminion
+    400068: Right_Ankle
+    400070: Right_Ball
+    400072: Right_Clevical
+    400074: Right_Elbow
+    400076: Right_Hand_1
+    400078: Right_Hand_2
+    400080: Right_Hand_3
+    400082: Right_Hand_3_end
+    400084: Right_Hip
+    400086: Right_Joint_5
+    400088: Right_Joint_6
+    400090: Right_Joint_7
+    400092: Right_Joint_8
+    400094: Right_Joint_8_end
+    400096: Right_Knee
+    400098: Right_Palm
+    400100: Right_Shoulder
+    400102: Right_Toe
+    400104: Right_Toe_end
+    400106: Right_Wrist
+    400108: Spine_1
+    400110: Spine_2
+    400112: transform2
+    2300000: Mesh_sword_fleshminion
+    3300000: Mesh_sword_fleshminion
+    4300000: Mesh_sword_fleshminion
+    4300002: Mesh_Fleshminion
+    7400000: T-Pose
+    7400002: Attack (Diagonal Slash - Mainhand)
+    9500000: //RootNode
+    13700000: Mesh_Fleshminion
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: T-Pose
+      takeName: Rig_Fleshminion|Rig_FleshminionAction
+      firstFrame: 0
+      lastFrame: 0
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Lamp.001
+        weight: 1
+      - path: Lamp.002
+        weight: 1
+      - path: Main_Controller
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe/Left_Toe_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe/Right_Toe_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3/Left_Hand_3_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1/Left_Joint_2
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1/Left_Joint_2/Left_Joint_3
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1/Left_Joint_2/Left_Joint_3/Left_Joint_4
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1/Left_Joint_2/Left_Joint_3/Left_Joint_4/Left_Joint_4_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Neck/Head/Head_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Mesh_sword_fleshminion
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3/Right_Hand_3_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5/Right_Joint_6
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5/Right_Joint_6/Right_Joint_7
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5/Right_Joint_6/Right_Joint_7/Right_Joint_8
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5/Right_Joint_6/Right_Joint_7/Right_Joint_8/Right_Joint_8_end
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Mesh/transform2
+        weight: 1
+      - path: Mesh_Fleshminion
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Attack (Diagonal Slash - Mainhand)
+      takeName: Rig_Fleshminion|Rig_FleshminionAction
+      firstFrame: 1
+      lastFrame: 19
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Lamp.001
+        weight: 1
+      - path: Lamp.002
+        weight: 1
+      - path: Main_Controller
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee/Left_Ankle
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Left_Hip/Left_Knee/Left_Ankle/Left_Ball/Left_Toe/Left_Toe_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee/Right_Ankle
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee/Right_Ankle/Right_Ball
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Right_Hip/Right_Knee/Right_Ankle/Right_Ball/Right_Toe/Right_Toe_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Hand_1/Left_Hand_2/Left_Hand_3/Left_Hand_3_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1/Left_Joint_2
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1/Left_Joint_2/Left_Joint_3
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1/Left_Joint_2/Left_Joint_3/Left_Joint_4
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Left_Clevical/Left_Shoulder/Left_Elbow/Left_Wrist/Left_Palm/Left_Joint_1/Left_Joint_2/Left_Joint_3/Left_Joint_4/Left_Joint_4_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Neck
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Neck/Head
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Neck/Head/Head_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Mesh_sword_fleshminion
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Hand_1/Right_Hand_2/Right_Hand_3/Right_Hand_3_end
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5/Right_Joint_6
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5/Right_Joint_6/Right_Joint_7
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5/Right_Joint_6/Right_Joint_7/Right_Joint_8
+        weight: 1
+      - path: Main_Controller/Rig_Fleshminion/Pelvis/Spine_1/Spine_2/Chest/Right_Clevical/Right_Shoulder/Right_Elbow/Right_Wrist/Right_Palm/Right_Joint_5/Right_Joint_6/Right_Joint_7/Right_Joint_8/Right_Joint_8_end
+        weight: 1
+      - path: Mesh
+        weight: 1
+      - path: Mesh/transform2
+        weight: 1
+      - path: Mesh_Fleshminion
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human:
+    - boneName: Pelvis
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_Hip
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Hip
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_Knee
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Knee
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_Ankle
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Ankle
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Spine_1
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Spine_2
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_Shoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Clevical
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_Elbow
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Shoulder
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_Palm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Elbow
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_Joint_1
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Wrist
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_Toe
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Toe
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Joint_5
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Joint_6
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Joint_7
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Hand_1
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Hand_2
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_Hand_3
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Hit_Fleshminion(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Lamp
+      position: {x: -2.781333, y: 5.117169, z: 1.5278491}
+      rotation: {x: 0.16907571, y: -0.75588036, z: 0.27217132, w: 0.57094747}
+      scale: {x: 100.000015, y: 100, z: 100.00001}
+      transformModified: 1
+    - name: Lamp.001
+      position: {x: 1.4227577, y: 1.1456953, z: 1.7560514}
+      rotation: {x: 0.16907571, y: -0.75588036, z: 0.27217132, w: 0.57094747}
+      scale: {x: 100.000015, y: 100, z: 100.00001}
+      transformModified: 1
+    - name: Lamp.002
+      position: {x: -0.2478414, y: 1.567328, z: -3.26967}
+      rotation: {x: 0.16907571, y: -0.75588036, z: 0.27217132, w: 0.57094747}
+      scale: {x: 100.000015, y: 100, z: 100.00001}
+      transformModified: 1
+    - name: Main_Controller
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: 0, w: 1}
+      scale: {x: 33, y: 33, z: 33}
+      transformModified: 1
+    - name: Rig_Fleshminion
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Pelvis
+      position: {x: -0.00006153757, y: 0.025296357, z: 7.0312906e-19}
+      rotation: {x: -0.0051544346, y: 0.9999867, z: 3.609557e-10, w: 0.00000007532213}
+      scale: {x: 1, y: 1.0000001, z: 1}
+      transformModified: 1
+    - name: Spine_1
+      position: {x: 9.3132255e-12, y: 0.004910195, z: -2.8766868e-18}
+      rotation: {x: 6.1447736e-10, y: 0.000000031786094, z: 0.005154436, w: 0.9999867}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Spine_2
+      position: {x: 7.721468e-13, y: 0.004960551, z: 2.70771e-19}
+      rotation: {x: 0.0034964373, y: -0.9999939, z: -4.167333e-11, w: 0.00000007549744}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+      transformModified: 1
+    - name: Chest
+      position: {x: 3.259629e-11, y: 0.0072385347, z: -6.901709e-19}
+      rotation: {x: -0.009520106, y: 0.99995476, z: 1.13531254e-10, w: 0.000000075494505}
+      scale: {x: 0.99999976, y: 0.99999994, z: 0.99999976}
+      transformModified: 1
+    - name: Neck
+      position: {x: 4.6566126e-11, y: 0.0042015905, z: 0}
+      rotation: {x: 0.009569698, y: -0.9999542, z: -1.1411315e-10, w: 0.00000007549448}
+      scale: {x: 0.9999999, y: 1, z: 1}
+      transformModified: 1
+    - name: Head
+      position: {x: -6.0535965e-11, y: 0.007137301, z: -3.330669e-18}
+      rotation: {x: 1.8155531e-10, y: -0.000000031786016, z: -0.005712135, w: 0.99998367}
+      scale: {x: 0.9999998, y: 1, z: 1}
+      transformModified: 1
+    - name: Head_end
+      position: {x: -0, y: 0.007137306, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Left_Clevical
+      position: {x: -0.000056933262, y: -0.00038252352, z: 4.282992e-12}
+      rotation: {x: 0.034693524, y: -0.038648494, z: -0.6581021, w: 0.7511354}
+      scale: {x: 0.99999976, y: 1, z: 0.9999998}
+      transformModified: 1
+    - name: Left_Shoulder
+      position: {x: 0.0000000036280834, y: 0.0053234473, z: -6.658041e-11}
+      rotation: {x: 0.057529155, y: 0.005683779, z: 0.09815343, w: -0.9934908}
+      scale: {x: 1, y: 0.99999964, z: 1}
+      transformModified: 1
+    - name: Left_Elbow
+      position: {x: 0.000000004566391, y: 0.00828374, z: -1.6763806e-10}
+      rotation: {x: -0.04174303, y: -0.000003837048, z: 0.004784017, w: 0.99911696}
+      scale: {x: 1, y: 0.9999999, z: 1.0000001}
+      transformModified: 1
+    - name: Left_Wrist
+      position: {x: 0.0000000035203993, y: 0.0076732114, z: -2.7939676e-10}
+      rotation: {x: 0.15919933, y: -0.00000037252897, z: 0.000002235174, w: 0.98724645}
+      scale: {x: 1.0000002, y: 1, z: 1.0000001}
+      transformModified: 1
+    - name: Left_Palm
+      position: {x: -0.00000000131864, y: 0.0012988714, z: -3.4226103e-10}
+      rotation: {x: -0.12952387, y: 0.020246485, z: 0.19136754, w: 0.9727241}
+      scale: {x: 1.0000001, y: 0.9999998, z: 0.9999997}
+      transformModified: 1
+    - name: Left_Hand_1
+      position: {x: -0.000023517743, y: 0.0012982627, z: 0.000004333069}
+      rotation: {x: -0.01837449, y: 0.000000035390254, z: -0.0000004768371, w: 0.99983126}
+      scale: {x: 1.0000001, y: 1, z: 1.0000004}
+      transformModified: 1
+    - name: Left_Hand_2
+      position: {x: -0.000049653205, y: 0.001800252, z: 0.000032544292}
+      rotation: {x: 0.019456353, y: 0.000000051688385, z: 0.0000005066393, w: 0.9998107}
+      scale: {x: 0.99999994, y: 1.0000004, z: 1.0000002}
+      transformModified: 1
+    - name: Left_Hand_3
+      position: {x: -4.065805e-10, y: 0.0011626126, z: 4.6566126e-11}
+      rotation: {x: 0.022968628, y: -0.000000012572852, z: -0.0000031888478, w: 0.99973625}
+      scale: {x: 0.9999998, y: 0.99999964, z: 0.99999976}
+      transformModified: 1
+    - name: Left_Hand_3_end
+      position: {x: -0, y: 0.0011626121, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Left_Joint_1
+      position: {x: 0.00016309356, y: 0.00040436647, z: 0.000017662682}
+      rotation: {x: -0.33576325, y: -0.89893717, z: 0.17073376, w: 0.22366276}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000007}
+      transformModified: 1
+    - name: Left_Joint_2
+      position: {x: -0.0000000013783574, y: 0.0008427426, z: 0.00041946417}
+      rotation: {x: 0.7572058, y: -0.000000566244, z: 0.000000733882, w: 0.65317637}
+      scale: {x: 0.99999976, y: 0.9999999, z: 1}
+      transformModified: 1
+    - name: Left_Joint_3
+      position: {x: -0.0000000020489097, y: 0.0012065448, z: 0.0002326405}
+      rotation: {x: 0.22852233, y: -0.00000068545336, z: -0.00000065565104, w: 0.9735387}
+      scale: {x: 1.0000001, y: 1, z: 1.0000002}
+      transformModified: 1
+    - name: Left_Joint_4
+      position: {x: -0.0000000014528632, y: 0.0014109368, z: 0.00016783104}
+      rotation: {x: 0.1760419, y: 0.00000009685751, z: -0.00000083446474, w: 0.98438275}
+      scale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      transformModified: 1
+    - name: Left_Joint_4_end
+      position: {x: -0, y: 0.0014208839, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Right_Clevical
+      position: {x: -0.000056933448, y: -0.00038250923, z: 4.5653164e-12}
+      rotation: {x: 0.034225438, y: 0.03906371, z: 0.66710347, w: 0.7431525}
+      scale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      transformModified: 1
+    - name: Right_Shoulder
+      position: {x: 8.9756214e-10, y: 0.005323446, z: 9.384572e-10}
+      rotation: {x: -0.05752915, y: 0.005683764, z: 0.09815329, w: 0.9934909}
+      scale: {x: 0.9999997, y: 0.9999998, z: 1.0000001}
+      transformModified: 1
+    - name: Right_Elbow
+      position: {x: -0.0000000017991988, y: 0.008283771, z: -4.6566126e-11}
+      rotation: {x: -0.025744868, y: -0.00065544783, z: -0.014554137, w: 0.99956244}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
+      transformModified: 1
+    - name: Right_Wrist
+      position: {x: -0.000000024471372, y: 0.007673186, z: -0.0000000034458933}
+      rotation: {x: 0.15919931, y: 0.00000035762778, z: 0.0000007450579, w: 0.9872465}
+      scale: {x: 0.99999994, y: 0.9999999, z: 0.99999934}
+      transformModified: 1
+    - name: Right_Palm
+      position: {x: -0.0000000023000575, y: 0.001298897, z: -0.0000000060524323}
+      rotation: {x: -0.116303556, y: 0.000000046566107, z: 0.0000018775454, w: 0.9932138}
+      scale: {x: 1, y: 1, z: 1.0000005}
+      transformModified: 1
+    - name: Mesh_sword_fleshminion
+      position: {x: -0.0012527084, y: 0.0008620512, z: 0.0015812432}
+      rotation: {x: -0.61737555, y: -0.1993288, z: 0.108247235, w: 0.7532582}
+      scale: {x: 1, y: 0.99999994, z: 1}
+      transformModified: 1
+    - name: Right_Hand_1
+      position: {x: 0.000023472867, y: 0.0012982745, z: 0.0000043323917}
+      rotation: {x: 0.027027158, y: -0.0012504671, z: 0.0048663574, w: 0.9996221}
+      scale: {x: 1, y: 0.99999976, z: 0.9999994}
+      transformModified: 1
+    - name: Right_Hand_2
+      position: {x: 0.000049668586, y: 0.0018002745, z: 0.000032545413}
+      rotation: {x: 0.01945633, y: 0.00000006472689, z: 0.00000056624384, w: 0.9998107}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+      transformModified: 1
+    - name: Right_Hand_3
+      position: {x: 0.000000042351893, y: 0.0011625987, z: 5.3085386e-10}
+      rotation: {x: 0.022968724, y: 0.00000044051538, z: -0.0000013113016, w: 0.99973625}
+      scale: {x: 0.9999999, y: 0.9999998, z: 0.9999998}
+      transformModified: 1
+    - name: Right_Hand_3_end
+      position: {x: -0, y: 0.0011625995, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Right_Joint_5
+      position: {x: -0.00017511242, y: 0.00025083218, z: 0.000015456744}
+      rotation: {x: -0.14150515, y: 0.09134408, z: 0.03712187, w: 0.98501503}
+      scale: {x: 0.9999998, y: 0.99999994, z: 0.9999998}
+      transformModified: 1
+    - name: Right_Joint_6
+      position: {x: 0.000000070761885, y: 0.00084274, z: 0.00041944228}
+      rotation: {x: 0.14265418, y: 0.00003756952, z: -0.00004369017, w: 0.9897726}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1.0000004}
+      transformModified: 1
+    - name: Right_Joint_7
+      position: {x: -0.000000034458935, y: 0.0012065477, z: 0.00023263357}
+      rotation: {x: 0.06977181, y: -0.0000049993355, z: 0.0000045597517, w: 0.99756294}
+      scale: {x: 0.9999998, y: 0.99999964, z: 0.9999995}
+      transformModified: 1
+    - name: Right_Joint_8
+      position: {x: -0.000000024586916, y: 0.001410973, z: 0.00016784042}
+      rotation: {x: 0.17604184, y: 0.00000022351733, z: 0.0000002980231, w: 0.98438275}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000007}
+      transformModified: 1
+    - name: Right_Joint_8_end
+      position: {x: -0, y: 0.0014209223, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Right_Hip
+      position: {x: -0.0030683312, y: -0.0019295098, z: 0.000039268372}
+      rotation: {x: -0.7062048, y: 0.03570591, z: -0.7057975, w: 0.043009553}
+      scale: {x: 0.9999995, y: 0.99999976, z: 0.99997956}
+      transformModified: 1
+    - name: Right_Knee
+      position: {x: -2.0472228e-11, y: 0.010193558, z: -3.157274e-10}
+      rotation: {x: -0.12508127, y: -0.9921465, z: 0.00003253296, w: -0.0000006854534}
+      scale: {x: 0.9999998, y: 1.0000002, z: 0.9999999}
+      transformModified: 1
+    - name: Right_Ankle
+      position: {x: -1.45129065e-11, y: 0.011508393, z: 4.8118876e-10}
+      rotation: {x: -0.4569934, y: -0.8894701, z: 0.000016536564, w: -0.000003993511}
+      scale: {x: 0.9999999, y: 0.9999999, z: 1}
+      transformModified: 1
+    - name: Right_Ball
+      position: {x: -1.10404415e-10, y: 0.0019327719, z: -1.308636e-10}
+      rotation: {x: -0.00000059604645, y: 0.0000029206276, z: 0.31531787, w: 0.9489862}
+      scale: {x: 0.9999999, y: 1.0000007, z: 1}
+      transformModified: 1
+    - name: Right_Toe
+      position: {x: 7.593949e-11, y: 0.0033562738, z: -1.8015484e-10}
+      rotation: {x: -0.00000011920929, y: 0.00000059604645, z: 0.07630077, w: 0.9970849}
+      scale: {x: 0.99999994, y: 0.99999976, z: 1}
+      transformModified: 1
+    - name: Right_Toe_end
+      position: {x: -0, y: 0.003356273, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Left_Hip
+      position: {x: 0.0029683753, y: -0.001867278, z: 0.000039267463}
+      rotation: {x: 0.70620376, y: -0.0357297, z: 0.70579886, w: -0.04298547}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000179}
+      transformModified: 1
+    - name: Left_Knee
+      position: {x: 2.68885e-11, y: 0.010193554, z: -7.7664306e-11}
+      rotation: {x: 0.12508114, y: 0.9921465, z: 0.000028587874, w: -0.0000009238719}
+      scale: {x: 1.0000001, y: 1.0000007, z: 1.0000001}
+      transformModified: 1
+    - name: Left_Ankle
+      position: {x: 5.7901416e-11, y: 0.011508389, z: 3.0087705e-10}
+      rotation: {x: 0.45699352, y: 0.88947, z: 0.000014580784, w: -0.0000033974643}
+      scale: {x: 1, y: 0.99999976, z: 1.0000002}
+      transformModified: 1
+    - name: Left_Ball
+      position: {x: 5.012315e-11, y: 0.0019327704, z: -6.23398e-10}
+      rotation: {x: 0.0000006258488, y: -0.000002473593, z: 0.31531796, w: 0.9489861}
+      scale: {x: 0.9999999, y: 1.0000007, z: 1.0000001}
+      transformModified: 1
+    - name: Left_Toe
+      position: {x: 7.472682e-11, y: 0.0033562726, z: 1.7051126e-10}
+      rotation: {x: -0.000000059604638, y: 0.0000005960464, z: -0.07630069, w: -0.99708486}
+      scale: {x: 0.99999994, y: 1.0000001, z: 0.9999999}
+      transformModified: 1
+    - name: Left_Toe_end
+      position: {x: -0, y: 0.003356273, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mesh
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: 0, w: 1}
+      scale: {x: 33, y: 33, z: 33}
+      transformModified: 1
+    - name: transform2
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
+    - name: Mesh_Fleshminion
+      position: {x: -0.0000000025739424, y: -0.00000008501694, z: -1.1526501e-10}
+      rotation: {x: 0.00000008146034, y: 4.8572257e-17, z: -1.9721523e-31, w: 1}
+      scale: {x: 33, y: 33, z: 32.999996}
+      transformModified: 1
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
