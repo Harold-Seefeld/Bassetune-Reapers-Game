@@ -140,8 +140,8 @@ public class Pathfinder : MonoBehaviour
                 }
                 bool free = true;
                 float maxY = -Mathf.Infinity;
-                
-                foreach(RaycastHit h in hit)
+
+                foreach (RaycastHit h in hit)
                 {
                     if (DisallowedTags.Contains(h.transform.tag))
                     {

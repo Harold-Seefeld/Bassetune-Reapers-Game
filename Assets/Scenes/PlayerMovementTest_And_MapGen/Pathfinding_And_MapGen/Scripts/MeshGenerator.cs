@@ -50,11 +50,16 @@ public class MeshGenerator : MonoBehaviour {
 		Mesh mesh = new Mesh();
 		cave.mesh = mesh;
 
-		mesh.vertices = vertices.ToArray();
+        mesh.vertices = vertices.ToArray();
 		mesh.triangles = triangles.ToArray();
+        mesh.Optimize();
+        mesh.RecalculateBounds();
 		mesh.RecalculateNormals();
 
-		if(!is2D)
+        MeshCollider caveCollider = walls.gameObject.AddComponent<MeshCollider>();
+        caveCollider.sharedMesh = mesh;
+
+        if (!is2D)
 		{
 			CreateWallMesh();
 		}
