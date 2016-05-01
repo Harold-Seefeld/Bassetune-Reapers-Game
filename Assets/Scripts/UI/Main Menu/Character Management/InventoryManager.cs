@@ -69,10 +69,6 @@ public class InventoryManager : MonoBehaviour
                 {
                     continue;
                 }
-                if (panel == "armor" && !items[n].prefabs[0].GetComponent<Armor>())
-                {
-                    continue;
-                }
                 if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
                 {
                     continue;
@@ -100,37 +96,62 @@ public class InventoryManager : MonoBehaviour
 
     public void ShowInventory(string panel)
     {
-        int inventoryLength = inventoryJSON.Count;
+        int inventoryLength = inventoryJSON["all"].Count;
         // Clear previous entries in inventory
         foreach (Transform child in inventoryPanel.transform)
         {
             Destroy(child.gameObject);
         }
-        // Start creating entries
-        for (int i = 0; i < inventoryLength; i++)
+        // Add all items based on respective list
+        for (int n = 0; n < items.Length; n++)
         {
-            if (inventoryJSON[i][0].ToString() == "null")
+            if (items[n].prefabs.Length <= 0)
             {
                 continue;
             }
-            // Get item info
-            ItemBase item = GetItemInfo(panel, i);
-            if (item != null)
-            {
-                // Create entry
-                GameObject newObject = Instantiate(labelPrefab);
-                newObject.transform.SetParent(inventoryPanel.transform);
 
-                newObject.GetComponentInChildren<Text>().text = item.itemName;
-                newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
-                ItemBase itemBase = newObject.AddComponent<ItemBase>();
-                itemBase.itemID = item.itemID;
-                itemBase.itemName = item.itemName;
-                itemBase.itemIcon = item.itemIcon;
-                itemBase.itemDescription = item.itemDescription;
-                itemBase.itemCount = item.itemCount;
-                itemBase.itemBuyPrice = item.itemBuyPrice;
-                itemBase.itemSellPrice = item.itemSellPrice;
+            if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
+            {
+                continue;
+            }
+            if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
+            {
+                continue;
+            }
+            if (panel == "equipable" && !items[n].prefabs[0].GetComponent<Equipable>())
+            {
+                continue;
+            }
+            if (panel == "ability" && !items[n].prefabs[0].GetComponent<Ability>())
+            {
+                continue;
+            }
+
+            for (int a = 0; a < items[n].prefabs.Length; a++)
+            {
+                for (int i = 0; i < inventoryLength; i++)
+                {
+                    // Create Entry
+                    ItemBase item = items[n].prefabs[a].GetComponent<ItemBase>();
+                    if (inventoryJSON["all"].list[i][0].n != item.itemID)
+                    {
+                        continue;
+                    }
+
+                    GameObject newObject = Instantiate(labelPrefab);
+                    newObject.transform.SetParent(inventoryPanel.transform);
+
+                    newObject.GetComponentInChildren<Text>().text = item.itemName;
+                    newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
+                    ItemBase itemBase = newObject.AddComponent<ItemBase>();
+                    itemBase.itemID = item.itemID;
+                    itemBase.itemName = item.itemName;
+                    itemBase.itemIcon = item.itemIcon;
+                    itemBase.itemDescription = item.itemDescription;
+                    itemBase.itemCount = item.itemCount;
+                    itemBase.itemBuyPrice = item.itemBuyPrice;
+                    itemBase.itemSellPrice = item.itemSellPrice;
+                }
             }
         }
     }
@@ -148,10 +169,6 @@ public class InventoryManager : MonoBehaviour
             if (items[n].prefabs.Length > 0)
             {
                 if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
-                {
-                    continue;
-                }
-                if (panel == "armor" && !items[n].prefabs[0].GetComponent<Armor>())
                 {
                     continue;
                 }
@@ -253,7 +270,6 @@ public class InventoryManager : MonoBehaviour
         www.AddField("amount", itemAmount);
         www.AddField("commandType", "Sell");
         www.AddField("item", itemIndex);
-        Debug.Log(itemIndex);
         WWW w = new WWW(setInventorySite, www.data);
         StartCoroutine(SellItem(w));
     }
@@ -300,7 +316,5 @@ public class InventoryManager : MonoBehaviour
             notificationButton.onClick.RemoveAllListeners();
             notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
         }
-
-        Debug.Log(w.text);
     }
 }

@@ -88,8 +88,9 @@ public class CharacterManager : MonoBehaviour {
                     // TODO: Assign locations to character movement agents for smoothness
                     //characterData[n].gameObject.transform.position = new Vector3(data[i].GetField("l")[0].n,
                     //                                                                              0f, data[i].GetField("l")[1].n);
-                    characterData[n].gridPlayer.FindPath(characterData[n].gameObject.transform.position,
-                        new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n));
+                    StartCoroutine(characterData[n].gridPlayer.FindPath(characterData[n].gameObject.transform.position,
+                        new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n)));
+                    characterData[n].gridPlayer.currentDestination = new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n);
                 }
             }
         }

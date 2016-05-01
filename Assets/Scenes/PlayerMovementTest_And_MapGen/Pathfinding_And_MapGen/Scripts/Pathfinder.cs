@@ -48,7 +48,6 @@ public class Pathfinder : MonoBehaviour
     {
         instance = this;
     }
-
 	
 	void Start () 
     {
@@ -59,7 +58,6 @@ public class Pathfinder : MonoBehaviour
 
         Pathfinder.Instance.CreateMap();
 	}
-
 
     float overalltimer = 0;
     int iterations = 0;
@@ -185,6 +183,11 @@ public class Pathfinder : MonoBehaviour
     {
         QueuePath q = new QueuePath(startPos, endPos, listMethod);
         queue.Add(q);
+    }
+
+    public IEnumerator ImmediatePathHandler(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod)
+    {
+        yield return StartCoroutine(PathHandler(startPos, endPos, listMethod));
     }
 
     #region astar
