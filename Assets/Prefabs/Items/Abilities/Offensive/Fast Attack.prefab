@@ -49,13 +49,13 @@ MonoBehaviour:
   abilityType: 0
   abilityState: 0
   requiredWeapons: 
-  damageRatio: 0
-  castTime: 5
-  cooldownTime: 10
+  damageRatio: 0.8
+  castTime: 0.6
+  cooldownTime: 2
   anim: 
   startEffect: {fileID: 0}
   endEffect: {fileID: 0}
-  abilityID: 0
+  abilityID: 2500
   isTogglable: 0
 --- !u!1001 &100100000
 Prefab:
@@ -88,6 +88,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: itemID
       value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: abilityID
+      value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: castTime
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cooldownTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: damageRatio
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
