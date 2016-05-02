@@ -260,7 +260,6 @@ public class InventoryManager : MonoBehaviour
             notificationButton.onClick.RemoveAllListeners();
             notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
         }
-        Debug.Log(w.text);
     }
 
     public void SellItem(int itemIndex, int itemAmount)

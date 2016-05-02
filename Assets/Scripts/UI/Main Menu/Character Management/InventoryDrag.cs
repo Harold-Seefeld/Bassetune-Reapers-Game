@@ -7,6 +7,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	
 	public static GameObject itemBeingDragged;
     public static bool onInventoryDrag = false;
+    public bool draggable = true;
 	
 	private Vector3 startPosition;
 	private Transform startParent;
@@ -14,6 +15,8 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	
 	public void OnBeginDrag(PointerEventData eventData)
 	{
+        if (!draggable) return;
+
 		itemBeingDragged = gameObject;
 		startPosition = transform.position;
 		startParent = transform.parent;
@@ -22,12 +25,16 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	
 	public void OnDrag(PointerEventData eventData)
 	{
-		transform.position = Input.mousePosition;
+        if (!draggable) return;
+
+        transform.position = Input.mousePosition;
 	}
 	
 	public void OnEndDrag (PointerEventData eventData)
 	{
-		GetComponent<CanvasGroup>().blocksRaycasts = true;
+        if (!draggable) return;
+
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
 
 		if (transform.parent == startParent)
 		{
