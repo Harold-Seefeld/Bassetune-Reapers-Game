@@ -11,7 +11,12 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	
 	private Vector3 startPosition;
 	private Transform startParent;
-	[SerializeField] RectTransform rectTransform;
+	private RectTransform rectTransform;
+
+    void Start()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
 	
 	public void OnBeginDrag(PointerEventData eventData)
 	{

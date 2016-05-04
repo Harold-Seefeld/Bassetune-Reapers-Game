@@ -5,8 +5,16 @@ using System.Collections;
 public class InventorySetter : MonoBehaviour
 {
 
-    private string slotInventorySite = "";
+    private string slotInventorySite = "/slots";
     private ClientData clientData;
+
+    public enum SlotType
+    {
+        knight_slots,
+        boss_slots,
+        ability_slots
+    }
+    public SlotType slotType;
 
     public Sprite defaultImage;
     public InventoryManager inventoryManager;
@@ -14,47 +22,32 @@ public class InventorySetter : MonoBehaviour
 
     public void Start()
     {
-        slotInventorySite = inventoryManager.server + "/slots";
+        slotInventorySite = inventoryManager.server + slotInventorySite;
         clientData = FindObjectOfType<ClientData>() as ClientData;
     }
 
     public void SetInventory()
     {
-        Image[] inventoryIcons = GetComponentsInChildren<Image>();
+        ItemBase[] itemBases = GetComponentsInChildren<ItemBase>(true);
         // Create a json object for storing the json arrays
-        JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
-
-        for (int i = 0; i < inventoryIcons.Length; i++)
+        JSONObject jsonObject = new JSONObject(JSONObject.Type.ARRAY);
+        for (int n = 0; n < itemBases.Length; n++)
         {
-            if (inventoryIcons[i].GetComponentsInChildren<ItemBase>(true).Length > 0)
-            {
-                ItemBase[] itemBase = inventoryIcons[i].GetComponentsInChildren<ItemBase>(true);
-                for (int n = 0; n < inventoryManager.items.Length; n++)
-                {
-                    GameObject[] prefabList = inventoryManager.items[n].prefabs;
-                    for (int x = 0; i < prefabList.Length; i++)
-                    {
-                        ItemBase item = prefabList[x].GetComponent<ItemBase>();
-                        if (item.itemID == itemBase[0].itemID)
-                        {
-                            // Create a new JSON array for storing the fields
-                            JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
-                            // Add the item ID
-                            arr.Add(item.itemID.ToString());
-                            // TODO: Add item count
-                            arr.Add(item.itemCount.ToString());
-                            // Say that the type is an item
-                            arr.Add("i");
-                            // Add the position of the inventory and add it to the main json object
-                            jsonObject.AddField((inventoryIcons[i].transform.parent.GetSiblingIndex() * 3 + inventoryIcons[i].transform.GetSiblingIndex()).ToString(), arr);
-                        }
-                    }
-                }
-            }
+            // Create a new JSON array for storing the fields
+            JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
+            // Add the item ID
+            arr.Add(itemBases[n].itemID.ToString());
+            // TODO: Add item count
+            arr.Add("1");
+            // Set the slot number
+            arr.Add((itemBases[n].gameObject.transform.parent.GetSiblingIndex() * 3 + itemBases[n].gameObject.transform.GetSiblingIndex()).ToString());
+            // Add the position of the inventory and add it to the main json object
+            jsonObject.Add(arr);
         }
 
         WWWForm www = new WWWForm();
         www.AddField("uuid", clientData.GetSession());
+        www.AddField("slotType", slotType.ToString());
         www.AddField("j", jsonObject.Print());
         WWW w = new WWW(slotInventorySite, www.data);
         StartCoroutine(SetInventorySlot(w));
@@ -72,6 +65,8 @@ public class InventorySetter : MonoBehaviour
             inventoryManager.notificationButton.onClick.RemoveAllListeners();
             inventoryManager.notificationButton.onClick.AddListener(() => { inventoryManager.notificationRect.transform.gameObject.SetActive(false); }); ;
         }
+
+        Debug.Log(w.text);
     }
 
     void ResetInventory()
