@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Armor : ItemBase {
+public class Armor : Equipable {
 
     // The amount to be blocked
     public int block = 0;

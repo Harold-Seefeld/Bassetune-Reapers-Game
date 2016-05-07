@@ -14,16 +14,29 @@ public class Pathfinding : MonoBehaviour
     public PathfinderType PathType = PathfinderType.GridBased;
 	public bool JS = false;
 
-    public void FindPath(Vector3 startPosition, Vector3 endPosition)
+    public IEnumerator FindPath(Vector3 startPosition, Vector3 endPosition)
     {
         if (PathType == PathfinderType.GridBased)
         {
+<<<<<<< HEAD
             Pathfinder.Instance.InsertInQueue(startPosition, endPosition, SetList);
+=======
+            if (Pathfinder.Instance)
+            {
+                yield return StartCoroutine(Pathfinder.Instance.ImmediatePathHandler(startPosition, endPosition, SetList));
+            }
+            else
+            {
+                Pathfinder2D.Instance.InsertInQueue(startPosition, endPosition, SetList);
+            }
+>>>>>>> a76a04d351a1f4eb7b15bfcb53d900503f9bc673
         }
         else if (PathType == PathfinderType.WaypointBased)
         {
             WaypointPathfinder.Instance.InsertInQueue(startPosition, endPosition, SetList);          
         }
+
+        yield return 0;
     }
 	
 	public void FindJSPath(Vector3[] arr)

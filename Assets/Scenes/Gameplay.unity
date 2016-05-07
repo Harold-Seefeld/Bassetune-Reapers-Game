@@ -782,7 +782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0be71b058d55f429d47eb893586425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tilesize: 2
+  Tilesize: 1
   MaxFalldownHeight: 15
   ClimbLimit: 0.5
   HeuristicAggression: 0
@@ -796,7 +796,7 @@ MonoBehaviour:
   - Player
   MoveDiagonal: 1
   DrawMapInEditor: 1
-  CheckFullTileSize: 1
+  CheckFullTileSize: 0
 --- !u!4 &1730176039
 Transform:
   m_ObjectHideFlags: 0

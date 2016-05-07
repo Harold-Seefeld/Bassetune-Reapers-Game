@@ -40,23 +40,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 160504, guid: 43eb2ea6d577c604ca2956c695d3de98, type: 2}
-  - {fileID: 142792, guid: b9fa65975cfb8434d9f50a84e2be2817, type: 2}
-  - {fileID: 154236, guid: 04f22eb46d47e904784aea7d95394415, type: 2}
-  - {fileID: 145174, guid: eeef6f5502d08c240a8741143dab8270, type: 2}
-  - {fileID: 109812, guid: 8d328eb703f20834c9a19185aea7a7f1, type: 2}
-  - {fileID: 102428, guid: 92f4ff486c0394b429d0dbc8af8d8432, type: 2}
-  - {fileID: 138964, guid: 42bdafcdcf234bb48be5beca65849cce, type: 2}
-  - {fileID: 151254, guid: 9be59ffdb102906478f4ad241b1dd6be, type: 2}
-  - {fileID: 112958, guid: 5596390fee3fe044b923d0a685450f85, type: 2}
-  - {fileID: 164054, guid: 2d065f5f00e853a49860094f2a3691fb, type: 2}
+  - {fileID: 148558, guid: 9a9ad74c13ab4d940a742026b2028a83, type: 2}
+  - {fileID: 172100, guid: 0109184aa6c944446a45b2d90192d3b7, type: 2}
+  - {fileID: 174420, guid: e05b9d314c5bae747a34d8ed96ec4e42, type: 2}
+  - {fileID: 119612, guid: 821059e691807bc459862fc4bb745cca, type: 2}
+  - {fileID: 179568, guid: 1169ffcbef7a5354e9d0a01dd30dc609, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: prefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: prefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 148558, guid: 9a9ad74c13ab4d940a742026b2028a83, type: 2}
+    - target: {fileID: 0}
+      propertyPath: prefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 172100, guid: 0109184aa6c944446a45b2d90192d3b7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: prefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 174420, guid: e05b9d314c5bae747a34d8ed96ec4e42, type: 2}
+    - target: {fileID: 0}
+      propertyPath: prefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 119612, guid: 821059e691807bc459862fc4bb745cca, type: 2}
+    - target: {fileID: 0}
+      propertyPath: prefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 179568, guid: 1169ffcbef7a5354e9d0a01dd30dc609, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 184454}

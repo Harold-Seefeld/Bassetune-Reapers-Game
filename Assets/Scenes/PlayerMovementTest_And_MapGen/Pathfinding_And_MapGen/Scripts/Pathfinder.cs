@@ -52,7 +52,11 @@ public class Pathfinder : MonoBehaviour
         
 		instance = this;
     }
+<<<<<<< HEAD
 		
+=======
+	
+>>>>>>> a76a04d351a1f4eb7b15bfcb53d900503f9bc673
 	void Start () 
     {
         if (Tilesize <= 0)
@@ -67,7 +71,11 @@ public class Pathfinder : MonoBehaviour
 //
 		Pathfinder.Instance.CreateMap();
 	}
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> a76a04d351a1f4eb7b15bfcb53d900503f9bc673
     float overalltimer = 0;
     int iterations = 0;
     //Go through one 
@@ -192,6 +200,11 @@ public class Pathfinder : MonoBehaviour
     {
         QueuePath q = new QueuePath(startPos, endPos, listMethod);
         queue.Add(q);
+    }
+
+    public IEnumerator ImmediatePathHandler(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod)
+    {
+        yield return StartCoroutine(PathHandler(startPos, endPos, listMethod));
     }
 
     #region astar
