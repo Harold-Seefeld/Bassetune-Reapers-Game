@@ -11,7 +11,7 @@ GameObject:
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: Pathfinder
-  m_TagString: Untagged
+  m_TagString: Pathfinder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23,7 +23,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 297.08154, y: 22.121094, z: 293.3286}
+  m_LocalPosition: {x: -88, y: 22.12107, z: 32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -39,18 +39,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4acf42fa4d81a498faec7fa36593cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tilesize: 0
-  MaxFalldownHeight: 0
-  ClimbLimit: 0
+  Tilesize: 1
+  MaxFalldownHeight: 2.5
+  ClimbLimit: 0.2
   HeuristicAggression: 0
   HighestPoint: 100
   LowestPoint: -50
-  MapStartPosition: {x: 0, y: 0}
-  MapEndPosition: {x: 0, y: 0}
-  DisallowedTags: []
-  IgnoreTags: []
+  MapStartPosition: {x: -120, y: -66}
+  MapEndPosition: {x: 128, y: 72}
+  DisallowedTags:
+  - Wall
+  IgnoreTags:
+  - Player
+  - Enemy
   MoveDiagonal: 1
-  DrawMapInEditor: 0
+  DrawMapInEditor: 1
   CheckFullTileSize: 0
 --- !u!1001 &100100000
 Prefab:

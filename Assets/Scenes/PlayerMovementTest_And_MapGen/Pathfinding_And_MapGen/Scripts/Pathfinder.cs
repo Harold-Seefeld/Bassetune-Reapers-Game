@@ -11,6 +11,9 @@ public class Pathfinder : MonoBehaviour
     private static Pathfinder instance;
     public static Pathfinder Instance { get { return instance; } private set {} }
 
+    //class map generator
+	MapGenerator generateMap;
+
     //Variables
     private Node[,] Map = null;
     public float Tilesize = 1;
@@ -46,10 +49,10 @@ public class Pathfinder : MonoBehaviour
     //Set singleton!
     void Awake()
     {
-        instance = this;
+        
+		instance = this;
     }
-
-	
+		
 	void Start () 
     {
         if (Tilesize <= 0)
@@ -57,10 +60,14 @@ public class Pathfinder : MonoBehaviour
             Tilesize = 1;
         }
 
-        Pathfinder.Instance.CreateMap();
+//		GameObject gameObject = GameObject.FindWithTag("MapGenerator");
+//
+//		generateMap = gameObject.GetComponent<MapGenerator>();
+//		generateMap.GenerateMap();
+//
+		Pathfinder.Instance.CreateMap();
 	}
-
-
+		
     float overalltimer = 0;
     int iterations = 0;
     //Go through one 
@@ -94,14 +101,14 @@ public class Pathfinder : MonoBehaviour
             overalltimer += sw.ElapsedMilliseconds;
             iterations++;
         }
-
+			
         DrawMapLines();
-	}
+	}   
 
     #region map
     //-------------------------------------------------INSTANIATE MAP-----------------------------------------------//
 
-    private void CreateMap()
+    public void CreateMap()
     {
         //Find positions for start and end of map
         int startX  = (int)MapStartPosition.x;
@@ -140,8 +147,8 @@ public class Pathfinder : MonoBehaviour
                 }
                 bool free = true;
                 float maxY = -Mathf.Infinity;
-
-                foreach (RaycastHit h in hit)
+                
+                foreach(RaycastHit h in hit)
                 {
                     if (DisallowedTags.Contains(h.transform.tag))
                     {
