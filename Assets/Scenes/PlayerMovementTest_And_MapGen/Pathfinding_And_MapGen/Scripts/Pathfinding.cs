@@ -41,14 +41,7 @@ public class Pathfinding : MonoBehaviour
 		{	
 			if (PathType == PathfinderType.GridBased)
 	        {
-                if (Pathfinder.Instance)
-                {
-                    Pathfinder.Instance.InsertInQueue(arr[0], arr[1], SetList);
-                }
-                else
-                {
-                    Pathfinder2D.Instance.InsertInQueue(arr[0], arr[1], SetList);
-                }
+	            Pathfinder.Instance.InsertInQueue(arr[0], arr[1], SetList);
 	        }
 	        else if (PathType == PathfinderType.WaypointBased)
 	        {
