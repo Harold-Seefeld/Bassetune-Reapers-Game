@@ -90,19 +90,10 @@ public class GridPlayer : Pathfinding
             destinationPath.Add(new Vector3(Path[Path.Count - 1].x, Path[Path.Count - 1].y, Path[Path.Count - 1].z));
         }
 
-        for (var i = 2; i < Path.Count; i++)
+        for (var i = 0; i < Path.Count; i++)
         {
-            Vector2 firstVector = new Vector2(Path[i - 2].x, Path[i - 2].z);
-            Vector2 secondVector = new Vector2(Path[i - 1].x, Path[i - 1].z);
-            Vector2 thirdVector = new Vector2(Path[i].x, Path[i].z);
-            Debug.Log(Vector2.Angle(firstVector, secondVector));
-            Debug.Log((Vector2.Angle(secondVector, thirdVector)));
-            float angle1 = Vector2.Angle(firstVector, secondVector) * 360;
-            float angle2 = Vector2.Angle(secondVector, thirdVector) * 360;
-            if (angle1 + 15f < angle2 || angle1 - 15f > angle2)
-            {
-                destinationPath.Add(new Vector3(Path[i-1].x, Path[i-1].y, Path[i-1].z));
-            }
+            //TODO: Find way to only change when direction changes
+            destinationPath.Add(new Vector3(Path[i].x, Path[i].y, Path[i].z));
         }
 
         if (Path.Count > 0)

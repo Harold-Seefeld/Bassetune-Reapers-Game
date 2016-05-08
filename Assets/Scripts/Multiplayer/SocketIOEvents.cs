@@ -44,8 +44,13 @@ public static class SocketIOEvents {
 		{
 			public static string ABILITY_START = "as";
 			public static string ABILITY_END = "ae";
-			public static string USE_ITEM = "i";
+			public static string USE_ITEM_START = "i";
+            public static string USE_ITEM_END = "ie";
+            public static string USE_ITEM_INTERRUPTED = "ii";
 			public static string CHANGE_EQUIPPED = "ce";
+
+            public static string ITEM_INVENTORY = "inv";
+            public static string ABILITY_INVENTORY = "anv";
 		}
 		
 		// Boss

@@ -17,7 +17,39 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
     public void OnDrop(PointerEventData eventData)
     {
         GameObject item = InventoryDrag.itemBeingDragged;
+        ItemBase currentItemBase = gameObject.GetComponent<ItemBase>();
+        InventoryDrag newDrag = item.GetComponent<InventoryDrag>();
 
+        if (newDrag && newDrag.swappable && currentItemBase)
+        {
+            string itemName = currentItemBase.itemName;
+            int itemID = currentItemBase.itemID;
+            Sprite itemIcon = currentItemBase.itemIcon;
+
+            UpdateInventorySlot(item);
+
+            ItemBase newItemBase = item.GetComponent<ItemBase>();
+            newItemBase.itemName = itemName;
+            newItemBase.itemID = itemID;
+            newItemBase.itemIcon = itemIcon;
+
+            item.GetComponent<Image>().sprite = itemIcon;
+
+            InventoryDrag.swapped = true;
+        }
+        else if (newDrag && newDrag.swappable && !currentItemBase)
+        {
+            UpdateInventorySlot(item);
+            InventoryDrag.swapped = true;
+        }
+        else
+        {
+            UpdateInventorySlot(item);
+        }
+    }
+
+    private void UpdateInventorySlot(GameObject item)
+    {
         if (gameObject.GetComponent<ItemBase>())
         {
             Destroy(gameObject.GetComponent<ItemBase>());
@@ -40,7 +72,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
             itemBase.itemName = _item.itemName;
             itemBase.itemIcon = _item.itemIcon;
 
-            gameObject.AddComponent<InventoryDrag>().draggable = false;
+            gameObject.AddComponent<InventoryDrag>().clearOnDrop = true;//.draggable = false;
         }
     }
 }

@@ -21,6 +21,7 @@ public class Server : MonoBehaviour {
 		public string username;
 		public string nickname;
 		public string side;
+        public List<JSONObject> itemInventory;
 	}
 	public Player[] players;
 	public int currentPlayerID;
@@ -47,7 +48,8 @@ public class Server : MonoBehaviour {
             connection.Connect();
             connection.On("connect", GetServerData);
             connection.On(SocketIOEvents.Input.PLAYER, SetPlayerData);
-            
+            connection.On(SocketIOEvents.Input.Knight.ITEM_INVENTORY, SetItemInventory);
+
             uuid = GameObject.Find("Client Data").GetComponent<ClientData>().GetSession();
         }
     }
@@ -61,16 +63,6 @@ public class Server : MonoBehaviour {
         connection.Emit("join", registerData);
         //StartCoroutine(GetServerData());
     }
-
-    //private IEnumerator GetServerData()
-    //{
-    //    yield return new WaitForSeconds(2f);
-    //    // Join the appropriate room
-    //    JSONObject registerData = new JSONObject(JSONObject.Type.OBJECT);
-    //    registerData.AddField("uuid", uuid);
-    //    registerData.AddField("matchID", matchID);
-    //    connection.Emit("join", registerData);
-    //}
 
     private void SetPlayerData(SocketIOEvent socket)
     {
@@ -90,9 +82,31 @@ public class Server : MonoBehaviour {
             if (player.username == clientData.username)
             {
                 currentPlayerID = player.id;
+
+                if (player.side == "knight")
+                {
+                    GameObject.Find("Boss Canvas").SetActive(false);
+                }
+                else
+                {
+                    GameObject.Find("Knight Canvas").SetActive(false);
+                }
             }
          }
-        
+    }
+
+    private void SetItemInventory(SocketIOEvent socket)
+    {
+        JSONObject socketData = socket.data;
+        for (var i = 0; i < players.Length; i++)
+        {
+            int id = (int)socketData.GetField("id").n;
+            if (id != players[i].id)
+            {
+                continue;
+            }
+            players[i].itemInventory = socketData.GetField("i").list;
+        }
     }
 
 }

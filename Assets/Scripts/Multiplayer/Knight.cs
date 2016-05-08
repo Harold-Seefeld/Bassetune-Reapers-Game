@@ -5,13 +5,13 @@ using SocketIO;
 public class Knight : MonoBehaviour {
 
 	private SocketIOComponent socket;
-	[SerializeField] private CharacterManager characterManager;
+	private CharacterManager characterManager;
 	
 	// Use this for initialization
 	void Start () {
 		// Get socket object
-		GameObject go = GameObject.Find ("SocketIO");
-		socket = go.GetComponent<SocketIOComponent>();
+		socket = FindObjectOfType<SocketIOComponent>();
+        characterManager = FindObjectOfType<CharacterManager>();
 	}
 
 	public void UseAbility (int abilityID, Vector2 target, int characterID, int weaponID) {
@@ -35,5 +35,16 @@ public class Knight : MonoBehaviour {
 		itemUsage.AddField("itemID", itemID);
 		socket.Emit(SocketIOEvents.Output.Knight.USE_ITEM, itemUsage);
 	}
-	
+
+    public void UseItem(int itemID)
+    {
+        JSONObject itemUsage = new JSONObject(JSONObject.Type.OBJECT);
+        JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
+        directionData.AddField("x", 0);
+        directionData.AddField("y", 0);
+        itemUsage.AddField("characterID", 0);
+        itemUsage.AddField("itemID", itemID);
+        socket.Emit(SocketIOEvents.Output.Knight.USE_ITEM, itemUsage);
+    }
+
 }

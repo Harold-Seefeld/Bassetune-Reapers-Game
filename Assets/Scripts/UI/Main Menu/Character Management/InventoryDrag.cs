@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler{
 	
 	public static GameObject itemBeingDragged;
     public static bool onInventoryDrag = false;
+    public static bool swapped = false;
     public bool draggable = true;
+    public bool swappable = false;
+    public bool clearOnDrop = false;
 	
 	private Vector3 startPosition;
 	private Transform startParent;
@@ -22,6 +26,8 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	{
         if (!draggable) return;
 
+        if (!gameObject.GetComponent<ItemBase>()) return;
+
 		itemBeingDragged = gameObject;
 		startPosition = transform.position;
 		startParent = transform.parent;
@@ -32,6 +38,8 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	{
         if (!draggable) return;
 
+        if (!itemBeingDragged) return;
+
         transform.position = Input.mousePosition;
 	}
 	
@@ -39,12 +47,24 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	{
         if (!draggable) return;
 
+        if (clearOnDrop && !swapped)
+        {
+            ItemBase item = GetComponent<ItemBase>();
+            if (item) Destroy(item);
+
+            Image image = GetComponent<Image>();
+            if (image) image.sprite = null;
+        }
+
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
 		if (transform.parent == startParent)
 		{
 			transform.position = startPosition;
 		}
+
+        itemBeingDragged = null;
+        swapped = false;
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
@@ -58,8 +78,16 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 				Debug.LogError("Please make sure you have Popup Gameobject on your scene");
 
 			Popup.instance.gameObject.SetActive (true);
-			Popup.instance.MenuDisplay (rectTransform.position + new Vector3 (Screen.width / 21, -Screen.width / 85),
-			                        _item);
+            if (Input.mousePosition.x > Screen.width / 2)
+            {
+                Popup.instance.MenuDisplay(rectTransform.position - new Vector3(Screen.width / 4, Screen.height / 24),
+                        _item);
+            }
+            else
+            {
+                Popup.instance.MenuDisplay(rectTransform.position + new Vector3(Screen.width / 21, Screen.height / 24),
+                        _item);
+            }
 		}
 	}
 
