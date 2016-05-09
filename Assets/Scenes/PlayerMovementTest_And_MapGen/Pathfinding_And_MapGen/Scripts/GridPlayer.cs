@@ -5,12 +5,8 @@ using SocketIO;
 
 public class GridPlayer : Pathfinding
 {
-    public Camera playerCam;
     public Camera minimapCam;
-
-    public GUIStyle bgStyle;
-    Vector3 direction;
-
+   
     public Vector3 currentDestination = Vector2.zero;
     public float speed = 6f;
 
@@ -19,17 +15,22 @@ public class GridPlayer : Pathfinding
     private CharacterData characterData;
 
     void Start()
-    {
-        socket = GameObject.Find("SocketIO").GetComponent<SocketIOComponent>();
+	{
+        characterData = GetComponent<CharacterData>();
+
+        socket = FindObjectOfType<SocketIOComponent>();
+
+        minimapCam = GameObject.Find("MinimapCam").GetComponent<Camera>();
+
         currentDestination = transform.position;
 
         if (characterData.CharacterOwner == Server.instance.currentPlayerID)
         {
             StartCoroutine(SendDestination());
         }
-    }
+	}
 
-    void Update()
+	void Update () 
     {
         if (Path.Count > 0)
         {
@@ -49,6 +50,10 @@ public class GridPlayer : Pathfinding
 
     private void FindPath()
     {
+        if (Server.instance.currentPlayerID != characterData.CharacterOwner)
+        {
+            return;
+        }
 
         if (Input.GetButtonDown("Fire1") && Input.mousePosition.x > (Screen.width / 10) * 7F && Input.mousePosition.y < (Screen.height / 10) * 3.5F)
         {
@@ -60,20 +65,19 @@ public class GridPlayer : Pathfinding
             {
                 //destination = new Vector2(hit.point.x, hit.point.z);
                 StartCoroutine(UpdateDestinationPath(transform.position, new Vector3(hit.point.x, 5, hit.point.z)));
-            }
+            }          
         }
         else if (Input.GetButtonDown("Fire1"))
         {
             //Call minimap
-            Ray ray = playerCam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                FindPath(transform.position, hit.point);
                 //destination = new Vector2(hit.point.x, hit.point.z);
                 StartCoroutine(UpdateDestinationPath(transform.position, hit.point));
-            }
+            }      
         }
     }
 
@@ -103,12 +107,9 @@ public class GridPlayer : Pathfinding
 
     private void MoveMethod()
     {
-        //create a JSONobject that will catch the movement data for the players.  
-        JSONObject movementData = new JSONObject(JSONObject.Type.OBJECT);
-
-        if (Path.Count > 0)
+		if (Path.Count > 0)
         {
-            Vector3 direction = (Path[0] - transform.position).normalized;
+            Vector3 direction = (Path[0] - transform.position).normalized;  
 
             transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * speed);
             if (transform.position.x < Path[0].x + 0.2F && transform.position.x > Path[0].x - 0.2F && transform.position.z > Path[0].z - 0.2F && transform.position.z < Path[0].z + 0.2F)
@@ -129,15 +130,7 @@ public class GridPlayer : Pathfinding
                 }
             }
             transform.position = new Vector3(transform.position.x, maxY + 1F, transform.position.z);
-
-            //adding some fields and emitting them from the socket
-            movementData.AddField("x", direction.x);
-            movementData.AddField("y", direction.y);
-            movementData.AddField("z", direction.z);
-
-            socket.Emit("making movement data", movementData);
-
-        }
+		}
     }
 
     private Vector2 sentDestination = new Vector2();
@@ -155,7 +148,7 @@ public class GridPlayer : Pathfinding
                 sentDestination = destination;
             }
         }
-
+ 
         StartCoroutine(SendDestination());
     }
 }

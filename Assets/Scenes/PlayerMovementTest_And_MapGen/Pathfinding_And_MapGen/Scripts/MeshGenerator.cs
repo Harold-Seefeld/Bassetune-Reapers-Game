@@ -6,10 +6,8 @@ public class MeshGenerator : MonoBehaviour {
 
 	public SquareGrid squareGrid;
 	public MeshFilter walls;
-    //public MeshCollider wallCollider;
 
-
-    List<Vector3> vertices;
+	List<Vector3> vertices;
 	List<int> triangles;
 
 	public MeshFilter cave;
@@ -18,15 +16,6 @@ public class MeshGenerator : MonoBehaviour {
 	Dictionary<int,List<Triangle>> triangleDictionary = new Dictionary<int, List<Triangle>>();
 	List<List<int>> outlines = new List<List<int>> ();
 	HashSet<int> checkedVertices = new HashSet<int>();
-
-    //void Update()
-    //{
-    //    Mesh mesh = walls.GetComponent<MeshFilter>().mesh;
-    //    wallCollider.sharedMesh = mesh;
-
-    //    UnityEditor.AssetDatabase.CreateAsset(walls.GetComponent<MeshFilter>().mesh, "Assets/mesh.asset");
-    //}
-
 
 	public class Node
 	{
@@ -61,17 +50,18 @@ public class MeshGenerator : MonoBehaviour {
 		Mesh mesh = new Mesh();
 		cave.mesh = mesh;
 
-        MeshCollider caveCollider = cave.gameObject.AddComponent<MeshCollider>();
-        caveCollider.sharedMesh = mesh;
-
         mesh.vertices = vertices.ToArray();
 		mesh.triangles = triangles.ToArray();
+        mesh.Optimize();
+        mesh.RecalculateBounds();
 		mesh.RecalculateNormals();
 
-		if(!is2D)
+        MeshCollider caveCollider = walls.gameObject.AddComponent<MeshCollider>();
+        caveCollider.sharedMesh = mesh;
+
+        if (!is2D)
 		{
 			CreateWallMesh();
-
 		}
 
 	}
@@ -112,7 +102,6 @@ public class MeshGenerator : MonoBehaviour {
 
 		wallMesh.vertices = wallVertices.ToArray();
 		wallMesh.triangles = wallTriangles.ToArray();
-
 		walls.mesh = wallMesh;
 
 		MeshCollider wallCollider = walls.gameObject.AddComponent<MeshCollider>();
