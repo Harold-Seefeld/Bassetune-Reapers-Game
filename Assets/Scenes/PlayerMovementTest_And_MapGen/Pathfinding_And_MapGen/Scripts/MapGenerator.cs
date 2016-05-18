@@ -1,35 +1,45 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using SocketIO;
 
+[ExecuteInEditMode]
 public class MapGenerator : MonoBehaviour {
 
 	public int width;
 	public int height;
-	public int seed;
+	public string seed;
+	public bool useRandomSeed;
 
-    public Pathfinder pathFinder;
-
-	public SocketIOComponent socket;
+    //adding the socketIO gameobject
+    private GameObject socketObject;
+	//public SocketIOComponent socket;
 
 	[Range(0,100)]
-	public float randomFillPercent;
+	public int randomFillPercent;
 	
 	int[,] map;
 
-	void Start()
-	{
-        socket = FindObjectOfType<SocketIOComponent>();
-		socket.On("seed", seedRecieved);
+//    void Awake()
+//    {
+//        //instance = this;
+//        GenerateMap();
+//    }
 
-		//GenerateMap();
+    void Start()
+	{
+		//initialize the socket emitter.
+//		socketObject = GameObject.Find ("SocketIO");
+//		socket = socketObject.GetComponent<SocketIOComponent>();
+//		socket.On("listening", OpenSocket);
+		//Pathfinder.Instance.CreateMap();
+        GenerateMap();
 	}
 
-    private void seedRecieved(SocketIOEvent ev)
+	private void OpenSocket(SocketIOEvent ev)
 	{
-        seed = (int)ev.data.GetField("s").n;
-        GenerateMap();
+		Debug.Log("listening for emitter");
 	}
 
 	public void GenerateMap()
@@ -37,14 +47,15 @@ public class MapGenerator : MonoBehaviour {
 		map = new int[width,height];
 		RandomFillMap();
 
-        for (int i = 0; i < 5; i++)
+		for(int i = 0; i < 5; i++)
 		{
 			SmoothMap();
+		
 		}
+	
+		ProcessMap();
 
-        ProcessMap();
-
-        int borderSize = 0;
+		int borderSize = 10;
 		int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
 		for(int x = 0; x < borderedMap.GetLength(0); x++)
 		{
@@ -62,20 +73,25 @@ public class MapGenerator : MonoBehaviour {
 			}
 		}
 
-        MeshGenerator meshGen = GetComponent<MeshGenerator>();
+		MeshGenerator meshGen = GetComponent<MeshGenerator>();
 		meshGen.GenerateMesh(borderedMap, 1);
-
-        // Enable pathfinder
-        pathFinder.enabled = true;
 	}
 
-    List<List<Coord>> GetRegions(int tileType)
+	List<List<Coord>> GetRegions(int tileType)
 	{
 		List<List<Coord>> regions = new List<List<Coord>> ();
 		int[,] mapFlags = new int[width,height];
 
+		//create a json object to add a json object array
+		JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
+
+		//create a json object type array  
+		JSONObject regionsData = new JSONObject(JSONObject.Type.ARRAY);
+
 		for(int x = 0; x < width; x++)
 		{
+			regionsData.Add(x);
+
 			for(int y = 0; y < height; y++)
 			{
 				if(mapFlags[x,y] == 0 && map[x,y] == tileType)
@@ -88,8 +104,15 @@ public class MapGenerator : MonoBehaviour {
 						mapFlags[tile.tileX, tile.tileY] = 1;
 					}
 				}
+
+				regionsData.Add(y);
 			}
 		}
+
+		jsonObject.AddField("regions data", regionsData);
+
+		//emit the array of regions to the server
+		//socket.Emit("making regions data", jsonObject);
 
 		return regions;
 	}
@@ -138,13 +161,13 @@ public class MapGenerator : MonoBehaviour {
 		ConnectClosestRooms(survivingRooms);
 	}
 
-	void ConnectClosestRooms(List<Room> allRooms, bool forceAccessibilityFromMainRoom = false)
+	void ConnectClosestRooms(List<Room> allRooms, bool forecAccessibilityFromMainRoom = false)
 	{
 		List<Room> roomListA = new List<Room>();
 
 		List<Room> roomListB = new List<Room>();
 
-		if(forceAccessibilityFromMainRoom)
+		if(forecAccessibilityFromMainRoom)
 		{
 			foreach(Room room in allRooms)
 			{
@@ -171,7 +194,7 @@ public class MapGenerator : MonoBehaviour {
 
 		foreach(Room roomA in roomListA)
 		{
-			if(!forceAccessibilityFromMainRoom)
+			if(!forecAccessibilityFromMainRoom)
 			{
 				possibleConnectionFound = false;
 				if(roomA.connectedRooms.Count > 0)
@@ -208,19 +231,19 @@ public class MapGenerator : MonoBehaviour {
 				}
 			}
 		
-			if(possibleConnectionFound && !forceAccessibilityFromMainRoom)
+			if(possibleConnectionFound && !forecAccessibilityFromMainRoom)
 			{
 				CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
 			}
 		}
 	
-		if(possibleConnectionFound && forceAccessibilityFromMainRoom)
+		if(possibleConnectionFound && forecAccessibilityFromMainRoom)
 		{
 			CreatePassage(bestRoomA, bestRoomB, bestTileA, bestTileB);
 			ConnectClosestRooms(allRooms, true);
 		}
 
-		if(!forceAccessibilityFromMainRoom)
+		if(!forecAccessibilityFromMainRoom)
 		{
 			ConnectClosestRooms(allRooms, true);
 		}
@@ -346,53 +369,46 @@ public class MapGenerator : MonoBehaviour {
 		return x >= 0 && x < width && y >= 0 && y < height;
 	}
 
-    double pRandom()
-    {
-        double x = Math.Sin(seed++) * 10000;
-        return x - Math.Floor(x);
-    }
-
 	void RandomFillMap()
 	{
-        // Archive if further debugging needed
-        //JSONObject jsonObject = new JSONObject(JSONObject.Type.ARRAY);
-        //for (int x = 0; x < width; x++)
-        //{
-        //    //create a json object type array
-        //    JSONObject mapData = new JSONObject(JSONObject.Type.ARRAY);
+		//create a json object to add a json object array
+		JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
+		
+		//create a json object type array  
+		JSONObject mapData = new JSONObject(JSONObject.Type.ARRAY);
 
-        //    jsonObject.Add(mapData);
+		if(useRandomSeed)
+		{
+			seed = Time.time.ToString();
+		}
 
-        //    for (int y = 0; y < height; y++)
-        //    {
-        //        if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
-        //        {
-        //            map[x, y] = 1;
-        //        }
-        //        else
-        //        {
-        //            map[x, y] = (pRandom() < randomFillPercent / 100) ? 1 : 0;
-        //        }
+		System.Random pRandom = new System.Random(seed.GetHashCode());
 
-        //        mapData.Add(map[x, y]);
-        //    }
-        //}
+		for(int x = 0; x < width; x++)
+		{
+			mapData.Add(x);
 
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
-                {
-                    map[x, y] = 1;
-                }
-                else
-                {
-                    map[x, y] = (pRandom() < randomFillPercent / 100) ? 1 : 0;
-                }
-            }
-        }
-    }
+			for(int y = 0; y < height; y++)
+			{
+				if(x == 0 || x == width - 1 || y == 0 || y == height -1)
+				{
+					map[x,y] = 1;
+				}
+				else
+				{
+					map[x,y] = (pRandom.Next(0, 100) < randomFillPercent)? 1: 0;
+				}
+			
+				mapData.Add(y);
+
+			}
+		}
+	
+		jsonObject.AddField("map data", mapData);
+		
+		//emit the array of map to the server
+		//socket.Emit("making map data", jsonObject);
+	}
 
 	void SmoothMap()
 	{
