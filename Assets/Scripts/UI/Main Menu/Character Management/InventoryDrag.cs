@@ -9,9 +9,6 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	public static GameObject itemBeingDragged;
     public static bool onInventoryDrag = false;
     public static bool swapped = false;
-    public bool draggable = true;
-    public bool swappable = false;
-    public bool clearOnDrop = false;
 	
 	private Vector3 startPosition;
 	private Transform startParent;
@@ -24,8 +21,6 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	
 	public void OnBeginDrag(PointerEventData eventData)
 	{
-        if (!draggable) return;
-
         if (!gameObject.GetComponent<ItemBase>()) return;
 
 		itemBeingDragged = gameObject;
@@ -36,8 +31,6 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	
 	public void OnDrag(PointerEventData eventData)
 	{
-        if (!draggable) return;
-
         if (!itemBeingDragged) return;
 
         transform.position = Input.mousePosition;
@@ -45,9 +38,8 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	
 	public void OnEndDrag (PointerEventData eventData)
 	{
-        if (!draggable) return;
-
-        if (clearOnDrop && !swapped)
+        InventorySlot inventorySlot = GetComponent<InventorySlot>();
+        if (!swapped && inventorySlot && inventorySlot.clearOnDrop)
         {
             ItemBase item = GetComponent<ItemBase>();
             if (item) Destroy(item);

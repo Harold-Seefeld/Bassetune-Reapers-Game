@@ -13,7 +13,6 @@ public class InventoryMenu : MonoBehaviour {
 	void Start () {
         instance = this;
         server = FindObjectOfType<Server>();
-        UpdateMenu();
     }
 	
 	// Update is called once per frame
@@ -38,7 +37,7 @@ public class InventoryMenu : MonoBehaviour {
 
                 if (itemSlot.GetComponent<ItemBase>())
                 {
-                    return;
+                    Destroy(itemSlot.GetComponent<ItemBase>());
                 }
 
                 for (int k = 0; k < items.Length; k++)
@@ -61,12 +60,6 @@ public class InventoryMenu : MonoBehaviour {
                         }
                     }
                 }
-            }
-
-            for (int n = 0; n < inventorySlots.Length; n++)
-            {
-                if (!inventorySlots[n].GetComponent<InventorySlot>())
-                    inventorySlots[n].gameObject.AddComponent<InventorySlot>();
             }
         }
 	}

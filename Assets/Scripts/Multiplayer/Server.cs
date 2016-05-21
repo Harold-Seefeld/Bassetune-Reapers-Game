@@ -22,7 +22,8 @@ public class Server : MonoBehaviour {
 		public string nickname;
 		public string side;
         public List<JSONObject> itemInventory;
-	}
+        public List<JSONObject> abilityInventory;
+    }
 	public Player[] players;
 	public int currentPlayerID;
 

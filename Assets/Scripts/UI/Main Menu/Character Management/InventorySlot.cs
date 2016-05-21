@@ -9,6 +9,17 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
 
     public RectTransform rectTransform;
 
+    public bool swappable = true;
+    public bool clearOnDrop = false;
+
+    public enum SlotType
+    {
+        Item,
+        Offensive_Ability,
+        Defensive_Ability,
+    }
+    public SlotType slotType;
+
     public void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -17,14 +28,24 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
     public void OnDrop(PointerEventData eventData)
     {
         GameObject item = InventoryDrag.itemBeingDragged;
-        ItemBase currentItemBase = gameObject.GetComponent<ItemBase>();
-        InventoryDrag newDrag = item.GetComponent<InventoryDrag>();
+        ItemBase thisItemBase = gameObject.GetComponent<ItemBase>();
+        InventorySlot otherItemSlot = item.GetComponent<InventorySlot>();
+        InventoryDrag otherDrag = item.GetComponent<InventoryDrag>();
+        ItemBase otherItem = item.GetComponent<ItemBase>();
 
-        if (newDrag && newDrag.swappable && currentItemBase)
+        // Check if item matches slot type
+        if ((slotType == SlotType.Item && (otherItem.itemID < 1000 || otherItem.itemID >= 2500)) ||
+            (slotType == SlotType.Offensive_Ability && (otherItem.itemID < 2500 || otherItem.itemID >= 2750)) ||
+            (slotType == SlotType.Defensive_Ability && (otherItem.itemID < 2750 || otherItem.itemID >= 3000)))
+        { 
+            return;
+        }
+
+        if (otherDrag && swappable && thisItemBase && otherItemSlot)
         {
-            string itemName = currentItemBase.itemName;
-            int itemID = currentItemBase.itemID;
-            Sprite itemIcon = currentItemBase.itemIcon;
+            string itemName = thisItemBase.itemName;
+            int itemID = thisItemBase.itemID;
+            Sprite itemIcon = thisItemBase.itemIcon;
 
             UpdateInventorySlot(item);
 
@@ -37,10 +58,10 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
 
             InventoryDrag.swapped = true;
         }
-        else if (newDrag && newDrag.swappable && !currentItemBase)
+        else if (otherDrag && swappable && !thisItemBase)
         {
             UpdateInventorySlot(item);
-            InventoryDrag.swapped = true;
+            //InventoryDrag.swapped = true;
         }
         else
         {
@@ -55,11 +76,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
             Destroy(gameObject.GetComponent<ItemBase>());
         }
 
-        if (gameObject.GetComponent<InventoryDrag>())
-        {
-            Destroy(gameObject.GetComponent<InventoryDrag>());
-        }
-
         if (item.GetComponent<ItemBase>())
         {
             _item = item.GetComponent<ItemBase>();
@@ -71,8 +87,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
             itemBase.itemID = _item.itemID;
             itemBase.itemName = _item.itemName;
             itemBase.itemIcon = _item.itemIcon;
-
-            gameObject.AddComponent<InventoryDrag>().clearOnDrop = true;//.draggable = false;
         }
     }
 }

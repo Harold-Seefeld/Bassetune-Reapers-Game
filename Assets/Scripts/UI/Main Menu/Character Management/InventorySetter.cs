@@ -49,6 +49,7 @@ public class InventorySetter : MonoBehaviour
         www.AddField("uuid", clientData.GetSession());
         www.AddField("slotType", slotType.ToString());
         www.AddField("j", jsonObject.Print());
+        Debug.Log(jsonObject.Print());
         WWW w = new WWW(slotInventorySite, www.data);
         StartCoroutine(SetInventorySlot(w));
     }
