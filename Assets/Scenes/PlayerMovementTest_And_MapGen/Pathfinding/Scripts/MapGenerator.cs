@@ -18,7 +18,19 @@ public class MapGenerator : MonoBehaviour {
 
 	[Range(0,100)]
 	public int randomFillPercent;
-	
+
+	[Range(0,100)]
+	public int smoothMaping;
+
+	[Range(0,100)]
+	public int wallThresholdSize;
+
+	[Range(0,100)]
+	public int roomThresholdSize;
+
+	[Range(0,100)]
+	public int borderSize;
+
 	int[,] map;
 
 //    void Awake()
@@ -33,7 +45,6 @@ public class MapGenerator : MonoBehaviour {
 //		socketObject = GameObject.Find ("SocketIO");
 //		socket = socketObject.GetComponent<SocketIOComponent>();
 //		socket.On("listening", OpenSocket);
-		//Pathfinder.Instance.CreateMap();
         GenerateMap();
 	}
 
@@ -47,7 +58,7 @@ public class MapGenerator : MonoBehaviour {
 		map = new int[width,height];
 		RandomFillMap();
 
-		for(int i = 0; i < 5; i++)
+		for(int i = 0; i < smoothMaping; i++)
 		{
 			SmoothMap();
 		
@@ -55,7 +66,7 @@ public class MapGenerator : MonoBehaviour {
 	
 		ProcessMap();
 
-		int borderSize = 10;
+		//borderSize = 10;
 		int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
 		for(int x = 0; x < borderedMap.GetLength(0); x++)
 		{
@@ -83,14 +94,14 @@ public class MapGenerator : MonoBehaviour {
 		int[,] mapFlags = new int[width,height];
 
 		//create a json object to add a json object array
-		JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
+		//JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
 
 		//create a json object type array  
-		JSONObject regionsData = new JSONObject(JSONObject.Type.ARRAY);
+		//JSONObject regionsData = new JSONObject(JSONObject.Type.ARRAY);
 
 		for(int x = 0; x < width; x++)
 		{
-			regionsData.Add(x);
+			//regionsData.Add(x);
 
 			for(int y = 0; y < height; y++)
 			{
@@ -105,11 +116,11 @@ public class MapGenerator : MonoBehaviour {
 					}
 				}
 
-				regionsData.Add(y);
+				//regionsData.Add(y);
 			}
 		}
 
-		jsonObject.AddField("regions data", regionsData);
+		//jsonObject.AddField("regions data", regionsData);
 
 		//emit the array of regions to the server
 		//socket.Emit("making regions data", jsonObject);
@@ -121,7 +132,7 @@ public class MapGenerator : MonoBehaviour {
 	{
 		List<List<Coord>> wallRegions = GetRegions(1);
 
-		int wallThresholdSize = 50;
+		//wallThresholdSize = 5;
 
 		foreach(List<Coord> wallRegion in wallRegions)
 		{
@@ -136,7 +147,7 @@ public class MapGenerator : MonoBehaviour {
 	
 		List<List<Coord>> roomRegions = GetRegions(0);
 		
-		int roomThresholdSize = 50;
+		//roomThresholdSize = 10;
 		List<Room> survivingRooms = new List<Room> ();
 		
 		foreach(List<Coord> roomRegion in roomRegions)

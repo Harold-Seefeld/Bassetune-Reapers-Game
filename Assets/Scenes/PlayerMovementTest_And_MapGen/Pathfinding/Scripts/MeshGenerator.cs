@@ -152,6 +152,7 @@ public class MeshGenerator : MonoBehaviour {
 		}
 	}
 
+	//this will make the squares slant or smooth depending on the vertices of the square.
 	void TriangulateSquare(Square square)
 	{
 		switch(square.configuration)
@@ -214,7 +215,6 @@ public class MeshGenerator : MonoBehaviour {
 				checkedVertices.Add(square.topRight.vertexIndex);
 				checkedVertices.Add(square.bottomRight.vertexIndex);
 				checkedVertices.Add(square.bottomLeft.vertexIndex);
-
 				break;
 		}
 	}
