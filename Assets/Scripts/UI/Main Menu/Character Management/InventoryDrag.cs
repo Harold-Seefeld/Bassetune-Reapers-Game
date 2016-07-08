@@ -9,6 +9,8 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	public static GameObject itemBeingDragged;
     public static bool onInventoryDrag = false;
     public static bool swapped = false;
+
+    public bool draggable = true;
 	
 	private Vector3 startPosition;
 	private Transform startParent;
@@ -18,12 +20,15 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         rectTransform = GetComponent<RectTransform>();
     }
+
 	
 	public void OnBeginDrag(PointerEventData eventData)
 	{
+        if (!draggable) return;
         if (!gameObject.GetComponent<ItemBase>()) return;
+        if (gameObject.GetComponent<ItemBase>().itemName == null) return;
 
-		itemBeingDragged = gameObject;
+        itemBeingDragged = gameObject;
 		startPosition = transform.position;
 		startParent = transform.parent;
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -31,13 +36,18 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	
 	public void OnDrag(PointerEventData eventData)
 	{
+        if (!draggable) return;
         if (!itemBeingDragged) return;
+        if (gameObject.GetComponent<ItemBase>().itemName == null) return;
 
         transform.position = Input.mousePosition;
 	}
 	
 	public void OnEndDrag (PointerEventData eventData)
 	{
+        if (!draggable) return;
+        if (gameObject.GetComponent<ItemBase>().itemName == null) return;
+
         InventorySlot inventorySlot = GetComponent<InventorySlot>();
         if (!swapped && inventorySlot && inventorySlot.clearOnDrop)
         {
@@ -66,13 +76,15 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 		{
 			ItemBase _item = GetComponent<ItemBase>();
 
+            if (_item.itemName == null) return;
+
 			if(!Popup.instance)
 				Debug.LogError("Please make sure you have Popup Gameobject on your scene");
 
 			Popup.instance.gameObject.SetActive (true);
             if (Input.mousePosition.x > Screen.width / 2)
             {
-                Popup.instance.MenuDisplay(rectTransform.position - new Vector3(Screen.width / 4, Screen.height / 24),
+                Popup.instance.MenuDisplay(rectTransform.position - new Vector3(Screen.width / 3.6f, Screen.height / 24),
                         _item);
             }
             else

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using SocketIO;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UseCaller : MonoBehaviour {
 
     public bool isKnight = true;
-    public static CharacterData[] selectedCharacters;
+    public static List<CharacterData> selectedCharacters = new List<CharacterData>();
 
     private SocketIOComponent socket;
     private bool leftClicked = false;
@@ -49,13 +50,40 @@ public class UseCaller : MonoBehaviour {
 
     private void Use(int slotIndex, string itemType)
     {
-        if(selectedCharacters.Length == 0)
+        if(selectedCharacters.Count == 0)
         {
             // TODO: selectedCharacters[0] = DefaultPlayerCharacter;
         }
 
         ItemBase[] itemsAvailable = GetComponentsInChildren<ItemBase>();
-        for (int i = 0; i < selectedCharacters.Length; i++)
+
+        if (selectedCharacters.Count > 0)
+        {
+            CharacterData selectedCharacter = selectedCharacters[0];
+            if (itemsAvailable.Length >= slotIndex || itemsAvailable[slotIndex].itemID == 0)
+            {
+                return;
+            }
+            if (Server.instance.currentPlayerID != selectedCharacter.CharacterOwner)
+            {
+                return;
+            }
+            if (itemType == "consumable")
+            {
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+                Vector2 direction = new Vector2(mousePosition.x, mousePosition.z);
+
+                UseItem(itemsAvailable[slotIndex].itemID, selectedCharacter.CharacterID, direction);
+            }
+            else
+            {
+                //UseAbility();
+            }
+        }
+
+        /* multiple cast: needs keybind
+        ItemBase[] itemsAvailable = GetComponentsInChildren<ItemBase>();
+        for (int i = 0; i < selectedCharacters.Count; i++)
         {
             CharacterData selectedCharacter = selectedCharacters[i];
             if (itemsAvailable.Length >= slotIndex || itemsAvailable[slotIndex].itemID == 0)
@@ -76,6 +104,7 @@ public class UseCaller : MonoBehaviour {
                 //UseAbility();
             }
         }
+        */
     }
 
     public void UseAbility(int abilityID, Vector2 target, int characterID, int weaponID)

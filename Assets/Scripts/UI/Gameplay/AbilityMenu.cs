@@ -18,8 +18,6 @@ public class AbilityMenu : MonoBehaviour
     {
         instance = this;
         server = FindObjectOfType<Server>();
-
-        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,6 +32,7 @@ public class AbilityMenu : MonoBehaviour
             }
 
             List<Image> inventorySlots = GetComponentsInChildren<Image>().ToList();
+            inventorySlots.RemoveAt(0);
             inventorySlots.RemoveAt(0);
             inventorySlots.RemoveAt(8);
             for (int n = 0; n < player.itemInventory.Count; n++)

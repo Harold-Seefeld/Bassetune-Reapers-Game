@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class InventoryManager : MonoBehaviour
     public Text notificationText;
     public Button notificationButton;
     public RectTransform notificationRect;
+    public GameObject inventorySetPanel;
+    public GameObject abilitySetPanel;
 
     // Label to create an entry
     public GameObject labelPrefab;
@@ -54,7 +57,16 @@ public class InventoryManager : MonoBehaviour
         Debug.Log(w.text);
         inventoryJSON = new JSONObject(w.text);
 
+        for (var i = 0; i < inventoryJSON.Count; i++)
+        {
+            
+        }
+
         ShowInventory("ability");
+
+        // Update Selector slots
+        DisplayInventory();
+        DisplayAbility();
 
         Debug.Log("Downloaded Inventory Successfully.");
     }
@@ -314,6 +326,94 @@ public class InventoryManager : MonoBehaviour
             notificationText.text = "An error occurred";
             notificationButton.onClick.RemoveAllListeners();
             notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+    }
+
+    private void DisplayInventory()
+    {
+        Image[] inventorySlots = inventorySetPanel.GetComponentsInChildren<Image>();
+        List<JSONObject> itemInventory = inventoryJSON["knight"].list;
+        for (int n = 0; n < itemInventory.Count; n++)
+        {
+            var item = itemInventory[n];
+            if (item[2].n >= inventorySlots.Length)
+            {
+                continue;
+            }
+            var itemSlot = inventorySlots[(int)item[2].n].gameObject;
+
+            if (itemSlot.GetComponent<ItemBase>())
+            {
+                Destroy(itemSlot.GetComponent<ItemBase>());
+            }
+ 
+            for (int k = 0; k < items.Length; k++)
+            {
+                for (int p = 0; p < items[k].prefabs.Length; p++)
+                {
+                    ItemBase itemBase = items[k].prefabs[p].GetComponent<ItemBase>();
+
+                    if (itemBase.itemID == item[0].n)
+                    {
+                        itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
+
+                        ItemBase newItem = itemSlot.AddComponent<ItemBase>();
+                        newItem.itemID = itemBase.itemID;
+                        newItem.itemName = itemBase.itemName;
+                        newItem.itemIcon = itemBase.itemIcon;
+                        newItem.itemDescription = itemBase.itemDescription;
+                        newItem.itemBuyPrice = itemBase.itemBuyPrice;
+                        newItem.itemSellPrice = itemBase.itemSellPrice;
+
+                        k = items.Length;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void DisplayAbility()
+    {
+        Image[] inventorySlots = abilitySetPanel.GetComponentsInChildren<Image>();
+        List<JSONObject> itemInventory = inventoryJSON["knight"].list;
+        for (int n = 0; n < itemInventory.Count; n++)
+        {
+            var item = itemInventory[n];
+            if (item[2].n >= inventorySlots.Length)
+            {
+                continue;
+            }
+            var itemSlot = inventorySlots[(int)item[2].n].gameObject;
+
+            if (itemSlot.GetComponent<ItemBase>())
+            {
+                Destroy(itemSlot.GetComponent<ItemBase>());
+            }
+
+            for (int k = 0; k < items.Length; k++)
+            {
+                for (int p = 0; p < items[k].prefabs.Length; p++)
+                {
+                    ItemBase itemBase = items[k].prefabs[p].GetComponent<ItemBase>();
+
+                    if (itemBase.itemID == item[0].n)
+                    {
+                        itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
+
+                        ItemBase newItem = itemSlot.AddComponent<ItemBase>();
+                        newItem.itemID = itemBase.itemID;
+                        newItem.itemName = itemBase.itemName;
+                        newItem.itemIcon = itemBase.itemIcon;
+                        newItem.itemDescription = itemBase.itemDescription;
+                        newItem.itemBuyPrice = itemBase.itemBuyPrice;
+                        newItem.itemSellPrice = itemBase.itemSellPrice;
+
+                        k = items.Length;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

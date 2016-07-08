@@ -43,18 +43,17 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
 
         if (otherDrag && swappable && thisItemBase && otherItemSlot)
         {
-            string itemName = thisItemBase.itemName;
-            int itemID = thisItemBase.itemID;
-            Sprite itemIcon = thisItemBase.itemIcon;
-
             UpdateInventorySlot(item);
 
             ItemBase newItemBase = item.GetComponent<ItemBase>();
-            newItemBase.itemName = itemName;
-            newItemBase.itemID = itemID;
-            newItemBase.itemIcon = itemIcon;
+            newItemBase.itemID = thisItemBase.itemID;
+            newItemBase.itemName = thisItemBase.itemName;
+            newItemBase.itemIcon = thisItemBase.itemIcon;
+            newItemBase.itemDescription = thisItemBase.itemDescription;
+            newItemBase.itemBuyPrice = thisItemBase.itemBuyPrice;
+            newItemBase.itemSellPrice = thisItemBase.itemSellPrice;
 
-            item.GetComponent<Image>().sprite = itemIcon;
+            item.GetComponent<Image>().sprite = newItemBase.itemIcon;
 
             InventoryDrag.swapped = true;
         }
@@ -87,6 +86,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
             itemBase.itemID = _item.itemID;
             itemBase.itemName = _item.itemName;
             itemBase.itemIcon = _item.itemIcon;
+            itemBase.itemDescription = _item.itemDescription;
+            itemBase.itemBuyPrice = _item.itemBuyPrice;
+            itemBase.itemSellPrice = _item.itemSellPrice;
         }
     }
 }

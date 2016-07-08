@@ -17,7 +17,6 @@ public class InventoryToggle : MonoBehaviour {
 			else
 			{
                 inventoryPanel.SetActive(true);
-                if (InventoryMenu.instance) InventoryMenu.instance.UpdateMenu();
             }
 		}
 	}

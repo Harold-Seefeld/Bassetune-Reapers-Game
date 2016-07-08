@@ -50,6 +50,7 @@ public class Server : MonoBehaviour {
             connection.On("connect", GetServerData);
             connection.On(SocketIOEvents.Input.PLAYER, SetPlayerData);
             connection.On(SocketIOEvents.Input.Knight.ITEM_INVENTORY, SetItemInventory);
+            connection.On(SocketIOEvents.Input.Knight.ABILITY_INVENTORY, SetAbilityInventory);
 
             uuid = GameObject.Find("Client Data").GetComponent<ClientData>().GetSession();
         }
@@ -106,7 +107,33 @@ public class Server : MonoBehaviour {
             {
                 continue;
             }
+
             players[i].itemInventory = socketData.GetField("i").list;
+
+            if (id == currentPlayerID && players[i].side == "knight")
+            {
+                InventoryMenu.instance.UpdateMenu();
+            }
+        }
+    }
+
+    private void SetAbilityInventory(SocketIOEvent socket)
+    {
+        JSONObject socketData = socket.data;
+        for (var i = 0; i < players.Length; i++)
+        {
+            int id = (int)socketData.GetField("id").n;
+            if (id != players[i].id)
+            {
+                continue;
+            }
+
+            players[i].itemInventory = socketData.GetField("i").list;
+
+            if (id == currentPlayerID && players[i].side == "knight")
+            {
+                AbilityMenu.instance.UpdateMenu();
+            }
         }
     }
 

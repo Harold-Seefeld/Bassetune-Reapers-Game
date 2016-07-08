@@ -346,6 +346,8 @@ GameObject:
   - 222: {fileID: 44518133}
   - 114: {fileID: 44518132}
   - 114: {fileID: 44518134}
+  - 225: {fileID: 44518136}
+  - 114: {fileID: 44518135}
   m_Layer: 0
   m_Name: Image (7)
   m_TagString: Untagged
@@ -418,6 +420,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
+--- !u!114 &44518135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 44518130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &44518136
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 44518130}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &51552798
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,6 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &71281182
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1690,147 +1716,147 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 128.13101
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -11.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 256.26202
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 23
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 389.39304
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -11.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 256.26202
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 23
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400004, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400004, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400004, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 258.76202
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400004, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -15.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400004, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 517.52405
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400004, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 31
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400000, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400000, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400000, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 258.76202
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400000, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -43.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400000, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 517.52405
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400000, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 258.76202
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -70.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 517.52405
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 29
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22467938, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22467938, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22467938, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 258.76202
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22467938, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -96.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22467938, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 517.52405
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22467938, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 23
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11460904, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_Delegates.Array.data[0].eventID
@@ -1941,6 +1967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &212684792
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2365,6 +2392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &233605473
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2923,6 +2951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &296744061
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3091,6 +3120,8 @@ GameObject:
   - 222: {fileID: 311256839}
   - 114: {fileID: 311256838}
   - 114: {fileID: 311256840}
+  - 225: {fileID: 311256842}
+  - 114: {fileID: 311256841}
   m_Layer: 0
   m_Name: Image (10)
   m_TagString: Untagged
@@ -3163,6 +3194,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
+--- !u!114 &311256841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 311256836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &311256842
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 311256836}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &320217935
 GameObject:
   m_ObjectHideFlags: 0
@@ -3904,6 +3958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &366493408
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4230,6 +4285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &415235509
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5255,6 +5311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &532746221
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5362,6 +5419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &533076769
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5560,6 +5618,8 @@ GameObject:
   - 222: {fileID: 568626309}
   - 114: {fileID: 568626308}
   - 114: {fileID: 568626310}
+  - 225: {fileID: 568626312}
+  - 114: {fileID: 568626311}
   m_Layer: 0
   m_Name: Image (5)
   m_TagString: Untagged
@@ -5632,6 +5692,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
+--- !u!114 &568626311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 568626306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &568626312
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 568626306}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &578966414
 GameObject:
   m_ObjectHideFlags: 0
@@ -6951,6 +7034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &722234674
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7058,6 +7142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &733837441
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7259,6 +7344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &749075140
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7407,6 +7493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &758076227
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7502,6 +7589,8 @@ GameObject:
   - 222: {fileID: 784201011}
   - 114: {fileID: 784201010}
   - 114: {fileID: 784201012}
+  - 225: {fileID: 784201014}
+  - 114: {fileID: 784201013}
   m_Layer: 0
   m_Name: Image (15)
   m_TagString: Untagged
@@ -7574,6 +7663,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
+--- !u!114 &784201013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 784201008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &784201014
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 784201008}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &787484904
 GameObject:
   m_ObjectHideFlags: 0
@@ -8427,6 +8539,8 @@ GameObject:
   - 222: {fileID: 874953792}
   - 114: {fileID: 874953791}
   - 114: {fileID: 874953793}
+  - 225: {fileID: 874953795}
+  - 114: {fileID: 874953794}
   m_Layer: 0
   m_Name: Image (12)
   m_TagString: Untagged
@@ -8499,6 +8613,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
+--- !u!114 &874953794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 874953789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &874953795
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 874953789}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &879597421
 GameObject:
   m_ObjectHideFlags: 0
@@ -8729,6 +8866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &899443705
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -9081,6 +9219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &912455023
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -9309,6 +9448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &923674268
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -9416,6 +9556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &932218133
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -9723,6 +9864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &995320129
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -10252,6 +10394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1088720372
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -10394,6 +10537,8 @@ MonoBehaviour:
   notificationText: {fileID: 863207045}
   notificationButton: {fileID: 1273520453}
   notificationRect: {fileID: 1356774112}
+  inventorySetPanel: {fileID: 423244805}
+  abilitySetPanel: {fileID: 738371873}
   labelPrefab: {fileID: 172218, guid: ead34845b7ed2a247a2cc6e487aec83b, type: 2}
   items:
   - {fileID: 11451018, guid: f1a63b3ae45306f4db92d33ac236f49d, type: 2}
@@ -10710,6 +10855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1137510057
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -10732,6 +10878,8 @@ GameObject:
   - 222: {fileID: 1154977781}
   - 114: {fileID: 1154977780}
   - 114: {fileID: 1154977782}
+  - 225: {fileID: 1154977784}
+  - 114: {fileID: 1154977783}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -10804,6 +10952,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
+--- !u!114 &1154977783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1154977778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1154977784
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1154977778}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1218905445
 GameObject:
   m_ObjectHideFlags: 0
@@ -10900,6 +11071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1218905451
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -11318,6 +11490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1295546796
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -11505,6 +11678,8 @@ GameObject:
   - 222: {fileID: 1324085314}
   - 114: {fileID: 1324085313}
   - 114: {fileID: 1324085315}
+  - 225: {fileID: 1324085317}
+  - 114: {fileID: 1324085316}
   m_Layer: 0
   m_Name: Image (4)
   m_TagString: Untagged
@@ -11577,6 +11752,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
+--- !u!114 &1324085316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1324085311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1324085317
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1324085311}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1332556231
 GameObject:
   m_ObjectHideFlags: 0
@@ -11734,6 +11932,8 @@ GameObject:
   - 222: {fileID: 1353310590}
   - 114: {fileID: 1353310589}
   - 114: {fileID: 1353310591}
+  - 225: {fileID: 1353310593}
+  - 114: {fileID: 1353310592}
   m_Layer: 0
   m_Name: Image (2)
   m_TagString: Untagged
@@ -11806,6 +12006,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
+--- !u!114 &1353310592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1353310587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1353310593
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1353310587}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1356774111
 GameObject:
   m_ObjectHideFlags: 0
@@ -12429,6 +12652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1420384827
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -12524,6 +12748,8 @@ GameObject:
   - 222: {fileID: 1437398899}
   - 114: {fileID: 1437398898}
   - 114: {fileID: 1437398900}
+  - 225: {fileID: 1437398902}
+  - 114: {fileID: 1437398901}
   m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
@@ -12596,6 +12822,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
+--- !u!114 &1437398901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1437398896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1437398902
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1437398896}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1454744784
 GameObject:
   m_ObjectHideFlags: 0
@@ -13015,6 +13264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1501981468
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -14601,6 +14851,8 @@ GameObject:
   - 222: {fileID: 1665344078}
   - 114: {fileID: 1665344077}
   - 114: {fileID: 1665344079}
+  - 225: {fileID: 1665344081}
+  - 114: {fileID: 1665344080}
   m_Layer: 0
   m_Name: Image (13)
   m_TagString: Untagged
@@ -14673,6 +14925,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
+--- !u!114 &1665344080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1665344075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1665344081
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1665344075}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1668606668
 GameObject:
   m_ObjectHideFlags: 0
@@ -14769,6 +15044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1668606674
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -15247,6 +15523,8 @@ GameObject:
   - 222: {fileID: 1747340903}
   - 114: {fileID: 1747340902}
   - 114: {fileID: 1747340904}
+  - 225: {fileID: 1747340906}
+  - 114: {fileID: 1747340905}
   m_Layer: 0
   m_Name: Image (9)
   m_TagString: Untagged
@@ -15319,6 +15597,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
+--- !u!114 &1747340905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1747340900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1747340906
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1747340900}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1749241840
 GameObject:
   m_ObjectHideFlags: 0
@@ -15415,6 +15716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1749241846
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -15698,6 +16000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1754838690
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -15866,6 +16169,8 @@ GameObject:
   - 222: {fileID: 1776336908}
   - 114: {fileID: 1776336907}
   - 114: {fileID: 1776336909}
+  - 225: {fileID: 1776336911}
+  - 114: {fileID: 1776336910}
   m_Layer: 0
   m_Name: Image (8)
   m_TagString: Untagged
@@ -15938,6 +16243,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
+--- !u!114 &1776336910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1776336905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1776336911
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1776336905}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1783062219
 GameObject:
   m_ObjectHideFlags: 0
@@ -16089,6 +16417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1792627504
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -16533,6 +16862,8 @@ GameObject:
   - 222: {fileID: 1904395136}
   - 114: {fileID: 1904395135}
   - 114: {fileID: 1904395137}
+  - 225: {fileID: 1904395139}
+  - 114: {fileID: 1904395138}
   m_Layer: 0
   m_Name: Image (14)
   m_TagString: Untagged
@@ -16605,6 +16936,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
+--- !u!114 &1904395138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1904395133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1904395139
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1904395133}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1911916124
 GameObject:
   m_ObjectHideFlags: 0
@@ -17083,6 +17437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1937088697
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -17252,6 +17607,8 @@ GameObject:
   - 222: {fileID: 1970527231}
   - 114: {fileID: 1970527230}
   - 114: {fileID: 1970527232}
+  - 225: {fileID: 1970527234}
+  - 114: {fileID: 1970527233}
   m_Layer: 0
   m_Name: Image (11)
   m_TagString: Untagged
@@ -17324,6 +17681,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
+--- !u!114 &1970527233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1970527228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1970527234
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1970527228}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1972334348
 GameObject:
   m_ObjectHideFlags: 0
@@ -17554,6 +17934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1980112209
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -17576,6 +17957,8 @@ GameObject:
   - 222: {fileID: 1982059469}
   - 114: {fileID: 1982059468}
   - 114: {fileID: 1982059470}
+  - 225: {fileID: 1982059472}
+  - 114: {fileID: 1982059471}
   m_Layer: 0
   m_Name: Image (3)
   m_TagString: Untagged
@@ -17648,6 +18031,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
+--- !u!114 &1982059471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1982059466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &1982059472
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1982059466}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1996366152
 GameObject:
   m_ObjectHideFlags: 0
@@ -17744,6 +18150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &1996366158
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -18053,6 +18460,8 @@ GameObject:
   - 222: {fileID: 2070657256}
   - 114: {fileID: 2070657255}
   - 114: {fileID: 2070657257}
+  - 225: {fileID: 2070657259}
+  - 114: {fileID: 2070657258}
   m_Layer: 0
   m_Name: Image (6)
   m_TagString: Untagged
@@ -18125,6 +18534,29 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
+--- !u!114 &2070657258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2070657253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggable: 1
+--- !u!225 &2070657259
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2070657253}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2091753397
 GameObject:
   m_ObjectHideFlags: 0
@@ -18363,6 +18795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72f90569a410094eaaa3ab4a7827591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1
 --- !u!225 &2102324063
 CanvasGroup:
   m_ObjectHideFlags: 0

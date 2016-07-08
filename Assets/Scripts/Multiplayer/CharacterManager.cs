@@ -50,13 +50,15 @@ public class CharacterManager : MonoBehaviour {
         // TODO: Create character with given data (assign meshes, etc use a prefab)
         Vector3 location = new Vector3(e.data.GetField("L").GetField("x").n, 5, e.data.GetField("L").GetField("y").n);
         GameObject newCharacter = (GameObject)Instantiate(characterPrefab, location, Quaternion.identity);
-		CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
+        CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
 		newCharacterData.CharacterEntity = (int)e.data.GetField("E").n;
 		newCharacterData.CharacterHP = (int)e.data.GetField("H").n;
 		newCharacterData.CharacterID = (int)e.data.GetField("I").n;
 		newCharacterData.CharacterOwner = (int)e.data.GetField("O").n;
 		// Add character data to the list
 		characterData.Add(newCharacterData);
+        // Allow character to be selected
+        newCharacter.AddComponent<UnityEngine.UI.Extensions.CharacterSelectable>();
 	}
 
 	void UpdateHP(SocketIOEvent e)
@@ -88,9 +90,10 @@ public class CharacterManager : MonoBehaviour {
                     // TODO: Assign locations to character movement agents for smoothness
                     //characterData[n].gameObject.transform.position = new Vector3(data[i].GetField("l")[0].n,
                     //                                                                              0f, data[i].GetField("l")[1].n);
-                    StartCoroutine(characterData[n].gridPlayer.FindPath(characterData[n].gameObject.transform.position,
-                        new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n)));
-                    characterData[n].gridPlayer.currentDestination = new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n);
+                    //StartCoroutine(characterData[n].gridPlayer.FindPath(characterData[n].gameObject.transform.position,
+                    //    new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n)));
+                    //characterData[n].gridPlayer.currentDestination = new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n);
+                    characterData[n].gameObject.GetComponent<Rigidbody>().MovePosition(new Vector3(data[i].GetField("l").list[0].n, 3, data[i].GetField("l").list[1].n));
                 }
             }
         }

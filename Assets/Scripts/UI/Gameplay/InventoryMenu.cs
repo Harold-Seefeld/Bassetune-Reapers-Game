@@ -13,6 +13,8 @@ public class InventoryMenu : MonoBehaviour {
 	void Start () {
         instance = this;
         server = FindObjectOfType<Server>();
+
+        transform.parent.gameObject.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -59,6 +61,15 @@ public class InventoryMenu : MonoBehaviour {
                             break;
                         }
                     }
+                }
+            }
+
+            // Fill remaining item slots with empty item bases
+            for (int k = 0; k < inventorySlots.Length; k++)
+            {
+                if (!inventorySlots[k].GetComponent<ItemBase>())
+                {
+                    inventorySlots[k].gameObject.AddComponent<ItemBase>();
                 }
             }
         }

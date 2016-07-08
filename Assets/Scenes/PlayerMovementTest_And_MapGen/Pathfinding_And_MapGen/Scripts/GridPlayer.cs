@@ -11,6 +11,7 @@ public class GridPlayer : Pathfinding
     public float speed = 6f;
 
     private List<Vector3> destinationPath = new List<Vector3>();
+    private Vector2 destination = Vector2.zero;
     private SocketIOComponent socket;
     private CharacterData characterData;
 
@@ -63,8 +64,8 @@ public class GridPlayer : Pathfinding
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                //destination = new Vector2(hit.point.x, hit.point.z);
-                StartCoroutine(UpdateDestinationPath(transform.position, new Vector3(hit.point.x, 5, hit.point.z)));
+                destination = new Vector2(hit.point.x, hit.point.z);
+                //StartCoroutine(UpdateDestinationPath(transform.position, new Vector3(hit.point.x, 5, hit.point.z)));
             }          
         }
         else if (Input.GetButtonDown("Fire1"))
@@ -75,8 +76,8 @@ public class GridPlayer : Pathfinding
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                //destination = new Vector2(hit.point.x, hit.point.z);
-                StartCoroutine(UpdateDestinationPath(transform.position, hit.point));
+                destination = new Vector2(hit.point.x, hit.point.z);
+                //StartCoroutine(UpdateDestinationPath(transform.position, hit.point));
             }      
         }
     }
@@ -92,7 +93,6 @@ public class GridPlayer : Pathfinding
 
         for (var i = 0; i < Path.Count; i++)
         {
-            //TODO: Find way to only change when direction changes
             destinationPath.Add(new Vector3(Path[i].x, Path[i].y, Path[i].z));
         }
 
@@ -100,6 +100,8 @@ public class GridPlayer : Pathfinding
         {
             destinationPath.Add(new Vector3(Path[Path.Count - 1].x, Path[Path.Count - 1].y, Path[Path.Count - 1].z));
         }
+
+        Path = new List<Vector3>();
 
         // Set path for pathfinding again
         StartCoroutine(FindPath(transform.position, new Vector3(currentDestination.x, 5, currentDestination.z)));
@@ -138,16 +140,16 @@ public class GridPlayer : Pathfinding
     {
         yield return new WaitForSeconds(0.083f);
 
-        if (destinationPath.Count > 0)
-        {
-            Vector2 destination = new Vector2(destinationPath[0].x, destinationPath[0].z);
+        //if (destinationPath.Count > 0)
+        //{
+            //Vector2 destination = new Vector2(destinationPath[0].x, destinationPath[0].z);
             if (destination != sentDestination)
             {
                 // Emitting X, Z to server for verification
                 CharacterManager.instance.AddLocation(characterData.CharacterID.ToString(), destination);
                 sentDestination = destination;
             }
-        }
+        //}
  
         StartCoroutine(SendDestination());
     }

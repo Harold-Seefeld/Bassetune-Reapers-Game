@@ -9,7 +9,7 @@ public class MapGenerator : MonoBehaviour {
 	public int height;
 	public int seed;
 
-    public Pathfinder pathFinder;
+    //public Pathfinder pathFinder;
 
 	public SocketIOComponent socket;
 
@@ -66,7 +66,7 @@ public class MapGenerator : MonoBehaviour {
 		meshGen.GenerateMesh(borderedMap, 1);
 
         // Enable pathfinder
-        pathFinder.enabled = true;
+        //pathFinder.enabled = true;
 	}
 
     List<List<Coord>> GetRegions(int tileType)
