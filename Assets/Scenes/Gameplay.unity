@@ -2176,7 +2176,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794577913fab00f4c9644e4d8d608a6a, type: 2}
+  - {fileID: 2100000, guid: 99c60dd207f196543af3ed2773a39a97, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -2631,6 +2631,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 585369773}
   - 114: {fileID: 585369774}
+  - 114: {fileID: 585369775}
   m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
@@ -2706,6 +2707,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &585369775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 585369772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7e15a6eadbc2c438116dfbd30be3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619805258
 GameObject:
   m_ObjectHideFlags: 0
@@ -3720,12 +3732,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 832823822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023ba904d2a27334fa1ba0d7e3f23c3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f7076c6a635fd2478ab8b2a203e0ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   width: 128
   height: 72
-  seed: 1
+  seed: 0
   socket: {fileID: 0}
   randomFillPercent: 48
 --- !u!4 &832823824

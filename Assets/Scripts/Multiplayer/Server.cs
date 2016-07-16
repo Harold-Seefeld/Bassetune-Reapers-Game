@@ -25,7 +25,14 @@ public class Server : MonoBehaviour {
         public List<JSONObject> abilityInventory;
     }
 	public Player[] players;
-	public int currentPlayerID;
+
+    // Current character selections
+	public int currentPlayerID = -1;
+    public CharacterData currentDefaultCharacter;
+
+    // Track when loading screen should dissapear
+    public bool inventoryRecieved = false;
+    public bool abilitiesRecieved = false;
 
     private string uuid;
     private SocketIOComponent connection = null;
@@ -63,7 +70,6 @@ public class Server : MonoBehaviour {
         registerData.AddField("uuid", uuid);
         registerData.AddField("matchID", matchID);
         connection.Emit("join", registerData);
-        //StartCoroutine(GetServerData());
     }
 
     private void SetPlayerData(SocketIOEvent socket)
@@ -99,6 +105,8 @@ public class Server : MonoBehaviour {
 
     private void SetItemInventory(SocketIOEvent socket)
     {
+        inventoryRecieved = true;
+
         JSONObject socketData = socket.data;
         for (var i = 0; i < players.Length; i++)
         {
@@ -119,6 +127,8 @@ public class Server : MonoBehaviour {
 
     private void SetAbilityInventory(SocketIOEvent socket)
     {
+        abilitiesRecieved = true;
+
         JSONObject socketData = socket.data;
         for (var i = 0; i < players.Length; i++)
         {

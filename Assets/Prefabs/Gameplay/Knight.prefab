@@ -12,7 +12,6 @@ GameObject:
   - 23: {fileID: 2365110}
   - 136: {fileID: 13636538}
   - 54: {fileID: 5483618}
-  - 114: {fileID: 11494222}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Player
@@ -42,7 +41,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: b975f90ef81f6d14e8497465bb622723, type: 2}
+  - {fileID: 2100000, guid: b9af5f76044016b43b324967e5fab8e2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -80,23 +79,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 122
   m_CollisionDetection: 0
---- !u!114 &11494222
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7556af4d28d16c042adc12e26716559a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: []
-  PathType: 0
-  JS: 0
-  minimapCam: {fileID: 0}
-  currentDestination: {x: 0, y: 0, z: 0}
-  speed: 6
 --- !u!136 &13636538
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -133,6 +115,10 @@ Prefab:
       propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b9af5f76044016b43b324967e5fab8e2, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 131036}
