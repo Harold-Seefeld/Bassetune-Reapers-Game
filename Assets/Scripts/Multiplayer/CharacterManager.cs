@@ -59,6 +59,15 @@ public class CharacterManager : MonoBehaviour {
 		characterData.Add(newCharacterData);
         // Allow character to be selected
         newCharacter.AddComponent<UnityEngine.UI.Extensions.CharacterSelectable>();
+
+        // Set Default Character
+        if (Server.instance.currentPlayerID == newCharacterData.CharacterOwner)
+        {
+            // For knights
+            if (newCharacterData.CharacterEntity == 0 || newCharacterData.CharacterEntity == 1) Server.instance.currentDefaultCharacter = newCharacterData;
+            // For bosses
+            if (newCharacterData.CharacterEntity >= 3000 || newCharacterData.CharacterEntity < 3200) Server.instance.currentDefaultCharacter = newCharacterData;
+        }
 	}
 
 	void UpdateHP(SocketIOEvent e)
