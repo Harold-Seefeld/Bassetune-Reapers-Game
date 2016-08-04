@@ -54,13 +54,7 @@ public class InventoryManager : MonoBehaviour
     IEnumerator UpdateInventory(WWW w)
     {
         yield return w;
-        Debug.Log(w.text);
         inventoryJSON = new JSONObject(w.text);
-
-        for (var i = 0; i < inventoryJSON.Count; i++)
-        {
-            
-        }
 
         ShowInventory("ability");
 
@@ -376,7 +370,7 @@ public class InventoryManager : MonoBehaviour
     private void DisplayAbility()
     {
         Image[] inventorySlots = abilitySetPanel.GetComponentsInChildren<Image>();
-        List<JSONObject> itemInventory = inventoryJSON["knight"].list;
+        List<JSONObject> itemInventory = inventoryJSON["ability"].list;
         for (int n = 0; n < itemInventory.Count; n++)
         {
             var item = itemInventory[n];

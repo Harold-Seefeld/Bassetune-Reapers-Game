@@ -40,7 +40,7 @@ public class InventorySetter : MonoBehaviour
             // TODO: Add item count
             arr.Add("1");
             // Set the slot number
-            arr.Add((itemBases[n].gameObject.transform.parent.GetSiblingIndex() * 3 + itemBases[n].gameObject.transform.GetSiblingIndex()).ToString());
+            arr.Add(itemBases[n].transform.GetSiblingIndex());
             // Add the position of the inventory and add it to the main json object
             jsonObject.Add(arr);
         }

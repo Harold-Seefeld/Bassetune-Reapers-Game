@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class UseCaller : MonoBehaviour {
 
-    public bool isKnight = true;
+    public static bool isKnight = true;
     public static List<CharacterData> selectedCharacters = new List<CharacterData>();
 
     private SocketIOComponent socket;
@@ -21,46 +21,58 @@ public class UseCaller : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        if (Input.GetMouseButton(0))
+        if (selectedCharacters.Count == 0 && Server.instance.currentDefaultCharacter)
+        {
+            selectedCharacters.Add(Server.instance.currentDefaultCharacter);
+        }
+
+        if (Input.GetButtonDown("Main-hand Attack"))
         {
             leftClicked = true;
         }
-        else if (Input.GetMouseButton(1))
+        else if (Input.GetButtonDown("Off-hand Attack"))
         {
             leftClicked = false;
         }
-        else
+
+        // Attack keybinds
+        for (int i = 1; i <= 8; i++)
         {
-            return;
+            if (Input.GetButtonDown("Attack" + i.ToString()))
+            {
+                Use(i - 1, "ability");
+            }
         }
 
-	    if (Input.GetKeyDown("y"))
+        // Defend keybinds
+        for (int i = 1; i <= 3; i++)
         {
-            Use(13, "consumable");
+            if (Input.GetButtonDown("Defend" + i.ToString()))
+            {
+                Use(i + 7, "ability");
+            }
         }
-        else if (Input.GetKeyDown("u"))
+
+        // Inventory keybinds
+        for (int i = 1; i <= 5; i++)
         {
-            Use(14, "consumable");
-        }
-        else if (Input.GetKeyDown("i"))
-        {
-            Use(15, "consumable");
+            if (Input.GetButtonDown("Inventory" + i.ToString()))
+            {
+                Use(i + 10, "consumable");
+            }
         }
     }
 
     private void Use(int slotIndex, string itemType)
     {
-        if(selectedCharacters.Count == 0)
-        {
-            // TODO: selectedCharacters[0] = DefaultPlayerCharacter;
-        }
-
         ItemBase[] itemsAvailable = GetComponentsInChildren<ItemBase>();
+
+        Debug.Log("Used: " + slotIndex.ToString());
 
         if (selectedCharacters.Count > 0)
         {
             CharacterData selectedCharacter = selectedCharacters[0];
-            if (itemsAvailable.Length >= slotIndex || itemsAvailable[slotIndex].itemID == 0)
+            if (itemsAvailable.Length < slotIndex || itemsAvailable[slotIndex].itemID == 0)
             {
                 return;
             }

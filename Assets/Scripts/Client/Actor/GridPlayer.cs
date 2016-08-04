@@ -51,7 +51,7 @@ public class GridPlayer : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Fire1") && Input.mousePosition.x > (Screen.width / 10) * 7F && Input.mousePosition.y < (Screen.height / 10) * 3.5F)
+        if (Input.GetButtonDown("Move") && Input.mousePosition.x > (Screen.width / 10) * 7F && Input.mousePosition.y < (Screen.height / 10) * 3.5F)
         {
             //Call to the player map
             Ray ray = minimapCam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
@@ -63,7 +63,7 @@ public class GridPlayer : MonoBehaviour
                 //StartCoroutine(UpdateDestinationPath(transform.position, new Vector3(hit.point.x, 5, hit.point.z)));
             }          
         }
-        else if (Input.GetButtonDown("Fire1"))
+        else if (Input.GetButtonDown("Move"))
         {
             //Call minimap
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));

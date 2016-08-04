@@ -2,6 +2,7 @@
 using System;
 using SocketIO;
 using System.Collections.Generic;
+using System.Collections;
 
 public class CharacterManager : MonoBehaviour {
 
@@ -38,25 +39,36 @@ public class CharacterManager : MonoBehaviour {
 
 	void CreateCharacter(SocketIOEvent e)
     {
+        StartCoroutine(CreateCharacter(Server.instance.currentPlayerID != 1, e));
+	}
+
+    IEnumerator CreateCharacter(bool playerIDSet, SocketIOEvent e)
+    {
+        // Delay
+        if (!playerIDSet)
+        {
+            yield return new WaitForSeconds(1);
+        }
+
         // Check if character already exists
         for (var i = 0; i < characterData.Count; i++)
         {
             if (characterData[i].CharacterID == (int)e.data.GetField("I").n)
             {
                 // Don't create a new character
-                return;
+                yield break;
             }
         }
         // TODO: Create character with given data (assign meshes, etc use a prefab)
         Vector3 location = new Vector3(e.data.GetField("L").GetField("x").n, 5, e.data.GetField("L").GetField("y").n);
         GameObject newCharacter = (GameObject)Instantiate(characterPrefab, location, Quaternion.identity);
         CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
-		newCharacterData.CharacterEntity = (int)e.data.GetField("E").n;
-		newCharacterData.CharacterHP = (int)e.data.GetField("H").n;
-		newCharacterData.CharacterID = (int)e.data.GetField("I").n;
-		newCharacterData.CharacterOwner = (int)e.data.GetField("O").n;
-		// Add character data to the list
-		characterData.Add(newCharacterData);
+        newCharacterData.CharacterEntity = (int)e.data.GetField("E").n;
+        newCharacterData.CharacterHP = (int)e.data.GetField("H").n;
+        newCharacterData.CharacterID = (int)e.data.GetField("I").n;
+        newCharacterData.CharacterOwner = (int)e.data.GetField("O").n;
+        // Add character data to the list
+        characterData.Add(newCharacterData);
         // Allow character to be selected
         newCharacter.AddComponent<UnityEngine.UI.Extensions.CharacterSelectable>();
 
@@ -64,11 +76,19 @@ public class CharacterManager : MonoBehaviour {
         if (Server.instance.currentPlayerID == newCharacterData.CharacterOwner)
         {
             // For knights
-            if (newCharacterData.CharacterEntity == 0 || newCharacterData.CharacterEntity == 1) Server.instance.currentDefaultCharacter = newCharacterData;
+            if (newCharacterData.CharacterEntity == 0 || newCharacterData.CharacterEntity == 1)
+            {
+                Server.instance.currentDefaultCharacter = newCharacterData;
+                UseCaller.isKnight = true;
+            }
             // For bosses
-            if (newCharacterData.CharacterEntity >= 3000 || newCharacterData.CharacterEntity < 3200) Server.instance.currentDefaultCharacter = newCharacterData;
+            if (newCharacterData.CharacterEntity >= 3000 || newCharacterData.CharacterEntity < 3200)
+            {
+                Server.instance.currentDefaultCharacter = newCharacterData;
+                UseCaller.isKnight = false;
+            }
         }
-	}
+    }
 
 	void UpdateHP(SocketIOEvent e)
     {

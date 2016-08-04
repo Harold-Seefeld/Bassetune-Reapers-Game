@@ -101,6 +101,26 @@ public class Server : MonoBehaviour {
                 }
             }
          }
+
+        // Set Default Character
+        foreach (CharacterData characterData in CharacterManager.instance.characterData)
+        {
+            if (characterData.CharacterOwner == currentPlayerID)
+            {
+                // For knights
+                if (characterData.CharacterEntity == 0 || characterData.CharacterEntity == 1)
+                {
+                    currentDefaultCharacter = characterData;
+                    UseCaller.isKnight = true;
+                }
+                // For bosses
+                if (characterData.CharacterEntity >= 3000 || characterData.CharacterEntity < 3200)
+                {
+                    currentDefaultCharacter = characterData;
+                    UseCaller.isKnight = false;
+                }
+            }
+        }
     }
 
     private void SetItemInventory(SocketIOEvent socket)
@@ -138,7 +158,7 @@ public class Server : MonoBehaviour {
                 continue;
             }
 
-            players[i].itemInventory = socketData.GetField("i").list;
+            players[i].abilityInventory = socketData.GetField("i").list;
 
             if (id == currentPlayerID && players[i].side == "knight")
             {

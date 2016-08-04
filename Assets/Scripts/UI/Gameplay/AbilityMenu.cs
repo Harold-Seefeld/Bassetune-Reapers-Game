@@ -31,19 +31,20 @@ public class AbilityMenu : MonoBehaviour
                 continue;
             }
 
-            List<Image> inventorySlots = GetComponentsInChildren<Image>().ToList();
-            inventorySlots.RemoveAt(0);
-            inventorySlots.RemoveAt(0);
-            inventorySlots.RemoveAt(8);
-            for (int n = 0; n < player.itemInventory.Count; n++)
+            List<Image> abilitySlots = GetComponentsInChildren<Image>().ToList();
+            abilitySlots.RemoveAt(0);
+            abilitySlots.RemoveAt(0);
+            abilitySlots.RemoveAt(8);
+
+            for (int n = 0; n < player.abilityInventory.Count; n++)
             {
-                var item = player.itemInventory[n];
-                if (item[2].n >= inventorySlots.Count)
+                var item = player.abilityInventory[n];
+                if (item[2].n >= abilitySlots.Count)
                 {
                     continue;
                 }
 
-                GameObject itemSlot = inventorySlots[(int)item[2].n].gameObject;
+                GameObject itemSlot = abilitySlots[(int)item[2].n].gameObject;
 
                 if (itemSlot.GetComponent<ItemBase>())
                 {
@@ -70,11 +71,14 @@ public class AbilityMenu : MonoBehaviour
                         }
                     }
                 }
-                
+            }
+
+            for (int n = 0; n < abilitySlots.Count; n++)
+            {
                 // Create an item base slot if its empty
-                if (itemSlot.GetComponent<ItemBase>())
+                if (!abilitySlots[n].GetComponent<ItemBase>())
                 {
-                    itemSlot.AddComponent<ItemBase>();
+                    abilitySlots[n].gameObject.AddComponent<ItemBase>();
                 }
             }
         }

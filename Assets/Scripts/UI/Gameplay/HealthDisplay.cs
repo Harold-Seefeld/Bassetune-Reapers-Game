@@ -4,17 +4,12 @@ using System.Collections;
 
 public class HealthDisplay : MonoBehaviour {
 
-    private Slider healthSlider;
-
-    void Start()
-    {
-        healthSlider = GetComponent<Slider>();
-    }
+    public Slider healthSlider;
 	
 	// Update is called once per frame
 	void Update () {
         // Show either default character or first selected characters health
-        if (UseCaller.selectedCharacters.Count > 0)
+        if (UseCaller.selectedCharacters.Count > 0 && UseCaller.selectedCharacters[0])
         {
             CharacterData selectedCharacter = UseCaller.selectedCharacters[0];
             healthSlider.maxValue = selectedCharacter.CharacterMaxHP;
