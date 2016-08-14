@@ -67,6 +67,7 @@ public class CharacterManager : MonoBehaviour {
         newCharacterData.CharacterHP = (int)e.data.GetField("H").n;
         newCharacterData.CharacterID = (int)e.data.GetField("I").n;
         newCharacterData.CharacterOwner = (int)e.data.GetField("O").n;
+        newCharacterData.CharacterMaxHP = (int)e.data.GetField("M").n;
         // Add character data to the list
         characterData.Add(newCharacterData);
         // Allow character to be selected
