@@ -93,13 +93,14 @@ public class CharacterManager : MonoBehaviour {
 
 	void UpdateHP(SocketIOEvent e)
     {
+        var data = e.data.GetField("d").list;
 		for (int n = 0; n < e.data.Count; n++)
         {
 			for (int i = 0; i < characterData.Count; i++)
             {
-				if (e.data[n].GetField("i").str == characterData[i].CharacterID.ToString())
+				if ((int)data[n].GetField("i").n == characterData[i].CharacterID)
                 {
-					characterData[i].CharacterHP = Convert.ToInt16(e.data[n].GetField("h").n);
+					characterData[i].CharacterHP = Convert.ToInt16(data[n].GetField("h").n);
 					i = characterData.Count;
 				}
 			}
