@@ -12,7 +12,8 @@ public class InventorySetter : MonoBehaviour
     {
         knight_slots,
         boss_slots,
-        ability_slots
+        ability_slots,
+        equipped_slots
     }
     public SlotType slotType;
 
@@ -87,6 +88,5 @@ public class InventorySetter : MonoBehaviour
                 Destroy(inventoryIcons[i].GetComponent<Ability>());
             }
         }
-
     }
 }

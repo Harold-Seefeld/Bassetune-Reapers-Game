@@ -26,6 +26,15 @@ public class UseCaller : MonoBehaviour {
             selectedCharacters.Add(Server.instance.currentDefaultCharacter);
         }
 
+        // Inventory keybinds
+        for (int i = 1; i <= 5; i++)
+        {
+            if (Input.GetButtonDown("Inventory" + i.ToString()))
+            {
+                Use(i + 10, "consumable");
+            }
+        }
+
         if (Input.GetButtonDown("Main-hand Attack"))
         {
             leftClicked = true;
@@ -34,11 +43,15 @@ public class UseCaller : MonoBehaviour {
         {
             leftClicked = false;
         }
+        else
+        {
+            return;
+        }
 
         // Attack keybinds
         for (int i = 1; i <= 8; i++)
         {
-            if (Input.GetButtonDown("Attack" + i.ToString()))
+            if (Input.GetButton("Attack" + i.ToString()))
             {
                 Use(i - 1, "ability");
             }
@@ -47,18 +60,9 @@ public class UseCaller : MonoBehaviour {
         // Defend keybinds
         for (int i = 1; i <= 3; i++)
         {
-            if (Input.GetButtonDown("Defend" + i.ToString()))
+            if (Input.GetButton("Defend" + i.ToString()))
             {
                 Use(i + 7, "ability");
-            }
-        }
-
-        // Inventory keybinds
-        for (int i = 1; i <= 5; i++)
-        {
-            if (Input.GetButtonDown("Inventory" + i.ToString()))
-            {
-                Use(i + 10, "consumable");
             }
         }
     }
@@ -89,7 +93,10 @@ public class UseCaller : MonoBehaviour {
             }
             else
             {
-                //UseAbility();
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
+                Vector2 direction = new Vector2(mousePosition.x, mousePosition.z);
+
+                UseAbility(itemsAvailable[slotIndex].itemID, direction, selectedCharacter.CharacterID);
             }
         }
 
@@ -119,7 +126,7 @@ public class UseCaller : MonoBehaviour {
         */
     }
 
-    public void UseAbility(int abilityID, Vector2 target, int characterID, int weaponID)
+    public void UseAbility(int abilityID, Vector2 target, int characterID)
     {
         JSONObject abilityUsage = new JSONObject(JSONObject.Type.OBJECT);
         JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
@@ -128,7 +135,7 @@ public class UseCaller : MonoBehaviour {
         abilityUsage.AddField("target", directionData);
         abilityUsage.AddField("characterID", characterID);
         abilityUsage.AddField("abilityID", abilityID);
-        abilityUsage.AddField("weapon", weaponID);
+        abilityUsage.AddField("weapon", leftClicked ? 1 : 0);
         socket.Emit(SocketIOEvents.Output.Knight.ABILITY_START, abilityUsage);
     }
 

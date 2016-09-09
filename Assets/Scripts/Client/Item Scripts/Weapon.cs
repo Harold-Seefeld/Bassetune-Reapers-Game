@@ -25,10 +25,27 @@ public class Weapon : ItemBase {
 		Scythes,
 		Spears,
 		Shield,
-		Shortbow,
-		Longbow,
+		ShortBow,
+		LongBow,
 		LightCrossbow,
 		HeavyCrossbow
 	}
     public WeaponType weaponType;
+
+    public enum TwoHanded
+    {
+        TwoHandedSword,
+        GreatSword,
+        GreatHammer,
+        GreatBladedAxe,
+        GreatAxe,
+        BallAndChain,
+        Scythe,
+        Lance,
+        ShortBow,
+        LongBow,
+        HeavyCrossbow
+    }
+
+
 }

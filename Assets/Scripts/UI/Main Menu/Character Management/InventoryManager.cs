@@ -29,11 +29,15 @@ public class InventoryManager : MonoBehaviour
     // All items and abilities
     public PrefabStore[] items;
 
+    public static InventoryManager instance = null;
+
     [SerializeField]
     private ClientData clientData;
 
     void Start()
     {
+        instance = this;
+
         setInventorySite = server + "/setInventory";
         getInventorySite = server + "/getInventory";
 
