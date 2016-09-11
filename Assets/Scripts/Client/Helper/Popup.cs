@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
+using System;
 
 [AddComponentMenu("Helper/Popup")]
 public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -12,6 +13,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public RectTransform rectTransform;
 	public Text nameText;
+    public Text tagText;
 	public Text typeText;
 	public Text descriptionText;
     public Image icon;
@@ -44,11 +46,189 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         icon.sprite = item.itemIcon;
         rectTransform.SetAsLastSibling();
 
+        InventorySlot inventorySlot = item.GetComponent<InventorySlot>();
+        if (inventorySlot)
+        {
+            if (inventorySlot.slotTags.Count > 0)
+            {
+                tagText.text = inventorySlot.slotTags[0].ToString();
+            }
+            for (int i = 1; i < inventorySlot.slotTags.Count; i++)
+            {
+                tagText.text = tagText.text + " | " + inventorySlot.slotTags[i].ToString();
+            }
+
+            // If weapon allow tags of Main|Auxillary, if two handed allow as Weapon
+            if (item.isWeapon())
+            {
+                bool twoHanded = false;
+                foreach (Weapon.TwoHanded weapon in Enum.GetValues(typeof(Weapon.TwoHanded)))
+                {
+                    if (inventorySlot.FindWeapon(item.itemID, InventoryManager.instance.items).weaponType.ToString() == weapon.ToString())
+                    {
+                        twoHanded = true;
+                    }
+                }
+
+                // Create indicators for equipping it as a main weapon
+                if (twoHanded && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Main))
+                {
+                    Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
+                    for (int il = 0; il < tagButtons.Length; il++)
+                    {
+                        EventTrigger eventTrigger = tagButtons[il].gameObject.GetComponent<EventTrigger>();
+                        if (tagButtons[il].gameObject.name == "Slot1")
+                        {
+                            eventTrigger.triggers.Clear();
+
+                            EventTrigger.Entry entry = new EventTrigger.Entry();
+                            entry.eventID = EventTriggerType.PointerClick;
+                            entry.callback.AddListener((eventData) =>
+                            {
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Main, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Auxiliary, false);
+
+                                MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
+                            });
+                            eventTrigger.triggers.Add(entry);
+
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Weapon";
+                            tagButtons[il].gameObject.SetActive(true);
+                        }
+                        else if (tagButtons[il].gameObject.name == "Slot2")
+                        {
+                            tagButtons[il].gameObject.SetActive(false);
+                        }
+                    }
+                }
+                else if (!inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Main) && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Auxiliary))
+                {
+                    Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
+                    for (int il = 0; il < tagButtons.Length; il++)
+                    {
+                        EventTrigger eventTrigger = tagButtons[il].gameObject.GetComponent<EventTrigger>();
+                        eventTrigger.triggers.Clear();
+                        EventTrigger.Entry entry = new EventTrigger.Entry();
+                        if (tagButtons[il].gameObject.name == "Slot1")
+                        {
+                            entry.eventID = EventTriggerType.PointerClick;
+                            entry.callback.AddListener((eventData) =>
+                            {
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Main, true);
+
+                                MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
+                            });
+                            eventTrigger.triggers.Add(entry);
+
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Main";
+                            tagButtons[il].gameObject.SetActive(true);
+                        }
+                        else if (tagButtons[il].gameObject.name == "Slot2")
+                        {
+                            entry.eventID = EventTriggerType.PointerClick;
+                            entry.callback.AddListener((eventData) =>
+                            {
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Auxiliary, true);
+
+                                MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
+                            });
+                            eventTrigger.triggers.Add(entry);
+
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Auxiliary";
+                            tagButtons[il].gameObject.SetActive(true);
+                        }
+                    }
+                }
+                else if (!inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Main) && inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Auxiliary))
+                {
+                    Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
+                    for (int il = 0; il < tagButtons.Length; il++)
+                    {
+                        EventTrigger eventTrigger = tagButtons[il].gameObject.GetComponent<EventTrigger>();
+                        eventTrigger.triggers.Clear();
+                        EventTrigger.Entry entry = new EventTrigger.Entry();
+                        if (tagButtons[il].gameObject.name == "Slot1")
+                        {
+                            entry.eventID = EventTriggerType.PointerClick;
+                            entry.callback.AddListener((eventData) =>
+                            {
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Main, true);
+
+                                MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
+                            });
+                            eventTrigger.triggers.Add(entry);
+
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Main";
+                            tagButtons[il].gameObject.SetActive(true);
+                        }
+                        else if (tagButtons[il].gameObject.name == "Slot2")
+                        {
+                            tagButtons[il].gameObject.SetActive(false);
+                        }
+                    }
+                }
+                else if (inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Main) && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Auxiliary))
+                {
+                    Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
+                    for (int il = 0; il < tagButtons.Length; il++)
+                    {
+                        EventTrigger eventTrigger = tagButtons[il].gameObject.GetComponent<EventTrigger>();
+                        eventTrigger.triggers.Clear();
+                        EventTrigger.Entry entry = new EventTrigger.Entry();
+                        if (tagButtons[il].gameObject.name == "Slot1")
+                        {
+                            tagButtons[il].gameObject.SetActive(false);
+                        }
+                        else if (tagButtons[il].gameObject.name == "Slot2")
+                        {
+                            entry.eventID = EventTriggerType.PointerClick;
+                            entry.callback.AddListener((eventData) =>
+                            {
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Auxiliary, true);
+
+                                MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
+                            });
+                            eventTrigger.triggers.Add(entry);
+
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Auxilary";
+                            tagButtons[il].gameObject.SetActive(true);
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            // If ammo/bolt allow it to be equipped as ammo
+
+            // If armor allow it to be equipped as 
+            else
+            {
+                tagText.text = "";
+            }
+        }
+        else
+        {
+            Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
+            for (int il = 0; il < tagButtons.Length; il++)
+            {
+                if (tagButtons[il].gameObject.name == "Slot1")
+                {
+                    tagButtons[il].gameObject.SetActive(false);
+                }
+                else if (tagButtons[il].gameObject.name == "Slot2")
+                {
+                    tagButtons[il].gameObject.SetActive(false);
+                }
+            }
+        }
+
         Button[] buttons = gameObject.GetComponentsInChildren<Button>(true);
         for (int il = 0; il < buttons.Length; il++)
         {
             EventTrigger eventTrigger = buttons[il].gameObject.GetComponent<EventTrigger>();
-            if (buttons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
+            if (buttons[il].gameObject.name == "Buy Button")
             {
                 eventTrigger.triggers.Clear();
 
@@ -76,7 +256,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 });
                 eventTrigger.triggers.Add(entry);
             }
-            else
+            else if (buttons[il].gameObject.name == "Sell Button")
             {
                 eventTrigger.triggers.Clear();
 

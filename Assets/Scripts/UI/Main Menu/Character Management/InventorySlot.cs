@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class InventorySlot : MonoBehaviour, IDropHandler {
 
@@ -25,6 +26,17 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
     }
     public SlotType slotType;
 
+    public enum SlotTag
+    {
+        Inventory,
+        Ability,
+        Main,
+        Auxiliary,
+        Armor,
+        Ammo
+    }
+    public List<SlotTag> slotTags = new List<SlotTag>(new SlotTag[] { SlotTag.Inventory });
+
     public void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -39,13 +51,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
         ItemBase otherItem = item.GetComponent<ItemBase>();
 
         // Check if item matches slot type
-        if ((slotType == SlotType.Item && (otherItem.itemID < 1000 || otherItem.itemID >= 2500)) ||
-            (slotType == SlotType.Consumable && (otherItem.itemID < 1000 || otherItem.itemID >= 2400)) ||
-            (slotType == SlotType.Ammo && (otherItem.itemID < 1900 || otherItem.itemID >= 2000)) ||
-            (slotType == SlotType.Weapon && (otherItem.itemID < 2000 || otherItem.itemID >= 2400)) ||
-            (slotType == SlotType.Armor && (otherItem.itemID < 2400 || otherItem.itemID >= 2500)) ||
-            (slotType == SlotType.Offensive_Ability && (otherItem.itemID < 2500 || otherItem.itemID >= 2750)) ||
-            (slotType == SlotType.Defensive_Ability && (otherItem.itemID < 2750 || otherItem.itemID >= 3000)))
+        if ((slotType == SlotType.Item && !otherItem.isItem()) ||
+            (slotType == SlotType.Consumable && !otherItem.isConsumable()) ||
+            (slotType == SlotType.Ammo && !otherItem.isAmmo()) ||
+            (slotType == SlotType.Weapon && !otherItem.isWeapon()) ||
+            (slotType == SlotType.Armor && !otherItem.isArmor()) ||
+            (slotType == SlotType.Offensive_Ability && !otherItem.isOffensiveAbility()) ||
+            (slotType == SlotType.Defensive_Ability && !otherItem.isDefensiveAbility()))
         { 
             return;
         }
@@ -215,5 +227,27 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
             }
         }
         return new Weapon();
+    }
+
+    public void SetTag(SlotTag tag, bool overwrite)
+    {
+        // Linear search array for any existing tags and overwrite them
+        foreach (Transform child in transform.parent)
+        {
+            InventorySlot slot = child.GetComponent<InventorySlot>();
+            if (slot.slotTags.Contains(tag))
+            {
+                slot.slotTags = new List<SlotTag>(new SlotTag[] { SlotTag.Inventory });
+            }
+        }
+
+        if (overwrite)
+        {
+            slotTags = new List<SlotTag>(new SlotTag[] { tag });
+        }
+        else
+        {
+            slotTags.Add(tag);
+        }
     }
 }

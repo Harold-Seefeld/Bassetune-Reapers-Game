@@ -84,7 +84,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 			Popup.instance.gameObject.SetActive (true);
             if (Input.mousePosition.x > Screen.width / 2)
             {
-                Popup.instance.MenuDisplay(rectTransform.position - new Vector3(Screen.width / 3.6f, Screen.height / 24),
+                Popup.instance.MenuDisplay(rectTransform.position - new Vector3(Screen.width / 4f, Screen.height / 24),
                         _item);
             }
             else
