@@ -42,6 +42,16 @@ public class InventorySetter : MonoBehaviour
             arr.Add("1");
             // Set the slot number
             arr.Add(itemBases[n].transform.GetSiblingIndex());
+            // Set the slot tag
+            InventorySlot slot = itemBases[n].GetComponent<InventorySlot>();
+            if (slot.slotTags.Contains(InventorySlot.SlotTag.Main) && slot.slotTags.Contains(InventorySlot.SlotTag.Auxiliary))
+            {
+                arr.Add(9);
+            }
+            else
+            {
+                arr.Add((int)slot.slotTags[0]);
+            }
             // Add the position of the inventory and add it to the main json object
             jsonObject.Add(arr);
         }

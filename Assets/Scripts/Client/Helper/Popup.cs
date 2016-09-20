@@ -47,7 +47,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         rectTransform.SetAsLastSibling();
 
         InventorySlot inventorySlot = item.GetComponent<InventorySlot>();
-        if (inventorySlot)
+        if (inventorySlot && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Ability))
         {
             if (inventorySlot.slotTags.Count > 0)
             {
@@ -56,6 +56,19 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             for (int i = 1; i < inventorySlot.slotTags.Count; i++)
             {
                 tagText.text = tagText.text + " | " + inventorySlot.slotTags[i].ToString();
+            }
+
+            Button[] tButtons = gameObject.GetComponentsInChildren<Button>(true);
+            for (int il = 0; il < tButtons.Length; il++)
+            {
+                if (tButtons[il].gameObject.name == "Slot1")
+                {
+                    tButtons[il].gameObject.SetActive(false);
+                }
+                else if (tButtons[il].gameObject.name == "Slot2")
+                {
+                    tButtons[il].gameObject.SetActive(false);
+                }
             }
 
             // If weapon allow tags of Main|Auxillary, if two handed allow as Weapon
@@ -197,15 +210,53 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 }
                 else
                 {
-
+                    Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
+                    for (int il = 0; il < tagButtons.Length; il++)
+                    {
+                        EventTrigger eventTrigger = tagButtons[il].gameObject.GetComponent<EventTrigger>();
+                        eventTrigger.triggers.Clear();
+                        EventTrigger.Entry entry = new EventTrigger.Entry();
+                        if (tagButtons[il].gameObject.name == "Slot1")
+                        {
+                            tagButtons[il].gameObject.SetActive(false);
+                        }
+                        else if (tagButtons[il].gameObject.name == "Slot2")
+                        {
+                            tagButtons[il].gameObject.SetActive(false);
+                        }
+                    }
                 }
             }
             // If ammo/bolt allow it to be equipped as ammo
 
             // If armor allow it to be equipped as 
-            else
+            else if (item.isArmor())
             {
-                tagText.text = "";
+                Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
+                for (int il = 0; il < tagButtons.Length; il++)
+                {
+                    EventTrigger eventTrigger = tagButtons[il].gameObject.GetComponent<EventTrigger>();
+                    eventTrigger.triggers.Clear();
+                    EventTrigger.Entry entry = new EventTrigger.Entry();
+                    if (tagButtons[il].gameObject.name == "Slot1")
+                    {
+                        entry.eventID = EventTriggerType.PointerClick;
+                        entry.callback.AddListener((eventData) =>
+                        {
+                            inventorySlot.SetTag(InventorySlot.SlotTag.Armor, true);
+
+                            MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
+                        });
+                        eventTrigger.triggers.Add(entry);
+
+                        tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Armor";
+                        tagButtons[il].gameObject.SetActive(true);
+                    }
+                    else if (tagButtons[il].gameObject.name == "Slot2")
+                    {
+                        tagButtons[il].gameObject.SetActive(false);
+                    }
+                }
             }
         }
         else

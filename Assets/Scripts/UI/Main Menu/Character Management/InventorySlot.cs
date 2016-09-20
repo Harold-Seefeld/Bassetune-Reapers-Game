@@ -46,9 +46,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
     {
         GameObject item = InventoryDrag.itemBeingDragged;
         ItemBase thisItemBase = gameObject.GetComponent<ItemBase>();
+        InventorySlot thisItemSlot = gameObject.GetComponent<InventorySlot>();
         InventorySlot otherItemSlot = item.GetComponent<InventorySlot>();
         InventoryDrag otherDrag = item.GetComponent<InventoryDrag>();
         ItemBase otherItem = item.GetComponent<ItemBase>();
+
 
         // Check if item matches slot type
         if ((slotType == SlotType.Item && !otherItem.isItem()) ||
@@ -61,7 +63,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
         { 
             return;
         }
-        
+
+        if (otherItemSlot && thisItemSlot)
+        {
+            List<SlotTag> tempTags = otherItemSlot.slotTags.GetRange(0, otherItemSlot.slotTags.Count);
+            otherItemSlot.slotTags = thisItemSlot.slotTags.GetRange(0, thisItemSlot.slotTags.Count);
+            thisItemSlot.slotTags = tempTags;
+        }
+
         /* Weapon Configuration 
             - If two-handed weapon, set both slots to the weapon and TODO: activate link image/scale to take up both slots
             - If not two-handed then remove one not being set and set the new one, unequipping the two-handed
