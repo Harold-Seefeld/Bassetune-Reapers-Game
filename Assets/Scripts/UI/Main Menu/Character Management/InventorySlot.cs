@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class InventorySlot : MonoBehaviour, IDropHandler {
+public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
 
     ItemBase _item;
 
@@ -30,8 +29,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
     {
         Inventory,
         Ability,
-        Main,
-        Auxiliary,
+        Mainhand,
+        Offhand,
         Armor,
         Ammo
     }
@@ -191,6 +190,77 @@ public class InventorySlot : MonoBehaviour, IDropHandler {
         else
         {
             UpdateInventorySlot(item);
+        }
+    }
+
+    float doubleClickThreshold = 0.5f;
+    float clickTime = 0;
+    PointerEventData.InputButton clickType = PointerEventData.InputButton.Left;
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != clickType)
+        {
+            // Reset button and time since last click
+            clickType = eventData.button;
+            clickTime = 0;
+        }
+
+        if (Time.timeSinceLevelLoad - clickTime <= doubleClickThreshold)
+        {
+            ItemBase itemBase = gameObject.GetComponent<ItemBase>();
+            // Double clicked
+            if (clickType == PointerEventData.InputButton.Left)
+            {
+                if (itemBase.isWeapon())
+                {
+                    bool twoHanded = false;
+                    foreach (Weapon.TwoHanded weapon in Enum.GetValues(typeof(Weapon.TwoHanded)))
+                    {
+                        if (FindWeapon(itemBase.itemID, InventoryManager.instance.items).weaponType.ToString() == weapon.ToString())
+                        {
+                            twoHanded = true;
+                        }
+                    }
+
+                    if (twoHanded)
+                    {
+                        // Equip two-handed
+                        SetTag(InventorySlot.SlotTag.Mainhand, true);
+                        SetTag(InventorySlot.SlotTag.Offhand, false);
+                    }
+                    else
+                    {
+                        // Equip weapon as mainhand
+                        SetTag(InventorySlot.SlotTag.Mainhand, true);
+                    }
+                }
+            } 
+            else if (clickType == PointerEventData.InputButton.Right)
+            {
+                if (itemBase.isWeapon())
+                {
+                    bool twoHanded = false;
+                    foreach (Weapon.TwoHanded weapon in Enum.GetValues(typeof(Weapon.TwoHanded)))
+                    {
+                        if (FindWeapon(itemBase.itemID, InventoryManager.instance.items).weaponType.ToString() == weapon.ToString())
+                        {
+                            twoHanded = true;
+                        }
+                    }
+
+                    if (twoHanded)
+                    {
+                        // Equip two-handed
+                        SetTag(InventorySlot.SlotTag.Mainhand, true);
+                        SetTag(InventorySlot.SlotTag.Offhand, false);
+                    }
+                    else
+                    {
+                        // Equip weapon as mainhand
+                        SetTag(InventorySlot.SlotTag.Offhand, true);
+                    }
+                }
+            }
         }
     }
 

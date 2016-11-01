@@ -71,7 +71,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 }
             }
 
-            // If weapon allow tags of Main|Auxillary, if two handed allow as Weapon
+            // If weapon allow tags of Mainhand|Offhand, if two handed allow as Weapon
             if (item.isWeapon())
             {
                 bool twoHanded = false;
@@ -84,7 +84,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 }
 
                 // Create indicators for equipping it as a main weapon
-                if (twoHanded && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Main))
+                if (twoHanded && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Mainhand))
                 {
                     Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
                     for (int il = 0; il < tagButtons.Length; il++)
@@ -98,8 +98,11 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Main, true);
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Auxiliary, false);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, false);
+
+                                // Send request to update slot inventory
+                                if (InventorySetter.instance) InventorySetter.SetInventory();
 
                                 MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
                             });
@@ -114,7 +117,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         }
                     }
                 }
-                else if (!inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Main) && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Auxiliary))
+                else if (!inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
                 {
                     Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
                     for (int il = 0; il < tagButtons.Length; il++)
@@ -127,13 +130,16 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Main, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
+
+                                // Send request to update slot inventory
+                                if (InventorySetter.instance) InventorySetter.SetInventory();
 
                                 MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
                             });
                             eventTrigger.triggers.Add(entry);
 
-                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Main";
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Mainhand";
                             tagButtons[il].gameObject.SetActive(true);
                         }
                         else if (tagButtons[il].gameObject.name == "Slot2")
@@ -141,18 +147,21 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Auxiliary, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, true);
+
+                                // Send request to update slot inventory
+                                if (InventorySetter.instance) InventorySetter.SetInventory();
 
                                 MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
                             });
                             eventTrigger.triggers.Add(entry);
 
-                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Auxiliary";
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Offhand";
                             tagButtons[il].gameObject.SetActive(true);
                         }
                     }
                 }
-                else if (!inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Main) && inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Auxiliary))
+                else if (!inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
                 {
                     Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
                     for (int il = 0; il < tagButtons.Length; il++)
@@ -165,13 +174,16 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Main, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
+
+                                // Send request to update slot inventory
+                                if (InventorySetter.instance) InventorySetter.SetInventory();
 
                                 MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
                             });
                             eventTrigger.triggers.Add(entry);
 
-                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Main";
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Mainhand";
                             tagButtons[il].gameObject.SetActive(true);
                         }
                         else if (tagButtons[il].gameObject.name == "Slot2")
@@ -180,7 +192,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         }
                     }
                 }
-                else if (inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Main) && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Auxiliary))
+                else if (inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
                 {
                     Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
                     for (int il = 0; il < tagButtons.Length; il++)
@@ -197,13 +209,16 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Auxiliary, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, true);
+
+                                // Send request to update slot inventory
+                                if (InventorySetter.instance) InventorySetter.SetInventory();
 
                                 MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
                             });
                             eventTrigger.triggers.Add(entry);
 
-                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Auxilary";
+                            tagButtons[il].GetComponentsInChildren<Text>(true)[0].text = "Offhand";
                             tagButtons[il].gameObject.SetActive(true);
                         }
                     }
@@ -244,6 +259,11 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         entry.callback.AddListener((eventData) =>
                         {
                             inventorySlot.SetTag(InventorySlot.SlotTag.Armor, true);
+
+                            // Send request to update slot inventory
+                            if (InventorySetter.instance) InventorySetter.SetInventory();
+
+                            inventorySlot.GetComponent<Outline>().effectColor = Color.yellow;
 
                             MenuDisplay(new Vector2(position.x - 100, position.y - 60), item);
                         });

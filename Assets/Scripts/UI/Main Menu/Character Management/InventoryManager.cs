@@ -355,6 +355,16 @@ public class InventoryManager : MonoBehaviour
                     {
                         itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
 
+                        if (item[3].n == 9)
+                        {
+                            itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Mainhand, true);
+                            itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Offhand, false);
+                        }
+                        else
+                        {
+                            itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n, true);
+                        }
+
                         ItemBase newItem = itemSlot.AddComponent<ItemBase>();
                         newItem.itemID = itemBase.itemID;
                         newItem.itemName = itemBase.itemName;

@@ -19,15 +19,29 @@ public class InventorySetter : MonoBehaviour
 
     public Sprite defaultImage;
     public InventoryManager inventoryManager;
-    
+
+    public static InventorySetter instanceAbility;
+    public static InventorySetter instanceInventory;
+    public static InventorySetter instance;
 
     public void Start()
     {
+        if (gameObject.name == "Ability List") instanceAbility = this;
+        if (gameObject.name == "Inventory List") instanceInventory = this;
+
+        instance = this;
+
         slotInventorySite = inventoryManager.server + slotInventorySite;
         clientData = FindObjectOfType<ClientData>() as ClientData;
     }
 
-    public void SetInventory()
+    public static void SetInventory()
+    {
+        instanceAbility.SendInventory();
+        instanceInventory.SendInventory();
+    }
+
+    public void SendInventory()
     {
         ItemBase[] itemBases = GetComponentsInChildren<ItemBase>(true);
         // Create a json object for storing the json arrays
@@ -44,7 +58,7 @@ public class InventorySetter : MonoBehaviour
             arr.Add(itemBases[n].transform.GetSiblingIndex());
             // Set the slot tag
             InventorySlot slot = itemBases[n].GetComponent<InventorySlot>();
-            if (slot.slotTags.Contains(InventorySlot.SlotTag.Main) && slot.slotTags.Contains(InventorySlot.SlotTag.Auxiliary))
+            if (slot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && slot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
             {
                 arr.Add(9);
             }

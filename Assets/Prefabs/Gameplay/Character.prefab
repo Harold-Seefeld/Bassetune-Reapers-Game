@@ -14,7 +14,7 @@ GameObject:
   - 54: {fileID: 5483618}
   - 114: {fileID: 11490776}
   m_Layer: 0
-  m_Name: Knight
+  m_Name: Character
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,6 +134,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b9af5f76044016b43b324967e5fab8e2, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: Character
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 131036}

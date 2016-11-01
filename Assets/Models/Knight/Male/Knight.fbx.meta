@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 298b092bab228054494072eecc9563ca
-timeCreated: 1472942151
+timeCreated: 1474432375
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -171,7 +171,199 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Default Take' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Chest' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n\nClip '2H_Polearm_Diagonal_Slash'
+      has import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Chest' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Polearm_Horizontal_Slash' has import animation warnings that might lower
+      retargeting quality:\nNote: Activate translation DOF on avatar to improve retargeting
+      quality.\n\t'Chest' is inbetween humanoid transforms and has rotation animation
+      that will be discarded.\n\t'Right_Palm' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\nClip '2H_Polearm_Idle' has
+      import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Chest' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Polearm_Thrusting_Attack' has import animation warnings that might lower
+      retargeting quality:\nNote: Activate translation DOF on avatar to improve retargeting
+      quality.\n\t'Chest' is inbetween humanoid transforms and has rotation animation
+      that will be discarded.\n\t'Right_Palm' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\nClip '2H_Polearm_Vertical_Slash'
+      has import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Chest' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Polearm_Block' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Polearm_DefensiveStance' has import animation warnings that might lower
+      retargeting quality:\nNote: Activate translation DOF on avatar to improve retargeting
+      quality.\n\t'Chest' is inbetween humanoid transforms and has rotation animation
+      that will be discarded.\n\t'Left_Shoulder' has translation animation that will
+      be discarded.\n\t'Right_Shoulder' has translation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Polearm_DrawWeapon' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Polearm_Run' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_Block' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_DefensiveStance' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_DiagonalSlash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_DrawWeapon' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_HorizontalSlash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_Idle' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_Run' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_ThrustingAttack' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      '2H_Pose_VerticalSlash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'BackFlip' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Backstep' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Death' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Dive' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Draw_Mainhand_Weapon' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Draw_Offhand_Weapon' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Equip_Armor' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'FrontFlip' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Kick' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Spine_1'
+      has translation animation that will be discarded.\n\t'Right_Clevical' has translation
+      animation that will be discarded.\n\nClip 'Mainhand_Block' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation DOF
+      on avatar to improve retargeting quality.\n\t'Left_Palm' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\nClip 'Mainhand_Defensive_Stance'
+      has import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Chest' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Left_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Mainhand_Diagonal_Slash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Mainhand_Horizonal_Slash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Mainhand_Punch' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Mainhand_Shield_Bash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Left_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Mainhand_Thrusting_Attack' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Mainhand_Vertical_Slash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Block' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Defensive_Stance' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Diagonal_Slash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Horizonal_Slash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Lash' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Punch' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Shield_Bash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Thrusting_Attack' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Offhand_Vertical_Slash' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Perform_Resurrection' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Roll' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Left_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Shoot_Bow' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Shoot_Mainhand_Crossbow' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Left_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Ankle'
+      has translation animation that will be discarded.\n\nClip 'Shoot_Offhand_Crossbow'
+      has import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Chest' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'Left_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Right_Palm'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'Left_Ankle'
+      has translation animation that will be discarded.\n\nClip 'Throw_Item' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'Chest' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n\nClip 'Use_Healing_Item'
+      has import animation warnings that might lower retargeting quality:\nNote: Activate
+      translation DOF on avatar to improve retargeting quality.\n\t'Chest' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'X-Slash' has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'Chest'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 3
@@ -7698,6 +7890,31 @@ ModelImporter:
       rotation: {x: -0.7286285, y: 0.000000028857329, z: 0.000000022279174, w: 0.6849091}
       scale: {x: 0.99999994, y: 1, z: 0.99999994}
       transformModified: 1
+    - name: Left_Hip
+      position: {x: -0.013131565, y: -0.000000007615197, z: -0.0000000024769315}
+      rotation: {x: 0.51637375, y: -0.4864654, z: -0.47895467, w: 0.5170222}
+      scale: {x: 0.9999998, y: 0.9999998, z: 1}
+      transformModified: 1
+    - name: Left_Knee
+      position: {x: -0.052481696, y: 0.0000000030733645, z: 0.0000000019441357}
+      rotation: {x: 0.019805672, y: -0.006130757, z: -0.09768233, w: 0.9950017}
+      scale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
+      transformModified: 1
+    - name: Left_Ankle
+      position: {x: -0.06264447, y: 0.000000030994414, z: 0.0000000017625279}
+      rotation: {x: -0.05168751, y: -0.0030397698, z: 0.4772876, w: 0.87722045}
+      scale: {x: 1, y: 1.0000004, z: 0.99999994}
+      transformModified: 1
+    - name: Left_Ball
+      position: {x: -0.023123229, y: 0.0000000011920929, z: -0.0000000048242508}
+      rotation: {x: 0.008714344, y: -0.028056692, z: 0.29091296, w: 0.95629835}
+      scale: {x: 1, y: 0.9999996, z: 1}
+      transformModified: 1
+    - name: Left_Toe
+      position: {x: -0.009426705, y: -0.0000000025890767, z: 0.000000007067574}
+      rotation: {x: 0.0000022036254, y: 0.00000013061786, z: -0.00000005575959, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      transformModified: 1
     - name: Spine_1
       position: {x: 0.00000000344604, y: -0.017514836, z: -0.0036803393}
       rotation: {x: -0.4819766, y: -0.5173952, z: 0.48197734, w: 0.51739603}
@@ -7712,16 +7929,6 @@ ModelImporter:
       position: {x: -0.017568652, y: 0.000000007450605, z: 0.000000011086909}
       rotation: {x: 0.0000008081326, y: -0.0000012668023, z: -0.11007181, w: 0.99392366}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    - name: Neck
-      position: {x: -0.02133834, y: 0.000000021755701, z: 0.0000000059568106}
-      rotation: {x: -0.000005066393, y: -0.0000013709064, z: -0.2300688, w: 0.97317433}
-      scale: {x: 1.0000001, y: 1.0000001, z: 1}
-      transformModified: 1
-    - name: Head
-      position: {x: -0.012125962, y: 0.00000001728573, z: 4.547e-14}
-      rotation: {x: -0.0000045553115, y: 0.000000044030003, z: 0.00000008939092, w: 1}
-      scale: {x: 0.9999998, y: 0.9999998, z: 1}
       transformModified: 1
     - name: Left_Clevical
       position: {x: -0.014754883, y: 0.0036593585, z: 0.00786211}
@@ -7743,6 +7950,26 @@ ModelImporter:
       rotation: {x: -0.056624517, y: 0.013316627, z: 0.027448954, w: 0.99792933}
       scale: {x: 1.0000001, y: 1, z: 1}
       transformModified: 1
+    - name: Left_joint1
+      position: {x: -0.0024302637, y: 0.003860231, z: 0.00032383547}
+      rotation: {x: 0.79507715, y: -0.022457533, z: -0.039726112, w: 0.6047891}
+      scale: {x: 1.0000006, y: 1.0000001, z: 1}
+      transformModified: 1
+    - name: Left_joint2
+      position: {x: -0.0029980808, y: -0.000000067949294, z: -0.0000000047683715}
+      rotation: {x: -0.19003388, y: 0.03015382, z: -0.012451724, w: 0.9812354}
+      scale: {x: 0.9999998, y: 1.0000002, z: 1.0000001}
+      transformModified: 1
+    - name: Left_joint3
+      position: {x: -0.0033151102, y: 0.000000005662441, z: 0.00000003680587}
+      rotation: {x: -0.016961323, y: 0.012808035, z: -0.03921903, w: 0.9990046}
+      scale: {x: 0.9999998, y: 0.9999999, z: 0.99999994}
+      transformModified: 1
+    - name: Left_joint4
+      position: {x: -0.004842745, y: -0.0000000038743018, z: -5.122274e-10}
+      rotation: {x: -0.0000014417724, y: 0.7150616, z: -0.0000050865356, w: 0.69906145}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1}
+      transformModified: 1
     - name: Left_Palm
       position: {x: -0.0044429526, y: -0.0000021481515, z: 0.000059309452}
       rotation: {x: -0.0006638957, y: 0.013841816, z: -0.026433842, w: 0.9995545}
@@ -7763,25 +7990,15 @@ ModelImporter:
       rotation: {x: 0.00000006566958, y: 0.6864953, z: 0.000000741711, w: 0.7271342}
       scale: {x: 0.9999998, y: 0.9999998, z: 0.9999999}
       transformModified: 1
-    - name: Left_joint1
-      position: {x: -0.0024302637, y: 0.003860231, z: 0.00032383547}
-      rotation: {x: 0.79507715, y: -0.022457533, z: -0.039726112, w: 0.6047891}
-      scale: {x: 1.0000006, y: 1.0000001, z: 1}
+    - name: Neck
+      position: {x: -0.02133834, y: 0.000000021755701, z: 0.0000000059568106}
+      rotation: {x: -0.0000050663934, y: -0.0000013709065, z: -0.23006882, w: 0.9731744}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
       transformModified: 1
-    - name: Left_joint2
-      position: {x: -0.0029980808, y: -0.000000067949294, z: -0.0000000047683715}
-      rotation: {x: -0.19003387, y: 0.030153818, z: -0.012451723, w: 0.9812353}
-      scale: {x: 0.9999998, y: 1.0000002, z: 1.0000001}
-      transformModified: 1
-    - name: Left_joint3
-      position: {x: -0.0033151102, y: 0.000000005662441, z: 0.00000003680587}
-      rotation: {x: -0.016961323, y: 0.012808035, z: -0.03921903, w: 0.9990046}
-      scale: {x: 0.9999998, y: 0.9999999, z: 0.99999994}
-      transformModified: 1
-    - name: Left_joint4
-      position: {x: -0.004842745, y: -0.0000000038743018, z: -5.122274e-10}
-      rotation: {x: -0.0000014417724, y: 0.7150616, z: -0.0000050865356, w: 0.69906145}
-      scale: {x: 1.0000001, y: 1.0000002, z: 1}
+    - name: Head
+      position: {x: -0.012125962, y: 0.00000001728573, z: 4.547e-14}
+      rotation: {x: -0.0000045553115, y: 0.000000044030003, z: 0.00000008939092, w: 1}
+      scale: {x: 0.9999998, y: 0.9999998, z: 1}
       transformModified: 1
     - name: Right_Clevical
       position: {x: -0.01475496, y: 0.0036593175, z: -0.007862029}
@@ -7872,31 +8089,6 @@ ModelImporter:
       position: {x: -0.009426815, y: 0.0000000012107193, z: 0.0000000026077032}
       rotation: {x: -0.000004671077, y: 0.000000006518693, z: 0.00000012073725, w: 1}
       scale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
-      transformModified: 1
-    - name: Left_Hip
-      position: {x: -0.013131565, y: -0.000000007615197, z: -0.0000000024769315}
-      rotation: {x: 0.51637375, y: -0.4864654, z: -0.47895467, w: 0.5170222}
-      scale: {x: 0.9999998, y: 0.9999998, z: 1}
-      transformModified: 1
-    - name: Left_Knee
-      position: {x: -0.052481696, y: 0.0000000030733645, z: 0.0000000019441357}
-      rotation: {x: 0.019805672, y: -0.006130757, z: -0.09768233, w: 0.9950017}
-      scale: {x: 1.0000001, y: 1.0000001, z: 0.99999994}
-      transformModified: 1
-    - name: Left_Ankle
-      position: {x: -0.06264447, y: 0.000000030994414, z: 0.0000000017625279}
-      rotation: {x: -0.05168751, y: -0.0030397698, z: 0.4772876, w: 0.87722045}
-      scale: {x: 1, y: 1.0000004, z: 0.99999994}
-      transformModified: 1
-    - name: Left_Ball
-      position: {x: -0.023123229, y: 0.0000000011920929, z: -0.0000000048242508}
-      rotation: {x: 0.008714344, y: -0.028056692, z: 0.29091296, w: 0.95629835}
-      scale: {x: 1, y: 0.9999996, z: 1}
-      transformModified: 1
-    - name: Left_Toe
-      position: {x: -0.009426705, y: -0.0000000025890767, z: 0.000000007067574}
-      rotation: {x: 0.0000022036254, y: 0.00000013061786, z: -0.00000005575959, w: 1}
-      scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: Mesh
       position: {x: 0, y: 0, z: 0}
