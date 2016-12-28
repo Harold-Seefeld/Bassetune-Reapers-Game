@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using SocketIO;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler { 
@@ -17,8 +18,6 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	private Vector3 startPosition;
 	private Transform startParent;
 	private RectTransform rectTransform;
-
-    public GameObject itemSlot;
 
     void Start()
     {
@@ -76,6 +75,13 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         swapped = false;
         droppedOnParent = false;
 
+        // Send request to update slot inventory after delay
+        StartCoroutine(OnEndDrag());
+    }
+
+    IEnumerator OnEndDrag()
+    {
+        yield return new WaitForEndOfFrame();
         // Send request to update slot inventory
         if (InventorySetter.instance) InventorySetter.SetInventory();
     }
@@ -94,7 +100,6 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
             if (InventoryDrag.itemBeingDragged) return;
 
-            StopCoroutine("OpenPopup");
             StartCoroutine("OpenPopup", _item);
 		}
 	}
@@ -112,6 +117,10 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         // TODO: Detect double click then equip (mainhand - left, offhand - right, others - left)
         if (eventData.clickCount % 2 == 0)
         {
+            SocketIOComponent socket = CharacterManager.instance.socket;
+
+            JSONObject ItemSwap = new JSONObject(JSONObject.Type.OBJECT);
+
             // Double click detected
             if (eventData.button == PointerEventData.InputButton.Left)
             {
@@ -129,23 +138,30 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
                     if (twoHanded)
                     {
-                        inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
-                        inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, false);
+                        ItemSwap.AddField("itemID", item.itemID);
+                        ItemSwap.AddField("target", 9);
+                        socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                     }
                     else
                     {
-                        inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
+                        ItemSwap.AddField("itemID", item.itemID);
+                        ItemSwap.AddField("target", 2);
+                        socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                     }
                 }
 
                 if (item.isArmor())
                 {
-                    inventorySlot.SetTag(InventorySlot.SlotTag.Armor, true);
+                    ItemSwap.AddField("itemID", item.itemID);
+                    ItemSwap.AddField("target", 4);
+                    socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                 }
 
                 if (item.isAmmo())
                 {
-                    inventorySlot.SetTag(InventorySlot.SlotTag.Ammo, true);
+                    ItemSwap.AddField("itemID", item.itemID);
+                    ItemSwap.AddField("target", 5);
+                    socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                 }
             }
 
@@ -166,23 +182,30 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
                     if (twoHanded)
                     {
-                        inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
-                        inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, false);
+                        ItemSwap.AddField("itemID", item.itemID);
+                        ItemSwap.AddField("target", 9);
+                        socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                     }
                     else
                     {
-                        inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, true);
+                        ItemSwap.AddField("itemID", item.itemID);
+                        ItemSwap.AddField("target", 3);
+                        socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                     }
                 }
 
                 if (item.isArmor())
-                {
-                    inventorySlot.SetTag(InventorySlot.SlotTag.Armor, true);
+                { 
+                    ItemSwap.AddField("itemID", item.itemID);
+                    ItemSwap.AddField("target", 4);
+                    socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                 }
 
                 if (item.isAmmo())
                 {
-                    inventorySlot.SetTag(InventorySlot.SlotTag.Ammo, true);
+                    ItemSwap.AddField("itemID", item.itemID);
+                    ItemSwap.AddField("target", 5);
+                    socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                 }
             }
         }
@@ -228,6 +251,8 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             Debug.LogError("Please make sure you have Popup Gameobject on your scene");
         }
+
+        StopCoroutine("OpenPopup");
 
         StartCoroutine(PointerExitHandler());
 	}

@@ -17,10 +17,11 @@ public class InventoryManager : MonoBehaviour
     // UI References
     public GameObject shopPanel;
     public GameObject inventoryPanel;
+    public GameObject inventorySetPanel;
     public Text notificationText;
     public Button notificationButton;
     public RectTransform notificationRect;
-    public GameObject inventorySetPanel;
+    public GameObject abilitySlotPanel;
     public GameObject abilitySetPanel;
 
     // Label to create an entry
@@ -336,6 +337,8 @@ public class InventoryManager : MonoBehaviour
             var item = itemInventory[n];
             if (item[2].n >= inventorySlots.Length)
             {
+                // Try to display on ability inventory menu
+                DisplayAbilityItem(item);
                 continue;
             }
             var itemSlot = inventorySlots[(int)item[2].n].gameObject;
@@ -376,6 +379,58 @@ public class InventoryManager : MonoBehaviour
                         k = items.Length;
                         break;
                     }
+                }
+            }
+        }
+    }
+
+    private void DisplayAbilityItem(JSONObject item)
+    {
+        Image[] abilitySlots = abilitySlotPanel.GetComponentsInChildren<Image>();
+
+        item[2].n = item[2].n - 9;
+
+        if (item[2].n >= abilitySlots.Length)
+        {
+            return;
+        }
+        var itemSlot = abilitySlots[(int)item[2].n].gameObject;
+
+        if (itemSlot.GetComponent<ItemBase>())
+        {
+            Destroy(itemSlot.GetComponent<ItemBase>());
+        }
+
+        for (int k = 0; k < items.Length; k++)
+        {
+            for (int p = 0; p < items[k].prefabs.Length; p++)
+            {
+                ItemBase itemBase = items[k].prefabs[p].GetComponent<ItemBase>();
+
+                if (itemBase.itemID == item[0].n)
+                {
+                    itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
+
+                    if (item[3].n == 9)
+                    {
+                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Mainhand, true);
+                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Offhand, false);
+                    }
+                    else
+                    {
+                        itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n, true);
+                    }
+
+                    ItemBase newItem = itemSlot.AddComponent<ItemBase>();
+                    newItem.itemID = itemBase.itemID;
+                    newItem.itemName = itemBase.itemName;
+                    newItem.itemIcon = itemBase.itemIcon;
+                    newItem.itemDescription = itemBase.itemDescription;
+                    newItem.itemBuyPrice = itemBase.itemBuyPrice;
+                    newItem.itemSellPrice = itemBase.itemSellPrice;
+
+                    k = items.Length;
+                    break;
                 }
             }
         }

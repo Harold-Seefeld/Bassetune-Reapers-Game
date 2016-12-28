@@ -244,7 +244,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
             // If ammo/bolt allow it to be equipped as ammo
 
-            // If armor allow it to be equipped as 
+            // If armor allow it to be equipped 
             else if (item.isArmor())
             {
                 Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);

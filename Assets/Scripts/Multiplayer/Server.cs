@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 using SocketIO;
 using System.Collections.Generic;
 
@@ -21,8 +21,8 @@ public class Server : MonoBehaviour {
 		public string username;
 		public string nickname;
 		public string side;
-        public List<JSONObject> itemInventory;
-        public List<JSONObject> abilityInventory;
+        public List<JSONObject> itemInventory = new List<JSONObject>();
+        public List<JSONObject> abilityInventory = new List<JSONObject>();
     }
 	public Player[] players;
 
@@ -41,10 +41,21 @@ public class Server : MonoBehaviour {
     {
         instance = this;
     }
+ 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     // Connects to the game server when the gameplay level was loaded
-    void OnLevelWasLoaded(int level)
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        int level = scene.buildIndex;
         if (level == 2)
         {
             connection = FindObjectOfType<SocketIOComponent>();
@@ -140,6 +151,7 @@ public class Server : MonoBehaviour {
 
             if (id == currentPlayerID && players[i].side == "knight")
             {
+                AbilityMenu.instance.UpdateMenu();
                 InventoryMenu.instance.UpdateMenu();
             }
         }
@@ -163,6 +175,7 @@ public class Server : MonoBehaviour {
             if (id == currentPlayerID && players[i].side == "knight")
             {
                 AbilityMenu.instance.UpdateMenu();
+                InventoryMenu.instance.UpdateMenu();
             }
         }
     }

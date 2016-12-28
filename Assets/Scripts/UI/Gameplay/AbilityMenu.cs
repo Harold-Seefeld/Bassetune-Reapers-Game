@@ -8,7 +8,6 @@ public class AbilityMenu : MonoBehaviour
 {
 
     public static AbilityMenu instance;
-    private Server server;
 
     [SerializeField]
     private PrefabStore[] items;
@@ -17,12 +16,12 @@ public class AbilityMenu : MonoBehaviour
     void Start()
     {
         instance = this;
-        server = FindObjectOfType<Server>();
     }
 
     // Update is called once per frame
     public void UpdateMenu()
     {
+        Server server = Server.instance;
         for (int i = 0; i < server.players.Length; i++)
         {
             var player = server.players[i];

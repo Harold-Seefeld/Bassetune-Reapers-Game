@@ -311,9 +311,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
     public void SetTag(SlotTag tag, bool overwrite)
     {
         // Linear search array for any existing tags and overwrite them
-        foreach (Transform child in transform.parent)
+        foreach (InventorySlot slot in FindObjectsOfType<InventorySlot>())
         {
-            InventorySlot slot = child.GetComponent<InventorySlot>();
             if (slot.slotTags.Contains(tag))
             {
                 slot.slotTags = new List<SlotTag>(new SlotTag[] { SlotTag.Inventory });

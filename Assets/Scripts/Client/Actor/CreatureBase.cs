@@ -33,9 +33,9 @@ public class CreatureBase : MonoBehaviour {
 	// Current target
 	Transform currentTarget = null;
 	// Agent for pathfinding and movement
-	NavMeshAgent agent;
+	UnityEngine.AI.NavMeshAgent agent;
 	// Obstacle for avoidance
-	NavMeshObstacle obstacle;
+	UnityEngine.AI.NavMeshObstacle obstacle;
 	// Attacking flag
 	bool isAttacking = false;
 	// Track current waypoint index
@@ -55,8 +55,8 @@ public class CreatureBase : MonoBehaviour {
 
 	// Base function of Start
 	protected void BaseStart(){
-		agent = GetComponent<NavMeshAgent> ();
-		obstacle = GetComponent<NavMeshObstacle> ();
+		agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
+		obstacle = GetComponent<UnityEngine.AI.NavMeshObstacle> ();
 		agent.stoppingDistance = attackRange;
 		
 		#if UNITY_EDITOR
@@ -161,8 +161,8 @@ public class CreatureBase : MonoBehaviour {
 						randomPosition += creatureAnchor.position;
 					}
 
-					NavMeshHit hit;
-					NavMesh.SamplePosition(randomPosition, out hit, anchorRange, 1);
+					UnityEngine.AI.NavMeshHit hit;
+					UnityEngine.AI.NavMesh.SamplePosition(randomPosition, out hit, anchorRange, 1);
 					agent.SetDestination(hit.position);
 					timer = 0f;
 				}
