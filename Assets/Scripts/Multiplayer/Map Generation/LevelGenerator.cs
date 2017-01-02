@@ -180,7 +180,7 @@ public class LevelGenerator : MonoBehaviour
     private void SetupRoomWalls(int x, int y, int width, int height)
     {
         //To encapsulate the room width and height have to increase by 2
-        width += 1;
+        width += 1; 
         height += 2;
 
         //Origin of room is bottom left, to encapsulate decrement axis 
