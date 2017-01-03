@@ -3,46 +3,55 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class XRoom {
-    private XSize _size;
-    private XCoord _topLeftVertex;
-    private XCoord _topRightVertex;
-    private XCoord _botLeftVertex;
-    private XCoord _botRightVertex;
+    private XGrid _size;
+    private XCell _topLeftVertex;
+    private XCell _topRightVertex;
+    private XCell _botLeftVertex;
+    private XCell _botRightVertex;
 
-    public XRoom(XCoord topLeftOrigin, XSize size) {
+    public XRoom(XCell topLeftOrigin, XGrid size) {
         _topLeftVertex = topLeftOrigin;
-        _topRightVertex = topLeftOrigin.plus(size.heightOnly());
-        _botLeftVertex = topLeftOrigin.plus(size.widthOnly());
+        _topRightVertex = topLeftOrigin.plus(size.columnsOnly());
+        _botLeftVertex = topLeftOrigin.plus(size.rowsOnly());
         _botRightVertex = topLeftOrigin.plus(size);
         _size = size;
     }
 
-    public void plotOn(int[,] map) {      
-        for (int x = 0; x < _size.width(); x++) {
-            for (int y = 0; y < _size.height(); y++) {
-                //test is in range
-                int xPos = _topLeftVertex._x + x;
-                int yPos = _topLeftVertex._y + y;
+    public void printVertex() {
+        Console.Write(_topLeftVertex);
+        Console.Write(" TOP ");
+        Console.WriteLine(_topRightVertex);
+        Console.Write(_botLeftVertex);
+        Console.Write(" BOT ");
+        Console.WriteLine(_botRightVertex);
+    }
 
-                XCoord pos = new XCoord(xPos, yPos);
+    public void plotOn(int[,] map) {      
+        for (int row = 0; row < _size.rows(); row++) {
+            for (int col = 0; col < _size.columns(); col++) {
+                //test is in range
+                int rowPos = _topLeftVertex._x + row;
+                int colPos = _topLeftVertex._y + col;
+
+                XCell pos = new XCell(rowPos, colPos);
                 if (pos.isEqual(_topLeftVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Empty;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Empty;
                 } else if (pos.isEqual(_topRightVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Empty;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Empty;
                 } else if (pos.isEqual(_botRightVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Empty;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Empty;
                 } else if (pos.isEqual(_botLeftVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Empty;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Empty;
                 } else if (pos.isWithin(_topLeftVertex, _topRightVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Wall_N;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Wall_N;
                 } else if (pos.isWithin(_topRightVertex, _botRightVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Wall_E;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Wall_E;
                 } else if (pos.isWithin(_botLeftVertex, _botRightVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Wall_S;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Wall_S;
                 } else if (pos.isWithin(_topLeftVertex, _botLeftVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Wall_W;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Wall_W;
                 } else {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Floor;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Floor;
                 }
             }
         }

@@ -1,36 +1,36 @@
 ﻿using System;
 
-public class XSize {
-    private int _width;
-    private int _height;
+public class XGrid {
+    private int _columns;
+    private int _rows;
 
-    public XSize(int width, int height) {
-        _width = width;
-        _height = height;
+    public XGrid(int rows, int columns) {
+        _columns = columns;
+        _rows = rows;
     }
 
-    public int width() {
-        return _width;
+    public int columns() {
+        return _columns;
     }
 
-    public int height() {
-        return _height;
+    public int rows() {
+        return _rows;
     }
 
-    public int widthZeroBased() {
-        return _width - 1;
+    public int columnsZeroBased() {
+        return _columns - 1;
     }
 
-    public int heightZeroBased() {
-        return _height - 1;
+    public int rowsZeroBased() {
+        return _rows - 1;
     }
 
-    public XSize widthOnly() {
-        return new XSize(_width, 1);
+    public XGrid columnsOnly() {
+        return new XGrid(1, _columns);
     }
 
-    public XSize heightOnly() {
-        return new XSize(1, _height);
+    public XGrid rowsOnly() {
+        return new XGrid(_rows, 1);
     }
     
 }

@@ -20,26 +20,30 @@ public class XGeneratorBehaviour : MonoBehaviour {
         Corner_INN_NE,
         Corner_INN_SE,
         Corner_INN_SW,
-        Corner_OUT_NW,
         Corner_OUT_NE,
-        Corner_OUT_SE,
-        Corner_OUT_SW
+        Corner_OUT_NW,
+        Corner_OUT_SW,
+        Corner_OUT_SE
     }
 
 
     void Start() {
         int[,] map = new int[100, 100];
 
-        XRoom room1 = new XRoom(new XCoord(0, 0), new XSize(20, 20));
-        XRoom room2 = new XRoom(new XCoord(25, 3), new XSize(7, 7));
-        XCorridor corr1_2 = new XCorridor(new XCoord(19, 5), new XSize(7, 3), XCorridor.Orientation.vertical);
-        XCorridor corr2_N = new XCorridor(new XCoord(27, 9), new XSize(3, 4), XCorridor.Orientation.horizontal);
+
+        XRoom room1 = new XRoom(new XCell(0, 0), new XGrid(20, 20));
+        XRoom room2 = new XRoom(new XCell(25, 3), new XGrid(7, 7));
+        XCorridor corr1_2 = new XCorridor(new XCell(19, 5), new XGrid(7, 3), XCorridor.Orientation.vertical);
+        XCorridor corr2_N = new XCorridor(new XCell(27, 9), new XGrid(3, 4), XCorridor.Orientation.horizontal);
 
 
         room1.plotOn(map);
         room2.plotOn(map);
         corr1_2.plotOn(map);
-        corr2_N.plotOn(map);
+        //corr2_N.plotOn(map);
+
+        //XRoom room0 = new XRoom(new XCell(0, 0), new XGrid(5, 8));
+        //room0.plotOn(map);
 
         /* T Map
         int[,] map = new int[9, 7] { { 6, 0, 2, 2, 2, 0, 7 },
@@ -129,89 +133,89 @@ public class XGeneratorBehaviour : MonoBehaviour {
         float xSpacing = size.x;
         float zSpacing = size.z;
         */
-        for (int x = 0; x < map.GetLength(0); x++) {
-            for (int z = 0; z < map.GetLength(1); z++) {
-                int value = map[x, z];
+        for (int row = 0; row < map.GetLength(0); row++) {
+            for (int col = 0; col < map.GetLength(1); col++) {
+                int value = map[row, col];
                 TileType type = (TileType)value;
 
                 if (type == TileType.Floor) {
                     GameObject prefab = _floorPrefab;
-                    float xPos = x * floorSpan;
-                    float zPos = z * floorSpan;
+                    float xPos = col * floorSpan;
+                    float zPos = -row * floorSpan;
                     float yRot = 0f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Wall_N) {
                     GameObject prefab = _wallPrefab;
-                    float xPos = x * floorSpan;
-                    float zPos = z * floorSpan;
-                    float yRot = 90f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    float xPos = col * floorSpan - floorSpan;
+                    float zPos = -row * floorSpan;
+                    float yRot = 180f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Wall_E) {
                     GameObject prefab = _wallPrefab;
-                    float xPos = x * floorSpan - floorSpan;
-                    float zPos = z * floorSpan;
-                    float yRot = 180f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    float xPos = col * floorSpan - floorSpan;
+                    float zPos = -row * floorSpan + floorSpan;
+                    float yRot = 270f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Wall_S) {
                     GameObject prefab = _wallPrefab;
-                    float xPos = x * floorSpan - floorSpan;
-                    float zPos = z * floorSpan + floorSpan;
-                    float yRot = 270f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    float xPos = col * floorSpan;
+                    float zPos = -row * floorSpan + floorSpan;
+                    float yRot = 0f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Wall_W) {
                     GameObject prefab = _wallPrefab;
-                    float xPos = x * floorSpan;
-                    float zPos = z * floorSpan + floorSpan;
-                    float yRot = 0f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    float xPos = col * floorSpan;
+                    float zPos = -row * floorSpan;
+                    float yRot = 90f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Corner_INN_NW) {
                     GameObject prefab = _cornerInnPrefab;
-                    float xPos = x * floorSpan;
-                    float zPos = z * floorSpan + floorSpan;
-                    float yRot = 90f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    float xPos = col * floorSpan;
+                    float zPos = -row * floorSpan;
+                    float yRot = 180f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Corner_INN_NE) {
                     GameObject prefab = _cornerInnPrefab;
-                    float xPos = x * floorSpan;
-                    float zPos = z * floorSpan;
-                    float yRot = 180f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    float xPos = col * floorSpan - floorSpan;
+                    float zPos = -row * floorSpan;
+                    float yRot = 270f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Corner_INN_SE) {
                     GameObject prefab = _cornerInnPrefab;
-                    float xPos = x * floorSpan - floorSpan;
-                    float zPos = z * floorSpan;
-                    float yRot = 270f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    float xPos = col * floorSpan - floorSpan;
+                    float zPos = -row * floorSpan + floorSpan;
+                    float yRot = 0f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Corner_INN_SW) {
                     GameObject prefab = _cornerInnPrefab;
-                    float xPos = x * floorSpan - floorSpan;
-                    float zPos = z * floorSpan + floorSpan;
-                    float yRot = 0f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
-                } else if (type == TileType.Corner_OUT_NE) {
-                    GameObject prefab = _cornerOutPrefab;
-                    float xPos = x * floorSpan - halfFloorSpan;
-                    float zPos = z * floorSpan + halfFloorSpan;
+                    float xPos = col * floorSpan;
+                    float zPos = -row * floorSpan + floorSpan;
                     float yRot = 90f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Corner_OUT_NW) {
                     GameObject prefab = _cornerOutPrefab;
-                    float xPos = x * floorSpan - halfFloorSpan;
-                    float zPos = z * floorSpan + halfFloorSpan;
-                    float yRot = 0f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
-                } else if (type == TileType.Corner_OUT_SE) {
-                    GameObject prefab = _cornerOutPrefab;
-                    float xPos = x * floorSpan - halfFloorSpan;
-                    float zPos = z * floorSpan + halfFloorSpan;
+                    float xPos = col * floorSpan - halfFloorSpan;
+                    float zPos = -row * floorSpan + halfFloorSpan;
                     float yRot = 180f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
+                } else if (type == TileType.Corner_OUT_NE) {
+                    GameObject prefab = _cornerOutPrefab;
+                    float xPos = col * floorSpan - halfFloorSpan;
+                    float zPos = -row * floorSpan + halfFloorSpan;
+                    float yRot = 90f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 } else if (type == TileType.Corner_OUT_SW) {
                     GameObject prefab = _cornerOutPrefab;
-                    float xPos = x * floorSpan - halfFloorSpan;
-                    float zPos = z * floorSpan + halfFloorSpan;
+                    float xPos = col * floorSpan - halfFloorSpan;
+                    float zPos = -row * floorSpan + halfFloorSpan;
                     float yRot = 270f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, type.ToString());
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
+                } else if (type == TileType.Corner_OUT_SE) {
+                    GameObject prefab = _cornerOutPrefab;
+                    float xPos = col * floorSpan - halfFloorSpan;
+                    float zPos = -row * floorSpan + halfFloorSpan;
+                    float yRot = 0f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, type.ToString());
                 }
             }
         }
@@ -226,71 +230,71 @@ public class XGeneratorBehaviour : MonoBehaviour {
         float oneQuarterFloorSpan = floorSpan * 0.25f;
         float threeQuartersFloorSpan = floorSpan * 0.75f;
 
-        for (int x = 0; x < map.GetLength(0); x++) {
-            for (int z = 0; z < map.GetLength(1); z++) {
-                int value = map[x, z];
+        for (int row = 0; row < map.GetLength(0); row++) {
+            for (int col = 0; col < map.GetLength(1); col++) {
+                int value = map[row, col];
                 TileType type = (TileType)value;
 
                 if (type == TileType.Wall_N) {
-                    float xPos = x * floorSpan - oneQuarterFloorSpan;
-                    float zPos = z * floorSpan;
-                    float yRot = 90;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
+                    float xPos = col * floorSpan;
+                    float zPos = -row * floorSpan + oneQuarterFloorSpan;
+                    float yRot = 180f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
                 } else if (type == TileType.Wall_E) {
-                    float xPos = (x - 1) * floorSpan;
-                    float zPos = z * floorSpan + oneQuarterFloorSpan;
-                    float yRot = 180;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Wall_S) {
-                    float xPos = x * floorSpan - threeQuartersFloorSpan;
-                    float zPos = z * floorSpan + floorSpan;
-                    float yRot = 270;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Wall_W) {
-                    float xPos = x * floorSpan;
-                    float zPos = z * floorSpan + threeQuartersFloorSpan;
-                    float yRot = 0;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Corner_INN_NW) {
-                    float xPos = x * floorSpan + floorSpan;
-                    float zPos = (z + 1) * floorSpan - oneQuarterFloorSpan;
-                    float yRot = 0f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Corner_INN_NE) {
-                    float xPos = x * floorSpan - oneQuarterFloorSpan;
-                    float zPos = (z-1) * floorSpan;
-                    float yRot = 90f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Corner_INN_SE) {
-                    float xPos = (x - 2) * floorSpan;
-                    float zPos = z * floorSpan + oneQuarterFloorSpan;
-                    float yRot = 180f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Corner_INN_SW) {
-                    float xPos = (x - 1) * floorSpan + oneQuarterFloorSpan;
-                    float zPos = (z + 2) * floorSpan;
+                    float xPos = col * floorSpan - threeQuartersFloorSpan;
+                    float zPos = -row * floorSpan;
                     float yRot = 270f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Corner_OUT_NE) {
-                    float xPos = x * floorSpan;
-                    float zPos = z * floorSpan + threeQuartersFloorSpan;
-                    float yRot = 0;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Corner_OUT_NW) {
-                    float xPos = x * floorSpan - threeQuartersFloorSpan;
-                    float zPos = (z+1) * floorSpan;
-                    float yRot = 270;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Corner_OUT_SE) {
-                    float xPos = x * floorSpan - oneQuarterFloorSpan;
-                    float zPos = z * floorSpan;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Wall_S) {
+                    float xPos = col * floorSpan - floorSpan;
+                    float zPos = -row * floorSpan + threeQuartersFloorSpan;
+                    float yRot = 0f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Wall_W) {
+                    float xPos = col * floorSpan - oneQuarterFloorSpan;
+                    float zPos = -row * floorSpan + floorSpan;
                     float yRot = 90f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
-                } else if (type == TileType.Corner_OUT_SW) {
-                    float xPos = x * floorSpan - floorSpan;
-                    float zPos = z * floorSpan + oneQuarterFloorSpan;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Corner_INN_NW) {
+                    float xPos = col * floorSpan + floorSpan;
+                    float zPos = -row * floorSpan + oneQuarterFloorSpan;
                     float yRot = 180f;
-                    istantiate(prefab, xPos, zPos, yRot, boardHolder, x, z, objectName);
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Corner_INN_NE) {
+                    float xPos = col * floorSpan - threeQuartersFloorSpan;
+                    float zPos = -row * floorSpan - floorSpan;
+                    float yRot = 270f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Corner_INN_SE) {
+                    float xPos = col * floorSpan - 2 * floorSpan;
+                    float zPos = -row * floorSpan + threeQuartersFloorSpan;
+                    float yRot = 0f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Corner_INN_SW) {
+                    float xPos = col * floorSpan - oneQuarterFloorSpan;
+                    float zPos = -row * floorSpan + 2*floorSpan;
+                    float yRot = 90f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Corner_OUT_NW) {
+                    float xPos = col * floorSpan - floorSpan;
+                    float zPos = -row * floorSpan + threeQuartersFloorSpan;
+                    float yRot = 0f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Corner_OUT_NE) {
+                    float xPos = col * floorSpan - threeQuartersFloorSpan;
+                    float zPos = -row * floorSpan;
+                    float yRot = 270f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Corner_OUT_SW) {
+                    float xPos = col * floorSpan - oneQuarterFloorSpan;
+                    float zPos = -row * floorSpan + floorSpan;
+                    float yRot = 90f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
+                } else if (type == TileType.Corner_OUT_SE) {
+                    float xPos = col * floorSpan;
+                    float zPos = -row * floorSpan + oneQuarterFloorSpan;
+                    float yRot = 180f;
+                    istantiate(prefab, xPos, zPos, yRot, boardHolder, row, col, objectName);
                 }
             }
         }

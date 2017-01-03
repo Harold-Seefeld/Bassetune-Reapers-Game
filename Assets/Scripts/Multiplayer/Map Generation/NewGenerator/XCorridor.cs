@@ -1,11 +1,11 @@
 ﻿using System;
 
 public class XCorridor {
-    private XCoord _topLeftVertex;
-    private XCoord _topRightVertex;
-    private XCoord _botLeftVertex;
-    private XCoord _botRightVertex;
-    private XSize _size;
+    private XCell _topLeftVertex;
+    private XCell _topRightVertex;
+    private XCell _botLeftVertex;
+    private XCell _botRightVertex;
+    private XGrid _size;
     private Orientation _orientation;
 
     public enum Orientation {
@@ -13,53 +13,54 @@ public class XCorridor {
         vertical
     }
 
-    public XCorridor(XCoord topLeftVertex, XSize size, Orientation orientation) {
-        //if (orientation == Orientation.horizontal) { 
+    public XCorridor(XCell topLeftVertex, XGrid size, Orientation orientation) {
         _topLeftVertex = topLeftVertex;
-        _topRightVertex = topLeftVertex.plus(size.heightOnly());
-        _botLeftVertex = topLeftVertex.plus(size.widthOnly());
+        _topRightVertex = topLeftVertex.plus(size.columnsOnly());
+        _botLeftVertex = topLeftVertex.plus(size.rowsOnly());
         _botRightVertex = topLeftVertex.plus(size);
-        /* } else {
-            _topLeftVertex = topLeftVertex;
-            _topRightVertex = topLeftVertex;
-            _botLeftVertex = _topRightVertex.plus(size.heightOnly());
-            _botRightVertex = topLeftVertex.plus(size);
-        }
-        */
         _size = size;
         _orientation = orientation;
     }
 
-    public void plotOn(int[,] map) {
-        for (int x = 0; x < _size.width(); x++) {
-            for (int y = 0; y < _size.height(); y++) {
-                //test is in range
-                int xPos = _topLeftVertex._x + x;
-                int yPos = _topLeftVertex._y + y;
+    public void printVertex() {
+        Console.Write(_topLeftVertex);
+        Console.Write(" TOP ");
+        Console.WriteLine(_topRightVertex);
+        Console.Write(_botLeftVertex);
+        Console.Write(" BOT ");
+        Console.WriteLine(_botRightVertex);
+    }
 
-                XCoord pos = new XCoord(xPos, yPos);
+    public void plotOn(int[,] map) {
+        for (int row = 0; row < _size.rows(); row++) {
+            for (int col = 0; col < _size.columns(); col++) {
+                //test is in range
+                int rowPos = _topLeftVertex._x + row;
+                int colPos = _topLeftVertex._y + col;
+
+                XCell pos = new XCell(rowPos, colPos);
                 if (pos.isEqual(_topLeftVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Corner_OUT_NE;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Corner_OUT_NW;
                 } else if (pos.isEqual(_topRightVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Corner_OUT_NW;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Corner_OUT_NE;
                 } else if (pos.isEqual(_botRightVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Corner_OUT_SW;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Corner_OUT_SE;
                 } else if (pos.isEqual(_botLeftVertex)) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Corner_OUT_SE;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Corner_OUT_SW;
                 } else if (pos.isWithin(_topLeftVertex, _topRightVertex) 
                     && _orientation == Orientation.horizontal) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Wall_N;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Wall_N;
                 } else if (pos.isWithin(_topRightVertex, _botRightVertex)
                     && _orientation == Orientation.vertical) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Wall_E;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Wall_E;
                 } else if (pos.isWithin(_botLeftVertex, _botRightVertex) 
                     && _orientation == Orientation.horizontal) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Wall_S;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Wall_S;
                 } else if (pos.isWithin(_topLeftVertex, _botLeftVertex)
                     && _orientation == Orientation.vertical) {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Wall_W;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Wall_W;
                 } else {
-                    map[xPos, yPos] = (int)XGeneratorBehaviour.TileType.Floor;
+                    map[rowPos, colPos] = (int)XGeneratorBehaviour.TileType.Floor;
                 }
             }
         }
