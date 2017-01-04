@@ -26,95 +26,52 @@ public class XGeneratorBehaviour : MonoBehaviour {
         Corner_OUT_SE
     }
 
-
     void Start() {
         int[,] map = new int[100, 100];
 
+        int _roomsNumber = 2;
+        int _roomSize = 20;
+        int _corrSize = 5;
 
-        XRoom room1 = new XRoom(new XCell(0, 0), new XGrid(20, 20));
-        XRoom room2 = new XRoom(new XCell(25, 3), new XGrid(7, 7));
-        XCorridor corr1_2 = new XCorridor(new XCell(19, 5), new XGrid(7, 3), XCorridor.Orientation.vertical);
-        XCorridor corr2_N = new XCorridor(new XCell(27, 9), new XGrid(3, 4), XCorridor.Orientation.horizontal);
+        XGrid mapGrid = new XGrid(100, 100);
+        XCell topLeftCell;
+        XGrid grid;
+        XRoom source;
 
+        topLeftCell = new XCell(5, 5);
+        grid = new XGrid(_roomSize, _roomSize);
+        if (!grid.isWithin(mapGrid, topLeftCell)) return;
+        source = new XRoom(topLeftCell, grid);
 
-        room1.plotOn(map);
-        room2.plotOn(map);
-        corr1_2.plotOn(map);
-        //corr2_N.plotOn(map);
+        XRoom room = source;
+        //Piazzo Corridoio a destra
+        topLeftCell = topLeftCell.plus(6, 20);
+        grid = new XGrid(3, _corrSize);
+        if (!grid.isWithin(mapGrid, topLeftCell)) return;
+        XCorridorBIS corr = new XCorridorBIS(topLeftCell, grid, XCorridorBIS.Orientation.horizontal);
+        room.setCorridorOutcoming(corr);
+        corr.setSourceRoom(room);
 
-        //XRoom room0 = new XRoom(new XCell(0, 0), new XGrid(5, 8));
-        //room0.plotOn(map);
+        //Obbligo piazzare Stanza a destra
+        topLeftCell = topLeftCell.plus(1, _corrSize);
+        grid = new XGrid(_roomSize, _roomSize);
+        if (!grid.isWithin(mapGrid, topLeftCell)) return;
+        room = new XRoom(topLeftCell, grid);
+        room.setCorridorIncoming(corr);
+        corr.setDestinationRoom(room);
 
-        /* T Map
-        int[,] map = new int[9, 7] { { 6, 0, 2, 2, 2, 0, 7 },
-                                     { 0, 1, 1, 1, 1, 1, 0 },
-                                     { 5, 1, 1, 1, 1, 1, 3 },
-                                     { 5, 1, 1, 1, 1, 1, 3 },
-                                     { 0, 1, 1, 1, 1, 1, 0 },
-                                     { 9, 0, 11, 1, 10, 0, 8 },
-                                     { 0, 0,  5, 1, 3, 0, 0 },
-                                     { 0, 0,  5, 1, 3, 0, 0 },
-                                     { 0, 0,  5, 1, 3, 0, 0 }
-        };
-        */
+        //source.plotOn(map);
 
-        /* L Map  */
-        int[,] map1 = new int[9, 7] { { 6, 0, 2, 2, 2, 0, 7 },
-                                     { 0, 1, 1, 1, 1, 1, 0 },
-                                     { 5, 1, 1, 1, 1, 1, 3 },
-                                     { 5, 1, 1, 1, 1, 1, 3 },
-                                     { 5, 1, 1, 1, 1, 1, 0 },
-                                     { 5, 1, 10, 4, 4, 0, 8 },
-                                     { 5, 1,  3, 0, 0, 0, 0 },
-                                     { 5, 1,  3, 0, 0, 0, 0 },
-                                     { 5, 1,  3, 0, 0, 0, 0 }
-        };
-        
+        XDungeonSampleCases.case_RoomWithBottomLeftCorridorHorizontal_plot(map);
+        //XDungeonSampleCases.case_RoomWithRightSideCorridorHorizontal_plot(map);
+
+        //new XCorridorBIS(new XCell(0, 0), new XGrid(3, 5), XCorridorBIS.Orientation.horizontal).plotOn(map);
 
 
-        //XRoom room = new XRoom(new XCoord(1, 1), new XSize(2, 2));
-        //room.plotOn(map);
-
-        attachMeshesTo(map);
-
-        
-
-
-        /*
-        int mapWidth = 50;
-        int mapHeight = 100;
-        
-        int roomNumber = 1;
-        int corridorNumber = 0;
-
-        int roomWidth = 10;
-        int roomHeight = 20;
-
-        int corridorLenght = 5;
-
-
-        int direction = 2; //destra
-
-
-        XCoord room1Coord = new XCoord(0, 0);
-        XSize room1Size = new XSize(roomWidth, roomHeight);
-        XRoom room1 = new XRoom(room1Coord,  room1Size);
-
-        if (direction == 2) {
-            XCoord room1RightCoord = room1Coord.plus(room1Size.justWidth);
-        }
-
-        if (room1RightCoord.plus(corridorLenght))
-
-        
-        XCorridor corridor1_2 = new XCorridor()
-        */
-
-
-
+        convertToMeshes(map);
     }
 
-    private void attachMeshesTo(int[,] map) {
+    private void convertToMeshes(int[,] map) {
         GameObject boardHolder = new GameObject("BoardHolder");
         boardHolder.transform.parent = this.transform;
 

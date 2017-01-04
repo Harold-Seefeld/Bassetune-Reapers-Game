@@ -8,6 +8,7 @@ public class XRoom {
     private XCell _topRightVertex;
     private XCell _botLeftVertex;
     private XCell _botRightVertex;
+    private XCorridorBIS _corridor;
 
     public XRoom(XCell topLeftOrigin, XGrid size) {
         _topLeftVertex = topLeftOrigin;
@@ -17,6 +18,7 @@ public class XRoom {
         _size = size;
     }
 
+    /*
     public void printVertex() {
         Console.Write(_topLeftVertex);
         Console.Write(" TOP ");
@@ -25,6 +27,7 @@ public class XRoom {
         Console.Write(" BOT ");
         Console.WriteLine(_botRightVertex);
     }
+    */
 
     public void plotOn(int[,] map) {      
         for (int row = 0; row < _size.rows(); row++) {
@@ -56,29 +59,61 @@ public class XRoom {
             }
         }
 
-        int xPosC = _topLeftVertex._x;
-        int yPosC = _topLeftVertex._y;
-        map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_NW;
-        map[xPosC, yPosC + 1] = (int)XGeneratorBehaviour.TileType.Empty;
-        map[xPosC + 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
+        int xPosC;
+        int yPosC;
 
-        xPosC = _topRightVertex._x;
-        yPosC = _topRightVertex._y;
-        map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_NE;
-        map[xPosC, yPosC - 1] = (int)XGeneratorBehaviour.TileType.Empty;
-        map[xPosC + 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
+        //TOP LEFT VERTEX
+        if (_corridor == null || !_corridor.isSharingVertex(_topLeftVertex)) {
+            xPosC = _topLeftVertex._x;
+            yPosC = _topLeftVertex._y;
+            map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_NW;
+            map[xPosC, yPosC + 1] = (int)XGeneratorBehaviour.TileType.Empty;
+            map[xPosC + 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
+        }
 
-        xPosC = _botRightVertex._x;
-        yPosC = _botRightVertex._y;
-        map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_SE;
-        map[xPosC, yPosC - 1] = (int)XGeneratorBehaviour.TileType.Empty;
-        map[xPosC - 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
+        //TOP RIGHT VERTEX
+        if (_corridor == null || !_corridor.isSharingVertex(_topRightVertex)) {
+            xPosC = _topRightVertex._x;
+            yPosC = _topRightVertex._y;
+            map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_NE;
+            map[xPosC, yPosC - 1] = (int)XGeneratorBehaviour.TileType.Empty;
+            map[xPosC + 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
+        }
 
-        xPosC = _botLeftVertex._x;
-        yPosC = _botLeftVertex._y;
-        map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_SW;
-        map[xPosC, yPosC + 1] = (int)XGeneratorBehaviour.TileType.Empty;
-        map[xPosC - 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
+        //BOTTOM RIGHT VERTEX
+        if (_corridor == null || !_corridor.isSharingVertex(_botRightVertex)) {
+            xPosC = _botRightVertex._x;
+            yPosC = _botRightVertex._y;
+            map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_SE;
+            map[xPosC, yPosC - 1] = (int)XGeneratorBehaviour.TileType.Empty;
+            map[xPosC - 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
+        }
 
+        if (_corridor == null || !_corridor.isSharingVertex(_botLeftVertex)) { 
+            xPosC = _botLeftVertex._x;
+            yPosC = _botLeftVertex._y;
+            map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_SW;
+            map[xPosC, yPosC + 1] = (int)XGeneratorBehaviour.TileType.Empty;
+            map[xPosC - 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
+        }
+
+
+        if (_corridor != null) _corridor.plotOn(map);
+    }
+
+    public void setCorridorIncoming(XCorridorBIS corr) {
+        
+    }
+
+    public bool isSharingVertex(XCell vertex) {
+        if (vertex.isEqual(_topLeftVertex)) return true;
+        if (vertex.isEqual(_topRightVertex)) return true;
+        if (vertex.isEqual(_botLeftVertex)) return true;
+        if (vertex.isEqual(_botRightVertex)) return true;
+        return false;
+    }
+
+    public void setCorridorOutcoming(XCorridorBIS corr) {
+        _corridor = corr;
     }
 }

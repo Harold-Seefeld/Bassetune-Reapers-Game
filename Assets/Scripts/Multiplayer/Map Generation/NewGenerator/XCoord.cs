@@ -29,9 +29,23 @@ public class XCell {
         return true;
     }
 
+    public bool isWithin(XGrid aGrid) {
+        return aGrid.hasCell(_x, _y);
+    }
+
     public bool isEqual(XCell other) {
         if (other._x != _x) return false;
         if (other._y != _y) return false;
         return true;
+    }
+
+    //CAPIRE BENE SE HA SENSO SOMMARE DUE CELLE
+    //forse bisogna trovare la distanza e sommare quella
+    public XCell plus(XCell other) {
+        return new XCell(_x + other._x, _y + other._y);
+    }
+
+    public XCell plus(int rowSize, int colSize) {
+        return new XCell(_x + rowSize-1, _y + colSize-1);
     }
 }
