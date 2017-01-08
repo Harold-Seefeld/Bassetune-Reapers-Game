@@ -47,7 +47,8 @@ public static class SocketIOEvents {
 			public static string USE_ITEM_START = "i";
             public static string USE_ITEM_END = "ie";
             public static string USE_ITEM_INTERRUPTED = "ii";
-			public static string CHANGE_EQUIPPED = "ce";
+			public static string START_CHANGE_EQUIPPED = "se";
+            public static string END_CHANGE_EQUIPPED = "ce";
 
             public static string ITEM_INVENTORY = "inv";
             public static string ABILITY_INVENTORY = "anv";

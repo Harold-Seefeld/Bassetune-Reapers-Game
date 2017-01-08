@@ -94,10 +94,8 @@ public class InventoryMenu : MonoBehaviour {
 
     public void UpdateAbilityBar(JSONObject item, List<Image> abilitySlots)
     {
-
         // Item slot is (-20 + i + 11)
         var itemSlot = abilitySlots[(int)item[2].n - 9].gameObject;
-        Debug.Log(itemSlot);
         if (itemSlot.GetComponent<ItemBase>())
         {
             Destroy(itemSlot.GetComponent<ItemBase>());
