@@ -69,99 +69,32 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
             otherItemSlot.slotTags = thisItemSlot.slotTags.GetRange(0, thisItemSlot.slotTags.Count);
             thisItemSlot.slotTags = tempTags;
         }
-
-        /* Weapon Configuration 
-            - If two-handed weapon, set both slots to the weapon and TODO: activate link image/scale to take up both slots
-            - If not two-handed then remove one not being set and set the new one, unequipping the two-handed
-        */
-        if (slotType == SlotType.Weapon)
+        
+        // Update slots on server
+        if (Server.instance)
         {
-            bool twohanded = false;
-            foreach (Weapon.TwoHanded weapon in Enum.GetValues(typeof(Weapon.TwoHanded)))
+            JSONObject itemSwap = new JSONObject(JSONObject.Type.OBJECT);
+            itemSwap.AddField("characterID", Server.instance.currentDefaultCharacter.CharacterID);
+            itemSwap.AddField("target", 0);
+            // Slot 1 index
+            if (thisItemSlot.transform.parent.name == "Defensive Skills / Items")
             {
-                if (FindWeapon(otherItem.GetComponent<ItemBase>().itemID, InventoryManager.instance.items).weaponType.ToString() == weapon.ToString())
-                {
-                    twohanded = true;
-                }
-            }
-
-            if (twohanded)
-            {
-                foreach (Transform child in transform.parent)
-                {
-                    bool valid = true;
-                    if (child.GetSiblingIndex() == 1 || child.GetSiblingIndex() == 0)
-                    {
-                        // TODO: Find available slot in inventory
-                        valid = true;
-                    }
-                }
-
-                foreach (Transform child in transform.parent)
-                {
-                    if (child.GetSiblingIndex() == 1 || child.GetSiblingIndex() == 0)
-                    {
-                        child.GetComponent<InventorySlot>().UpdateInventorySlot(item);
-                    }
-                }
+                itemSwap.AddField("slot1", 17 + thisItemSlot.transform.GetSiblingIndex());
             }
             else
             {
-                foreach (Transform child in transform.parent)
-                {
-                    if (child.GetSiblingIndex() == 1 || child.GetSiblingIndex() == 0)
-                    {
-                        ItemBase otherWeaponBase = child.GetComponent<ItemBase>();
-
-                        foreach (Weapon.TwoHanded weapon in Enum.GetValues(typeof(Weapon.TwoHanded)))
-                        {
-                            if (otherWeaponBase && FindWeapon(otherWeaponBase.itemID, InventoryManager.instance.items).weaponType.ToString() == weapon.ToString())
-                            {
-                                twohanded = true;
-                            }
-                        }
-
-                        if (gameObject.transform.GetSiblingIndex() == child.GetSiblingIndex())
-                        {
-                            // TODO: Swap two handed if possible
-                            if (twohanded)
-                            {
-                                if (otherDrag && swappable && thisItemBase && otherItemSlot)
-                                {
-                                    child.GetComponent<InventorySlot>().UpdateInventorySlot(item);
-
-                                    ItemBase newItemBase = item.GetComponent<ItemBase>();
-                                    newItemBase.itemID = thisItemBase.itemID;
-                                    newItemBase.itemName = thisItemBase.itemName;
-                                    newItemBase.itemIcon = thisItemBase.itemIcon;
-                                    newItemBase.itemDescription = thisItemBase.itemDescription;
-                                    newItemBase.itemBuyPrice = thisItemBase.itemBuyPrice;
-                                    newItemBase.itemSellPrice = thisItemBase.itemSellPrice;
-
-                                    item.GetComponent<Image>().sprite = newItemBase.itemIcon;
-
-                                    InventoryDrag.swapped = true;
-                                }
-                            }
-                            else
-                            {
-                                child.GetComponent<InventorySlot>().UpdateInventorySlot(item);
-                            }
-                        }
-                        else
-                        {
-                            // Clear the other slot if the weapon is two handed
-                            if (twohanded)
-                            {
-                                Destroy(child.GetComponent<ItemBase>());
-                                child.GetComponent<Image>().sprite = null;
-                                // TODO: Swap two handed weapon with inventory weapon if in game                  
-                            }
-                        }
-                    }
-                }
+                itemSwap.AddField("slot1", thisItemSlot.transform.GetSiblingIndex());
             }
-            return;
+            // Slot 2 index
+            if (otherItemSlot.transform.name == "Defensive Skills / Items")
+            {
+                itemSwap.AddField("slot2", 17 + otherItemSlot.transform.GetSiblingIndex());
+            }
+            else
+            {
+                itemSwap.AddField("slot2", otherItemSlot.transform.GetSiblingIndex());
+            }
+            CharacterManager.instance.socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, itemSwap);
         }
 
         if (otherDrag && swappable && thisItemBase && otherItemSlot)

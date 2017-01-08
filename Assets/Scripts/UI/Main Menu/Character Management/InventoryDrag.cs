@@ -18,10 +18,17 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	private Vector3 startPosition;
 	private Transform startParent;
 	private RectTransform rectTransform;
+    private SocketIOComponent socket;
 
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
+
+        if (Server.instance)
+        {
+            // Get socket object
+            socket = FindObjectOfType<SocketIOComponent>();
+        }
     }
 	
 	public void OnBeginDrag(PointerEventData eventData)
@@ -66,7 +73,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             if (image) image.sprite = null;
         }
 
-		if (transform.parent == startParent)
+        if (transform.parent == startParent)
 		{
 			transform.position = startPosition;
 		}
@@ -114,6 +121,8 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (!item) return;
         if (!inventorySlot) return;
 
+        int itemSlot = item.transform.GetSiblingIndex();
+
         // TODO: Detect double click then equip (mainhand - left, offhand - right, others - left)
         if (eventData.clickCount % 2 == 0)
         {
@@ -138,13 +147,13 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
                     if (twoHanded)
                     {
-                        ItemSwap.AddField("itemID", item.itemID);
+                        ItemSwap.AddField("slotID", itemSlot);
                         ItemSwap.AddField("target", 9);
                         socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                     }
                     else
                     {
-                        ItemSwap.AddField("itemID", item.itemID);
+                        ItemSwap.AddField("slotID", itemSlot);
                         ItemSwap.AddField("target", 2);
                         socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                     }
@@ -152,14 +161,14 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
                 if (item.isArmor())
                 {
-                    ItemSwap.AddField("itemID", item.itemID);
+                    ItemSwap.AddField("slotID", itemSlot);
                     ItemSwap.AddField("target", 4);
                     socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                 }
 
                 if (item.isAmmo())
                 {
-                    ItemSwap.AddField("itemID", item.itemID);
+                    ItemSwap.AddField("slotID", itemSlot);
                     ItemSwap.AddField("target", 5);
                     socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                 }
@@ -182,13 +191,13 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
                     if (twoHanded)
                     {
-                        ItemSwap.AddField("itemID", item.itemID);
+                        ItemSwap.AddField("slotID", itemSlot);
                         ItemSwap.AddField("target", 9);
                         socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                     }
                     else
                     {
-                        ItemSwap.AddField("itemID", item.itemID);
+                        ItemSwap.AddField("slotID", itemSlot);
                         ItemSwap.AddField("target", 3);
                         socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                     }
@@ -196,14 +205,14 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
                 if (item.isArmor())
                 { 
-                    ItemSwap.AddField("itemID", item.itemID);
+                    ItemSwap.AddField("slotID", itemSlot);
                     ItemSwap.AddField("target", 4);
                     socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                 }
 
                 if (item.isAmmo())
                 {
-                    ItemSwap.AddField("itemID", item.itemID);
+                    ItemSwap.AddField("slotID", itemSlot);
                     ItemSwap.AddField("target", 5);
                     socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, ItemSwap);
                 }

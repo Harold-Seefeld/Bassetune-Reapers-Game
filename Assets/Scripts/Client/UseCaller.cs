@@ -31,7 +31,7 @@ public class UseCaller : MonoBehaviour {
         {
             if (Input.GetButtonDown("Inventory" + i.ToString()))
             {
-                Use(i + 10, "consumable");
+                Use(i + 9, "consumable");
             }
         }
 

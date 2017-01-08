@@ -23,6 +23,7 @@ public class CharacterManager : MonoBehaviour {
 		socket.On(SocketIOEvents.Input.CHAR_CREATED, CreateCharacter);
 		socket.On(SocketIOEvents.Input.HP, UpdateHP);
         socket.On(SocketIOEvents.move, UpdateLocations);
+        socket.On(SocketIOEvents.Input.Knight.END_CHANGE_EQUIPPED, UpdateKnightInventory);
     }
 
     void Update ()
@@ -137,6 +138,95 @@ public class CharacterManager : MonoBehaviour {
         locationData.Add(location.x);
         locationData.Add(location.y);
         locationsToSend.AddField(characterID, locationData);
+    }
+
+    public void UpdateKnightInventory(SocketIOEvent e)
+    {
+        int playerID = (int)e.data.GetField("p").n;
+        for (int i = 0; i < Server.instance.players.Length; i++)
+        {
+            if (playerID != Server.instance.players[i].id) continue;
+            var player = Server.instance.players[i];
+
+            // Slot change
+            if (e.data.HasField("a") && e.data.HasField("b"))
+            {
+                JSONObject slot1 = null;
+                JSONObject slot2 = null;
+
+                for (int n = 0; n < player.itemInventory.Count; n++)
+                {
+                    if (e.data.GetField("a").n == player.itemInventory[n].list[2].n)
+                    {
+                        slot1 = player.itemInventory[n];
+                    }
+                    else if (e.data.GetField("b").n == player.itemInventory[n].list[2].n)
+                    {
+                        slot2 = player.itemInventory[n];
+                    }
+                }
+
+                if (slot1 != null && slot2 !=null)
+                {
+                    int temp = (int)slot1.list[2].n;
+                    slot1.list[2].n = slot2.list[2].n;
+                    slot2.list[2].n = temp;
+                }
+            }
+            // Equip type change
+            else
+            {
+                int slotID = (int)e.data.GetField("i").n;
+                int target = (int)e.data.GetField("t").n;
+                // Linear search array for any existing tags and overwrite them
+                foreach (JSONObject slot in player.itemInventory)
+                {
+                    if ((int)slot.list[2].n == slotID)
+                    {
+                        slot.list[3].n = target;
+
+                    }
+                    else
+                    {
+                        if (target == 2 || target == 3 || target == 9)
+                        {
+                            if (target == 2)
+                            {
+                                if ((int)slot.list[3].n == target || (int)slot.list[3].n == 3 || (int)slot.list[3].n == 9)
+                                {
+                                    slot.list[3].n = 0;
+                                }
+                            }
+                            else if (target == 3)
+                            {
+                                if ((int)slot.list[3].n == target || (int)slot.list[3].n == 2 || (int)slot.list[3].n == 9)
+                                {
+                                    slot.list[3].n = 0;
+                                }
+                            }
+                            else if (target == 9)
+                            {
+                                if ((int)slot.list[3].n == target || (int)slot.list[3].n == 3 || (int)slot.list[3].n == 2)
+                                {
+                                    slot.list[3].n = 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ((int)slot.list[3].n == target)
+                            {
+                                slot.list[3].n = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Update menus
+        AbilityMenu.instance.UpdateMenu();
+        InventoryMenu.instance.UpdateMenu();
     }
 
 }
