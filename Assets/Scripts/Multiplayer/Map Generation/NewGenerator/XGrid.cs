@@ -41,22 +41,26 @@ public class XGrid {
         return true;
     }
 
-    private XCell absBotLeftVertexUsing(XCell topLeftVertex) {
+    public XCell absBotLeftVertexUsing(XCell topLeftVertex) {
         return vertexBottomLeft().plus(topLeftVertex);
     }
 
-    private XCell absBotRightVertexUsing(XCell topLeftVertex) {
+    public XCell absBotRightVertexUsing(XCell topLeftVertex) {
         return vertexBottomRight().plus(topLeftVertex);
     }
 
-    private XCell absTopRightVertexUsing(XCell topLeftVertex) {
-        return topLeftVertex.plus(topLeftVertex);
+    public XCell absTopRightVertexUsing(XCell topLeftVertex) {
+        return vertexTopRight().plus(topLeftVertex);
     }
 
     public bool hasCell(int rowIndex, int colIndex) {
-        if (rowIndex < 0 && rowIndex >= _rows) return false;
-        if (colIndex < 0 && colIndex >= _rows) return false;
+        if (rowIndex < 0 || rowIndex >= _rows) return false;
+        if (colIndex < 0 || colIndex >= _rows) return false;
         return true;
+    }
+
+    public int[,] toIntMatrix() {
+        return new int[_rows, _columns];
     }
 
     public XCell vertexTopLeft() {
@@ -72,7 +76,9 @@ public class XGrid {
         return new XCell(_rows - 1, _columns - 1);
     }
 
-
+    public override string ToString() {
+        return "XGrid: [" + _rows + ", " + _columns + "]";
+    }
 
 
 

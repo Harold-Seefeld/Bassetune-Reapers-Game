@@ -3,6 +3,17 @@ using System.Collections;
 using System;
 
 public class XGeneratorBehaviour : MonoBehaviour {
+    public int _mapHeight = 100;
+    public int _mapWidth = 100;
+    public int _roomsNumberMin = 5;
+    public int _roomsNumberMax = 15;
+    public int _roomSizeMin = 5;
+    public int _roomSizeMax = 20;
+    public int _corridorLengthMin = 2;
+    public int _corridorLengthMax = 7;
+    public int _seed = 123456;
+    public bool _randomSeed = false;
+
     public GameObject _floorPrefab;
     public GameObject _wallPrefab;
     public GameObject _wallSeparatorPrefab;
@@ -27,48 +38,30 @@ public class XGeneratorBehaviour : MonoBehaviour {
     }
 
     void Start() {
-        int[,] map = new int[100, 100];
-
-        int _roomsNumber = 2;
-        int _roomSize = 20;
-        int _corrSize = 5;
-
-        XGrid mapGrid = new XGrid(100, 100);
-        XCell topLeftCell;
-        XGrid grid;
-        XRoom source;
-
-        topLeftCell = new XCell(5, 5);
-        grid = new XGrid(_roomSize, _roomSize);
-        if (!grid.isWithin(mapGrid, topLeftCell)) return;
-        source = new XRoom(topLeftCell, grid);
-
-        XRoom room = source;
-        //Piazzo Corridoio a destra
-        topLeftCell = topLeftCell.plus(6, 20);
-        grid = new XGrid(3, _corrSize);
-        if (!grid.isWithin(mapGrid, topLeftCell)) return;
-        XCorridorBIS corr = new XCorridorBIS(topLeftCell, grid, XCorridorBIS.Orientation.horizontal);
-        room.setCorridorOutcoming(corr);
-        corr.setSourceRoom(room);
-
-        //Obbligo piazzare Stanza a destra
-        topLeftCell = topLeftCell.plus(1, _corrSize);
-        grid = new XGrid(_roomSize, _roomSize);
-        if (!grid.isWithin(mapGrid, topLeftCell)) return;
-        room = new XRoom(topLeftCell, grid);
-        room.setCorridorIncoming(corr);
-        corr.setDestinationRoom(room);
-
-        //source.plotOn(map);
-
-        XDungeonSampleCases.case_RoomWithBottomLeftCorridorHorizontal_plot(map);
+        //XDungeonSampleCases.case_RoomWithBottomLeftCorridorHorizontal_plot(map);
         //XDungeonSampleCases.case_RoomWithRightSideCorridorHorizontal_plot(map);
+        
+        BRTilesMapGenerator gen = new BRTilesMapGenerator();
+        gen.setMapSize(_mapHeight, _mapWidth);
+        gen.setRoomsNumberRange(_roomsNumberMin, _roomsNumberMax);
+        gen.setRoomSizeRange(_roomSizeMin, _roomSizeMax);
+        gen.setCorridorSizeRange(_corridorLengthMin, _corridorLengthMax);
 
-        //new XCorridorBIS(new XCell(0, 0), new XGrid(3, 5), XCorridorBIS.Orientation.horizontal).plotOn(map);
+        if (_randomSeed) {
+            _seed = Time.time.ToString().GetHashCode();
+        }
+        gen.setSeed(_seed);
 
 
+        int[,] map = gen.result();
         convertToMeshes(map);
+    }
+
+    void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            Destroy(GameObject.Find("BoardHolder"));
+            Start();
+        }
     }
 
     private void convertToMeshes(int[,] map) {

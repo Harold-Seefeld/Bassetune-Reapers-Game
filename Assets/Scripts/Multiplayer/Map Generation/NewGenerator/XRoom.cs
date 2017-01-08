@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class XRoom {
-    private XGrid _size;
+public class XRoom : IShape {
+    private XGrid _grid;
     private XCell _topLeftVertex;
     private XCell _topRightVertex;
     private XCell _botLeftVertex;
     private XCell _botRightVertex;
-    private XCorridorBIS _corridor;
+    private XCorridor _outcomingCorridor;
+    private XCorridor _incomingCorridor;
 
     public XRoom(XCell topLeftOrigin, XGrid size) {
         _topLeftVertex = topLeftOrigin;
         _topRightVertex = topLeftOrigin.plus(size.columnsOnly());
         _botLeftVertex = topLeftOrigin.plus(size.rowsOnly());
         _botRightVertex = topLeftOrigin.plus(size);
-        _size = size;
+        _grid = size;
     }
 
     /*
@@ -30,8 +32,8 @@ public class XRoom {
     */
 
     public void plotOn(int[,] map) {      
-        for (int row = 0; row < _size.rows(); row++) {
-            for (int col = 0; col < _size.columns(); col++) {
+        for (int row = 0; row < _grid.rows(); row++) {
+            for (int col = 0; col < _grid.columns(); col++) {
                 //test is in range
                 int rowPos = _topLeftVertex._x + row;
                 int colPos = _topLeftVertex._y + col;
@@ -59,11 +61,30 @@ public class XRoom {
             }
         }
 
+       
+        joinWithCorridors(map);
+        if (_outcomingCorridor != null) _outcomingCorridor.plotOn(map);
+        
+    }
+
+    private bool existsCorridorSharingVertex(XCell vertex) {
+        bool result = false;
+        if (_incomingCorridor != null) {
+            result = result || _incomingCorridor.isSharingVertex(vertex);
+        }
+        if (_outcomingCorridor != null) {
+            result = result || _outcomingCorridor.isSharingVertex(vertex);
+        }
+        return result;
+    }
+
+    private void joinWithCorridors(int[,] map) {
         int xPosC;
         int yPosC;
 
         //TOP LEFT VERTEX
-        if (_corridor == null || !_corridor.isSharingVertex(_topLeftVertex)) {
+        //if (corr == null || !corr.isSharingVertex(_topLeftVertex)) {
+        if (!existsCorridorSharingVertex(_topLeftVertex)) {
             xPosC = _topLeftVertex._x;
             yPosC = _topLeftVertex._y;
             map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_NW;
@@ -72,7 +93,7 @@ public class XRoom {
         }
 
         //TOP RIGHT VERTEX
-        if (_corridor == null || !_corridor.isSharingVertex(_topRightVertex)) {
+        if (!existsCorridorSharingVertex(_topRightVertex)) {
             xPosC = _topRightVertex._x;
             yPosC = _topRightVertex._y;
             map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_NE;
@@ -81,7 +102,7 @@ public class XRoom {
         }
 
         //BOTTOM RIGHT VERTEX
-        if (_corridor == null || !_corridor.isSharingVertex(_botRightVertex)) {
+        if (!existsCorridorSharingVertex(_botRightVertex)) {
             xPosC = _botRightVertex._x;
             yPosC = _botRightVertex._y;
             map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_SE;
@@ -89,20 +110,21 @@ public class XRoom {
             map[xPosC - 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
         }
 
-        if (_corridor == null || !_corridor.isSharingVertex(_botLeftVertex)) { 
+        if (!existsCorridorSharingVertex(_botLeftVertex)) {
             xPosC = _botLeftVertex._x;
             yPosC = _botLeftVertex._y;
             map[xPosC, yPosC] = (int)XGeneratorBehaviour.TileType.Corner_INN_SW;
             map[xPosC, yPosC + 1] = (int)XGeneratorBehaviour.TileType.Empty;
             map[xPosC - 1, yPosC] = (int)XGeneratorBehaviour.TileType.Empty;
         }
-
-
-        if (_corridor != null) _corridor.plotOn(map);
     }
 
-    public void setCorridorIncoming(XCorridorBIS corr) {
-        
+    public int height() {
+        return _grid.rows();
+    }
+
+    internal int width() {
+        return _grid.columns();
     }
 
     public bool isSharingVertex(XCell vertex) {
@@ -113,7 +135,43 @@ public class XRoom {
         return false;
     }
 
-    public void setCorridorOutcoming(XCorridorBIS corr) {
-        _corridor = corr;
+    public void setCorridorIncoming(XCorridor corr) {
+        _incomingCorridor = corr;
+    }
+
+    public void setCorridorOutcoming(XCorridor corr) {
+        _outcomingCorridor = corr;
+    }
+
+    public bool isWithin(XGrid container) {
+        return _grid.isWithin(container, _topLeftVertex);
+    }
+
+    public bool collidesWith(IShape other) {
+        XCell[] cells = _topLeftVertex.cells(_botRightVertex);
+        foreach(XCell each in cells) {
+            if (other.containsCell(each)) return true;
+        }      
+        return false;
+    }
+
+    public XCell topLeftVertex() {
+        return _topLeftVertex;
+    }
+
+    public bool containsCell(XCell aCell) {
+        return aCell.isWithin(_topLeftVertex, _botRightVertex);
+    }
+
+    public override string ToString() {
+        return "XRoom: " + topLeftVertex() + " " + _grid;
+    }
+
+    public XCell topRightVertex() {
+        return _topRightVertex;
+    }
+
+    public XCell bottomLeftVertex() {
+        return _botLeftVertex;
     }
 }

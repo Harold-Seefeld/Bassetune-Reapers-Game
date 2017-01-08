@@ -319,6 +319,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e86aa64ceb3bd438cf28686573c661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mapHeight: 100
+  _mapWidth: 100
+  _roomsNumberMin: 5
+  _roomsNumberMax: 15
+  _roomSizeMin: 5
+  _roomSizeMax: 20
+  _corridorLengthMin: 2
+  _corridorLengthMax: 7
+  _seed: -1388557513
+  _randomSeed: 0
   _floorPrefab: {fileID: 1611164220234214, guid: c869b2f566828f04cbb21dc352b5988a,
     type: 2}
   _wallPrefab: {fileID: 1842422745101804, guid: 1d5bf74d50454924d989855b29caf1e8,
@@ -1710,7 +1720,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1611164220234214, guid: c869b2f566828f04cbb21dc352b5988a, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c869b2f566828f04cbb21dc352b5988a, type: 2}
@@ -2297,6 +2307,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 0a141081a132e8b42a288c376de2975f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a141081a132e8b42a288c376de2975f, type: 3}
   m_IsPrefabParent: 0
@@ -2432,6 +2446,14 @@ Prefab:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1842422745101804, guid: 1d5bf74d50454924d989855b29caf1e8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1117358936100872, guid: 1d5bf74d50454924d989855b29caf1e8, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1849312133531392, guid: 1d5bf74d50454924d989855b29caf1e8, type: 2}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
