@@ -316,7 +316,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 314428218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e86aa64ceb3bd438cf28686573c661, type: 3}
+  m_Script: {fileID: 11500000, guid: 0558a0ef1ef14a2488b51b1cecc55ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _mapHeight: 100
@@ -327,8 +327,8 @@ MonoBehaviour:
   _roomSizeMax: 20
   _corridorLengthMin: 2
   _corridorLengthMax: 7
-  _seed: -1388557513
-  _randomSeed: 0
+  _seed: 123456
+  _randomSeed: 1
   _floorPrefab: {fileID: 1611164220234214, guid: c869b2f566828f04cbb21dc352b5988a,
     type: 2}
   _wallPrefab: {fileID: 1842422745101804, guid: 1d5bf74d50454924d989855b29caf1e8,
