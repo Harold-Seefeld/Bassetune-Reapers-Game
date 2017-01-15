@@ -1,12 +1,14 @@
 ﻿using System;
 
 namespace DungeonGeneration.Generator.Pickers {
-
-    public class SeededPickerStrategy : IPickerStrategy {
+    /* 
+        Implementation based on System.Random API
+    */
+    public class RandomSeededPickerStrategy : IPickerStrategy {
         private Random _random;
         private int _seed;
 
-        public SeededPickerStrategy(int seed) {
+        public RandomSeededPickerStrategy(int seed) {
             _seed = seed;
             _random = new Random(seed);
         }

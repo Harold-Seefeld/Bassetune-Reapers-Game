@@ -52,7 +52,10 @@ namespace DungeonGeneration.Generator {
 
 
         public int[,] result() {
-            SeededPickerStrategy seedStrategy = new SeededPickerStrategy(_seed);
+            //IPickerStrategy seedStrategy = new RandomSeededPickerStrategy(_seed);
+            CustomSeededPickerStrategy seedStrategy = new CustomSeededPickerStrategy(_seed);
+            seedStrategy._logger = _logger;
+
             IntInRangePicker roomNumberPicker = new IntInRangePicker(_roomsNumberMin, _roomsNumberMax, seedStrategy);
             IntInRangePicker roomSizePicker = new IntInRangePicker(_roomSizeMin, _roomSizeMax, seedStrategy);
             IntInRangePicker corrSizePicker = new IntInRangePicker(_corridorSizeMin, _corridorSizeMax, seedStrategy);
@@ -69,7 +72,7 @@ namespace DungeonGeneration.Generator {
 
             Grid grid = new Grid(roomSizePicker.draw(), roomSizePicker.draw());
             Cell topLeftVertexMin = new Cell(0, 0);
-            Cell topLeftVertexMax = new Cell(_mapRows - 1, _mapColumns - 1).minus(grid.rows(), grid.columns());
+            Cell topLeftVertexMax = new Cell(_mapRows - 1, _mapColumns - 1).minusSize(grid.rows(), grid.columns());
             Cell topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
             Room lastRoom = new Room(topLeftCell, grid);
             if (!board.fitsIn(lastRoom)) {
@@ -137,50 +140,40 @@ namespace DungeonGeneration.Generator {
             int roomRows = roomSizePicker.draw();
             int roomCols = roomSizePicker.draw();
             Grid grid = new Grid(roomRows, roomCols);
-            Cell topLeftCell = null;//lastCorr.topLeftVertex();
+            Cell topLeftCell = null;
             if (lastCorridorDirection == CardinalPoint.NORD) {
-                Cell topLeftVertexMax = lastCorr.topLeftVertex().minus(roomRows, 0);
-                Cell topLeftVertexMin = topLeftVertexMax.minus(0, roomCols - lastCorr.width());
-                //topLeftCell = cellInRangePicker.drawBetween(roomTopLeftVertexMin, roomTopLeftVertexMax);
-                Cell excludeOne = topLeftVertexMin.plus(0, 1);
-                Cell excludeTwo = topLeftVertexMax.minus(0, 1);
+                Cell topLeftVertexMax = lastCorr.topLeftVertex().minusSize(roomRows, 0);
+                Cell topLeftVertexMin = topLeftVertexMax.minusCell(0, roomCols - lastCorr.width());
+                //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
+                Cell excludeOne = topLeftVertexMin.plusCell(0, 1);
+                Cell excludeTwo = topLeftVertexMax.minusCell(0, 1);
                 topLeftCell = cellInRangePicker.drawBetweenWithExclusion(topLeftVertexMin, topLeftVertexMax, excludeOne, excludeTwo);
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             } else if (lastCorridorDirection == CardinalPoint.EST) {
                 Cell topLeftVertexMax = lastCorr.topRightVertex();
-                Cell topLeftVertexMin = topLeftVertexMax.minus(roomRows-lastCorr.height(), 0);
-                // int rowsDiff = roomRows - lastCorr.height();
-                //if (rowsDiff < 0) rowsDiff = 0;
-                //Cell roomTopLeftVertexMin = roomTopLeftVertexMax.minus(rowsDiff, 0);
-
-                //topLeftCell = cellInRangePicker.drawBetween(roomTopLeftVertexMin, roomTopLeftVertexMax);
+                Cell topLeftVertexMin = topLeftVertexMax.minusCell(roomRows-lastCorr.height(), 0);
                 //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
-                Cell excludeOne = topLeftVertexMin.plus(1, 0);
-                Cell excludeTwo = topLeftVertexMax.minus(1, 0);
+                Cell excludeOne = topLeftVertexMin.plusCell(1, 0);
+                Cell excludeTwo = topLeftVertexMax.minusCell(1, 0);
                 topLeftCell = cellInRangePicker.drawBetweenWithExclusion(topLeftVertexMin, topLeftVertexMax, excludeOne, excludeTwo);
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             } else if (lastCorridorDirection == CardinalPoint.SUD) {
                 Cell topLeftVertexMax = lastCorr.bottomLeftVertex();
-                Cell topLeftVertexMin = topLeftVertexMax.minus(0, roomCols - lastCorr.width());
-                
+                Cell topLeftVertexMin = topLeftVertexMax.minusCell(0, roomCols - lastCorr.width());
                 //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
-                Cell excludeOne = topLeftVertexMin.plus(0, 1);
-                Cell excludeTwo = topLeftVertexMax.minus(0, 1);
+                Cell excludeOne = topLeftVertexMin.plusCell(0, 1);
+                Cell excludeTwo = topLeftVertexMax.minusCell(0, 1);
                 topLeftCell = cellInRangePicker.drawBetweenWithExclusion(topLeftVertexMin, topLeftVertexMax, excludeOne, excludeTwo);
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             } else if (lastCorridorDirection == CardinalPoint.WEST) {
-                //topLeftCell = topLeftCell.minus(roomRows / 2 - 1, roomCols);
-                Cell topLeftVertexMax = lastCorr.topLeftVertex().minus(0, roomCols);
-                Cell topLeftVertexMin = topLeftVertexMax.minus(roomRows - lastCorr.height(), 0);
-                //topLeftCell = cellInRangePicker.drawBetween(roomTopLeftVertexMin, roomTopLeftVertexMax);
+                Cell topLeftVertexMax = lastCorr.topLeftVertex().minusSize(0, roomCols);
+                Cell topLeftVertexMin = topLeftVertexMax.minusCell(roomRows - lastCorr.height(), 0);
                 //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
-                Cell excludeOne = topLeftVertexMin.plus(1, 0);
-                Cell excludeTwo = topLeftVertexMax.minus(1, 0);
+                Cell excludeOne = topLeftVertexMin.plusCell(1, 0);
+                Cell excludeTwo = topLeftVertexMax.minusCell(1, 0);
                 topLeftCell = cellInRangePicker.drawBetweenWithExclusion(topLeftVertexMin, topLeftVertexMax, excludeOne, excludeTwo);
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             }
-
-
             return new Room(topLeftCell, grid);
         }
 
@@ -194,44 +187,41 @@ namespace DungeonGeneration.Generator {
             if (mapDirection == CardinalPoint.NORD) {
                 grid = new Grid(corridorLenght, corridorSection);
                 corrOrient = Corridor.Orientation.vertical;
-                Cell topLeftVertexMin = lastRoom.topLeftVertex().minus(corridorLenght, 0);
-                Cell topLeftVertexMax = topLeftVertexMin.plus(0, lastRoom.width() - corridorSection);
-                //                topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
-                Cell excludeOne = topLeftVertexMin.plus(0, 1);
-                Cell excludeTwo = topLeftVertexMax.minus(0, 1);
+                Cell topLeftVertexMin = lastRoom.topLeftVertex().minusSize(corridorLenght, 0);
+                Cell topLeftVertexMax = topLeftVertexMin.plusCell(0, lastRoom.width() - corridorSection);
+                //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
+                Cell excludeOne = topLeftVertexMin.plusCell(0, 1);
+                Cell excludeTwo = topLeftVertexMax.minusCell(0, 1);
                 topLeftCell = cellRangePicker.drawBetweenWithExclusion(topLeftVertexMin, topLeftVertexMax, excludeOne, excludeTwo);
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             } else if (mapDirection == CardinalPoint.EST) {
                 grid = new Grid(corridorSection, corridorLenght);
                 corrOrient = Corridor.Orientation.horizontal;
-
                 Cell topLeftVertexMin = lastRoom.topRightVertex();
-                Cell topLeftVertexMax = topLeftVertexMin.plus(lastRoom.height() - corridorSection, 0);
-                //topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
-                Cell excludeOne = topLeftVertexMin.plus(1, 0);
-                Cell excludeTwo = topLeftVertexMax.minus(1, 0);
+                Cell topLeftVertexMax = topLeftVertexMin.plusCell(lastRoom.height() - corridorSection, 0);
+                //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
+                Cell excludeOne = topLeftVertexMin.plusCell(1, 0);
+                Cell excludeTwo = topLeftVertexMax.minusCell(1, 0);
                 topLeftCell = cellRangePicker.drawBetweenWithExclusion(topLeftVertexMin, topLeftVertexMax, excludeOne, excludeTwo);
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             } else if (mapDirection == CardinalPoint.SUD) {
                 grid = new Grid(corridorLenght, corridorSection);
                 corrOrient = Corridor.Orientation.vertical;
                 Cell topLeftVertexMin = lastRoom.bottomLeftVertex();
-                Cell topLeftVertexMax = topLeftVertexMin.plus(0, lastRoom.width() - corridorSection);
-
-                //topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
-                Cell excludeOne = topLeftVertexMin.plus(0, 1);
-                Cell excludeTwo = topLeftVertexMax.minus(0, 1);
+                Cell topLeftVertexMax = topLeftVertexMin.plusCell(0, lastRoom.width() - corridorSection);
+                //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
+                Cell excludeOne = topLeftVertexMin.plusCell(0, 1);
+                Cell excludeTwo = topLeftVertexMax.minusCell(0, 1);
                 topLeftCell = cellRangePicker.drawBetweenWithExclusion(topLeftVertexMin, topLeftVertexMax, excludeOne, excludeTwo);
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             } else if (mapDirection == CardinalPoint.WEST) {
                 grid = new Grid(corridorSection, corridorLenght);
                 corrOrient = Corridor.Orientation.horizontal;
-
-                Cell topLeftVertexMin = lastRoom.topLeftVertex().minus(0, corridorLenght);
-                Cell topLeftVertexMax = topLeftVertexMin.plus(lastRoom.height() - corridorSection, 0);
-                //topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
-                Cell excludeOne = topLeftVertexMin.plus(1, 0);
-                Cell excludeTwo = topLeftVertexMax.minus(1, 0);
+                Cell topLeftVertexMin = lastRoom.topLeftVertex().minusSize(0, corridorLenght);
+                Cell topLeftVertexMax = topLeftVertexMin.plusCell(lastRoom.height() - corridorSection, 0);
+                //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
+                Cell excludeOne = topLeftVertexMin.plusCell(1, 0);
+                Cell excludeTwo = topLeftVertexMax.minusCell(1, 0);
                 topLeftCell = cellRangePicker.drawBetweenWithExclusion(topLeftVertexMin, topLeftVertexMax, excludeOne, excludeTwo);
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             }

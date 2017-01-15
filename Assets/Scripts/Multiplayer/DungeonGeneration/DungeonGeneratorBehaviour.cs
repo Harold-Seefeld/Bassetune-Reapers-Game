@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using DungeonGeneration.Generator;
 using DungeonGeneration.Renderer;
-using DungeonGeneration.Generator.Samples;
 using DungeonGeneration.Logging;
 
 namespace DungeonGeneration { 
@@ -54,9 +53,7 @@ namespace DungeonGeneration {
             }
             _generator.setSeed(_seed);
 
-
             _tilesMap = _generator.result();
-
             _renderer.convertToMeshes(_tilesMap);
         }
     }

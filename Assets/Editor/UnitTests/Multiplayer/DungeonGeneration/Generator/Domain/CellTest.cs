@@ -76,7 +76,7 @@ namespace DungeonGeneration.Generator.Domain {
         [Test]
         public void sumTwoRowsToCell() {
             Cell cell = new Cell(0, 0);
-            Assert.AreEqual(new Cell(2, 0), cell.plus(2, 0));
+            Assert.AreEqual(new Cell(2, 0), cell.plusCell(2, 0));
         }
     }
 }

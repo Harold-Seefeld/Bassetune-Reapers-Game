@@ -26,19 +26,19 @@
         }
 
         public Cell absTopLeftVertexUsing(Cell topLeftVertex) {
-            return topLeftVertex.plus(0, 0);
+            return topLeftVertex.plusCell(0, 0);
         }
 
         public Cell absBotLeftVertexUsing(Cell topLeftVertex) {
-            return topLeftVertex.plus(_rows-1, 0);
+            return topLeftVertex.plusCell(_rows-1, 0);
         }
 
         public Cell absBotRightVertexUsing(Cell topLeftVertex) {
-            return topLeftVertex.plus(_rows-1, _columns-1);
+            return topLeftVertex.plusCell(_rows-1, _columns-1);
         }
 
         public Cell absTopRightVertexUsing(Cell topLeftVertex) {
-            return topLeftVertex.plus(0, _columns-1);
+            return topLeftVertex.plusCell(0, _columns-1);
         }
 
         public bool hasCell(int rowIndex, int colIndex) {

@@ -25,7 +25,7 @@ public class Room : IShape {
         for (int row = 0; row < _grid.rows(); row++) {
             for (int col = 0; col < _grid.columns(); col++) {
                 //test is in range
-                Cell pos = _topLeftVertex.plus(row, col);
+                Cell pos = _topLeftVertex.plusCell(row, col);
                 int rowPos = pos.rowIndex();
                 int colPos = pos.columnIndex();
 

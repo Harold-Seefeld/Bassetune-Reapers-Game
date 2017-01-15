@@ -73,18 +73,23 @@ namespace DungeonGeneration.Generator.Domain {
             return true;
         }
 
-        public Cell plus(int rowCells, int colCells) {
-            //if (rowSize == 0) rowSize = 1;
-            //if (colSize == 0) colSize = 1;
-            //return new Cell(_row + (rowSize - 1), _col + (colSize - 1));
+        public Cell plusCell(int rowCells, int colCells) {
             return new Cell(_row + rowCells, _col + colCells);
         }
 
-        public Cell minus(int rowCells, int colCells) {
-            //if (rowSize == 0) rowSize = 1;
-            //if (colSize == 0) colSize = 1;
-            //return new Cell(_row - (rowSize - 1), _col - (colSize - 1));
+        public Cell minusCell(int rowCells, int colCells) {
             return new Cell(_row - rowCells, _col - colCells);
+        }
+
+        public Cell minusSize(int rowSize, int colSize) {
+            if (rowSize == 0) rowSize = 1;
+            if (colSize == 0) colSize = 1;
+            return new Cell(_row - (rowSize - 1), _col - (colSize - 1));
+        }
+        public Cell plusSize(int rowSize, int colSize) {
+            if (rowSize == 0) rowSize = 1;
+            if (colSize == 0) colSize = 1;
+            return new Cell(_row + (rowSize - 1), _col + (colSize - 1));
         }
 
         public Cell[] cells(Cell other) {
