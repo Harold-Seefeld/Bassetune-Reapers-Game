@@ -1,5 +1,5 @@
-﻿namespace DungeonGeneration.Generator.Domain {
-    public enum TileType {
+﻿namespace DungeonGeneration.Generator.Plotters {
+    public enum DetailedTileType {
         Empty,
         Floor,
         Wall_N,

@@ -1,7 +1,7 @@
 ﻿using DungeonGeneration.Generator.Domain;
 using DungeonGeneration.Generator.Pickers;
 using DungeonGeneration.Logging;
-using System;
+using DungeonGeneration.Generator.Plotters;
 
 namespace DungeonGeneration.Generator {
 
@@ -16,6 +16,7 @@ namespace DungeonGeneration.Generator {
         private int _mapRows;
         private int _mapColumns;
         private IXLogger _logger;
+        private IPlotter _plotter;
 
         public TilesMapGenerator() {
             _logger = new NullLogger();
@@ -54,7 +55,7 @@ namespace DungeonGeneration.Generator {
         public int[,] result() {
             //IPickerStrategy seedStrategy = new RandomSeededPickerStrategy(_seed);
             CustomSeededPickerStrategy seedStrategy = new CustomSeededPickerStrategy(_seed);
-            seedStrategy._logger = _logger;
+            seedStrategy.setLogger(_logger);
 
             IntInRangePicker roomNumberPicker = new IntInRangePicker(_roomsNumberMin, _roomsNumberMax, seedStrategy);
             IntInRangePicker roomSizePicker = new IntInRangePicker(_roomSizeMin, _roomSizeMax, seedStrategy);
@@ -67,7 +68,7 @@ namespace DungeonGeneration.Generator {
             int roomNumber = roomNumberPicker.draw();
             if (roomNumber < 1) {
                 _logger.warning("Room number should be at least 1. Instead is: " + roomNumber);
-                return board.asTilesMatrix();
+                return board.asTilesMatrix(_plotter);
             }
 
             Grid grid = new Grid(roomSizePicker.draw(), roomSizePicker.draw());
@@ -77,7 +78,7 @@ namespace DungeonGeneration.Generator {
             Room lastRoom = new Room(topLeftCell, grid);
             if (!board.fitsIn(lastRoom)) {
                 _logger.error("First room not fit in. This should never happen");
-                return board.asTilesMatrix();
+                return board.asTilesMatrix(_plotter);
             }
             _logger.info("OK: " + lastRoom);
             board.add(lastRoom);
@@ -133,7 +134,11 @@ namespace DungeonGeneration.Generator {
                     board.add(lastRoom);
                 }
             }
-            return board.asTilesMatrix();
+            return board.asTilesMatrix(_plotter);
+        }
+
+        public void setPlotter(IPlotter plotter) {
+            _plotter = plotter;
         }
 
         private Room generateRoom(CardinalPoint lastCorridorDirection, Corridor lastCorr, IntInRangePicker roomSizePicker, CellInRangePicker cellInRangePicker) {

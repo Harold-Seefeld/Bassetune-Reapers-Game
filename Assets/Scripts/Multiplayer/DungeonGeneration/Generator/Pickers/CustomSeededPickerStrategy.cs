@@ -6,12 +6,16 @@ namespace DungeonGeneration.Generator.Pickers {
     public class CustomSeededPickerStrategy : IPickerStrategy {
         private int _originalSeed;
         private int _currentSeed;
-        public IXLogger _logger;
+        private IXLogger _logger;
 
         public CustomSeededPickerStrategy(int seed) {
             _originalSeed = seed;
             _currentSeed = seed;
             _logger = new NullLogger();
+        }
+
+        public void setLogger(IXLogger logger) {
+            _logger = logger;
         }
 
         public int drawBetween(int valueA, int valueB) {
@@ -48,5 +52,7 @@ namespace DungeonGeneration.Generator.Pickers {
             else _currentSeed--;
             return result;
         }
+
+        
     }
 }

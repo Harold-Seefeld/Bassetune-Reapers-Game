@@ -1,5 +1,6 @@
 ﻿using System;
 using DungeonGeneration.Generator.Domain;
+using DungeonGeneration.Generator.Plotters;
 
 namespace DungeonGeneration.Generator.Samples {
     public class XDungeonSampleCases {
@@ -9,7 +10,7 @@ namespace DungeonGeneration.Generator.Samples {
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
-            room.plotOn(map);
+            room.plotOn(map, new DetailedTilesPlotter());
         }
 
         public static void case_RoomWithBottomRightCorridorVertical_plot(int[,] map) {
@@ -18,7 +19,7 @@ namespace DungeonGeneration.Generator.Samples {
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
-            room.plotOn(map);
+            room.plotOn(map, new DetailedTilesPlotter());
         }
 
         public static void case_RoomWithBottomRightCorridorHorizontal_plot(int[,] map) {
@@ -27,7 +28,7 @@ namespace DungeonGeneration.Generator.Samples {
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
-            room.plotOn(map);
+            room.plotOn(map, new DetailedTilesPlotter());
         }
 
         public static void case_RoomWithTopRightCorridorHorizontal_plot(int[,] map) {
@@ -36,7 +37,7 @@ namespace DungeonGeneration.Generator.Samples {
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
-            room.plotOn(map);
+            room.plotOn(map, new DetailedTilesPlotter());
         }
 
         public static void case_RoomWithTopRightCorridorVertical_plot(int[,] map) {
@@ -45,7 +46,7 @@ namespace DungeonGeneration.Generator.Samples {
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
-            room.plotOn(map);
+            room.plotOn(map, new DetailedTilesPlotter());
         }
 
         public static void case_RoomWithBottomLeftCorridorVertical_plot(int[,] map) {
@@ -54,7 +55,7 @@ namespace DungeonGeneration.Generator.Samples {
             room0.setCorridorOutcoming(corr0_down);
             corr0_down.setSourceRoom(room0);
 
-            room0.plotOn(map);
+            room0.plotOn(map, new DetailedTilesPlotter());
         }
 
         public static void case_RoomWithBottomLeftCorridorHorizontal_plot(int[,] map) {
@@ -63,7 +64,7 @@ namespace DungeonGeneration.Generator.Samples {
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
-            room.plotOn(map);
+            room.plotOn(map, new DetailedTilesPlotter());
         }
 
         public static void case_RoomWithTopLeftCorridorHorizontal_plot(int[,] map) {
@@ -72,7 +73,7 @@ namespace DungeonGeneration.Generator.Samples {
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
-            room.plotOn(map);
+            room.plotOn(map, new DetailedTilesPlotter());
         }
 
         public static void case_RoomWithTopLeftCorridorVertical_plot(int[,] map) {
@@ -81,7 +82,7 @@ namespace DungeonGeneration.Generator.Samples {
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
-            room.plotOn(map);
+            room.plotOn(map, new DetailedTilesPlotter());
         }
     }
 }

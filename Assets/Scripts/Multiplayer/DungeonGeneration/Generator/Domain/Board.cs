@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DungeonGeneration.Generator.Plotters;
 
 namespace DungeonGeneration.Generator.Domain {
 
@@ -34,11 +35,11 @@ namespace DungeonGeneration.Generator.Domain {
             _roomsAndCorridors.Add(aRoom);
         }
 
-        public int[,] asTilesMatrix() {
+        public int[,] asTilesMatrix(IPlotter plotter) {
             int[,] result = _grid.toIntMatrix();
 
             if (_roomsAndCorridors.Count > 0) {
-                _roomsAndCorridors[0].plotOn(result);
+                _roomsAndCorridors[0].plotOn(result, plotter);
             }
             return result;
         }

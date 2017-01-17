@@ -2,6 +2,7 @@
 using DungeonGeneration.Generator;
 using DungeonGeneration.Renderer;
 using DungeonGeneration.Logging;
+using DungeonGeneration.Generator.Plotters;
 
 namespace DungeonGeneration { 
 
@@ -47,6 +48,7 @@ namespace DungeonGeneration {
             _generator.setRoomsNumberRange(_roomsNumberMin, _roomsNumberMax);
             _generator.setRoomSizeRange(_roomSizeMin, _roomSizeMax);
             _generator.setCorridorSizeRange(_corridorLengthMin, _corridorLengthMax);
+            _generator.setPlotter(new DetailedTilesPlotter());
             //_generator.setLogger(new UnityEngineLogger());
             if (_randomSeed) {
                 _seed = Time.time.ToString().GetHashCode();

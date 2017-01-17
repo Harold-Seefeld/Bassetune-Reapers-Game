@@ -1,16 +1,19 @@
 ﻿using NUnit.Framework;
 using System;
 using DungeonGeneration.Logging;
+using DungeonGeneration.Generator.Plotters;
+
 namespace DungeonGeneration.Generator {
     public class TilesMapGeneratorTest {
         [Test]
-        public void testScenario1() {
+        public void scenario1_withDetailedTilesPlotter() {
             TilesMapGenerator generator = new TilesMapGenerator();
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
             generator.setCorridorSizeRange(2, 4);
             generator.setSeed(1234567);
+            generator.setPlotter(new DetailedTilesPlotter());
             //generator.setLogger(new ConsoleLogger());
 
             int[,] expected = {  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -32,13 +35,14 @@ namespace DungeonGeneration.Generator {
         }
 
         [Test]
-        public void testScenario2() {
+        public void scenario2_withDetailedTilesPlotter() {
             TilesMapGenerator generator = new TilesMapGenerator();
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
             generator.setCorridorSizeRange(2, 4);
             generator.setSeed(-1910733923);
+            generator.setPlotter(new DetailedTilesPlotter());
 
             int[,] expected = {  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -58,5 +62,61 @@ namespace DungeonGeneration.Generator {
             Assert.AreEqual(expected, generator.result());
         }
 
+        [Test]
+        public void scenario1_withZeroOneTilesPlotter() {
+            TilesMapGenerator generator = new TilesMapGenerator();
+            generator.setMapSize(15, 15);
+            generator.setRoomsNumberRange(2, 2);
+            generator.setRoomSizeRange(5, 7);
+            generator.setCorridorSizeRange(2, 4);
+            generator.setSeed(1234567);
+            generator.setPlotter(new ZeroOneTilesPlotter());
+            //generator.setLogger(new ConsoleLogger());
+
+            int[,] expected = {  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+            Assert.AreEqual(expected, generator.result());
+        }
+
+        [Test]
+        public void scenario2_withZeroOneTilesPlotter() {
+            TilesMapGenerator generator = new TilesMapGenerator();
+            generator.setMapSize(15, 15);
+            generator.setRoomsNumberRange(2, 2);
+            generator.setRoomSizeRange(5, 7);
+            generator.setCorridorSizeRange(2, 4);
+            generator.setSeed(-1910733923);
+            generator.setPlotter(new ZeroOneTilesPlotter());
+
+            int[,] expected = {  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+            Assert.AreEqual(expected, generator.result());
+        }
     }
 }

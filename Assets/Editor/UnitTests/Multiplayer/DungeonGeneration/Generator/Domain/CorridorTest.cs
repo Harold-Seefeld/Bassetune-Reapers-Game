@@ -1,14 +1,15 @@
 ﻿using NUnit.Framework;
+using DungeonGeneration.Generator.Plotters;
 
 namespace DungeonGeneration.Generator.Domain {
 
     public class CorridorTest {
         [Test]
-        public void plotting_oneCorridor3x4Horizontally() {
+        public void plotting_detailed_oneCorridor3x4Horizontally() {
             Corridor room = new Corridor(new Cell(0, 0), new Grid(3, 4), Corridor.Orientation.horizontal);
 
             int[,] result = new int[3, 4];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[3, 4] { { 13, 2, 2, 12},
                                             { 1, 1, 1, 1},
@@ -22,7 +23,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(0, 0), new Grid(4, 3), Corridor.Orientation.vertical);
 
             int[,] result = new int[4, 3];
-            corr.plotOn(result);
+            corr.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[4, 3] { { 11, 1, 10},
                                             { 5, 1, 3},

@@ -1,14 +1,15 @@
 ﻿using NUnit.Framework;
+using DungeonGeneration.Generator.Plotters;
 
 namespace DungeonGeneration.Generator.Domain {
 
     public class RoomTest {
         [Test]
-        public void plotting_oneRoom5x5() {
+        public void plotting_detailed_oneRoom5x5() {
             Room room = new Room(new Cell(0, 0), new Grid(5, 5));
 
             int[,] result = new int[5, 5];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[5, 5] { { 6, 0, 2, 0, 7},
                                             { 0, 1, 1, 1, 0},
@@ -19,10 +20,10 @@ namespace DungeonGeneration.Generator.Domain {
         }
 
         [Test]
-        public void plotting_oneRoom4x8() {
+        public void plotting_detailed_oneRoom4x8() {
             Room room = new Room(new Cell(0, 0), new Grid(4, 8));
             int[,] result = new int[4, 8];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[4, 8] { { 6,0,2,2,2,2,0,7 },
                                             { 0,1,1,1,1,1,1,0},
@@ -32,13 +33,13 @@ namespace DungeonGeneration.Generator.Domain {
         }
 
 
-        public void plotting_twoRoomsWithoutOverlapping() {
+        public void plotting_detailed_twoRoomsWithoutOverlapping() {
             Room room5x5 = new Room(new Cell(0, 0), new Grid(5, 5));
             Room room3x3 = new Room(new Cell(6, 0), new Grid(4, 4));
 
             int[,] result = new int[10, 5];
-            room5x5.plotOn(result);
-            room3x3.plotOn(result);
+            room5x5.plotOn(result, new DetailedTilesPlotter());
+            room3x3.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[10, 5]{ { 6, 2, 2, 0, 7},
                                             { 0, 1, 1, 1, 0},
@@ -54,14 +55,14 @@ namespace DungeonGeneration.Generator.Domain {
         }
 
         [Test]
-        public void plotting_oneRoomAndOneCorridorHorizontalSharingBottomRightRoomVertex() {
+        public void plotting_detailed_oneRoomAndOneCorridorHorizontalSharingBottomRightRoomVertex() {
             Room room = new Room(new Cell(0, 0), new Grid(5, 4));
             Corridor corr = new Corridor(new Cell(2, 3), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
             int[,] result = new int[5, 6];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[5, 6]{ { 6, 0, 0, 7, 0, 0  },
                                             { 0, 1, 1, 0, 0, 0  },
@@ -72,14 +73,14 @@ namespace DungeonGeneration.Generator.Domain {
         }
 
         [Test]
-        public void plotting_oneRoomAndOneCorridorVerticalSharingBottomRightRoomVertex() {
+        public void plotting_detailed_oneRoomAndOneCorridorVerticalSharingBottomRightRoomVertex() {
             Room room = new Room(new Cell(0, 0), new Grid(4, 5));
             Corridor corr = new Corridor(new Cell(3, 2), new Grid(3, 3), Corridor.Orientation.vertical);
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
             int[,] result = new int[6, 5];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[6, 5]{ { 6, 0, 2, 0, 7 },
                                             { 0, 1, 1, 1, 0 },
@@ -91,14 +92,14 @@ namespace DungeonGeneration.Generator.Domain {
         }
 
         [Test]
-        public void plotting_oneRoomAndOneCorridorVerticalSharingBottomLeftRoomVertex() {
+        public void plotting_detailed_oneRoomAndOneCorridorVerticalSharingBottomLeftRoomVertex() {
             Room room = new Room(new Cell(0, 0), new Grid(5, 5));
             Corridor corr = new Corridor(new Cell(4, 0), new Grid(3, 3), Corridor.Orientation.vertical);
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
             int[,] result = new int[7, 5];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[7, 5]{ {  6, 0,  2, 0, 7 },
                                             {  0, 1,  1, 1, 0 },
@@ -112,14 +113,14 @@ namespace DungeonGeneration.Generator.Domain {
         }
 
         [Test]
-        public void plotting_oneRoomAndOneCorridorHorizontalSharingBottomLeftRoomVertex() {
+        public void plotting_detailed_oneRoomAndOneCorridorHorizontalSharingBottomLeftRoomVertex() {
             Room room = new Room(new Cell(0, 2), new Grid(5, 5));
             Corridor corr = new Corridor(new Cell(2, 0), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorOutcoming(corr);
             corr.setSourceRoom(room);
 
             int[,] result = new int[5, 7];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[5, 7]{ {0,  0,  6, 0, 2, 0, 7},
                                             {0,  0,  0, 1, 1, 1, 0},
@@ -137,7 +138,7 @@ namespace DungeonGeneration.Generator.Domain {
             corr.setSourceRoom(room);
 
             int[,] result = new int[5, 9];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[5, 9]{ {13, 2, 12, 0, 6, 0, 2, 0, 7},
                                             {1, 1, 1, 0, 0, 1, 1, 1, 0},
@@ -156,7 +157,7 @@ namespace DungeonGeneration.Generator.Domain {
             corr.setSourceRoom(room);
 
             int[,] result = new int[7, 5];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[7, 5]{ {11, 1, 10, 0, 0},
                                             {5, 1, 3, 0, 0},
@@ -177,7 +178,7 @@ namespace DungeonGeneration.Generator.Domain {
             corr.setSourceRoom(room);
 
             int[,] result = new int[8, 5];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[8, 5]{  {0, 0, 11, 1, 10},
                                             {0, 0, 5,  1, 3},
@@ -199,7 +200,7 @@ namespace DungeonGeneration.Generator.Domain {
             corr.setSourceRoom(room);
 
             int[,] result = new int[5, 8];
-            room.plotOn(result);
+            room.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[5, 8]{  {6, 0, 2, 2, 5, 1, 10, 0},
                                             {0, 1, 1, 1, 5, 1, 3, 0},
@@ -210,15 +211,14 @@ namespace DungeonGeneration.Generator.Domain {
         }
 
         [Test]
-        public void plotting_oneRoomAndOneIncomingHorizontalCorridorSharingTopRightRoomVertex() {
+        public void plotting_detailed_oneRoomAndOneIncomingHorizontalCorridorSharingTopRightRoomVertex() {
             Room room = new Room(new Cell(0, 2), new Grid(5, 5));
             Corridor corr = new Corridor(new Cell(0, 0), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorIncoming(corr);
             corr.setDestinationRoom(room);
 
             int[,] result = new int[5, 7];
-            //room.plotOn(result);
-            corr.plotOn(result);
+            corr.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[5, 7]{  {13, 2, 2, 2, 2, 0, 7},
                                             {1, 1, 1, 1, 1, 1, 0},
