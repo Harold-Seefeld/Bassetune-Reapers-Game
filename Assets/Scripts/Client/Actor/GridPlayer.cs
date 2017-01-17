@@ -14,15 +14,15 @@ public class GridPlayer : MonoBehaviour
     private Vector2 destination = Vector2.zero;
     private SocketIOComponent socket;
     private CharacterData characterData;
+    private Animator animator;
 
     void Start()
 	{
+        // Set local variables
         characterData = GetComponent<CharacterData>();
-
         socket = FindObjectOfType<SocketIOComponent>();
-
+        animator = GetComponent<Animator>();
         minimapCam = GameObject.Find("MinimapCam").GetComponent<Camera>();
-
         currentDestination = transform.position;
 
         if (characterData.CharacterOwner == Server.instance.currentPlayerID)
@@ -35,12 +35,19 @@ public class GridPlayer : MonoBehaviour
     {
         FindPath();
 
-        if (destinationPath.Count > 0)
+        if (currentDestination != transform.position)
         {
-            if (transform.position.x < destinationPath[0].x + 0.2F && transform.position.x > destinationPath[0].x - 0.2F && transform.position.z > destinationPath[0].z - 0.2F && transform.position.z < destinationPath[0].z + 0.2F)
-            {
-                destinationPath.RemoveAt(0);
-            }
+            // Use moving animation
+            animator.SetFloat("MoveSpeed", Mathf.Min(1, Vector3.Distance(currentDestination, transform.position) * Time.deltaTime * 64));
+            animator.speed = animator.GetFloat("MoveSpeed");
+            transform.position = Vector3.Lerp(transform.position, currentDestination, Time.deltaTime * 4);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(currentDestination - transform.position), Time.deltaTime * 4);
+        }
+        else
+        {
+            // Cancel moving animation
+            animator.SetFloat("MoveSpeed", 0);
+            animator.speed = 1;
         }
     }
 
@@ -60,7 +67,6 @@ public class GridPlayer : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 destination = new Vector2(hit.point.x, hit.point.z);
-                //StartCoroutine(UpdateDestinationPath(transform.position, new Vector3(hit.point.x, 5, hit.point.z)));
             }          
         }
         else if (Input.GetButtonDown("Move"))
@@ -72,7 +78,6 @@ public class GridPlayer : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 destination = new Vector2(hit.point.x, hit.point.z);
-                //StartCoroutine(UpdateDestinationPath(transform.position, hit.point));
             }      
         }
     }
@@ -82,17 +87,13 @@ public class GridPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(0.083f);
 
-        //if (destinationPath.Count > 0)
-        //{
-            //Vector2 destination = new Vector2(destinationPath[0].x, destinationPath[0].z);
-            if (destination != sentDestination)
-            {
-                // Emitting X, Z to server for verification
-                CharacterManager.instance.AddLocation(characterData.CharacterID.ToString(), destination);
-                sentDestination = destination;
-            }
-        //}
- 
+        if (destination != sentDestination)
+        {
+            // Emitting X, Z to server for verification
+            CharacterManager.instance.AddLocation(characterData.CharacterID.ToString(), destination);
+            sentDestination = destination;
+        }
+
         StartCoroutine(SendDestination());
     }
 }

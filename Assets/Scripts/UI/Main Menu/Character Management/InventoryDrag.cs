@@ -121,7 +121,12 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (!item) return;
         if (!inventorySlot) return;
 
+        // Set item slot id to be swapped
         int itemSlot = item.transform.GetSiblingIndex();
+        if (transform.parent.name == "Defensive Skills / Items")
+        {
+            itemSlot = itemSlot + 17;
+        }
 
         // TODO: Detect double click then equip (mainhand - left, offhand - right, others - left)
         if (eventData.clickCount % 2 == 0)

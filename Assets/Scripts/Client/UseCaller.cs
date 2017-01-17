@@ -31,21 +31,8 @@ public class UseCaller : MonoBehaviour {
         {
             if (Input.GetButtonDown("Inventory" + i.ToString()))
             {
-                Use(i + 9, "consumable");
+                Use(i + 19, "consumable");
             }
-        }
-
-        if (Input.GetButtonDown("Main-hand Attack"))
-        {
-            leftClicked = true;
-        }
-        else if (Input.GetButtonDown("Off-hand Attack"))
-        {
-            leftClicked = false;
-        }
-        else
-        {
-            return;
         }
 
         // Attack keybinds
@@ -53,7 +40,16 @@ public class UseCaller : MonoBehaviour {
         {
             if (Input.GetButton("Attack" + i.ToString()))
             {
-                Use(i - 1, "ability");
+                if (Input.GetButtonDown("Main-hand Attack"))
+                {
+                    leftClicked = true;
+                    Use(i - 1, "ability");
+                }
+                else if (Input.GetButtonDown("Off-hand Attack"))
+                {
+                    leftClicked = false;
+                    Use(i - 1, "ability");
+                }
             }
         }
 
@@ -62,7 +58,16 @@ public class UseCaller : MonoBehaviour {
         {
             if (Input.GetButton("Defend" + i.ToString()))
             {
-                Use(i + 7, "ability");
+                if (Input.GetButtonDown("Main-hand Attack"))
+                {
+                    leftClicked = true;
+                    Use(i + 7, "ability");
+                }
+                else if (Input.GetButtonDown("Off-hand Attack"))
+                {
+                    leftClicked = false;
+                    Use(i + 7, "ability");
+                }
             }
         }
     }
@@ -89,14 +94,14 @@ public class UseCaller : MonoBehaviour {
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
                 Vector2 direction = new Vector2(mousePosition.x, mousePosition.z);
 
-                UseItem(itemsAvailable[slotIndex].itemID, selectedCharacter.CharacterID, direction);
+                UseItem(slotIndex, selectedCharacter.CharacterID, direction);
             }
-            else
+            else if (itemType == "ability")
             {
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
                 Vector2 direction = new Vector2(mousePosition.x, mousePosition.z);
 
-                UseAbility(itemsAvailable[slotIndex].itemID, direction, selectedCharacter.CharacterID);
+                UseAbility(slotIndex, direction, selectedCharacter.CharacterID);
             }
         }
 
@@ -126,7 +131,7 @@ public class UseCaller : MonoBehaviour {
         */
     }
 
-    public void UseAbility(int abilityID, Vector2 target, int characterID)
+    public void UseAbility(int slotID, Vector2 target, int characterID)
     {
         JSONObject abilityUsage = new JSONObject(JSONObject.Type.OBJECT);
         JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
@@ -134,19 +139,19 @@ public class UseCaller : MonoBehaviour {
         directionData.AddField("y", target.y);
         abilityUsage.AddField("target", directionData);
         abilityUsage.AddField("characterID", characterID);
-        abilityUsage.AddField("abilityID", abilityID);
-        abilityUsage.AddField("weapon", leftClicked ? 1 : 0);
+        abilityUsage.AddField("slotID", slotID);
+        abilityUsage.AddField("weapon", leftClicked ? 0 : 1);
         socket.Emit(SocketIOEvents.Output.Knight.ABILITY_START, abilityUsage);
     }
 
-    public void UseItem(int itemID, int characterID, Vector2 target)
+    public void UseItem(int slotID, int characterID, Vector2 target)
     {
         JSONObject itemUsage = new JSONObject(JSONObject.Type.OBJECT);
         JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
         directionData.AddField("x", target.x);
         directionData.AddField("y", target.y);
         itemUsage.AddField("characterID", characterID);
-        itemUsage.AddField("itemID", itemID);
+        itemUsage.AddField("slotID", slotID);
         socket.Emit(SocketIOEvents.Output.Knight.USE_ITEM, itemUsage);
     }
 }

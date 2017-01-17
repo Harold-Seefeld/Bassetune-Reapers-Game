@@ -12,7 +12,7 @@ public class CharacterManager : MonoBehaviour {
     public static CharacterManager instance;
 
     private JSONObject locationsToSend = new JSONObject(JSONObject.Type.OBJECT);
-    public GameObject characterPrefab;
+    public PrefabStore characterPrefabs;
 
     // Use this for initialization
     void Start () {
@@ -23,6 +23,9 @@ public class CharacterManager : MonoBehaviour {
 		socket.On(SocketIOEvents.Input.CHAR_CREATED, CreateCharacter);
 		socket.On(SocketIOEvents.Input.HP, UpdateHP);
         socket.On(SocketIOEvents.move, UpdateLocations);
+
+        // Listen for equipment changes
+        socket.On(SocketIOEvents.Input.Knight.START_CHANGE_EQUIPPED, StartEquipAnimation);
         socket.On(SocketIOEvents.Input.Knight.END_CHANGE_EQUIPPED, UpdateKnightInventory);
     }
 
@@ -62,32 +65,43 @@ public class CharacterManager : MonoBehaviour {
         }
         // TODO: Create character with given data (assign meshes, etc use a prefab)
         Vector3 location = new Vector3(e.data.GetField("L").GetField("x").n, 5, e.data.GetField("L").GetField("y").n);
-        GameObject newCharacter = (GameObject)Instantiate(characterPrefab, location, Quaternion.identity);
-        CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
-        newCharacterData.CharacterEntity = (int)e.data.GetField("E").n;
-        newCharacterData.CharacterHP = (int)e.data.GetField("H").n;
-        newCharacterData.CharacterID = (int)e.data.GetField("I").n;
-        newCharacterData.CharacterOwner = (int)e.data.GetField("O").n;
-        newCharacterData.CharacterMaxHP = (int)e.data.GetField("M").n;
-        // Add character data to the list
-        characterData.Add(newCharacterData);
-        // Allow character to be selected
-        newCharacter.AddComponent<UnityEngine.UI.Extensions.CharacterSelectable>();
-
-        // Set Default Character
-        if (Server.instance.currentPlayerID == newCharacterData.CharacterOwner)
+        // Search for character, given a set of prefabs and an entity id
+        GameObject newCharacter;
+        for (var i = 0; i < characterPrefabs.prefabs.Length; i++)
         {
-            // For knights
-            if (newCharacterData.CharacterEntity == 0 || newCharacterData.CharacterEntity == 1)
+            if ((int)e.data.GetField("E").n == characterPrefabs.prefabs[i].GetComponent<ItemBase>().itemID)
             {
-                Server.instance.currentDefaultCharacter = newCharacterData;
-                UseCaller.isKnight = true;
-            }
-            // For bosses
-            if (newCharacterData.CharacterEntity >= 3000 || newCharacterData.CharacterEntity < 3200)
-            {
-                Server.instance.currentDefaultCharacter = newCharacterData;
-                UseCaller.isKnight = false;
+                newCharacter = (GameObject)Instantiate(characterPrefabs.prefabs[i], location, Quaternion.identity);
+
+                CharacterData newCharacterData = newCharacter.AddComponent<CharacterData>();
+                newCharacterData.CharacterEntity = (int)e.data.GetField("E").n;
+                newCharacterData.CharacterHP = (int)e.data.GetField("H").n;
+                newCharacterData.CharacterID = (int)e.data.GetField("I").n;
+                newCharacterData.CharacterOwner = (int)e.data.GetField("O").n;
+                newCharacterData.CharacterMaxHP = (int)e.data.GetField("M").n;
+                // Add character data to the list
+                characterData.Add(newCharacterData);
+                // Allow character to be selected
+                newCharacter.AddComponent<UnityEngine.UI.Extensions.CharacterSelectable>();
+
+                // Set Default Character
+                if (Server.instance.currentPlayerID == newCharacterData.CharacterOwner)
+                {
+                    // For knights
+                    if (newCharacterData.CharacterEntity == 0 || newCharacterData.CharacterEntity == 1)
+                    {
+                        Server.instance.currentDefaultCharacter = newCharacterData;
+                        UseCaller.isKnight = true;
+                    }
+                    // For bosses
+                    if (newCharacterData.CharacterEntity >= 3000 || newCharacterData.CharacterEntity < 3200)
+                    {
+                        Server.instance.currentDefaultCharacter = newCharacterData;
+                        UseCaller.isKnight = false;
+                    }
+                }
+
+                break;
             }
         }
     }
@@ -120,12 +134,8 @@ public class CharacterManager : MonoBehaviour {
                 if (characterData[n].CharacterID == recievedCharacterID)// && characterData[n].CharacterOwner != Server.instance.currentPlayerID)
                 {
                     // TODO: Assign locations to character movement agents for smoothness
-                    //characterData[n].gameObject.transform.position = new Vector3(data[i].GetField("l")[0].n,
-                    //                                                                              0f, data[i].GetField("l")[1].n);
-                    //StartCoroutine(characterData[n].gridPlayer.FindPath(characterData[n].gameObject.transform.position,
-                    //    new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n)));
-                    //characterData[n].gridPlayer.currentDestination = new Vector3(data[i].GetField("l").list[0].n, 5, data[i].GetField("l").list[1].n);
-                    characterData[n].gameObject.GetComponent<Rigidbody>().MovePosition(new Vector3(data[i].GetField("l").list[0].n, 3, data[i].GetField("l").list[1].n));
+                    Vector3 newPos = new Vector3(data[i].GetField("l").list[0].n, 1.35f, data[i].GetField("l").list[1].n);
+                    characterData[n].gridPlayer.currentDestination = newPos;
                 }
             }
         }
@@ -227,6 +237,13 @@ public class CharacterManager : MonoBehaviour {
         // Update menus
         AbilityMenu.instance.UpdateMenu();
         InventoryMenu.instance.UpdateMenu();
+
+        // TODO: Update item equipped
+    }
+
+    public void StartEquipAnimation(SocketIOEvent e)
+    {
+        // TODO: Start Equipping Animation
     }
 
 }

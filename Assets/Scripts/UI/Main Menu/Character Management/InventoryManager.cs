@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -22,10 +23,14 @@ public class InventoryManager : MonoBehaviour
     public Button notificationButton;
     public RectTransform notificationRect;
     public GameObject abilitySlotPanel;
-    public GameObject abilitySetPanel;
+    public GameObject dungeonSelectorPanel;
+    public GameObject dungeonSlotPanel;
 
     // Label to create an entry
     public GameObject labelPrefab;
+
+    // Buttons for selecting between dungeon compositions
+    public GameObject compositionSelectorPrefab;
 
     // All items and abilities
     public PrefabStore[] items;
@@ -34,6 +39,8 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField]
     private ClientData clientData;
+
+    private int selectedDungeon = 1;
 
     void Start()
     {
@@ -63,9 +70,11 @@ public class InventoryManager : MonoBehaviour
 
         ShowInventory("ability");
 
-        // Update Selector slots
+        // Update Selector slots (dungeon defaults to show dungeon 1)
         DisplayInventory();
         DisplayAbility();
+        DisplayDungeonSelector();
+        DisplayDungeon(1);
 
         Debug.Log("Downloaded Inventory Successfully.");
     }
@@ -438,7 +447,7 @@ public class InventoryManager : MonoBehaviour
 
     private void DisplayAbility()
     {
-        Image[] inventorySlots = abilitySetPanel.GetComponentsInChildren<Image>();
+        Image[] inventorySlots = abilitySlotPanel.GetComponentsInChildren<Image>();
         List<JSONObject> itemInventory = inventoryJSON["ability"].list;
         for (int n = 0; n < itemInventory.Count; n++)
         {
@@ -477,6 +486,105 @@ public class InventoryManager : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void DisplayDungeon(int index)
+    {
+        Image[] inventorySlots = dungeonSlotPanel.GetComponentsInChildren<Image>();
+        List<JSONObject> itemInventory = inventoryJSON["boss"].GetField(index.ToString()).list;
+        for (int n = 0; n < itemInventory.Count; n++)
+        {
+            var item = itemInventory[n];
+            if (item[2].n >= inventorySlots.Length)
+            {
+                continue;
+            }
+            var itemSlot = inventorySlots[(int)item[2].n].gameObject;
+
+            if (itemSlot.GetComponent<ItemBase>())
+            {
+                Destroy(itemSlot.GetComponent<ItemBase>());
+            }
+
+            for (int k = 0; k < items.Length; k++)
+            {
+                for (int p = 0; p < items[k].prefabs.Length; p++)
+                {
+                    ItemBase itemBase = items[k].prefabs[p].GetComponent<ItemBase>();
+
+                    if (itemBase.itemID == item[0].n)
+                    {
+                        itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
+
+                        ItemBase newItem = itemSlot.AddComponent<ItemBase>();
+                        newItem.itemID = itemBase.itemID;
+                        newItem.itemName = itemBase.itemName;
+                        newItem.itemIcon = itemBase.itemIcon;
+                        newItem.itemDescription = itemBase.itemDescription;
+                        newItem.itemBuyPrice = itemBase.itemBuyPrice;
+                        newItem.itemSellPrice = itemBase.itemSellPrice;
+
+                        k = items.Length;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void DisplayDungeonSelector()
+    {
+        int dungeonCount = (int)inventoryJSON["count"].n;
+
+        // Clear existing children
+        foreach (Transform child in dungeonSelectorPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 1; i <= dungeonCount; i++)
+        {
+            GameObject selector = (GameObject)Instantiate(compositionSelectorPrefab, dungeonSelectorPanel.transform);
+            EventTrigger eventTrigger = selector.GetComponent<EventTrigger>();
+            eventTrigger.triggers.Clear();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((eventData) =>
+            {
+                selectedDungeon = i;
+                DisplayDungeon(i);
+                // Set current one to inactive button and rest to active
+                foreach (Transform child in dungeonSelectorPanel.transform)
+                {
+                    child.GetComponent<Button>().interactable = true;
+                }
+                selector.GetComponent<Button>().interactable = false;
+            });
+            eventTrigger.triggers.Add(entry);
+
+            selector.GetComponentInChildren<Text>().text = i.ToString();
+
+            if (dungeonCount == 1)
+            {
+                selector.GetComponent<Button>().interactable = false;
+            }
+        }
+
+        if (dungeonCount != 4)
+        {
+            GameObject selector = (GameObject)Instantiate(compositionSelectorPrefab, dungeonSelectorPanel.transform);
+            EventTrigger eventTrigger = selector.GetComponent<EventTrigger>();
+            eventTrigger.triggers.Clear();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((eventData) =>
+            {
+                // TODO: Display dialogue for purchase
+            });
+            eventTrigger.triggers.Add(entry);
+
+            selector.GetComponentInChildren<Text>().text = "+";
         }
     }
 }

@@ -21,7 +21,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
         Weapon,
         Armor,
         Consumable,
-        Ammo
+        Ammo,
+        Lord,
+        Lesser_Lord,
+        Minion,
+        Trap
     }
     public SlotType slotType;
 

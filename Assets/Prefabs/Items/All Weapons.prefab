@@ -5,10 +5,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 412064}
-  - 114: {fileID: 11450310}
+  - component: {fileID: 412064}
+  - component: {fileID: 11450310}
   m_Layer: 0
   m_Name: All Weapons
   m_TagString: Untagged
@@ -28,6 +28,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11450310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40,10 +41,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 178958, guid: e742152bd8874c94683250e2d4d35aac, type: 2}
-  - {fileID: 130402, guid: 6487b79d654fd644783771d1e9aed5e3, type: 2}
-  - {fileID: 112572, guid: f5806a2219b65be41aec7943e57d05c0, type: 2}
-  - {fileID: 153310, guid: f3455f0995406fb4b9511fa2c2fba204, type: 2}
+  - {fileID: 1200860270490682, guid: 89c8a390215ddd04bae6d24228e28881, type: 2}
+  - {fileID: 1075795245169488, guid: a75f14176a9c9a447ab93fe38c48c418, type: 2}
+  - {fileID: 1148351936009240, guid: e742152bd8874c94683250e2d4d35aac, type: 2}
+  - {fileID: 1230658944718004, guid: 834f176a57f7c9140a259d98f6f80f0e, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
