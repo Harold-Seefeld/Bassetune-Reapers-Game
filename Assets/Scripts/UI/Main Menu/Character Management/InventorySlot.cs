@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
 
@@ -12,6 +13,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
 
     public bool swappable = true;
     public bool clearOnDrop = false;
+
+    public static string recievedParentName = null;
 
     public enum SlotType
     {
@@ -54,18 +57,23 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
         InventoryDrag otherDrag = item.GetComponent<InventoryDrag>();
         ItemBase otherItem = item.GetComponent<ItemBase>();
 
-
         // Check if item matches slot type
         if ((slotType == SlotType.Item && !otherItem.isItem()) ||
             (slotType == SlotType.Consumable && !otherItem.isConsumable()) ||
             (slotType == SlotType.Ammo && !otherItem.isAmmo()) ||
             (slotType == SlotType.Weapon && !otherItem.isWeapon()) ||
             (slotType == SlotType.Armor && !otherItem.isArmor()) ||
+            (slotType == SlotType.Lord && !otherItem.isLord()) ||
+            (slotType == SlotType.Lesser_Lord && !otherItem.isLesserLord()) ||
+            (slotType == SlotType.Minion && !otherItem.isMinion()) ||
+            (slotType == SlotType.Trap && !otherItem.isTrap()) ||
             (slotType == SlotType.Offensive_Ability && !otherItem.isOffensiveAbility()) ||
             (slotType == SlotType.Defensive_Ability && !otherItem.isDefensiveAbility()))
         { 
             return;
         }
+
+        recievedParentName = thisItemSlot.transform.parent.name;
 
         if (otherItemSlot && thisItemSlot)
         {

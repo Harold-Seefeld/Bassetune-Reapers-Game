@@ -13,7 +13,6 @@ public class InventorySetter : MonoBehaviour
         knight_slots,
         boss_slots,
         ability_slots,
-        equipped_slots
     }
     public SlotType slotType;
 
@@ -22,12 +21,14 @@ public class InventorySetter : MonoBehaviour
 
     public static InventorySetter instanceAbility;
     public static InventorySetter instanceInventory;
+    public static InventorySetter instanceDungeon;
     public static InventorySetter instance;
 
     public void Start()
     {
         if (gameObject.name == "Ability List") instanceAbility = this;
         if (gameObject.name == "Inventory List") instanceInventory = this;
+        if (gameObject.name == "Dungeon List") instanceDungeon = this;
 
         instance = this;
 
@@ -41,6 +42,38 @@ public class InventorySetter : MonoBehaviour
         // instanceAbility returns an object containing any items stored in the array
         JSONObject items = instanceAbility.SendAbilityInventory();
         instanceInventory.SendItemInventory(items);
+    }
+
+    public static void SetDungeonInventory()
+    {
+        instanceDungeon.SendDungeonInventory();
+    }
+
+    public void SendDungeonInventory()
+    {
+        ItemBase[] itemBases = GetComponentsInChildren<ItemBase>(true);
+        // Create a json object for storing the json arrays
+        JSONObject jsonObject = new JSONObject(JSONObject.Type.ARRAY);
+        for (int n = 0; n < itemBases.Length; n++)
+        {
+            // Create a new JSON array for storing the fields
+            JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
+            // Add the item ID
+            arr.Add(itemBases[n].itemID.ToString());
+            // Set slot number
+            arr.Add(itemBases[n].transform.GetSiblingIndex());
+            // Add the position of the inventory and add it to the main json object
+            jsonObject.Add(arr);
+        }
+
+        WWWForm www = new WWWForm();
+        www.AddField("uuid", clientData.GetSession());
+        www.AddField("slotType", slotType.ToString());
+        www.AddField("dungeonSelected", (InventoryManager.instance.selectedDungeon).ToString());
+        www.AddField("j", jsonObject.Print());
+        Debug.Log(jsonObject.Print());
+        WWW w = new WWW(slotInventorySite, www.data);
+        StartCoroutine(SetInventorySlot(w));
     }
 
     public JSONObject SendAbilityInventory()

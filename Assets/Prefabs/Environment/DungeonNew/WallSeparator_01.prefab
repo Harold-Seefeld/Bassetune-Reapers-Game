@@ -68,6 +68,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4433816772230342}
+  - component: {fileID: 65912768518610612}
   m_Layer: 0
   m_Name: WallSeparator_01
   m_TagString: Untagged
@@ -235,3 +236,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1706332114705538}
   m_Mesh: {fileID: 4300000, guid: 1c521a06691c67349bd87e68049db7cb, type: 3}
+--- !u!65 &65912768518610612
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1887667808915018}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 6, z: 2.5}
+  m_Center: {x: 0, y: 3, z: 1.3}

@@ -5,10 +5,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 414930}
-  - 114: {fileID: 11433072}
+  - component: {fileID: 414930}
+  - component: {fileID: 11433072}
   m_Layer: 0
   m_Name: All Equipables
   m_TagString: Untagged
@@ -28,6 +28,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11433072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39,7 +40,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea75c479622c857439e485052065b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs: []
+  prefabs:
+  - {fileID: 1255843499867152, guid: e2c2699d4846de84080e956f125359a4, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

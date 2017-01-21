@@ -37,6 +37,26 @@ public class ItemBase : MonoBehaviour
         return !(itemID < 2400 || itemID >= 2500);
     }
 
+    public bool isLord()
+    {
+        return !(itemID < 3000 || itemID >= 3200);
+    }
+
+    public bool isLesserLord()
+    {
+        return !(itemID < 3200 || itemID >= 3400);
+    }
+
+    public bool isMinion()
+    {
+        return !(itemID < 3400 || itemID >= 3600);
+    }
+
+    public bool isTrap()
+    {
+        return !(itemID < 3600 || itemID >= 3800);
+    }
+
     public bool isOffensiveAbility()
     {
         return !(itemID < 2500 || itemID >= 2750);

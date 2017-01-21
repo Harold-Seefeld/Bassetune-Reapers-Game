@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
     public string server = "bassetune.com";
     private string getInventorySite = "";
     private string setInventorySite = "";
+    private string buyFeatureSite = "";
 
     // Stores current JSON from the server
     public JSONObject inventoryJSON;
@@ -40,7 +41,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private ClientData clientData;
 
-    private int selectedDungeon = 1;
+    public int selectedDungeon = 0;
 
     void Start()
     {
@@ -48,6 +49,7 @@ public class InventoryManager : MonoBehaviour
 
         setInventorySite = server + "/setInventory";
         getInventorySite = server + "/getInventory";
+        buyFeatureSite = server + "/purchaseFeature";
 
         clientData = FindObjectOfType<ClientData>() as ClientData;
         UpdateInventory();
@@ -74,7 +76,7 @@ public class InventoryManager : MonoBehaviour
         DisplayInventory();
         DisplayAbility();
         DisplayDungeonSelector();
-        DisplayDungeon(1);
+        DisplayDungeon(0);
 
         Debug.Log("Downloaded Inventory Successfully.");
     }
@@ -221,6 +223,8 @@ public class InventoryManager : MonoBehaviour
                     itemBase.itemCount = item.itemCount;
                     itemBase.itemBuyPrice = item.itemBuyPrice;
                     itemBase.itemSellPrice = item.itemSellPrice;
+
+                    newObject.GetComponent<InventoryDrag>().draggable = false;
                 }
             }
         }
@@ -491,8 +495,20 @@ public class InventoryManager : MonoBehaviour
 
     private void DisplayDungeon(int index)
     {
+        // Clear existing slots
         Image[] inventorySlots = dungeonSlotPanel.GetComponentsInChildren<Image>();
-        List<JSONObject> itemInventory = inventoryJSON["boss"].GetField(index.ToString()).list;
+        foreach (Image image in inventorySlots)
+        {
+            image.sprite = null;
+            Destroy(image.GetComponent<ItemBase>());
+        }
+
+
+        if (inventoryJSON["boss"].list.Count <= index) return;
+
+        List<JSONObject> itemInventory = inventoryJSON["boss"].list[index].list;
+        if (itemInventory == null) return;
+
         for (int n = 0; n < itemInventory.Count; n++)
         {
             var item = itemInventory[n];
@@ -543,17 +559,18 @@ public class InventoryManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        for (int i = 1; i <= dungeonCount; i++)
+        for (int i = 0; i <= dungeonCount - 1; i++)
         {
+            int index = i;
+
             GameObject selector = (GameObject)Instantiate(compositionSelectorPrefab, dungeonSelectorPanel.transform);
             EventTrigger eventTrigger = selector.GetComponent<EventTrigger>();
-            eventTrigger.triggers.Clear();
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerClick;
             entry.callback.AddListener((eventData) =>
             {
-                selectedDungeon = i;
-                DisplayDungeon(i);
+                selectedDungeon = index;
+                DisplayDungeon(index);
                 // Set current one to inactive button and rest to active
                 foreach (Transform child in dungeonSelectorPanel.transform)
                 {
@@ -563,9 +580,9 @@ public class InventoryManager : MonoBehaviour
             });
             eventTrigger.triggers.Add(entry);
 
-            selector.GetComponentInChildren<Text>().text = i.ToString();
+            selector.GetComponentInChildren<Text>().text = (i + 1).ToString();
 
-            if (dungeonCount == 1)
+            if (i == 0)
             {
                 selector.GetComponent<Button>().interactable = false;
             }
@@ -581,10 +598,46 @@ public class InventoryManager : MonoBehaviour
             entry.callback.AddListener((eventData) =>
             {
                 // TODO: Display dialogue for purchase
+
+                BuyFeature();
             });
             eventTrigger.triggers.Add(entry);
 
             selector.GetComponentInChildren<Text>().text = "+";
+        }
+    }
+
+    public void BuyFeature()
+    {
+        WWWForm www = new WWWForm();
+        www.AddField("uuid", clientData.GetSession());
+        www.AddField("feature", "dungeon");
+        WWW w = new WWW(buyFeatureSite, www.data);
+        StartCoroutine(BuyFeature(w));
+    }
+
+    IEnumerator BuyFeature(WWW w)
+    {
+        yield return w;
+
+        Debug.Log(w.text);
+
+        if (w.text == "Success")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Successfully Purchased.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+            UpdateInventory();
+        }
+        else
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "An error occurred";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
         }
     }
 }

@@ -19,6 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4683388735826294}
+  - component: {fileID: 65373833179102782}
+  - component: {fileID: 65293226845175944}
   m_Layer: 0
   m_Name: WallCornerOutward_01
   m_TagString: Untagged
@@ -235,3 +237,27 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1220144436165744}
   m_Mesh: {fileID: 4300000, guid: c861f285e8bf01f469fe773e59b18c8e, type: 3}
+--- !u!65 &65293226845175944
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1183777331703584}
+  m_Material: {fileID: 13400000, guid: 446e8b56b80faf44990dfdd1dcae444b, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8, y: 6, z: 2}
+  m_Center: {x: 0, y: 3, z: -3}
+--- !u!65 &65373833179102782
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1183777331703584}
+  m_Material: {fileID: 13400000, guid: 446e8b56b80faf44990dfdd1dcae444b, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 6, z: 6}
+  m_Center: {x: -3, y: 3, z: 1}
