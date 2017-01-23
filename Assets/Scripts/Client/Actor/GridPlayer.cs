@@ -8,7 +8,6 @@ public class GridPlayer : MonoBehaviour
     public Camera minimapCam;
    
     public Vector3 currentDestination = Vector2.zero;
-    public float speed = 6f;
 
     private List<Vector3> destinationPath = new List<Vector3>();
     private Vector2 destination = Vector2.zero;
