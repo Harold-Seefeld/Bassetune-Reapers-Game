@@ -14,7 +14,7 @@ namespace DungeonGeneration.Generator.Domain {
             return isEqual((Cell)obj);
         }
         public override string ToString() {
-            return "XCell: [" + _row + ", " + _col + "]";
+            return "Cell: [" + _row + ", " + _col + "]";
         }
         public override int GetHashCode() {
             return ToString().GetHashCode();

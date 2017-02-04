@@ -35,22 +35,22 @@ namespace DungeonGeneration.Generator.Domain {
 
         public void plotting_detailed_twoRoomsWithoutOverlapping() {
             Room room5x5 = new Room(new Cell(0, 0), new Grid(5, 5));
-            Room room3x3 = new Room(new Cell(6, 0), new Grid(4, 4));
+            Room room4x4 = new Room(new Cell(6, 0), new Grid(4, 4));
 
             int[,] result = new int[10, 5];
             room5x5.plotOn(result, new DetailedTilesPlotter());
-            room3x3.plotOn(result, new DetailedTilesPlotter());
+            room4x4.plotOn(result, new DetailedTilesPlotter());
 
             int[,] expected = new int[10, 5]{ { 6, 2, 2, 0, 7},
-                                            { 0, 1, 1, 1, 0},
-                                            { 5, 1, 1, 1, 3},
-                                            { 0, 1, 1, 1, 0},
-                                            { 9, 0, 4, 0, 8},
-                                            { 0, 0, 0, 0, 0},
-                                            { 6, 0, 0, 7, 0},
-                                            { 0, 1, 1, 0, 0},
-                                            { 0, 1, 1, 0, 0},
-                                            { 9, 0, 0, 8, 0}};
+                                              { 0, 1, 1, 1, 0},
+                                              { 5, 1, 1, 1, 3},
+                                              { 0, 1, 1, 1, 0},
+                                              { 9, 0, 4, 0, 8},
+                                              { 0, 0, 0, 0, 0},
+                                              { 6, 0, 0, 7, 0},
+                                              { 0, 1, 1, 0, 0},
+                                              { 0, 1, 1, 0, 0},
+                                              { 9, 0, 0, 8, 0}};
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
 
@@ -250,6 +250,13 @@ namespace DungeonGeneration.Generator.Domain {
             Room room2 = new Room(new Cell(0, 4), new Grid(4, 4));
 
             Assert.IsTrue(room.collidesWith(room2));
+        }
+
+        [Test]
+        public void isWithin_aRoomOutsideBounds() {
+            Grid bounds = new Grid(40, 25);
+            Room room = new Room(new Cell(15, 22), new Grid(6, 5));
+            Assert.IsFalse(room.isWithin(bounds));
         }
     }
 

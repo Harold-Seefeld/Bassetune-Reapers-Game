@@ -55,7 +55,7 @@ namespace DungeonGeneration {
             }
             _generator.setSeed(_seed);
 
-            _tilesMap = _generator.result();
+            _tilesMap = _generator.asMatrix();
             _renderer.convertToMeshes(_tilesMap);
         }
     }

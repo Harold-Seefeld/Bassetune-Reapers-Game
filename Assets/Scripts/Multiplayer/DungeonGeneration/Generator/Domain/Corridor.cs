@@ -161,4 +161,18 @@ public class Corridor : IShape {
     public override string ToString() {
         return "Corridor: " + topLeftVertex() + " " + _grid;
     }
+
+    // Javascript API
+    public Cell[] walkableCells() {
+        Cell innerA = null;
+        Cell innerB = null;
+        if (isOrizontal()) {
+            innerA = topLeftVertex().plusCell(1, 0);
+            innerB = bottomRightVertex().minusCell(1, 0);
+        } else {
+            innerA = topLeftVertex().plusCell(0, 1);
+            innerB = bottomRightVertex().minusCell(0, 1);
+        }
+        return innerA.cells(innerB);
+    }
 }

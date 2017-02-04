@@ -43,7 +43,7 @@
 
         public bool hasCell(int rowIndex, int colIndex) {
             if (rowIndex < 0 || rowIndex >= _rows) return false;
-            if (colIndex < 0 || colIndex >= _rows) return false;
+            if (colIndex < 0 || colIndex >= _columns) return false;
             return true;
         }
 
