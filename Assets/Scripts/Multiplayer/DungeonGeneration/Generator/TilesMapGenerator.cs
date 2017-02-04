@@ -17,42 +17,59 @@ namespace DungeonGeneration.Generator {
         private int _mapColumns;
         private IXLogger _logger;
         private IPlotter _plotter;
+        private Board _board;
 
         public TilesMapGenerator() {
             _logger = new NullLogger();
+            clearBoard();
         }
 
+        private void clearBoard() {
+            _board = null;
+        }
+
+        private bool isBoardCleared() {
+            return _board == null;
+        }
 
         public void setCorridorSizeRange(int v1, int v2) {
             _corridorSizeMin = v1;
             _corridorSizeMax = v2;
+            clearBoard();
         }
 
         public void setRoomSizeRange(int v1, int v2) {
             _roomSizeMin = v1;
             _roomSizeMax = v2;
+            clearBoard();
         }
 
         public void setRoomsNumberRange(int v1, int v2) {
             _roomsNumberMin = v1;
             _roomsNumberMax = v2;
+            clearBoard();
         }
 
         public void setSeed(int v) {
             _seed = v;
+            clearBoard();
         }
 
         public void setMapSize(int rows, int columns) {
             _mapRows = rows;
             _mapColumns = columns;
+            clearBoard();
         }
 
         public void setLogger(IXLogger logger) {
             _logger = logger;
+            clearBoard();
         }
 
+        public Board asBoard() {
+            if (!isBoardCleared()) return _board;
+            _board = new Board(_mapRows, _mapColumns);
 
-        public int[,] result() {
             //IPickerStrategy seedStrategy = new RandomSeededPickerStrategy(_seed);
             CustomSeededPickerStrategy seedStrategy = new CustomSeededPickerStrategy(_seed);
             seedStrategy.setLogger(_logger);
@@ -63,12 +80,10 @@ namespace DungeonGeneration.Generator {
             CardinalPointPicker cardPointPicker = new CardinalPointPicker(seedStrategy);
             CellInRangePicker cellRangePicker = new CellInRangePicker(seedStrategy);
 
-            Board board = new Board(_mapRows, _mapColumns);
-
             int roomNumber = roomNumberPicker.draw();
             if (roomNumber < 1) {
                 _logger.warning("Room number should be at least 1. Instead is: " + roomNumber);
-                return board.asTilesMatrix(_plotter);
+                return _board;
             }
 
             Grid grid = new Grid(roomSizePicker.draw(), roomSizePicker.draw());
@@ -76,12 +91,12 @@ namespace DungeonGeneration.Generator {
             Cell topLeftVertexMax = new Cell(_mapRows - 1, _mapColumns - 1).minusSize(grid.rows(), grid.columns());
             Cell topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
             Room lastRoom = new Room(topLeftCell, grid);
-            if (!board.fitsIn(lastRoom)) {
+            if (!_board.fitsIn(lastRoom)) {
                 _logger.error("First room not fit in. This should never happen");
-                return board.asTilesMatrix(_plotter);
+                return _board;
             }
             _logger.info("OK: " + lastRoom);
-            board.add(lastRoom);
+            _board.addRoom(lastRoom);
 
             CardinalPoint lastDirection = 0;
             int roomCreationAttempt = 1;
@@ -98,7 +113,7 @@ namespace DungeonGeneration.Generator {
                 Corridor lastCorridor = null;
                 do {
                     lastCorridor = generateCorridor(lastDirection, lastRoom, corrSizePicker, cellRangePicker);
-                    if (!board.fitsIn(lastCorridor)) {
+                    if (!_board.fitsIn(lastCorridor)) {
                         _logger.info("NO FITS: " + lastCorridor + " " + lastDirection);
                         lastCorridor = null;
                         cardinalPointAttempt++;
@@ -112,12 +127,12 @@ namespace DungeonGeneration.Generator {
                     break;
                 }
                 _logger.info("OK: " + lastCorridor + " " + lastDirection);
-                board.add(lastCorridor);
+                _board.addCorridor(lastCorridor);
 
                 //Try to create a room. If there is enough space retry (until 4 times) restarting from a new corridor
                 Room newRoom = generateRoom(lastDirection, lastCorridor, roomSizePicker, cellRangePicker);
-                if (!board.fitsIn(newRoom)) {
-                    board.removeLast(); //remove last item added to the board (a corridor in this case)
+                if (!_board.fitsIn(newRoom)) {
+                    _board.removeLast(); //remove last item added to the board (a corridor in this case)
                     if (roomCreationAttempt <= 4) {
                         _logger.info("NO FITS: " + newRoom + " Retry: " + roomCreationAttempt);
                         roomCreationAttempt++;
@@ -131,10 +146,14 @@ namespace DungeonGeneration.Generator {
                     _logger.info("OK: " + newRoom + " Retry: " + roomCreationAttempt);
                     lastRoom = newRoom;
                     roomCreationAttempt = 1;
-                    board.add(lastRoom);
+                    _board.addRoom(lastRoom);
                 }
             }
-            return board.asTilesMatrix(_plotter);
+            return _board;
+        }
+
+        public int[,] asMatrix() {
+            return asBoard().asTilesMatrix(_plotter);
         }
 
         public void setPlotter(IPlotter plotter) {

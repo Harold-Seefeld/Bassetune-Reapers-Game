@@ -31,10 +31,10 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr1 = new Corridor(new Cell(4, 4), new Grid(3, 5), Corridor.Orientation.horizontal);
             Room room2 = new Room(new Cell(2, 8), new Grid(9, 5));
             Corridor corr2 = new Corridor(new Cell(1, 8), new Grid(2, 3), Corridor.Orientation.vertical);
-            board.add(room1);
-            board.add(corr1);
-            board.add(room2);
-            board.add(corr2);
+            board.addRoom(room1);
+            board.addCorridor(corr1);
+            board.addRoom(room2);
+            board.addCorridor(corr2);
 
             board.removeLast();
 
@@ -46,10 +46,17 @@ namespace DungeonGeneration.Generator.Domain {
         public void fitting_case2() {
             Board board = new Board(new Grid(100, 100));
             Corridor corr = new Corridor(new Cell(75, 61), new Grid(3, 6), Corridor.Orientation.horizontal);
-            board.add(corr);
+            board.addCorridor(corr);
 
             Room room = new Room(new Cell(70, 66), new Grid(15, 6));
             Assert.IsTrue(board.fitsIn(room));
+        }
+
+        [Test]
+        public void fitting_case3() {
+            Board board = new Board(new Grid(40, 25));
+            bool result = board.fitsIn(new Room(new Cell(15, 22), new Grid(6, 5)));
+            Assert.IsFalse(result);
         }
 
 
@@ -60,16 +67,15 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr1 = new Corridor(new Cell(4, 4), new Grid(3, 5), Corridor.Orientation.horizontal);
             Room room2 = new Room(new Cell(2, 8), new Grid(9, 5));
             Corridor corr2 = new Corridor(new Cell(1, 8), new Grid(2, 3), Corridor.Orientation.vertical);
-            board.add(room1);
-            board.add(corr1);
-            board.add(room2);
-            board.add(corr2);
+            board.addRoom(room1);
+            board.addCorridor(corr1);
+            board.addRoom(room2);
+            board.addCorridor(corr2);
 
             Assert.AreEqual(4, board.numberOfRoomsAndCorridors());
             board.removeLast();
 
             Assert.AreEqual(3, board.numberOfRoomsAndCorridors());
-
         }
     }
 

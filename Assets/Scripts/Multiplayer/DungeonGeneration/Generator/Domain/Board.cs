@@ -26,7 +26,7 @@ namespace DungeonGeneration.Generator.Domain {
             return true;
         }
 
-        public void add(Room aRoom) {
+        public void addRoom(Room aRoom) {
             if (_roomsAndCorridors.Count != 0) {
                 Corridor corr = (Corridor)_roomsAndCorridors[_roomsAndCorridors.Count - 1];
                 corr.setDestinationRoom(aRoom);
@@ -44,7 +44,7 @@ namespace DungeonGeneration.Generator.Domain {
             return result;
         }
 
-        public void add(Corridor corr) {
+        public void addCorridor(Corridor corr) {
             if (_roomsAndCorridors.Count != 0) {
                 Room room = (Room)_roomsAndCorridors[_roomsAndCorridors.Count - 1];
                 room.setCorridorOutcoming(corr);
@@ -82,6 +82,24 @@ namespace DungeonGeneration.Generator.Domain {
 
         public int numberOfRoomsAndCorridors() {
             return _roomsAndCorridors.Count;
+        }
+
+        //Added for Javascript
+        public Room[] rooms() {
+            List<Room> result = new List<Room>();
+            foreach(IShape each in _roomsAndCorridors) {
+                if (each is Room) result.Add((Room)each);
+            }
+            return result.ToArray();
+        }
+
+        //Added for Javascript
+        public Corridor[] corridors() {
+            List<Corridor> result = new List<Corridor>();
+            foreach (IShape each in _roomsAndCorridors) {
+                if (each is Corridor) result.Add((Corridor)each);
+            }
+            return result.ToArray();
         }
     }
 }
