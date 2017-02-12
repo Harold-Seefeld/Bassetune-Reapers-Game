@@ -22,8 +22,12 @@ public class GridPlayer : MonoBehaviour
         characterData = GetComponent<CharacterData>();
         socket = FindObjectOfType<SocketIOComponent>();
         animator = GetComponent<Animator>();
-        minimapCam = GameObject.Find("MinimapCam").GetComponent<Camera>();
+
+        GameObject miniMapObj = GameObject.Find("MinimapCam");
+        if (miniMapObj != null) minimapCam = miniMapObj.GetComponent<Camera>();
         currentDestination = transform.position;
+
+        if (Server.instance == null) return;
 
         if (characterData.CharacterOwner == Server.instance.currentPlayerID)
         {
@@ -33,6 +37,7 @@ public class GridPlayer : MonoBehaviour
 
 	void Update () 
     {
+        if (Server.instance == null) return;
         FindPath();
 
         if (currentDestination != transform.position)
@@ -53,6 +58,7 @@ public class GridPlayer : MonoBehaviour
 
     private void FindPath()
     {
+       
         if (Server.instance.currentPlayerID != characterData.CharacterOwner)
         {
             return;
