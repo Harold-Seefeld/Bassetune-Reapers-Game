@@ -31,7 +31,7 @@ namespace DungeonGeneration.Generator {
                                  {0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 4, 4, 0, 8, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-            Assert.AreEqual(expected, generator.result());
+            Assert.AreEqual(expected, generator.asMatrix());
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace DungeonGeneration.Generator {
                                  {0, 0, 0, 0, 0, 0, 0, 9, 0, 4, 0, 8, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-            Assert.AreEqual(expected, generator.result());
+            Assert.AreEqual(expected, generator.asMatrix());
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace DungeonGeneration.Generator {
                                  {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-            Assert.AreEqual(expected, generator.result());
+            Assert.AreEqual(expected, generator.asMatrix());
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace DungeonGeneration.Generator {
                                  {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-            Assert.AreEqual(expected, generator.result());
+            Assert.AreEqual(expected, generator.asMatrix());
         }
     }
 }

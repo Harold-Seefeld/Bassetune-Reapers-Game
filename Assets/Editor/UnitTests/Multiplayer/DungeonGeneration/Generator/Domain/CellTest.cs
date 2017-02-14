@@ -78,5 +78,23 @@ namespace DungeonGeneration.Generator.Domain {
             Cell cell = new Cell(0, 0);
             Assert.AreEqual(new Cell(2, 0), cell.plusCell(2, 0));
         }
+
+        [Test]
+        public void isWithin_twoCellsWithinBounds() {
+            Grid container = new Grid(40, 25);
+            Cell topLeftVertex = new Cell(15, 22);
+            Cell botLeftVertex = new Cell(20, 22);
+            Assert.IsTrue(topLeftVertex.isWithin(container));
+            Assert.IsTrue(botLeftVertex.isWithin(container));
+        }
+
+        [Test]
+        public void isWithin_twoCellsOutsideBounds() {
+            Grid container = new Grid(40, 25);
+            Cell topRightVertex = new Cell(15, 26);
+            Cell botRightVertex = new Cell(20, 26);
+            Assert.IsFalse(topRightVertex.isWithin(container));
+            Assert.IsFalse(botRightVertex.isWithin(container));
+        }
     }
 }
