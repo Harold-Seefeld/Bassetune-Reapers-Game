@@ -3,6 +3,7 @@ using DungeonGeneration.Generator;
 using DungeonGeneration.Renderer;
 using DungeonGeneration.Logging;
 using DungeonGeneration.Generator.Plotters;
+using SocketIO;
 
 namespace DungeonGeneration { 
 
@@ -27,6 +28,7 @@ namespace DungeonGeneration {
         [SerializeField] private int[,] _tilesMap;
         private TilesMapGenerator _generator;
         private BRDungeonRenderer _renderer;
+        private SocketIOComponent socket;
 
         void Awake() {
             _generator = new TilesMapGenerator();
@@ -34,14 +36,23 @@ namespace DungeonGeneration {
         }
 
         void Start() {
+            socket = FindObjectOfType<SocketIOComponent>();
+            socket.On("seed", SeedRecieved);
+        }
+
+        void SeedRecieved(SocketIOEvent ev)
+        {
+            _seed = (int)ev.data.GetField("s").n;
             generateDungeon();
         }
 
+        /*
         void Update() {
             if (Input.GetMouseButtonDown(0)) {
                 generateDungeon();
             }
         }
+        */
 
         private void generateDungeon() {
             _generator.setMapSize(_mapHeight, _mapWidth);

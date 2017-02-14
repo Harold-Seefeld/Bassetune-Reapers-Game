@@ -64,7 +64,7 @@ public class CharacterManager : MonoBehaviour {
             }
         }
         // TODO: Create character with given data (assign meshes, etc use a prefab)
-        Vector3 location = new Vector3(e.data.GetField("L").GetField("x").n, 5, e.data.GetField("L").GetField("y").n);
+        Vector3 location = new Vector3(e.data.GetField("L").GetField("x").n, 1.35f, e.data.GetField("L").GetField("y").n);
         // Search for character, given a set of prefabs and an entity id
         GameObject newCharacter;
         for (var i = 0; i < characterPrefabs.prefabs.Length; i++)

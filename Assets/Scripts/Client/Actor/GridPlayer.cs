@@ -11,6 +11,7 @@ public class GridPlayer : MonoBehaviour
 
     private List<Vector3> destinationPath = new List<Vector3>();
     private Vector2 destination = Vector2.zero;
+    private Vector2 sentDestination = Vector2.zero;
     private SocketIOComponent socket;
     private CharacterData characterData;
     private Animator animator;
@@ -23,16 +24,18 @@ public class GridPlayer : MonoBehaviour
         animator = GetComponent<Animator>();
         minimapCam = GameObject.Find("MinimapCam").GetComponent<Camera>();
         currentDestination = transform.position;
-
-        if (characterData.CharacterOwner == Server.instance.currentPlayerID)
-        {
-            StartCoroutine(SendDestination());
-        }
 	}
 
 	void Update () 
     {
         FindPath();
+
+        if (characterData.CharacterOwner == Server.instance.currentPlayerID && destination != sentDestination)
+        {
+            // Emitting X, Z to server for verification
+            CharacterManager.instance.AddLocation(characterData.CharacterID.ToString(), destination);
+            sentDestination = destination;
+        }
 
         if (currentDestination != transform.position)
         {
@@ -79,20 +82,5 @@ public class GridPlayer : MonoBehaviour
                 destination = new Vector2(hit.point.x, hit.point.z);
             }      
         }
-    }
-
-    private Vector2 sentDestination = new Vector2();
-    IEnumerator SendDestination()
-    {
-        yield return new WaitForSeconds(0.083f);
-
-        if (destination != sentDestination)
-        {
-            // Emitting X, Z to server for verification
-            CharacterManager.instance.AddLocation(characterData.CharacterID.ToString(), destination);
-            sentDestination = destination;
-        }
-
-        StartCoroutine(SendDestination());
     }
 }
