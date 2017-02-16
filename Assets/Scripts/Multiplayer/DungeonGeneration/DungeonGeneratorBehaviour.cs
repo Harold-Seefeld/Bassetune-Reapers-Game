@@ -55,6 +55,9 @@ namespace DungeonGeneration {
         */
 
         private void generateDungeon() {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.localScale = Vector3.one;
+
             _generator.setMapSize(_mapHeight, _mapWidth);
             _generator.setRoomsNumberRange(_roomsNumberMin, _roomsNumberMax);
             _generator.setRoomSizeRange(_roomSizeMin, _roomSizeMax);
@@ -68,6 +71,9 @@ namespace DungeonGeneration {
 
             _tilesMap = _generator.asMatrix();
             _renderer.convertToMeshes(_tilesMap);
+
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+            transform.localScale = new Vector3(-1, 1, -1);
         }
     }
 }

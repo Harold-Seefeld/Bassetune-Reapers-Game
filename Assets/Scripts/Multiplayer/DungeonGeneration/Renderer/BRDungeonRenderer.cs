@@ -18,11 +18,10 @@ namespace DungeonGeneration.Renderer {
 
             addMainMashes(boardHolder, map);
             overlapWallSerators(boardHolder, map);
-
         }
 
         private void addMainMashes(GameObject boardHolder, int[,] map) {
-            float floorSpan = 8;
+            float floorSpan = 1;
             float halfFloorSpan = floorSpan * 0.5f;
             float oneQuarterFloorSpan = floorSpan * 0.25f;
             float threeQuartersFloorSpan = floorSpan * 0.75f;
@@ -133,7 +132,7 @@ namespace DungeonGeneration.Renderer {
             GameObject prefab = _behavior._wallSeparatorPrefab;
             String objectName = "Wall_Separator";
 
-            float floorSpan = 8f;
+            float floorSpan = 1f;
             float halfFloorSpan = floorSpan * 0.5f;
             float oneQuarterFloorSpan = floorSpan * 0.25f;
             float threeQuartersFloorSpan = floorSpan * 0.75f;
@@ -215,6 +214,8 @@ namespace DungeonGeneration.Renderer {
             instance.transform.Rotate(0, yRot, 0);
             instance.name = "(" + mapX + "," + mapZ + ") " + name;
             instance.transform.parent = parent.transform;
+
+            instance.transform.localScale = new Vector3(0.125f, 0.125f, 0.125f);
         }
 
     }
