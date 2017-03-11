@@ -61,7 +61,7 @@ namespace DungeonGeneration {
             _generator.setMapSize(_mapHeight, _mapWidth);
             _generator.setRoomsNumberRange(_roomsNumberMin, _roomsNumberMax);
             _generator.setRoomSizeRange(_roomSizeMin, _roomSizeMax);
-            _generator.setCorridorSizeRange(_corridorLengthMin, _corridorLengthMax);
+            _generator.setCorridorLengthRange(_corridorLengthMin, _corridorLengthMax);
             _generator.setPlotter(new DetailedTilesPlotter());
             //_generator.setLogger(new UnityEngineLogger());
             if (_randomSeed) {

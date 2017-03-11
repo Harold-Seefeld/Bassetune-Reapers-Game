@@ -169,4 +169,8 @@ public class Room : IShape {
         }
         return vertex1.cells(vertex2);
     }
+
+    public Grid grid() {
+        return _grid;
+    }
 }

@@ -5,8 +5,8 @@
         private int _rows;
 
         public Grid(int rows, int columns) {
-            _columns = columns;
             _rows = rows;
+            _columns = columns;
         }
 
         public int columns() {

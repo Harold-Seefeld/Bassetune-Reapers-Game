@@ -175,4 +175,8 @@ public class Corridor : IShape {
         }
         return innerA.cells(innerB);
     }
+
+    public Grid grid() {
+        return _grid;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DungeonGeneration.Generator.Plotters;
 
 namespace DungeonGeneration.Generator.Domain {
@@ -78,6 +79,69 @@ namespace DungeonGeneration.Generator.Domain {
                 }
             }
             _roomsAndCorridors.RemoveAt(_roomsAndCorridors.Count - 1);
+        }
+
+        public Board crop() {
+            return crop(0);
+        }
+
+        public Board crop(int marginToAddAfterCrop) {
+            Cell upperTopLeftVert = null;
+            Cell righterBottomRightVert = null;
+            Cell downerBottomRightVert = null;
+            Cell lefterTopLeftVert = null;
+            foreach (Room each in rooms()) {
+                if (upperTopLeftVert == null) {
+                    upperTopLeftVert = each.topLeftVertex();
+                    righterBottomRightVert = each.bottomRightVertex();
+                    downerBottomRightVert = righterBottomRightVert;
+                    lefterTopLeftVert = upperTopLeftVert;
+                } else {
+                    if (each.topLeftVertex().isRowLesserThan(upperTopLeftVert)) {
+                        upperTopLeftVert = each.topLeftVertex();
+                    }
+                    if (each.bottomRightVertex().isColGreatherThan(righterBottomRightVert)) {
+                        righterBottomRightVert = each.bottomRightVertex();
+                    }
+                    if (each.bottomRightVertex().isRowGreatherThan(downerBottomRightVert)) {
+                        downerBottomRightVert = each.bottomRightVertex();
+                    }
+                    if (each.topLeftVertex().isColLesserThan(lefterTopLeftVert)) {
+                        lefterTopLeftVert = each.topLeftVertex();
+                    }
+                }
+            }
+
+            int rows = downerBottomRightVert.row() - upperTopLeftVert.row() + 1 + marginToAddAfterCrop*2;
+            int cols = righterBottomRightVert.col() - lefterTopLeftVert.col() + 1 + marginToAddAfterCrop * 2;
+
+            int cropUp = upperTopLeftVert.row() - marginToAddAfterCrop;
+            int cropLeft = lefterTopLeftVert.col() - marginToAddAfterCrop;
+
+            Board cropped = new Board(rows, cols);
+            foreach(IShape each in _roomsAndCorridors) {
+                if (each is Room) {
+                    Room r = (Room)each;
+                    Cell vert = r.topLeftVertex().minus(cropUp, cropLeft);
+                    Room relocated = new Room(vert, r.grid());
+                    cropped.addRoom(relocated);
+                } else {
+                    Corridor c = (Corridor)each;
+                    Cell vert = c.topLeftVertex().minus(cropUp, cropLeft);
+                    Corridor.Orientation orient = c.isOrizontal() ? Corridor.Orientation.horizontal : Corridor.Orientation.vertical;
+                    Corridor relocated = new Corridor(vert, c.grid(), orient);
+                    cropped.addCorridor(relocated);
+                }
+            }
+            return cropped;
+        }
+
+        public int cols() {
+            return _grid.columns();
+        }
+
+        public int rows() {
+            return _grid.rows();
         }
 
         public int numberOfRoomsAndCorridors() {

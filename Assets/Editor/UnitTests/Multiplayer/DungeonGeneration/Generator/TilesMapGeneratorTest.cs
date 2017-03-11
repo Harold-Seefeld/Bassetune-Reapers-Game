@@ -11,7 +11,7 @@ namespace DungeonGeneration.Generator {
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
-            generator.setCorridorSizeRange(2, 4);
+            generator.setCorridorLengthRange(2, 4);
             generator.setSeed(1234567);
             generator.setPlotter(new DetailedTilesPlotter());
             //generator.setLogger(new ConsoleLogger());
@@ -40,7 +40,7 @@ namespace DungeonGeneration.Generator {
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
-            generator.setCorridorSizeRange(2, 4);
+            generator.setCorridorLengthRange(2, 4);
             generator.setSeed(-1910733923);
             generator.setPlotter(new DetailedTilesPlotter());
 
@@ -59,6 +59,8 @@ namespace DungeonGeneration.Generator {
                                  {0, 0, 0, 0, 0, 0, 0, 9, 0, 4, 0, 8, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+            //XTestUtils.print(generator.asMatrix());
             Assert.AreEqual(expected, generator.asMatrix());
         }
 
@@ -68,7 +70,7 @@ namespace DungeonGeneration.Generator {
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
-            generator.setCorridorSizeRange(2, 4);
+            generator.setCorridorLengthRange(2, 4);
             generator.setSeed(1234567);
             generator.setPlotter(new ZeroOneTilesPlotter());
             //generator.setLogger(new ConsoleLogger());
@@ -97,7 +99,7 @@ namespace DungeonGeneration.Generator {
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
-            generator.setCorridorSizeRange(2, 4);
+            generator.setCorridorLengthRange(2, 4);
             generator.setSeed(-1910733923);
             generator.setPlotter(new ZeroOneTilesPlotter());
 
@@ -116,6 +118,7 @@ namespace DungeonGeneration.Generator {
                                  {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
             Assert.AreEqual(expected, generator.asMatrix());
         }
     }

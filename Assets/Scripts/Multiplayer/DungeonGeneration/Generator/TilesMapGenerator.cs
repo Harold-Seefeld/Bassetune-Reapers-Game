@@ -6,13 +6,16 @@ using DungeonGeneration.Generator.Plotters;
 namespace DungeonGeneration.Generator {
 
     public class TilesMapGenerator {
-        private int _corridorSizeMin;
-        private int _corridorSizeMax;
+        private int _corridorLengthMin;
+        private int _corridorLengthMax;
+        private int _corridorWidthMin;
+        private int _corridorWidthMax;
+
         private int _roomSizeMin;
         private int _roomSizeMax;
         private int _roomsNumberMin;
         private int _roomsNumberMax;
-        private int _seed;
+        internal int _seed;
         private int _mapRows;
         private int _mapColumns;
         private IXLogger _logger;
@@ -21,6 +24,10 @@ namespace DungeonGeneration.Generator {
 
         public TilesMapGenerator() {
             _logger = new NullLogger();
+
+
+            _corridorWidthMin = 3;
+            _corridorWidthMax = 3;
             clearBoard();
         }
 
@@ -32,9 +39,15 @@ namespace DungeonGeneration.Generator {
             return _board == null;
         }
 
-        public void setCorridorSizeRange(int v1, int v2) {
-            _corridorSizeMin = v1;
-            _corridorSizeMax = v2;
+        public void setCorridorLengthRange(int v1, int v2) {
+            _corridorLengthMin = v1;
+            _corridorLengthMax = v2;
+            clearBoard();
+        }
+
+        public void setCorridorWidthRange(int v1, int v2) {
+            _corridorWidthMin = v1;
+            _corridorWidthMax = v2;
             clearBoard();
         }
 
@@ -76,7 +89,8 @@ namespace DungeonGeneration.Generator {
 
             IntInRangePicker roomNumberPicker = new IntInRangePicker(_roomsNumberMin, _roomsNumberMax, seedStrategy);
             IntInRangePicker roomSizePicker = new IntInRangePicker(_roomSizeMin, _roomSizeMax, seedStrategy);
-            IntInRangePicker corrSizePicker = new IntInRangePicker(_corridorSizeMin, _corridorSizeMax, seedStrategy);
+            IntInRangePicker corrLengthPicker = new IntInRangePicker(_corridorLengthMin, _corridorLengthMax, seedStrategy);
+            IntInRangePicker corrWidthPicker = new IntInRangePicker(_corridorWidthMin, _corridorWidthMax, seedStrategy);
             CardinalPointPicker cardPointPicker = new CardinalPointPicker(seedStrategy);
             CellInRangePicker cellRangePicker = new CellInRangePicker(seedStrategy);
 
@@ -112,7 +126,7 @@ namespace DungeonGeneration.Generator {
                 int cardinalPointAttempt = 1;
                 Corridor lastCorridor = null;
                 do {
-                    lastCorridor = generateCorridor(lastDirection, lastRoom, corrSizePicker, cellRangePicker);
+                    lastCorridor = generateCorridor(lastDirection, lastRoom, corrLengthPicker, corrWidthPicker, cellRangePicker);
                     if (!_board.fitsIn(lastCorridor)) {
                         _logger.info("NO FITS: " + lastCorridor + " " + lastDirection);
                         lastCorridor = null;
@@ -175,7 +189,7 @@ namespace DungeonGeneration.Generator {
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             } else if (lastCorridorDirection == CardinalPoint.EST) {
                 Cell topLeftVertexMax = lastCorr.topRightVertex();
-                Cell topLeftVertexMin = topLeftVertexMax.minusCell(roomRows-lastCorr.height(), 0);
+                Cell topLeftVertexMin = topLeftVertexMax.minusCell(roomRows - lastCorr.height(), 0);
                 //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
                 Cell excludeOne = topLeftVertexMin.plusCell(1, 0);
                 Cell excludeTwo = topLeftVertexMax.minusCell(1, 0);
@@ -201,9 +215,9 @@ namespace DungeonGeneration.Generator {
             return new Room(topLeftCell, grid);
         }
 
-        private Corridor generateCorridor(CardinalPoint mapDirection, Room lastRoom, IntInRangePicker corrSizePicker, CellInRangePicker cellRangePicker) {
-            int corridorLenght = corrSizePicker.draw();
-            int corridorSection = 3;
+        private Corridor generateCorridor(CardinalPoint mapDirection, Room lastRoom, IntInRangePicker corrLengthPicker, IntInRangePicker corrWidthPicker, CellInRangePicker cellRangePicker) {
+            int corridorLenght = corrLengthPicker.draw();
+            int corridorSection = corrWidthPicker.draw();
 
             Corridor.Orientation corrOrient = 0;
             Grid grid = null;
