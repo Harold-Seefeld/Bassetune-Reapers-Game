@@ -227,6 +227,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 643abcd9e38357d4e93079c5f30389f0, type: 2}
+    - target: {fileID: 1291677074727296, guid: e461dc045d026134c8ca6ac8c32820c1, type: 2}
+      propertyPath: m_Name
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e461dc045d026134c8ca6ac8c32820c1, type: 2}
   m_IsPrefabParent: 0
@@ -435,7 +439,7 @@ GameObject:
   - component: {fileID: 1129264592}
   - component: {fileID: 1129264593}
   m_Layer: 0
-  m_Name: Walls
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -524,7 +528,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 6ef1bc3fd2534034488c66c6a3475cfa, type: 2}
+  - {fileID: 2100000, guid: 065a11a4d92b01a458f62e1c17657526, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
