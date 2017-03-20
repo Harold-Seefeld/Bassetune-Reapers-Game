@@ -2,10 +2,11 @@
 using DungeonGeneration.Generator.Pickers;
 using DungeonGeneration.Logging;
 using DungeonGeneration.Generator.Plotters;
+using System;
 
 namespace DungeonGeneration.Generator {
 
-    public class TilesMapGenerator {
+    public class DungeonGenerator {
         private int _corridorLengthMin;
         private int _corridorLengthMax;
         private int _corridorWidthMin;
@@ -15,19 +16,22 @@ namespace DungeonGeneration.Generator {
         private int _roomSizeMax;
         private int _roomsNumberMin;
         private int _roomsNumberMax;
-        internal int _seed;
+        private int _seed;
         private int _mapRows;
         private int _mapColumns;
         private IXLogger _logger;
         private IPlotter _plotter;
         private Board _board;
+        private int _mapMargin;
+        private bool _mapCropEnabled;
 
-        public TilesMapGenerator() {
+        public DungeonGenerator() {
             _logger = new NullLogger();
-
 
             _corridorWidthMin = 3;
             _corridorWidthMax = 3;
+            _mapMargin = 0;
+            _mapCropEnabled = false;
             clearBoard();
         }
 
@@ -80,8 +84,10 @@ namespace DungeonGeneration.Generator {
         }
 
         public Board asBoard() {
+            checkConstraints();
             if (!isBoardCleared()) return _board;
-            _board = new Board(_mapRows, _mapColumns);
+            //_board = new Board(_mapRows, _mapColumns);
+            _board = new Board(_mapRows - _mapMargin*2, _mapColumns - _mapMargin * 2);
 
             //IPickerStrategy seedStrategy = new RandomSeededPickerStrategy(_seed);
             CustomSeededPickerStrategy seedStrategy = new CustomSeededPickerStrategy(_seed);
@@ -102,7 +108,8 @@ namespace DungeonGeneration.Generator {
 
             Grid grid = new Grid(roomSizePicker.draw(), roomSizePicker.draw());
             Cell topLeftVertexMin = new Cell(0, 0);
-            Cell topLeftVertexMax = new Cell(_mapRows - 1, _mapColumns - 1).minusSize(grid.rows(), grid.columns());
+            Cell topLeftVertexMax = new Cell(_board.rows() - 1, _board.cols() - 1).minusSize(grid.rows(), grid.columns());
+            //Cell topLeftVertexMax = new Cell(_mapRows - 1, _mapColumns - 1).minusSize(grid.rows(), grid.columns()).minusCell(_mapMargin*2, _mapMargin*2);
             Cell topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
             Room lastRoom = new Room(topLeftCell, grid);
             if (!_board.fitsIn(lastRoom)) {
@@ -163,7 +170,32 @@ namespace DungeonGeneration.Generator {
                     _board.addRoom(lastRoom);
                 }
             }
+
+            if (_mapMargin > 0) {
+                _board = _board.resize(_mapMargin);
+            }
+            if (_mapCropEnabled) {
+                _board = _board.crop(_mapMargin);
+            }
             return _board;
+        }
+
+        private void checkConstraints() {
+            if (_roomsNumberMax < _roomsNumberMin) throw new FormatException("Invalid Room Number: Max < Min");
+            if (_roomSizeMax < _roomSizeMin) throw new FormatException("Invalid Room Size: Max < Min");
+            if (_corridorLengthMax < _corridorLengthMin) throw new FormatException("Invalid Corridor Length: Max < Min");
+            if (_corridorWidthMax < _corridorWidthMin) throw new FormatException("Invalid Corridor Width: Max < Min");
+            if (_corridorWidthMax > _roomSizeMin) throw new FormatException("Invalid Corridor Width Max > Room Size Min");
+        }
+
+        public void setMapCropEnabled(bool enabled) {
+            _mapCropEnabled = enabled;
+            clearBoard();
+        }
+
+        public void setMapMargin(int mapMargin) {
+            _mapMargin = mapMargin;
+            clearBoard();
         }
 
         public int[,] asMatrix() {

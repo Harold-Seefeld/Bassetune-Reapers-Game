@@ -7,16 +7,24 @@ namespace DungeonGeneration.Generator.Domain {
     public class Board {
         private Grid _grid;
         private List<IShape> _roomsAndCorridors;
+        private int _margin;
 
         public Board(int rows, int columns)
-            : this(new Grid(rows, columns)) {
+            : this(rows, columns, 0) {
         }
-
-        public Board(Grid mapGrid) {
+        public Board(int rows, int columns, int margin)
+            : this(new Grid(rows, columns), margin) {
+        }
+        public Board(Grid mapGrid)
+            : this(mapGrid, 0) {
+        }
+        public Board(Grid mapGrid, int margin) {
             _grid = mapGrid;
             _roomsAndCorridors = new List<IShape>();
+            _margin = margin;
         }
 
+     
         public bool fitsIn(IShape aSquare) {
             if (!aSquare.isWithin(_grid)) return false;
             //Evito di controllare la collisione con l'ultimo, poiche' e' necessaria
@@ -37,7 +45,7 @@ namespace DungeonGeneration.Generator.Domain {
         }
 
         public int[,] asTilesMatrix(IPlotter plotter) {
-            int[,] result = _grid.toIntMatrix();
+            int[,] result = new int[_grid.rows(), _grid.columns()];
 
             if (_roomsAndCorridors.Count > 0) {
                 _roomsAndCorridors[0].plotOn(result, plotter);
@@ -79,6 +87,27 @@ namespace DungeonGeneration.Generator.Domain {
                 }
             }
             _roomsAndCorridors.RemoveAt(_roomsAndCorridors.Count - 1);
+        }
+
+        public Board resize(int mapMargin) {
+            if (mapMargin < 0) return this;
+
+            Board resized = new Board(rows() + mapMargin*2, cols() + mapMargin * 2);
+            foreach (IShape each in _roomsAndCorridors) {
+                if (each is Room) {
+                    Room r = (Room)each;
+                    Cell vert = r.topLeftVertex().plusCell(mapMargin, mapMargin);
+                    Room relocated = new Room(vert, r.grid());
+                    resized.addRoom(relocated);
+                } else {
+                    Corridor c = (Corridor)each;
+                    Cell vert = c.topLeftVertex().plusCell(mapMargin, mapMargin);
+                    Corridor.Orientation orient = c.isOrizontal() ? Corridor.Orientation.horizontal : Corridor.Orientation.vertical;
+                    Corridor relocated = new Corridor(vert, c.grid(), orient);
+                    resized.addCorridor(relocated);
+                }
+            }
+            return resized;
         }
 
         public Board crop() {

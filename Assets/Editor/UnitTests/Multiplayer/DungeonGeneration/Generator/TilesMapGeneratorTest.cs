@@ -7,7 +7,7 @@ namespace DungeonGeneration.Generator {
     public class TilesMapGeneratorTest {
         [Test]
         public void scenario1_withDetailedTilesPlotter() {
-            TilesMapGenerator generator = new TilesMapGenerator();
+            DungeonGenerator generator = new DungeonGenerator();
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
@@ -36,7 +36,7 @@ namespace DungeonGeneration.Generator {
 
         [Test]
         public void scenario2_withDetailedTilesPlotter() {
-            TilesMapGenerator generator = new TilesMapGenerator();
+            DungeonGenerator generator = new DungeonGenerator();
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
@@ -66,7 +66,7 @@ namespace DungeonGeneration.Generator {
 
         [Test]
         public void scenario1_withZeroOneTilesPlotter() {
-            TilesMapGenerator generator = new TilesMapGenerator();
+            DungeonGenerator generator = new DungeonGenerator();
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);
@@ -95,7 +95,7 @@ namespace DungeonGeneration.Generator {
 
         [Test]
         public void scenario2_withZeroOneTilesPlotter() {
-            TilesMapGenerator generator = new TilesMapGenerator();
+            DungeonGenerator generator = new DungeonGenerator();
             generator.setMapSize(15, 15);
             generator.setRoomsNumberRange(2, 2);
             generator.setRoomSizeRange(5, 7);

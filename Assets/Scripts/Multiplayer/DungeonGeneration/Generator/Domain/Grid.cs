@@ -47,10 +47,6 @@
             return true;
         }
 
-        public int[,] toIntMatrix() {
-            return new int[_rows, _columns];
-        }
-
         public Cell topLeftVertex() {
             return new Cell(0, 0);
         }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using DungeonGeneration.Generator.Domain;
-using DungeonGeneration.Generator.Pickers;
+﻿using UnityEngine;
 using DungeonGeneration.Logging;
+using CaveGeneration.Generator;
 
 public class CaveGenBehaviour : MonoBehaviour {
 
@@ -16,6 +12,10 @@ public class CaveGenBehaviour : MonoBehaviour {
     public int _mapMaxWidth = 200;
     [Range(50, 300)]
     public int _mapMaxHeight = 200;
+    [Range(0, 10)]
+    public int _mapInnerMargin = 4;
+    public bool _mapCropEnabled = true;
+
     [Range(50, 100)]
     public int _cellularFillChance = 58;
     [Range(0, 10)]
@@ -51,11 +51,11 @@ public class CaveGenBehaviour : MonoBehaviour {
     //public bool _debugShowAsGizmos = false;
     //public bool _debugShowRoomPerimeter = false;
 
-    private CaveGridGenerator _generator;
+    private CaveGenerator _generator;
     private CaveRenderer _renderer;
 
     void Awake() {
-        _generator = new CaveGridGenerator();
+        _generator = new CaveGenerator();
         _renderer = CaveRenderer.newInstance(this);
     }
 
@@ -83,6 +83,9 @@ public class CaveGenBehaviour : MonoBehaviour {
 
         _generator.setCellularFillChance(_cellularFillChance);
         _generator.setCellularSmoothingSteps(_cellularSmoothSteps);
+
+        _generator.setMapMargin(_mapInnerMargin);
+        _generator.setMapCropEnabled(_mapCropEnabled);
 
         //if(_debugShowAsGizmos) return;
         if (_generator.asBoard().isEmpty()) {

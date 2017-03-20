@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 314428220}
   - component: {fileID: 314428219}
   m_Layer: 0
-  m_Name: MyLevelManager
+  m_Name: DunGenManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -327,7 +327,10 @@ MonoBehaviour:
   _roomSizeMax: 20
   _corridorLengthMin: 2
   _corridorLengthMax: 7
+  _corridorWidthMin: 3
+  _corridorWidthMax: 3
   _seed: 123456
+  _devMode: 0
   _randomSeed: 1
   _floorPrefab: {fileID: 1611164220234214, guid: c869b2f566828f04cbb21dc352b5988a,
     type: 2}

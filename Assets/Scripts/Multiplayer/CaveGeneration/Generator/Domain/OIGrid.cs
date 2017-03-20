@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 using DungeonGeneration.Generator.Domain;
 
 public class OIGrid : Grid {
     private int[,] _cells;
 
-    
+    public int[,] toIntMatrix() {
+        return (int[,])_cells.Clone();
+    }
+
     // Inverto le colonne della matrice, cosi riesco a vedere a video la mesh finale
     // nello stesso verso in cui e' la matrice (map) originale.
     public OIGrid mirror() {
@@ -104,6 +103,7 @@ public class OIGrid : Grid {
         return cellX >= 0 && cellX <= rows() - 1 && cellY >= 0 && cellY <= columns() - 1;
     }
 
+    /*
     public void printOnUnityConsole() {
         Debug.Log("Size: [" + rows() + ", " + columns()  + "]");
         String row = "";
@@ -116,6 +116,7 @@ public class OIGrid : Grid {
         }
         Debug.Log(row);
     }
+    */
 
     public void printOnConsole() {
         System.Console.WriteLine("Size: [" + rows() + ", " + columns() + "]");
