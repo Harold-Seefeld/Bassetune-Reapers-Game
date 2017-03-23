@@ -48,7 +48,7 @@ public class Room : IShape {
         return "Room: " + topLeftVertex() + " " + _grid;
     }
 
-    public void plotOn(int[,] map, IPlotter plotter) {
+    public void plotOn(int[,] map, IDungeonBoardPlotter plotter) {
         plotter.applyOnRoom(this, map);
         if (_outcomingCorridor != null) _outcomingCorridor.plotOn(map, plotter);
     }

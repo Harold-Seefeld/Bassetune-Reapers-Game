@@ -34,7 +34,7 @@ public class CaveBoard {
         return _roomsAndCorrs.Count;
     }
 
-    public int[,] asTilesMatrix(IPlotter plotter) {
+    public int[,] asTilesMatrix(IDungeonBoardPlotter plotter) {
         int[,] result = _grid.toIntMatrix();
 
         if (_roomsAndCorrs.Count > 0) {
@@ -42,6 +42,10 @@ public class CaveBoard {
             throw new NotImplementedException();
         }
         return result;
+    }
+
+    public IXShape[] all() {
+        return _roomsAndCorrs.ToArray();
     }
 
     //Added for Javascript

@@ -34,6 +34,22 @@ public class OIGrid : Grid {
         return result;
     }
 
+    public bool existsCellNeighborValue(int row, int col, int value) {
+        if (isCellValid(row-1, col) && hasCellValue(row-1, col, value)) {
+            return true;
+        }
+        if (isCellValid(row + 1, col) && hasCellValue(row + 1, col, value)) {
+            return true;
+        }
+        if (isCellValid(row, col-1) && hasCellValue(row, col-1, value)) {
+            return true;
+        }
+        if (isCellValid(row, col + 1) && hasCellValue(row, col + 1, value)) {
+            return true;
+        }
+        return false;
+    }
+
     //0 1
     public OIGrid invert() {
         OIGrid result = new OIGrid(rows(), columns());

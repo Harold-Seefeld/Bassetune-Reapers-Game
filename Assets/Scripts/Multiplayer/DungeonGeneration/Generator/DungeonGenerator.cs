@@ -20,7 +20,7 @@ namespace DungeonGeneration.Generator {
         private int _mapRows;
         private int _mapColumns;
         private IXLogger _logger;
-        private IPlotter _plotter;
+        private IDungeonBoardPlotter _plotter;
         private Board _board;
         private int _mapMargin;
         private bool _mapCropEnabled;
@@ -202,7 +202,7 @@ namespace DungeonGeneration.Generator {
             return asBoard().asTilesMatrix(_plotter);
         }
 
-        public void setPlotter(IPlotter plotter) {
+        public void setPlotter(IDungeonBoardPlotter plotter) {
             _plotter = plotter;
         }
 

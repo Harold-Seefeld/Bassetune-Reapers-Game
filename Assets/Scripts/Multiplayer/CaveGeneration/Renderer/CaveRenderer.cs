@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 public class CaveRenderer : ScriptableObject {
-    private CaveGenBehaviour _behavior;
+    private CaveGeneratorBehaviour _behavior;
 
-    private CaveRenderer(CaveGenBehaviour behaviour) {
+    private CaveRenderer(CaveGeneratorBehaviour behaviour) {
         _behavior = behaviour;
     }
 
@@ -34,13 +34,13 @@ public class CaveRenderer : ScriptableObject {
     }
 
         
-    public static CaveRenderer newInstance(CaveGenBehaviour behaviour) {
+    public static CaveRenderer newInstance(CaveGeneratorBehaviour behaviour) {
         CaveRenderer renderer = ScriptableObject.CreateInstance<CaveRenderer>();
         renderer.setBehaviour(behaviour);
         return renderer;
     }
 
-    private void setBehaviour(CaveGenBehaviour behav) {
+    private void setBehaviour(CaveGeneratorBehaviour behav) {
         _behavior = behav;
     }    
 }

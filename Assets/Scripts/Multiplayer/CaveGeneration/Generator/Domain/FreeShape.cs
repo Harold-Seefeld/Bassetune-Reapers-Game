@@ -30,7 +30,27 @@ public class FreeShape : IXShape {
     }
 
     public List<Cell> edge() {
-        throw new NotImplementedException();
+        List<Cell> result = new List<Cell>();
+        forEachCell((x, y, shape) => {
+            if (shape.hasCellValue(x, y, XTile.FLOOR)) {
+                for (int neighbourX = x - 1; neighbourX <= x + 1; neighbourX++) {
+                    for (int neighbourY = y - 1; neighbourY <= y + 1; neighbourY++) {
+                        if (shape.isCellValid(neighbourX, neighbourY)) {
+                            if (neighbourX != x || neighbourY != y) {
+                                if (shape.hasCellValue(neighbourX, neighbourY, XTile.WALL)) {
+                                    Cell cell = new Cell(x, y);
+                                    if (!result.Contains(cell)) result.Add(cell);
+                                }
+                            }
+                        } else {
+                            Cell cell = new Cell(x, y);
+                            if (!result.Contains(cell)) result.Add(cell);
+                        }
+                    }
+                }
+            }
+        });
+        return result;
     }
 
     public void forEachCell(Action<int, int, IXShape> doFunct) {
@@ -45,12 +65,17 @@ public class FreeShape : IXShape {
         }
     }
 
-    public bool hasCellValue(int neighbourX, int neighbourY, int v) {
-        throw new NotImplementedException();
+    public bool hasCellValue(int row, int col, int v) {
+        if (!isCellValid(row, col)) return false;
+        if (v == XTile.FLOOR) return true;
+        else return false;
     }
 
-    public bool isCellValid(int neighbourX, int neighbourY) {
-        throw new NotImplementedException();
+    public bool isCellValid(int row, int col) {
+        foreach(Cell each in _cells) {
+            if (each.row() == row && each.col() == col) return true;
+        }
+        return false;
     }
 
     public OIGrid grid() {
@@ -58,7 +83,7 @@ public class FreeShape : IXShape {
     }
 
     public void setCellValue(int cellX, int cellY, int v) {
-        throw new NotImplementedException();
+        _cells.Add(new Cell(cellX, cellY));
     }
 
     public CellPair shortestCellPair(IXShape other) {
@@ -84,5 +109,14 @@ public class FreeShape : IXShape {
 
     public bool containsCell(Cell each) {
         throw new NotImplementedException();
+    }
+
+    public void forEachEdgeCellAbs(Action<int, int, int> doFunct) {
+        List<Cell> edge = this.edge();
+        foreach (Cell each in edge) {
+            //Nel FreeShape le cell sono gia a valore assoluto.
+            //Cell abs = each.plus(topLeftVertex());
+            doFunct(each.row(), each.col(), XTile.FLOOR);
+        }
     }
 }

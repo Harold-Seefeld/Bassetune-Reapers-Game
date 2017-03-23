@@ -2,7 +2,7 @@
 using DungeonGeneration.Logging;
 using CaveGeneration.Generator;
 
-public class CaveGenBehaviour : MonoBehaviour {
+public class CaveGeneratorBehaviour : MonoBehaviour {
 
     public MeshFilter _ceilMeshFilter;
     public MeshFilter _wallMeshFilter;
@@ -12,7 +12,7 @@ public class CaveGenBehaviour : MonoBehaviour {
     public int _mapMaxWidth = 200;
     [Range(50, 300)]
     public int _mapMaxHeight = 200;
-    [Range(0, 10)]
+    [Range(1, 10)]
     public int _mapInnerMargin = 4;
     public bool _mapCropEnabled = true;
 
@@ -86,6 +86,8 @@ public class CaveGenBehaviour : MonoBehaviour {
 
         _generator.setMapMargin(_mapInnerMargin);
         _generator.setMapCropEnabled(_mapCropEnabled);
+
+        _generator.setPlotter(new ZeroOneFillerCavePlotter());
 
         //if(_debugShowAsGizmos) return;
         if (_generator.asBoard().isEmpty()) {

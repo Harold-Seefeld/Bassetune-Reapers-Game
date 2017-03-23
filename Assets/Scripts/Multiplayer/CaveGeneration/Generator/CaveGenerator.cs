@@ -14,6 +14,8 @@ namespace CaveGeneration.Generator {
         private int _cellularSmoothingStep;
         private int _seed;
         private IXLogger _logger;
+        private ICaveBoardPlotter<int[,]> _plotter;
+        private int _mapMargin;
 
         public CaveGenerator() {
             _dunGen = new DungeonGenerator();
@@ -21,6 +23,17 @@ namespace CaveGeneration.Generator {
             _logger = new NullLogger();
             _cellularFillChance = 50;
             _cellularSmoothingStep = 5;
+            setMapMargin(1);
+
+        }
+
+        private void checkConstraints() {
+            if (_mapMargin < 1) throw new FormatException("Invalid Map Margin: must be >= 1");
+        }
+
+
+        public void setPlotter(ICaveBoardPlotter<int[,]> plotter) {
+            _plotter = plotter;
         }
 
         public void setLogger(IXLogger logger) {
@@ -62,6 +75,8 @@ namespace CaveGeneration.Generator {
         }
 
         public CaveBoard asBoard() {
+            checkConstraints();
+
             Board board = _dunGen.asBoard();
             ShapeCellularAutomaton roomAlgo = new ShapeCellularAutomaton(_seed, _cellularFillChance, _cellularSmoothingStep);
             CustomSeededPickerStrategy shapePicker = new CustomSeededPickerStrategy(_seed);
@@ -110,6 +125,7 @@ namespace CaveGeneration.Generator {
         }
 
         public void setMapMargin(int mapMargin) {
+            _mapMargin = mapMargin;
             _dunGen.setMapMargin(mapMargin);
         }
 
@@ -182,14 +198,15 @@ namespace CaveGeneration.Generator {
         }
 
         public OIGrid asOIGrid() {
-            CaveBoard board = asBoard();
-            OIGrid grid = new OIGrid(board.rows(), board.cols());
-            board.accept(new OIGridFiller(grid));
-            return grid;
+            return new OIGrid(asMatrix());
+            //OIGrid grid = new OIGrid(board.rows(), board.cols());
+            //board.accept(new OIGridFiller(grid));
+            //return grid;
         }
 
         public int[,] asMatrix() {
-            return asOIGrid().toIntMatrix();
+            _plotter.applyOn(asBoard());
+            return _plotter.result();
         }
 
         private FreeShape createCorrShape(IXShape roomA, IXShape roomB, int corrWidth) {

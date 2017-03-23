@@ -4,7 +4,7 @@ using DungeonGeneration.Generator.Domain;
 
 namespace DungeonGeneration.Generator.Plotters {
 
-    public class ZeroOneTilesPlotter : IPlotter {
+    public class ZeroOneTilesPlotter : IDungeonBoardPlotter {
 
         public void applyOnCorridor(Corridor corridor, int[,] map) {
             for (int row = 0; row < corridor.height(); row++) {

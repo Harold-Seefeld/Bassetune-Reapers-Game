@@ -5,7 +5,7 @@ using DungeonGeneration.Generator.Domain;
 
 namespace DungeonGeneration.Generator.Plotters {
 
-    public class DetailedTilesPlotter : IPlotter {
+    public class DetailedTilesPlotter : IDungeonBoardPlotter {
         public DetailedTilesPlotter() {
         }
 

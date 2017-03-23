@@ -44,7 +44,7 @@ namespace DungeonGeneration.Generator.Domain {
             _roomsAndCorridors.Add(aRoom);
         }
 
-        public int[,] asTilesMatrix(IPlotter plotter) {
+        public int[,] asTilesMatrix(IDungeonBoardPlotter plotter) {
             int[,] result = new int[_grid.rows(), _grid.columns()];
 
             if (_roomsAndCorridors.Count > 0) {

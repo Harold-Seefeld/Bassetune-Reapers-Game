@@ -4,6 +4,6 @@ namespace DungeonGeneration.Generator.Domain {
         bool isWithin(Grid mapGrid);
         bool collidesWith(IShape each);
         bool containsCell(Cell _topLeftVertex);
-        void plotOn(int[,] map, IPlotter plotter);
+        void plotOn(int[,] map, IDungeonBoardPlotter plotter);
     }
 }

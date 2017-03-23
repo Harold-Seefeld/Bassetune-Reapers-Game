@@ -50,6 +50,14 @@ public abstract class APolyShape : IXShape {
         }
     }
 
+    public void forEachEdgeCellAbs(Action<int, int, int> doFunct) {
+        List<Cell> edge = this.edge();
+        foreach(Cell each in edge) {
+            Cell abs = each.plus(topLeftVertex());
+            doFunct(abs.row(), abs.col(), _grid.valueForCell(each.row(), each.col()));
+        }
+    }
+
     public Cell bottomLeftVertex() {
         return _topLeftVertex.plusSize(_grid.rows(), 0);
     }

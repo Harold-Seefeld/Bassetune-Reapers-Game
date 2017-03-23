@@ -34,7 +34,7 @@ public class Corridor : IShape {
         return false;
     }
 
-    public void plotOn(int[,] map, IPlotter plotter) {
+    public void plotOn(int[,] map, IDungeonBoardPlotter plotter) {
         if (hasDestRoom()) destRoom().plotOn(map, plotter);
         plotter.applyOnCorridor(this, map);
     }

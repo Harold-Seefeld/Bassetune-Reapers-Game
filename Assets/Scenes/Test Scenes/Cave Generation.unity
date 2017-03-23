@@ -763,10 +763,12 @@ MonoBehaviour:
   _floorMeshFilter: {fileID: 483204365}
   _mapMaxWidth: 200
   _mapMaxHeight: 200
+  _mapInnerMargin: 4
+  _mapCropEnabled: 1
   _cellularFillChance: 58
   _cellularSmoothSteps: 5
   _roomsNumberMin: 5
-  _roomsNumberMax: 11
+  _roomsNumberMax: 9
   _roomSizeMin: 40
   _roomSizeMax: 60
   _corridorLengthMin: 10
@@ -776,7 +778,7 @@ MonoBehaviour:
   _wallHeight: 5
   _ceilHeightVariation: 0
   _seed: 48
-  _randomSeed: 1
+  _randomSeed: 0
 --- !u!4 &2134365969
 Transform:
   m_ObjectHideFlags: 0

@@ -19,4 +19,5 @@ public interface IXShape {
     CellPair shortestCellPair(IXShape other);
     bool collidesWith(IXShape each);
     bool containsCell(Cell each);
+    void forEachEdgeCellAbs(Action<int, int, int> doFunct);
 }
