@@ -64,7 +64,7 @@ public class CharacterManager : MonoBehaviour {
             }
         }
         // TODO: Create character with given data (assign meshes, etc use a prefab)
-        Vector3 location = new Vector3(e.data.GetField("L").GetField("x").n, 1.35f, e.data.GetField("L").GetField("y").n);
+        Vector3 location = new Vector3(e.data.GetField("L").GetField("x").n, 0f, e.data.GetField("L").GetField("y").n);
         // Search for character, given a set of prefabs and an entity id
         GameObject newCharacter;
         for (var i = 0; i < characterPrefabs.prefabs.Length; i++)
@@ -81,8 +81,6 @@ public class CharacterManager : MonoBehaviour {
                 newCharacterData.CharacterMaxHP = (int)e.data.GetField("M").n;
                 // Add character data to the list
                 characterData.Add(newCharacterData);
-                // Allow character to be selected
-                newCharacter.AddComponent<UnityEngine.UI.Extensions.CharacterSelectable>();
 
                 // Set Default Character
                 if (Server.instance.currentPlayerID == newCharacterData.CharacterOwner)
@@ -134,7 +132,7 @@ public class CharacterManager : MonoBehaviour {
                 if (characterData[n].CharacterID == recievedCharacterID)// && characterData[n].CharacterOwner != Server.instance.currentPlayerID)
                 {
                     // TODO: Assign locations to character movement agents for smoothness
-                    Vector3 newPos = new Vector3(data[i].GetField("l").list[0].n, 1.35f, data[i].GetField("l").list[1].n);
+                    Vector3 newPos = new Vector3(data[i].GetField("l").list[0].n, 0f, data[i].GetField("l").list[1].n);
                     characterData[n].gridPlayer.currentDestination = newPos;
                 }
             }
@@ -157,7 +155,6 @@ public class CharacterManager : MonoBehaviour {
         {
             if (playerID != Server.instance.players[i].id) continue;
             var player = Server.instance.players[i];
-
             // Slot change
             if (e.data.HasField("a") && e.data.HasField("b"))
             {
@@ -235,8 +232,7 @@ public class CharacterManager : MonoBehaviour {
         }
 
         // Update menus
-        AbilityMenu.instance.UpdateMenu();
-        InventoryMenu.instance.UpdateMenu();
+        KnightUIManager.instance.UpdateInventory();
 
         // TODO: Update item equipped
     }

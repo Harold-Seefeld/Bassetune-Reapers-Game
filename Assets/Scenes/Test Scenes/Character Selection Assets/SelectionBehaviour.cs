@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class SelectionBehaviour : MonoBehaviour {
 
-    public CharacterData _currentCharacterData;
     private GameObject _currentSelection;
 
     void Start () {
-        _currentCharacterData = null;
         _currentSelection = null;
 	}
 	
@@ -27,7 +25,7 @@ public class SelectionBehaviour : MonoBehaviour {
             if (noSelection(found)) {
                 deselectCurrent();
             }  else if (isSelectingTwice(found)) {
-                deselectCurrent();
+                //deselectCurrent();
             } else if (isSelectingAnOther(found)) {
                 deselectCurrent();
                 setAsCurrentSelected(hitObject, found);
@@ -42,7 +40,7 @@ public class SelectionBehaviour : MonoBehaviour {
     private void setAsCurrentSelected(GameObject hitObject, GameObject found) {
         _currentSelection = found;
         _currentSelection.SetActive(true);
-        _currentCharacterData = hitObject.GetComponentInChildren<CharacterData>();
+        UseCaller.selectedCharacter = hitObject.GetComponent<CharacterData>();
     }
 
     private bool isSelectingAnOther(GameObject found) {
@@ -65,7 +63,6 @@ public class SelectionBehaviour : MonoBehaviour {
         if (_currentSelection == null) return;
         _currentSelection.SetActive(false);
         _currentSelection = null;
-        _currentCharacterData = null;
     }
 
     private GameObject lookUp(GameObject parent, string name) {

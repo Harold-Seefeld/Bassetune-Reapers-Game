@@ -40,13 +40,13 @@ public class GridPlayer : MonoBehaviour
             sentDestination = destination;
         }
 
-        if (currentDestination != transform.position)
+        if (Vector3.Distance(currentDestination, transform.position) > 0.3f)
         {
             // Use moving animation
-            animator.SetFloat("MoveSpeed", Mathf.Min(1, Vector3.Distance(currentDestination, transform.position) * Time.deltaTime * 64));
+            animator.SetFloat("MoveSpeed", Mathf.Min(1, Vector3.Distance(currentDestination, transform.position) * Time.deltaTime * 2048));
             animator.speed = animator.GetFloat("MoveSpeed");
             transform.position = Vector3.Lerp(transform.position, currentDestination, Time.deltaTime * 4);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(currentDestination - transform.position), Time.deltaTime * 4);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(currentDestination - transform.position), Time.deltaTime * 16);
         }
         else
         {
@@ -66,7 +66,7 @@ public class GridPlayer : MonoBehaviour
 
         if (Input.GetButtonDown("Move") && Input.mousePosition.x > (Screen.width / 10) * 7F && Input.mousePosition.y < (Screen.height / 10) * 3.5F)
         {
-            //Call to the player map
+            // Minimap Camera
             Ray ray = minimapCam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
             RaycastHit hit;
 
@@ -77,7 +77,7 @@ public class GridPlayer : MonoBehaviour
         }
         else if (Input.GetButtonDown("Move"))
         {
-            //Call minimap
+            // Main Camera
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
             RaycastHit hit;
 

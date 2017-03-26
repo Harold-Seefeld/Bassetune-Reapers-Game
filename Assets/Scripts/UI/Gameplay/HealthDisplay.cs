@@ -9,9 +9,9 @@ public class HealthDisplay : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // Show either default character or first selected characters health
-        if (UseCaller.selectedCharacters.Count > 0 && UseCaller.selectedCharacters[0])
+        if (UseCaller.selectedCharacter)
         {
-            CharacterData selectedCharacter = UseCaller.selectedCharacters[0];
+            CharacterData selectedCharacter = UseCaller.selectedCharacter;
             healthSlider.maxValue = selectedCharacter.CharacterMaxHP;
             healthSlider.value = selectedCharacter.CharacterHP;
         }

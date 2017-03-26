@@ -63,32 +63,35 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (!draggable) return;
         if (gameObject.GetComponent<ItemBase>().itemName == null) return;
 
-        InventorySlot inventorySlot = GetComponent<InventorySlot>();
-        if (swapped || InventorySlot.recievedParentName != null)
+        if (!Server.instance)
         {
-            // Send request to update slot inventory after delay
-            if (InventorySlot.recievedParentName != "Dungeon List")
+            InventorySlot inventorySlot = GetComponent<InventorySlot>();
+            if (swapped || InventorySlot.recievedParentName != null)
             {
-                Debug.Log(transform.parent.name);
-                StartCoroutine(OnEndDrag());
+                // Send request to update slot inventory after delay
+                if (InventorySlot.recievedParentName != "Dungeon List")
+                {
+                    Debug.Log(transform.parent.name);
+                    StartCoroutine(OnEndDrag());
+                }
+                else StartCoroutine(OnDungeonEndDrag());
             }
-            else StartCoroutine(OnDungeonEndDrag());
-        }
-        else if (!swapped && inventorySlot && inventorySlot.clearOnDrop && !droppedOnParent)
-        {
-            ItemBase item = GetComponent<ItemBase>();
-            if (item) Destroy(item);
-
-            Image image = GetComponent<Image>();
-            if (image) image.sprite = null;
-
-            // Send request to update slot inventory after delay
-            if (InventorySlot.recievedParentName == "Dungeon List" || transform.parent.name == "Dungeon List")
+            else if (!swapped && inventorySlot && inventorySlot.clearOnDrop && !droppedOnParent)
             {
-                Debug.Log(inventorySlot.transform.parent.name);
-                StartCoroutine(OnDungeonEndDrag());
+                ItemBase item = GetComponent<ItemBase>();
+                if (item) Destroy(item);
+
+                Image image = GetComponent<Image>();
+                if (image) image.sprite = null;
+
+                // Send request to update slot inventory after delay
+                if (InventorySlot.recievedParentName == "Dungeon List" || transform.parent.name == "Dungeon List")
+                {
+                    Debug.Log(inventorySlot.transform.parent.name);
+                    StartCoroutine(OnDungeonEndDrag());
+                }
+                else StartCoroutine(OnEndDrag());
             }
-            else StartCoroutine(OnEndDrag());
         }
 
         if (transform.parent == startParent)

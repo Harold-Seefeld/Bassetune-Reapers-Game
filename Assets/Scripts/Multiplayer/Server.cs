@@ -29,6 +29,7 @@ public class Server : MonoBehaviour {
     // Current character selections
 	public int currentPlayerID = -1;
     public CharacterData currentDefaultCharacter;
+    public Player currentPlayer;
 
     // Track when loading screen should dissapear
     public bool inventoryRecieved = false;
@@ -101,6 +102,7 @@ public class Server : MonoBehaviour {
             if (player.username == clientData.username)
             {
                 currentPlayerID = player.id;
+                currentPlayer = player;
 
                 if (player.side == "knight")
                 {
@@ -151,8 +153,7 @@ public class Server : MonoBehaviour {
 
             if (id == currentPlayerID && players[i].side == "knight")
             {
-                AbilityMenu.instance.UpdateMenu();
-                InventoryMenu.instance.UpdateMenu();
+                KnightUIManager.instance.UpdateInventory();
             }
         }
     }
@@ -174,8 +175,7 @@ public class Server : MonoBehaviour {
 
             if (id == currentPlayerID && players[i].side == "knight")
             {
-                AbilityMenu.instance.UpdateMenu();
-                InventoryMenu.instance.UpdateMenu();
+                KnightUIManager.instance.UpdateInventory();
             }
         }
     }

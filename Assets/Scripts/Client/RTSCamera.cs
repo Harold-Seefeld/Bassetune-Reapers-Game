@@ -49,7 +49,7 @@ public class RTSCamera : MonoBehaviour
             {
                 transform.Translate(Vector3.forward * Time.deltaTime * -PanSpeed, Space.World);
             }
-
+            /*
             if (Input.GetKey("q"))// || Input.mousePosition.x <= Screen.width * ScrollEdge)
             {
                 transform.Rotate(Vector3.up * Time.deltaTime * -rotateSpeed, Space.World);
@@ -58,6 +58,7 @@ public class RTSCamera : MonoBehaviour
             {
                 transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed, Space.World);
             }
+            */
         //}
 
         // zoom in/out

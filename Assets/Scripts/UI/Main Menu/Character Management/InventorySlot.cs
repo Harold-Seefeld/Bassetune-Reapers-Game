@@ -75,13 +75,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
 
         recievedParentName = thisItemSlot.transform.parent.name;
 
-        if (otherItemSlot && thisItemSlot)
-        {
-            List<SlotTag> tempTags = otherItemSlot.slotTags.GetRange(0, otherItemSlot.slotTags.Count);
-            otherItemSlot.slotTags = thisItemSlot.slotTags.GetRange(0, thisItemSlot.slotTags.Count);
-            thisItemSlot.slotTags = tempTags;
-        }
-        
         // Update slots on server
         if (Server.instance)
         {
@@ -98,7 +91,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
                 itemSwap.AddField("slot1", thisItemSlot.transform.GetSiblingIndex());
             }
             // Slot 2 index
-            if (otherItemSlot.transform.name == "Defensive Skills / Items")
+            if (otherItemSlot.transform.parent.name == "Defensive Skills / Items")
             {
                 itemSwap.AddField("slot2", 17 + otherItemSlot.transform.GetSiblingIndex());
             }
@@ -107,6 +100,15 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
                 itemSwap.AddField("slot2", otherItemSlot.transform.GetSiblingIndex());
             }
             CharacterManager.instance.socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, itemSwap);
+
+            return;
+        }
+
+        if (otherItemSlot && thisItemSlot)
+        {
+            List<SlotTag> tempTags = otherItemSlot.slotTags.GetRange(0, otherItemSlot.slotTags.Count);
+            otherItemSlot.slotTags = thisItemSlot.slotTags.GetRange(0, thisItemSlot.slotTags.Count);
+            thisItemSlot.slotTags = tempTags;
         }
 
         if (otherDrag && swappable && thisItemBase && otherItemSlot)

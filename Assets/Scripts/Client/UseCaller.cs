@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class UseCaller : MonoBehaviour {
 
     public static bool isKnight = true;
-    public static List<CharacterData> selectedCharacters = new List<CharacterData>();
+    public static CharacterData selectedCharacter;
 
     private SocketIOComponent socket;
     private bool leftClicked = false;
@@ -21,11 +21,6 @@ public class UseCaller : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        if (selectedCharacters.Count == 0 && Server.instance.currentDefaultCharacter)
-        {
-            selectedCharacters.Add(Server.instance.currentDefaultCharacter);
-        }
-
         // Inventory keybinds
         for (int i = 1; i <= 5; i++)
         {
@@ -74,61 +69,44 @@ public class UseCaller : MonoBehaviour {
 
     private void Use(int slotIndex, string itemType)
     {
-        ItemBase[] itemsAvailable = GetComponentsInChildren<ItemBase>();
+        selectedCharacter = Server.instance.currentDefaultCharacter;
+        Server.Player player = Server.instance.currentPlayer;
 
         Debug.Log("Used: " + slotIndex.ToString());
 
-        if (selectedCharacters.Count > 0)
+        if (Server.instance.currentPlayerID != selectedCharacter.CharacterOwner)
         {
-            CharacterData selectedCharacter = selectedCharacters[0];
-            if (itemsAvailable.Length < slotIndex || itemsAvailable[slotIndex].itemID == 0)
+            return;
+        }
+        if (itemType == "consumable")
+        {
+            for (int n = 0; n < player.itemInventory.Count; n++)
             {
-                return;
-            }
-            if (Server.instance.currentPlayerID != selectedCharacter.CharacterOwner)
-            {
-                return;
-            }
-            if (itemType == "consumable")
-            {
-                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-                Vector2 direction = new Vector2(mousePosition.x, mousePosition.z);
-
-                UseItem(slotIndex, selectedCharacter.CharacterID, direction);
-            }
-            else if (itemType == "ability")
-            {
-                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-                Vector2 direction = new Vector2(mousePosition.x, mousePosition.z);
-
-                UseAbility(slotIndex, direction, selectedCharacter.CharacterID);
+                if (player.itemInventory[n].list[2].n == slotIndex && player.itemInventory[n].list[0].n != 0)
+                    UseItem(slotIndex, selectedCharacter.CharacterID);
             }
         }
-
-        /* multiple cast: needs keybind
-        ItemBase[] itemsAvailable = GetComponentsInChildren<ItemBase>();
-        for (int i = 0; i < selectedCharacters.Count; i++)
+        else if (itemType == "ability")
         {
-            CharacterData selectedCharacter = selectedCharacters[i];
-            if (itemsAvailable.Length >= slotIndex || itemsAvailable[slotIndex].itemID == 0)
+            Vector2 direction = Vector2.zero;
+
+            // Main Camera
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                continue;
+                direction = new Vector2(hit.point.x, hit.point.z);
             }
-            if (selectedCharacter.CharacterEntity != selectedCharacters[i].CharacterEntity || Server.instance.currentPlayerID != selectedCharacter.CharacterOwner)
+
+            if (direction == Vector2.zero) return;
+
+            for (int n = 0; n < player.abilityInventory.Count; n++)
             {
-                continue;
-            }
-            if (itemType == "consumable")
-            {
-                // TODO: Update for inventory ranged weapons
-                UseItem(itemsAvailable[i].itemID, selectedCharacter.CharacterID, new Vector2(selectedCharacter.transform.forward.x, selectedCharacter.transform.forward.z));
-            }
-            else
-            {
-                //UseAbility();
+                if (player.abilityInventory[n].list[2].n == slotIndex && player.abilityInventory[n].list[0].n != 0)
+                    UseAbility(slotIndex, direction, selectedCharacter.CharacterID);
             }
         }
-        */
     }
 
     public void UseAbility(int slotID, Vector2 target, int characterID)
@@ -144,12 +122,9 @@ public class UseCaller : MonoBehaviour {
         socket.Emit(SocketIOEvents.Output.Knight.ABILITY_START, abilityUsage);
     }
 
-    public void UseItem(int slotID, int characterID, Vector2 target)
+    public void UseItem(int slotID, int characterID)
     {
         JSONObject itemUsage = new JSONObject(JSONObject.Type.OBJECT);
-        JSONObject directionData = new JSONObject(JSONObject.Type.OBJECT);
-        directionData.AddField("x", target.x);
-        directionData.AddField("y", target.y);
         itemUsage.AddField("characterID", characterID);
         itemUsage.AddField("slotID", slotID);
         socket.Emit(SocketIOEvents.Output.Knight.USE_ITEM, itemUsage);
