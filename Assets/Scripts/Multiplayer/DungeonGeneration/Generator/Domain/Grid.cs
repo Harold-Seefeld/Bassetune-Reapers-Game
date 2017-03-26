@@ -5,8 +5,8 @@
         private int _rows;
 
         public Grid(int rows, int columns) {
-            _columns = columns;
             _rows = rows;
+            _columns = columns;
         }
 
         public int columns() {
@@ -45,10 +45,6 @@
             if (rowIndex < 0 || rowIndex >= _rows) return false;
             if (colIndex < 0 || colIndex >= _columns) return false;
             return true;
-        }
-
-        public int[,] toIntMatrix() {
-            return new int[_rows, _columns];
         }
 
         public Cell topLeftVertex() {

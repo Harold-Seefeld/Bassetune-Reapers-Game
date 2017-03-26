@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DungeonGeneration.Generator.Plotters;
 
 namespace DungeonGeneration.Generator.Domain {
@@ -6,16 +7,24 @@ namespace DungeonGeneration.Generator.Domain {
     public class Board {
         private Grid _grid;
         private List<IShape> _roomsAndCorridors;
+        private int _margin;
 
         public Board(int rows, int columns)
-            : this(new Grid(rows, columns)) {
+            : this(rows, columns, 0) {
         }
-
-        public Board(Grid mapGrid) {
+        public Board(int rows, int columns, int margin)
+            : this(new Grid(rows, columns), margin) {
+        }
+        public Board(Grid mapGrid)
+            : this(mapGrid, 0) {
+        }
+        public Board(Grid mapGrid, int margin) {
             _grid = mapGrid;
             _roomsAndCorridors = new List<IShape>();
+            _margin = margin;
         }
 
+     
         public bool fitsIn(IShape aSquare) {
             if (!aSquare.isWithin(_grid)) return false;
             //Evito di controllare la collisione con l'ultimo, poiche' e' necessaria
@@ -35,8 +44,8 @@ namespace DungeonGeneration.Generator.Domain {
             _roomsAndCorridors.Add(aRoom);
         }
 
-        public int[,] asTilesMatrix(IPlotter plotter) {
-            int[,] result = _grid.toIntMatrix();
+        public int[,] asTilesMatrix(IDungeonBoardPlotter plotter) {
+            int[,] result = new int[_grid.rows(), _grid.columns()];
 
             if (_roomsAndCorridors.Count > 0) {
                 _roomsAndCorridors[0].plotOn(result, plotter);
@@ -78,6 +87,90 @@ namespace DungeonGeneration.Generator.Domain {
                 }
             }
             _roomsAndCorridors.RemoveAt(_roomsAndCorridors.Count - 1);
+        }
+
+        public Board resize(int mapMargin) {
+            if (mapMargin < 0) return this;
+
+            Board resized = new Board(rows() + mapMargin*2, cols() + mapMargin * 2);
+            foreach (IShape each in _roomsAndCorridors) {
+                if (each is Room) {
+                    Room r = (Room)each;
+                    Cell vert = r.topLeftVertex().plusCell(mapMargin, mapMargin);
+                    Room relocated = new Room(vert, r.grid());
+                    resized.addRoom(relocated);
+                } else {
+                    Corridor c = (Corridor)each;
+                    Cell vert = c.topLeftVertex().plusCell(mapMargin, mapMargin);
+                    Corridor.Orientation orient = c.isOrizontal() ? Corridor.Orientation.horizontal : Corridor.Orientation.vertical;
+                    Corridor relocated = new Corridor(vert, c.grid(), orient);
+                    resized.addCorridor(relocated);
+                }
+            }
+            return resized;
+        }
+
+        public Board crop() {
+            return crop(0);
+        }
+
+        public Board crop(int marginToAddAfterCrop) {
+            Cell upperTopLeftVert = null;
+            Cell righterBottomRightVert = null;
+            Cell downerBottomRightVert = null;
+            Cell lefterTopLeftVert = null;
+            foreach (Room each in rooms()) {
+                if (upperTopLeftVert == null) {
+                    upperTopLeftVert = each.topLeftVertex();
+                    righterBottomRightVert = each.bottomRightVertex();
+                    downerBottomRightVert = righterBottomRightVert;
+                    lefterTopLeftVert = upperTopLeftVert;
+                } else {
+                    if (each.topLeftVertex().isRowLesserThan(upperTopLeftVert)) {
+                        upperTopLeftVert = each.topLeftVertex();
+                    }
+                    if (each.bottomRightVertex().isColGreatherThan(righterBottomRightVert)) {
+                        righterBottomRightVert = each.bottomRightVertex();
+                    }
+                    if (each.bottomRightVertex().isRowGreatherThan(downerBottomRightVert)) {
+                        downerBottomRightVert = each.bottomRightVertex();
+                    }
+                    if (each.topLeftVertex().isColLesserThan(lefterTopLeftVert)) {
+                        lefterTopLeftVert = each.topLeftVertex();
+                    }
+                }
+            }
+
+            int rows = downerBottomRightVert.row() - upperTopLeftVert.row() + 1 + marginToAddAfterCrop*2;
+            int cols = righterBottomRightVert.col() - lefterTopLeftVert.col() + 1 + marginToAddAfterCrop * 2;
+
+            int cropUp = upperTopLeftVert.row() - marginToAddAfterCrop;
+            int cropLeft = lefterTopLeftVert.col() - marginToAddAfterCrop;
+
+            Board cropped = new Board(rows, cols);
+            foreach(IShape each in _roomsAndCorridors) {
+                if (each is Room) {
+                    Room r = (Room)each;
+                    Cell vert = r.topLeftVertex().minus(cropUp, cropLeft);
+                    Room relocated = new Room(vert, r.grid());
+                    cropped.addRoom(relocated);
+                } else {
+                    Corridor c = (Corridor)each;
+                    Cell vert = c.topLeftVertex().minus(cropUp, cropLeft);
+                    Corridor.Orientation orient = c.isOrizontal() ? Corridor.Orientation.horizontal : Corridor.Orientation.vertical;
+                    Corridor relocated = new Corridor(vert, c.grid(), orient);
+                    cropped.addCorridor(relocated);
+                }
+            }
+            return cropped;
+        }
+
+        public int cols() {
+            return _grid.columns();
+        }
+
+        public int rows() {
+            return _grid.rows();
         }
 
         public int numberOfRoomsAndCorridors() {

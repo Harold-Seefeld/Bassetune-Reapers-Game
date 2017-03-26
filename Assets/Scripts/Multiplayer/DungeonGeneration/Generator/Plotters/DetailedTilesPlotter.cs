@@ -5,7 +5,7 @@ using DungeonGeneration.Generator.Domain;
 
 namespace DungeonGeneration.Generator.Plotters {
 
-    public class DetailedTilesPlotter : IPlotter {
+    public class DetailedTilesPlotter : IDungeonBoardPlotter {
         public DetailedTilesPlotter() {
         }
 
@@ -13,8 +13,8 @@ namespace DungeonGeneration.Generator.Plotters {
             for (int row = 0; row < corridor.height(); row++) {
                 for (int col = 0; col < corridor.width(); col++) {
                     Cell pos = corridor.topLeftVertex().plusCell(row, col);
-                    int rowPos = pos.rowIndex();
-                    int colPos = pos.columnIndex();
+                    int rowPos = pos.row();
+                    int colPos = pos.col();
 
                     if (pos.isEqual(corridor.topLeftVertex())) {
                         map[rowPos, colPos] = corridor.isVertical() ? (int)DetailedTileType.Corner_OUT_NW : (int)DetailedTileType.Corner_OUT_SE;
@@ -40,30 +40,30 @@ namespace DungeonGeneration.Generator.Plotters {
 
             // Check if corridor shares vertexes with Source Room and Destination Room
             if (corridor.isSharingBottomLeftVertexWithSourceRoom()) {
-                map[corridor.bottomLeftVertex().rowIndex(),
-                    corridor.bottomLeftVertex().columnIndex()] = corridor.isVertical() ? (int)DetailedTileType.Wall_W : (int)DetailedTileType.Wall_S;
+                map[corridor.bottomLeftVertex().row(),
+                    corridor.bottomLeftVertex().col()] = corridor.isVertical() ? (int)DetailedTileType.Wall_W : (int)DetailedTileType.Wall_S;
             }
             if (corridor.isSharingTopRightVertexWithSourceRoom()) {
-                map[corridor.topRightVertex().rowIndex(), corridor.topRightVertex().columnIndex()] = corridor.isVertical() ? (int)DetailedTileType.Wall_E : (int)DetailedTileType.Wall_N;
+                map[corridor.topRightVertex().row(), corridor.topRightVertex().col()] = corridor.isVertical() ? (int)DetailedTileType.Wall_E : (int)DetailedTileType.Wall_N;
             }
             if (corridor.isSharingTopLeftVertexWithSourceRoom()) {
-                map[corridor.topLeftVertex().rowIndex(), corridor.topLeftVertex().columnIndex()] = corridor.isVertical() ? (int)DetailedTileType.Wall_W : (int)DetailedTileType.Wall_N;
+                map[corridor.topLeftVertex().row(), corridor.topLeftVertex().col()] = corridor.isVertical() ? (int)DetailedTileType.Wall_W : (int)DetailedTileType.Wall_N;
             }
             if (corridor.isSharingBottomRightVertexWithSourceRoom()) {
-                map[corridor.bottomRightVertex().rowIndex(), corridor.bottomRightVertex().columnIndex()] = corridor.isVertical() ? (int)DetailedTileType.Wall_E : (int)DetailedTileType.Wall_S;
+                map[corridor.bottomRightVertex().row(), corridor.bottomRightVertex().col()] = corridor.isVertical() ? (int)DetailedTileType.Wall_E : (int)DetailedTileType.Wall_S;
             }
 
             if (corridor.isSharingBottomLeftVertexWithDestRoom()) {
-                map[corridor.bottomLeftVertex().rowIndex(), corridor.bottomLeftVertex().columnIndex()] = corridor.isVertical() ? (int)DetailedTileType.Wall_W : (int)DetailedTileType.Wall_S;
+                map[corridor.bottomLeftVertex().row(), corridor.bottomLeftVertex().col()] = corridor.isVertical() ? (int)DetailedTileType.Wall_W : (int)DetailedTileType.Wall_S;
             }
             if (corridor.isSharingTopRightVertexWithDestRoom()) {
-                map[corridor.topRightVertex().rowIndex(), corridor.topRightVertex().columnIndex()] = corridor.isVertical() ? (int)DetailedTileType.Wall_E : (int)DetailedTileType.Wall_N;
+                map[corridor.topRightVertex().row(), corridor.topRightVertex().col()] = corridor.isVertical() ? (int)DetailedTileType.Wall_E : (int)DetailedTileType.Wall_N;
             }
             if (corridor.isSharingTopLeftVertexWithDestRoom()) {
-                map[corridor.topLeftVertex().rowIndex(), corridor.topLeftVertex().columnIndex()] = corridor.isVertical() ? (int)DetailedTileType.Wall_W : (int)DetailedTileType.Wall_N;
+                map[corridor.topLeftVertex().row(), corridor.topLeftVertex().col()] = corridor.isVertical() ? (int)DetailedTileType.Wall_W : (int)DetailedTileType.Wall_N;
             }
             if (corridor.isSharingBottomRightVertexWithDestRoom()) {
-                map[corridor.bottomRightVertex().rowIndex(), corridor.bottomRightVertex().columnIndex()] = corridor.isVertical() ? (int)DetailedTileType.Wall_E : (int)DetailedTileType.Wall_S;
+                map[corridor.bottomRightVertex().row(), corridor.bottomRightVertex().col()] = corridor.isVertical() ? (int)DetailedTileType.Wall_E : (int)DetailedTileType.Wall_S;
             }
         }
 
@@ -71,8 +71,8 @@ namespace DungeonGeneration.Generator.Plotters {
             for (int row = 0; row < room.height(); row++) {
                 for (int col = 0; col < room.width(); col++) {
                     Cell pos = room.topLeftVertex().plusCell(row, col);
-                    int rowPos = pos.rowIndex();
-                    int colPos = pos.columnIndex();
+                    int rowPos = pos.row();
+                    int colPos = pos.col();
 
                     if (pos.isEqual(room.topLeftVertex())) {
                         map[rowPos, colPos] = (int)DetailedTileType.Empty;
@@ -105,8 +105,8 @@ namespace DungeonGeneration.Generator.Plotters {
 
             //TOP LEFT VERTEX
             if (!room.hasCorridorSharingVertex(room.topLeftVertex())) {
-                xPosC = room.topLeftVertex().rowIndex();
-                yPosC = room.topLeftVertex().columnIndex();
+                xPosC = room.topLeftVertex().row();
+                yPosC = room.topLeftVertex().col();
                 map[xPosC, yPosC] = (int)DetailedTileType.Corner_INN_NW;
                 map[xPosC, yPosC + 1] = (int)DetailedTileType.Empty;
                 map[xPosC + 1, yPosC] = (int)DetailedTileType.Empty;
@@ -114,8 +114,8 @@ namespace DungeonGeneration.Generator.Plotters {
 
             //TOP RIGHT VERTEX
             if (!room.hasCorridorSharingVertex(room.topRightVertex())) {
-                xPosC = room.topRightVertex().rowIndex();
-                yPosC = room.topRightVertex().columnIndex();
+                xPosC = room.topRightVertex().row();
+                yPosC = room.topRightVertex().col();
                 map[xPosC, yPosC] = (int)DetailedTileType.Corner_INN_NE;
                 map[xPosC, yPosC - 1] = (int)DetailedTileType.Empty;
                 map[xPosC + 1, yPosC] = (int)DetailedTileType.Empty;
@@ -123,16 +123,16 @@ namespace DungeonGeneration.Generator.Plotters {
 
             //BOTTOM RIGHT VERTEX
             if (!room.hasCorridorSharingVertex(room.bottomRightVertex())) {
-                xPosC = room.bottomRightVertex().rowIndex();
-                yPosC = room.bottomRightVertex().columnIndex();
+                xPosC = room.bottomRightVertex().row();
+                yPosC = room.bottomRightVertex().col();
                 map[xPosC, yPosC] = (int)DetailedTileType.Corner_INN_SE;
                 map[xPosC, yPosC - 1] = (int)DetailedTileType.Empty;
                 map[xPosC - 1, yPosC] = (int)DetailedTileType.Empty;
             }
 
             if (!room.hasCorridorSharingVertex(room.bottomLeftVertex())) {
-                xPosC = room.bottomLeftVertex().rowIndex();
-                yPosC = room.bottomLeftVertex().columnIndex();
+                xPosC = room.bottomLeftVertex().row();
+                yPosC = room.bottomLeftVertex().col();
                 map[xPosC, yPosC] = (int)DetailedTileType.Corner_INN_SW;
                 map[xPosC, yPosC + 1] = (int)DetailedTileType.Empty;
                 map[xPosC - 1, yPosC] = (int)DetailedTileType.Empty;

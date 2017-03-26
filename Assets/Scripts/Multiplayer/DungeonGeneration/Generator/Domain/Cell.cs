@@ -59,11 +59,11 @@ namespace DungeonGeneration.Generator.Domain {
             return aGrid.hasCell(_row, _col);
         }
 
-        public int rowIndex() {
+        public int row() {
             return _row;
         }
 
-        internal int columnIndex() {
+        public int col() {
             return _col;
         }
 
@@ -113,10 +113,46 @@ namespace DungeonGeneration.Generator.Domain {
             return result;
         }
 
+        public bool isLesserThan(Cell other) {
+            int distanceA = new Cell(0, 0).distance(this);
+            int distanceB = new Cell(0, 0).distance(other);
+            return distanceA < distanceB;
+        }
+
+        public bool isRowLesserThan(Cell other) {
+            return row() < other.row();
+        }
+        public bool isColLesserThan(Cell other) {
+            return col() < other.col();
+        }
+
         public bool isGreatherThan(Cell other) {
             int distanceA = new Cell(0, 0).distance(this);
             int distanceB = new Cell(0, 0).distance(other);
             return distanceA > distanceB;
         }
+
+        public bool isRowGreatherThan(Cell other) {
+            return row() > other.row();
+        }
+        public bool isColGreatherThan(Cell other) {
+            return col() > other.col();
+        }
+
+        public Cell minus(int v1, int v2) {
+            return minusCell(v1, v2);
+        }
+
+        public double magnetude(Cell other) {
+            int diffY = Math.Abs(row()) - Math.Abs(other.row());
+            int diffX = Math.Abs(col()) - Math.Abs(other.col());
+            int sum = (int)(Math.Pow(diffY, 2) + Math.Pow(diffX, 2));
+            return Math.Round(Math.Sqrt(sum), 2);
+        }
+
+        public Cell plus(Cell cell) {
+            return plusCell(cell.row(), cell.col());
+        }
+
     }
 }

@@ -77,6 +77,51 @@ namespace DungeonGeneration.Generator.Domain {
 
             Assert.AreEqual(3, board.numberOfRoomsAndCorridors());
         }
-    }
 
+        [Test]
+        public void cropping_toZero_boardWithOneRoom() {
+            Board board = new Board(new Grid(10, 10));
+            Room room1 = new Room(new Cell(2, 2), new Grid(4, 4));
+            board.addRoom(room1);
+
+            Board cropped = board.crop();
+
+            Assert.AreEqual(4, cropped.rows());
+            Assert.AreEqual(4, cropped.cols());
+            Assert.AreEqual(new Cell(0, 0), cropped.rooms()[0].topLeftVertex());
+        }
+
+        [Test]
+        public void cropping__toZero_boardWithTwoRooms() {
+            Board board = new Board(new Grid(20, 20));
+            Room room1 = new Room(new Cell(0, 0), new Grid(13, 5));
+            Corridor corr1 = new Corridor(new Cell(4, 4), new Grid(3, 5), Corridor.Orientation.horizontal);
+            Room room2 = new Room(new Cell(2, 8), new Grid(9, 5));
+            board.addRoom(room1);
+            board.addCorridor(corr1);
+            board.addRoom(room2);
+
+            Board cropped = board.crop();
+
+            Assert.AreEqual(13, cropped.rows());
+            Assert.AreEqual(13, cropped.cols());
+            Assert.AreEqual(new Cell(0, 0), cropped.rooms()[0].topLeftVertex());
+            Assert.AreEqual(new Cell(4, 4), cropped.corridors()[0].topLeftVertex());
+            Assert.AreEqual(new Cell(2, 8), cropped.rooms()[1].topLeftVertex());
+        }
+
+        [Test]
+        public void cropping_toFour_boardWithOneRoom() {
+            Board board = new Board(new Grid(10, 10));
+            Room room1 = new Room(new Cell(2, 2), new Grid(4, 4));
+            board.addRoom(room1);
+
+            Board cropped = board.crop(4);
+
+            Assert.AreEqual(12, cropped.rows());
+            Assert.AreEqual(12, cropped.cols());
+            Assert.AreEqual(new Cell(4, 4), cropped.rooms()[0].topLeftVertex());
+        }
+    }
+   
 }

@@ -2,12 +2,16 @@
 using DungeonGeneration.Generator.Pickers;
 using DungeonGeneration.Logging;
 using DungeonGeneration.Generator.Plotters;
+using System;
 
 namespace DungeonGeneration.Generator {
 
-    public class TilesMapGenerator {
-        private int _corridorSizeMin;
-        private int _corridorSizeMax;
+    public class DungeonGenerator {
+        private int _corridorLengthMin;
+        private int _corridorLengthMax;
+        private int _corridorWidthMin;
+        private int _corridorWidthMax;
+
         private int _roomSizeMin;
         private int _roomSizeMax;
         private int _roomsNumberMin;
@@ -16,11 +20,18 @@ namespace DungeonGeneration.Generator {
         private int _mapRows;
         private int _mapColumns;
         private IXLogger _logger;
-        private IPlotter _plotter;
+        private IDungeonBoardPlotter _plotter;
         private Board _board;
+        private int _mapMargin;
+        private bool _mapCropEnabled;
 
-        public TilesMapGenerator() {
+        public DungeonGenerator() {
             _logger = new NullLogger();
+
+            _corridorWidthMin = 3;
+            _corridorWidthMax = 3;
+            _mapMargin = 0;
+            _mapCropEnabled = false;
             clearBoard();
         }
 
@@ -32,9 +43,15 @@ namespace DungeonGeneration.Generator {
             return _board == null;
         }
 
-        public void setCorridorSizeRange(int v1, int v2) {
-            _corridorSizeMin = v1;
-            _corridorSizeMax = v2;
+        public void setCorridorLengthRange(int v1, int v2) {
+            _corridorLengthMin = v1;
+            _corridorLengthMax = v2;
+            clearBoard();
+        }
+
+        public void setCorridorWidthRange(int v1, int v2) {
+            _corridorWidthMin = v1;
+            _corridorWidthMax = v2;
             clearBoard();
         }
 
@@ -67,8 +84,10 @@ namespace DungeonGeneration.Generator {
         }
 
         public Board asBoard() {
+            checkConstraints();
             if (!isBoardCleared()) return _board;
-            _board = new Board(_mapRows, _mapColumns);
+            //_board = new Board(_mapRows, _mapColumns);
+            _board = new Board(_mapRows - _mapMargin*2, _mapColumns - _mapMargin * 2);
 
             //IPickerStrategy seedStrategy = new RandomSeededPickerStrategy(_seed);
             CustomSeededPickerStrategy seedStrategy = new CustomSeededPickerStrategy(_seed);
@@ -76,7 +95,8 @@ namespace DungeonGeneration.Generator {
 
             IntInRangePicker roomNumberPicker = new IntInRangePicker(_roomsNumberMin, _roomsNumberMax, seedStrategy);
             IntInRangePicker roomSizePicker = new IntInRangePicker(_roomSizeMin, _roomSizeMax, seedStrategy);
-            IntInRangePicker corrSizePicker = new IntInRangePicker(_corridorSizeMin, _corridorSizeMax, seedStrategy);
+            IntInRangePicker corrLengthPicker = new IntInRangePicker(_corridorLengthMin, _corridorLengthMax, seedStrategy);
+            IntInRangePicker corrWidthPicker = new IntInRangePicker(_corridorWidthMin, _corridorWidthMax, seedStrategy);
             CardinalPointPicker cardPointPicker = new CardinalPointPicker(seedStrategy);
             CellInRangePicker cellRangePicker = new CellInRangePicker(seedStrategy);
 
@@ -88,7 +108,8 @@ namespace DungeonGeneration.Generator {
 
             Grid grid = new Grid(roomSizePicker.draw(), roomSizePicker.draw());
             Cell topLeftVertexMin = new Cell(0, 0);
-            Cell topLeftVertexMax = new Cell(_mapRows - 1, _mapColumns - 1).minusSize(grid.rows(), grid.columns());
+            Cell topLeftVertexMax = new Cell(_board.rows() - 1, _board.cols() - 1).minusSize(grid.rows(), grid.columns());
+            //Cell topLeftVertexMax = new Cell(_mapRows - 1, _mapColumns - 1).minusSize(grid.rows(), grid.columns()).minusCell(_mapMargin*2, _mapMargin*2);
             Cell topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
             Room lastRoom = new Room(topLeftCell, grid);
             if (!_board.fitsIn(lastRoom)) {
@@ -112,7 +133,7 @@ namespace DungeonGeneration.Generator {
                 int cardinalPointAttempt = 1;
                 Corridor lastCorridor = null;
                 do {
-                    lastCorridor = generateCorridor(lastDirection, lastRoom, corrSizePicker, cellRangePicker);
+                    lastCorridor = generateCorridor(lastDirection, lastRoom, corrLengthPicker, corrWidthPicker, cellRangePicker);
                     if (!_board.fitsIn(lastCorridor)) {
                         _logger.info("NO FITS: " + lastCorridor + " " + lastDirection);
                         lastCorridor = null;
@@ -149,14 +170,39 @@ namespace DungeonGeneration.Generator {
                     _board.addRoom(lastRoom);
                 }
             }
+
+            if (_mapMargin > 0) {
+                _board = _board.resize(_mapMargin);
+            }
+            if (_mapCropEnabled) {
+                _board = _board.crop(_mapMargin);
+            }
             return _board;
+        }
+
+        private void checkConstraints() {
+            if (_roomsNumberMax < _roomsNumberMin) throw new FormatException("Invalid Room Number: Max < Min");
+            if (_roomSizeMax < _roomSizeMin) throw new FormatException("Invalid Room Size: Max < Min");
+            if (_corridorLengthMax < _corridorLengthMin) throw new FormatException("Invalid Corridor Length: Max < Min");
+            if (_corridorWidthMax < _corridorWidthMin) throw new FormatException("Invalid Corridor Width: Max < Min");
+            if (_corridorWidthMax > _roomSizeMin) throw new FormatException("Invalid Corridor Width Max > Room Size Min");
+        }
+
+        public void setMapCropEnabled(bool enabled) {
+            _mapCropEnabled = enabled;
+            clearBoard();
+        }
+
+        public void setMapMargin(int mapMargin) {
+            _mapMargin = mapMargin;
+            clearBoard();
         }
 
         public int[,] asMatrix() {
             return asBoard().asTilesMatrix(_plotter);
         }
 
-        public void setPlotter(IPlotter plotter) {
+        public void setPlotter(IDungeonBoardPlotter plotter) {
             _plotter = plotter;
         }
 
@@ -175,7 +221,7 @@ namespace DungeonGeneration.Generator {
                 _logger.info("Min: " + topLeftVertexMin + " Max: " + topLeftVertexMax + " Selected: " + topLeftCell + " Exclusions: " + excludeOne + " - " + excludeTwo);
             } else if (lastCorridorDirection == CardinalPoint.EST) {
                 Cell topLeftVertexMax = lastCorr.topRightVertex();
-                Cell topLeftVertexMin = topLeftVertexMax.minusCell(roomRows-lastCorr.height(), 0);
+                Cell topLeftVertexMin = topLeftVertexMax.minusCell(roomRows - lastCorr.height(), 0);
                 //Excluding cells to avoid Inward and Outward Corner Walls Overlapping
                 Cell excludeOne = topLeftVertexMin.plusCell(1, 0);
                 Cell excludeTwo = topLeftVertexMax.minusCell(1, 0);
@@ -201,9 +247,9 @@ namespace DungeonGeneration.Generator {
             return new Room(topLeftCell, grid);
         }
 
-        private Corridor generateCorridor(CardinalPoint mapDirection, Room lastRoom, IntInRangePicker corrSizePicker, CellInRangePicker cellRangePicker) {
-            int corridorLenght = corrSizePicker.draw();
-            int corridorSection = 3;
+        private Corridor generateCorridor(CardinalPoint mapDirection, Room lastRoom, IntInRangePicker corrLengthPicker, IntInRangePicker corrWidthPicker, CellInRangePicker cellRangePicker) {
+            int corridorLenght = corrLengthPicker.draw();
+            int corridorSection = corrWidthPicker.draw();
 
             Corridor.Orientation corrOrient = 0;
             Grid grid = null;

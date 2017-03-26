@@ -34,7 +34,7 @@ public class Corridor : IShape {
         return false;
     }
 
-    public void plotOn(int[,] map, IPlotter plotter) {
+    public void plotOn(int[,] map, IDungeonBoardPlotter plotter) {
         if (hasDestRoom()) destRoom().plotOn(map, plotter);
         plotter.applyOnCorridor(this, map);
     }
@@ -174,5 +174,9 @@ public class Corridor : IShape {
             innerB = bottomRightVertex().minusCell(0, 1);
         }
         return innerA.cells(innerB);
+    }
+
+    public Grid grid() {
+        return _grid;
     }
 }
