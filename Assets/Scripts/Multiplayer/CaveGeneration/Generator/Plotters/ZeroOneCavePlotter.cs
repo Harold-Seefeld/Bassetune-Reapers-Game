@@ -20,13 +20,20 @@ public class ZeroOneCavePlotter : ICaveBoardPlotter<int[,]> {
         _grid = new OIGrid(board.rows(), board.cols());
 
         OIGrid populated = new OIGrid(board.rows(), board.cols());
-        foreach(IXShape eachShape in board.all()) {
+        foreach(IXShape eachShape in board.rooms()) {
             eachShape.forEachCellAbs((row, col, value) => {
                 populated.setCellValue(row, col, value);
             });
         }
-        
-         OIGrid inverted = populated.invert();
+        //Cosi i corridoi si sovrappongono alle celle 0 delle room.
+        foreach (IXShape eachShape in board.corridors()) {
+            eachShape.forEachCellAbs((row, col, value) => {
+                populated.setCellValue(row, col, value);
+            });
+        }
+
+
+        OIGrid inverted = populated.invert();
         
          inverted.forEach2((row, col, value) => {
              if (value == 1 && inverted.existsCellNeighborValue(row, col, 0)) {

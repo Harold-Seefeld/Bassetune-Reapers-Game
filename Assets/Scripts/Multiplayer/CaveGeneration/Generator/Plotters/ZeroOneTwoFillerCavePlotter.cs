@@ -5,10 +5,10 @@ using System.Text;
 using DungeonGeneration.Generator.Domain;
 
 
-public class ZeroOneFillerCavePlotter : ICaveBoardPlotter<int[,]> {
+public class ZeroOneTwoFillerCavePlotter : ICaveBoardPlotter<int[,]> {
     private OIGrid _grid;
     
-    public ZeroOneFillerCavePlotter() {
+    public ZeroOneTwoFillerCavePlotter() {
         _grid = new OIGrid(0, 0);
     }
 
@@ -21,7 +21,7 @@ public class ZeroOneFillerCavePlotter : ICaveBoardPlotter<int[,]> {
         }
         foreach (IXShape eachShape in board.corridors()) {
             eachShape.forEachCellAbs((row, col, value) => {
-                _grid.setCellValue(row, col, value);
+                _grid.setCellValue(row, col, 2);
             });
         }
     }

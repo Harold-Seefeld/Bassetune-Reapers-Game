@@ -4,6 +4,8 @@ using DungeonGeneration.Generator.Domain;
 
 public class FreeShape : IXShape {
     private List<Cell> _cells;
+    private IXShape _incoming;
+    private IXShape _outcoming;
 
     public FreeShape() {
         _cells = new List<Cell>();
@@ -116,6 +118,63 @@ public class FreeShape : IXShape {
         foreach (Cell each in edge) {
             //Nel FreeShape le cell sono gia a valore assoluto.
             //Cell abs = each.plus(topLeftVertex());
+            doFunct(each.row(), each.col(), XTile.FLOOR);
+        }
+    }
+
+    public Cell[] walkableCells() {
+        return _cells.ToArray();
+    }
+
+    public void setIncoming(IXShape incoming) {
+        _incoming = incoming;
+    }
+
+    public void setOutcoming(IXShape outcoming) {
+        _outcoming = outcoming;
+    }
+
+    public Cell bottomRightVertex() {
+        throw new NotImplementedException();
+    }
+
+    public bool hasCellAbsValue(Cell absCell, int v) {
+        return hasCellValue(absCell.row(), absCell.col(), v);
+    }
+
+    public Cell absCellFacing(Cell aCell) {
+        List<Cell> cellsOnEdge = edge();
+
+        if (cellsOnEdge.Contains(aCell.plusCell(1, 0))) {
+            return aCell.plusCell(1, 0);
+        }
+        if (cellsOnEdge.Contains(aCell.plusCell(0, 1))) {
+            return aCell.plusCell(0, 1);
+        }
+        if (cellsOnEdge.Contains(aCell.minusCell(1, 0))) {
+            return aCell.minusCell(1, 0);
+        }
+        if (cellsOnEdge.Contains(aCell.minusCell(0, 1))) {
+            return aCell.minusCell(0, 1);
+        }
+        return null;
+    }
+
+    public bool hasAbsCellFacing(Cell cell) {
+        return absCellFacing(cell) != null;
+    }
+
+   
+    public IXShape getIncoming() {
+        return _incoming;
+    }
+
+    public IXShape getOutcoming() {
+        return _outcoming;
+    }
+
+    public void forEachCell2(Action<int, int, int> doFunct) {
+        foreach (Cell each in _cells) {
             doFunct(each.row(), each.col(), XTile.FLOOR);
         }
     }

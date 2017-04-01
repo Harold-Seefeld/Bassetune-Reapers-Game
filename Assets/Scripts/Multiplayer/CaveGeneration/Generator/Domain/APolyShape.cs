@@ -7,6 +7,9 @@ public abstract class APolyShape : IXShape {
     private OIGrid _grid;
     private Cell _topLeftVertex;
 
+    private IXShape _incoming;
+    private IXShape _outcoming;
+
     public APolyShape(Cell topLeftVertex, OIGrid cells) {
         _topLeftVertex = topLeftVertex;
         _grid = cells;
@@ -36,6 +39,14 @@ public abstract class APolyShape : IXShape {
         }
     }
 
+    public void forEachCell2(Action<int, int, int> doFunct) {
+        for (int x = 0; x < _grid.rows(); x++) {
+            for (int y = 0; y < _grid.columns(); y++) {
+                if (isCellValid(x, y)) doFunct(x, y, getCellValue(x, y));
+            }
+        }
+    }
+
     public void forEachCellAbs(Action<int, int, int> doFunct) {
         for (int x = 0; x < _grid.rows(); x++) {
             for (int y = 0; y < _grid.columns(); y++) {
@@ -52,7 +63,7 @@ public abstract class APolyShape : IXShape {
 
     public void forEachEdgeCellAbs(Action<int, int, int> doFunct) {
         List<Cell> edge = this.edge();
-        foreach(Cell each in edge) {
+        foreach (Cell each in edge) {
             Cell abs = each.plus(topLeftVertex());
             doFunct(abs.row(), abs.col(), _grid.valueForCell(each.row(), each.col()));
         }
@@ -74,7 +85,7 @@ public abstract class APolyShape : IXShape {
         return _grid.valueForCell(cellX, cellY);
     }
 
-    public abstract bool isCellValid(int x, int y); 
+    public abstract bool isCellValid(int x, int y);
 
     public bool hasCellValue(int x, int y, int value) {
         return _grid.hasCellValue(x, y, value);
@@ -184,7 +195,7 @@ public abstract class APolyShape : IXShape {
     }
 
     public bool hasRegions() {
-        return regionsNumber() > 0;        
+        return regionsNumber() > 0;
     }
 
     private List<Cell> regionFrom(int startX, int startY) {
@@ -233,4 +244,82 @@ public abstract class APolyShape : IXShape {
         return aCell.isWithin(topLeftVertex(), bottomRightVertex());
     }
 
+    // Javascript API
+    public Cell[] walkableCells() {
+        List<Cell> result = new List<Cell>();
+        forEachCellAbs((row, col, value) => {
+            if (value == XTile.FLOOR) result.Add(new Cell(row, col));
+        });
+        return result.ToArray();
+    }
+
+    public void setIncoming(IXShape incoming) {
+        _incoming = incoming;
+    }
+
+    public void setOutcoming(IXShape outcoming) {
+        _outcoming = outcoming;
+    }
+
+    public bool hasCellAbsValue(Cell absCell, int value) {
+        Cell relCell = absCell.minusCell(topLeftVertex().row(), topLeftVertex().col());
+        return hasCellValue(relCell.row(), relCell.col(), value);
+    }
+
+    public Cell[] absCellsFacingOutcoming() {
+        if (_outcoming == null) return new Cell[0];
+        return absCellsFacingShape(_outcoming);
+    }
+
+    private Cell[] absCellsFacingShape(IXShape aShape) {
+        List<Cell> result = new List<Cell>();
+        forEachEdgeCellAbs((row, col, value) => {
+            Cell cell = new Cell(row, col);
+            if (aShape.hasAbsCellFacing(cell)) result.Add(cell);
+        });
+        return result.ToArray();
+    }
+
+    public Cell[] absCellsFacingIncoming() {
+        if (_incoming == null) return new Cell[0];
+        return absCellsFacingShape(_incoming);
+    }
+
+    public Cell absCellFacing(Cell aCell) {
+        List<Cell> cellsOnEdge = edge();
+
+        if (cellsOnEdge.Contains(aCell.plusCell(1, 0))) {
+            return aCell.plusCell(1, 0);
+        }
+        if (cellsOnEdge.Contains(aCell.plusCell(0, 1))) {
+            return aCell.plusCell(0, 1);
+        }
+        if (cellsOnEdge.Contains(aCell.minusCell(1, 0))) {
+            return aCell.minusCell(1, 0);
+        }
+        if (cellsOnEdge.Contains(aCell.minusCell(0, 1))) {
+            return aCell.minusCell(0, 1);
+        }
+        return null;
+    }
+
+    public bool hasAbsCellFacing(Cell cell) {
+        return absCellFacing(cell) != null;
+    }
+
+    public int height() {
+        return grid().rows();
+    }
+
+    public int width() {
+        return grid().columns();
+    }
+
+    public IXShape getIncoming() {
+        return _incoming;
+    }
+
+    public IXShape getOutcoming() {
+        return _outcoming;
+    }
 }
