@@ -5,7 +5,6 @@ using System;
 public class CaveBoard {
     private OIGrid _grid;
     private List<IXShape> _rooms;
-    private List<IXShape> _coors;
     private List<IXShape> _corrs;
     private List<IXShape> _roomsAndCorrs;
 
@@ -21,11 +20,21 @@ public class CaveBoard {
     }
 
     public void addRoom(IXShape aRoom) {
+        if (_roomsAndCorrs.Count != 0) {
+            IXShape prevCorr = _roomsAndCorrs[_roomsAndCorrs.Count - 1];
+            prevCorr.setOutcoming(aRoom);
+            aRoom.setIncoming(prevCorr);
+        }
         _rooms.Add(aRoom);
         _roomsAndCorrs.Add(aRoom);
     }
 
     public void addCorridor(IXShape corr) {
+        if (_roomsAndCorrs.Count != 0) {
+            IXShape prevRoom = _roomsAndCorrs[_roomsAndCorrs.Count - 1];
+            prevRoom.setOutcoming(corr);
+            corr.setIncoming(prevRoom);
+        }
         _corrs.Add(corr);
         _roomsAndCorrs.Add(corr);
     }
@@ -55,7 +64,7 @@ public class CaveBoard {
 
     //Added for Javascript
     public IXShape[] corridors() {
-        return _coors.ToArray();
+        return _corrs.ToArray();
     }
 
     public int rows() {

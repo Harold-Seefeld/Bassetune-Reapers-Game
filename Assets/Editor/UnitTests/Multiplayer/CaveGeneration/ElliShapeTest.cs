@@ -29,15 +29,10 @@ public class ElliShapeTest {
     public void deleteRegionsButTheBiggest_Ellibug() {
         ElliShape shape = new ElliShape(new Cell(0, 0), new OIGrid(10, 10));
         shape.setCellValue(5, 9, XTile.FLOOR);
-
-        shape.grid().printOnConsole();
-
         Assert.AreEqual(1, shape.regionsNumber());
 
         shape.deleteRegionsButTheBiggest();
         Assert.AreEqual(1, shape.regionsNumber());
-
-        //Assert.IsTrue(shape.hasCellValue(1, 1, XTile.FLOOR));
     }
 
 }

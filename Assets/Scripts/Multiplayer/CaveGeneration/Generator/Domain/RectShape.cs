@@ -11,4 +11,5 @@ public class RectShape : APolyShape {
     public override bool isCellValid(int x, int y) {
         return x >= 0 && x <  grid().rows() && y >= 0 && y < grid().columns();
     }
+
 }

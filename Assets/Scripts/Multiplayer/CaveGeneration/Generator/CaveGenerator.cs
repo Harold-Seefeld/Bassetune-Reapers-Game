@@ -76,7 +76,7 @@ namespace CaveGeneration.Generator {
 
         public CaveBoard asBoard() {
             checkConstraints();
-
+            
             Board board = _dunGen.asBoard();
             ShapeCellularAutomaton roomAlgo = new ShapeCellularAutomaton(_seed, _cellularFillChance, _cellularSmoothingStep);
             CustomSeededPickerStrategy shapePicker = new CustomSeededPickerStrategy(_seed);
@@ -106,15 +106,16 @@ namespace CaveGeneration.Generator {
                 currentRoom.deleteRegionsButTheBiggest();
                 _logger.info("Shape regions after clean: " + currentRoom.regionsNumber());
 
-                result.addRoom(currentRoom);
+                
                 onlyRooms.Add(currentRoom);
                 if (onlyRooms.Count > 1) {
                     IXShape previousRoom = onlyRooms[onlyRooms.Count - 2];
                     int corrIndex = onlyRooms.Count - 2;
                     Corridor corr = board.corridors()[corrIndex];
                     int corridorSection = corr.isVertical() ? corr.width() : corr.height();
-                    result.addCorridor(createCorrShape(previousRoom, currentRoom, corridorSection));
+                    result.addCorridor(CaveCorridorFactory.createCorrShape(previousRoom, currentRoom, corridorSection));
                 }
+                result.addRoom(currentRoom);
 
             }
             return result;
@@ -128,80 +129,9 @@ namespace CaveGeneration.Generator {
             _mapMargin = mapMargin;
             _dunGen.setMapMargin(mapMargin);
         }
-
-        private List<Cell> GetLine(Cell from, Cell to) {
-            List<Cell> line = new List<Cell>();
-
-            int x = from.row();
-            int y = from.col();
-
-            int dx = to.row() - from.row();
-            int dy = to.col() - from.col();
-
-            bool inverted = false;
-            int step = Math.Sign(dx);
-            int gradientStep = Math.Sign(dy);
-
-            int longest = Math.Abs(dx);
-            int shortest = Math.Abs(dy);
-
-            if (longest < shortest) {
-                inverted = true;
-                longest = Math.Abs(dy);
-                shortest = Math.Abs(dx);
-
-                step = Math.Sign(dy);
-                gradientStep = Math.Sign(dx);
-            }
-
-            int gradientAccumulation = longest / 2;
-            for (int i = 0; i < longest; i++) {
-                line.Add(new Cell(x, y));
-
-                if (inverted) {
-                    y += step;
-                } else {
-                    x += step;
-                }
-
-                gradientAccumulation += shortest;
-                if (gradientAccumulation >= longest) {
-                    if (inverted) {
-                        x += gradientStep;
-                    } else {
-                        y += gradientStep;
-                    }
-                    gradientAccumulation -= longest;
-                }
-            }
-
-            return line;
-        }
-
-        private List<Cell> DrawCircle(Cell cell, int sectionSize) {
-            List<Cell> result = new List<Cell>();
-            for (int row = -sectionSize; row <= sectionSize; row++) {
-                for (int col = -sectionSize; col <= sectionSize; col++) {
-                    if (row * row + col * col <= sectionSize * sectionSize) {
-                        int drawX = cell.row() + row;
-                        int drawY = cell.col() + col;
-                        /*
-                        if (IsInMapRange(drawX, drawY)) {
-                            map[drawX, drawY] = 0;
-                        }
-                        */
-                        result.Add(new Cell(drawX, drawY));
-                    }
-                }
-            }
-            return result;
-        }
-
+   
         public OIGrid asOIGrid() {
             return new OIGrid(asMatrix());
-            //OIGrid grid = new OIGrid(board.rows(), board.cols());
-            //board.accept(new OIGridFiller(grid));
-            //return grid;
         }
 
         public int[,] asMatrix() {
@@ -209,16 +139,7 @@ namespace CaveGeneration.Generator {
             return _plotter.result();
         }
 
-        private FreeShape createCorrShape(IXShape roomA, IXShape roomB, int corrWidth) {
-            CellPair pair = roomA.shortestCellPair(roomB);
-            List<Cell> line = GetLine(pair.cell1, pair.cell2);
-            FreeShape corrAtoB = new FreeShape();
-            foreach (Cell each in line) {
-                List<Cell> vCells = DrawCircle(each, corrWidth);
-                corrAtoB.add(vCells);
-            }
-            return corrAtoB;
-        }
+        
     }
 }
 

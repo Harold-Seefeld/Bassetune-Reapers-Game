@@ -48,9 +48,6 @@ public class CaveGeneratorBehaviour : MonoBehaviour {
     public int _seed = 48;
     public bool _randomSeed = false;
 
-    //public bool _debugShowAsGizmos = false;
-    //public bool _debugShowRoomPerimeter = false;
-
     private CaveGenerator _generator;
     private CaveRenderer _renderer;
 
@@ -89,7 +86,6 @@ public class CaveGeneratorBehaviour : MonoBehaviour {
 
         _generator.setPlotter(new ZeroOneFillerCavePlotter());
 
-        //if(_debugShowAsGizmos) return;
         if (_generator.asBoard().isEmpty()) {
             _ceilMeshFilter.mesh = null;
             _wallMeshFilter.mesh = null;
@@ -100,15 +96,4 @@ public class CaveGeneratorBehaviour : MonoBehaviour {
         }
         _renderer.convertToMeshes(_generator.asOIGrid());
     }
-
-   /*
-    void OnDrawGizmos() {
-        if (!_debugShowAsGizmos) return;
-        if (_shapes.Count == 0) return;
-        
-        foreach(IXShape each in _shapes) {
-           each.accept(new BlackAndWhiteGizmoDrawer(_debugShowRoomPerimeter));
-        }
-    }
-    */
 }
