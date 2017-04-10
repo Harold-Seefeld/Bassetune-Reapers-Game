@@ -84,6 +84,7 @@ namespace DungeonGeneration {
 
             transform.rotation = Quaternion.Euler(0, 90, 0);
             transform.localScale = new Vector3(-1, 1, -1);
+            transform.position = new Vector3(0.5f, 0, 0.5f);
         }
     }
 }
