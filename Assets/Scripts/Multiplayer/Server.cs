@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 using SocketIO;
 using System.Collections.Generic;
 
-public class Server : MonoBehaviour {
+public class Server : MonoBehaviour
+{
 
     // Connection to the server
     public string serverIP = "";
@@ -14,21 +15,24 @@ public class Server : MonoBehaviour {
 
     public static Server instance;
 
-	// Contains info about each player
-	public class Player
+    // Contains info about each player
+    public class Player
     {
-		public int id;
-		public string username;
-		public string nickname;
-		public string side;
+        public int id;
+        public string username;
+        public string nickname;
+        public string side;
         public List<JSONObject> itemInventory = new List<JSONObject>();
         public List<JSONObject> abilityInventory = new List<JSONObject>();
     }
-	public Player[] players;
+    public Player[] players;
 
     // Current character selections
-	public int currentPlayerID = -1;
-    public CharacterData currentDefaultCharacter;
+    public int currentPlayerID = -1;
+    private CharacterData defaultCharacter;
+    public CharacterData currentDefaultCharacter {
+        get { return defaultCharacter; }
+        set { defaultCharacter = value; SelectionBehaviour.instance.SetSelected(value.gameObject); } }
     public Player currentPlayer;
 
     // Track when loading screen should dissapear
@@ -42,7 +46,7 @@ public class Server : MonoBehaviour {
     {
         instance = this;
     }
- 
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -113,7 +117,7 @@ public class Server : MonoBehaviour {
                     GameObject.Find("Knight Canvas").SetActive(false);
                 }
             }
-         }
+        }
 
         // Set Default Character
         foreach (CharacterData characterData in CharacterManager.instance.characterData)

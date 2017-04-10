@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class SelectionBehaviour : MonoBehaviour {
 
-    private GameObject _currentSelection;
+    public static SelectionBehaviour instance;
+
+    public GameObject _currentSelection;
 
     void Start () {
-        _currentSelection = null;
+        instance = this;
 	}
 	
 	void Update () {
@@ -22,47 +24,37 @@ public class SelectionBehaviour : MonoBehaviour {
             if (hitObject == null) return;
 
             GameObject found = lookUp(hitObject, "Selection");
-            if (noSelection(found)) {
-                deselectCurrent();
-            }  else if (isSelectingTwice(found)) {
-                //deselectCurrent();
-            } else if (isSelectingAnOther(found)) {
-                deselectCurrent();
-                setAsCurrentSelected(hitObject, found);
-            } else {
+            if (found) {
+                if (_currentSelection) deselectCurrent();
                 setAsCurrentSelected(hitObject, found);
             }
-        } else {
-            deselectCurrent();
         }
 	}
 
+    public void SetSelected(GameObject character)
+    {
+        character = character.transform.root.gameObject;
+        GameObject found = lookUp(character, "Selection");
+        if (found)
+        {
+            if (_currentSelection) deselectCurrent();
+            setAsCurrentSelected(character, found);
+        }
+    }
+
     private void setAsCurrentSelected(GameObject hitObject, GameObject found) {
-        _currentSelection = found;
-        _currentSelection.SetActive(true);
-        UseCaller.selectedCharacter = hitObject.GetComponent<CharacterData>();
+        _currentSelection = hitObject;
+        found.SetActive(true);
     }
 
-    private bool isSelectingAnOther(GameObject found) {
-        if (_currentSelection == null) return false;
-        if (_currentSelection == found) return false;
-        return true;
-    }
-
-    private bool isSelectingTwice(GameObject found) {
-        if (_currentSelection == null) return false;
-        if (_currentSelection != found) return false;
-        return true;
+    private void deselectCurrent()
+    {
+        GameObject found = lookUp(_currentSelection, "Selection");
+        found.SetActive(false);
     }
 
     private bool noSelection(GameObject found) {
         return found == null;
-    }
-
-    private void deselectCurrent() {
-        if (_currentSelection == null) return;
-        _currentSelection.SetActive(false);
-        _currentSelection = null;
     }
 
     private GameObject lookUp(GameObject parent, string name) {

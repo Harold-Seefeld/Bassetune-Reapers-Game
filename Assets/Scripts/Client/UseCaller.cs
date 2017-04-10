@@ -6,7 +6,21 @@ using System.Collections.Generic;
 public class UseCaller : MonoBehaviour {
 
     public static bool isKnight = true;
-    public static CharacterData selectedCharacter;
+    public static CharacterData selectedCharacter
+    {
+        get
+        {
+            if (SelectionBehaviour.instance._currentSelection)
+            {
+                return SelectionBehaviour.instance._currentSelection.GetComponent<CharacterData>();
+            }
+            else return null;
+        }
+        set
+        {
+            SelectionBehaviour.instance.SetSelected(value.gameObject);
+        }
+    }
 
     private SocketIOComponent socket;
     private bool leftClicked = false;
@@ -16,6 +30,8 @@ public class UseCaller : MonoBehaviour {
     {
         // Get socket object
         socket = FindObjectOfType<SocketIOComponent>();
+        // Get minimap if possible
+        if (GameObject.Find("MinimapCam")) miniMapCamera = GameObject.Find("MinimapCam").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -27,6 +43,7 @@ public class UseCaller : MonoBehaviour {
             if (Input.GetButtonDown("Inventory" + i.ToString()))
             {
                 Use(i + 19, "consumable");
+                return;
             }
         }
 
@@ -39,11 +56,13 @@ public class UseCaller : MonoBehaviour {
                 {
                     leftClicked = true;
                     Use(i - 1, "ability");
+                    return;
                 }
                 else if (Input.GetButtonDown("Off-hand Attack"))
                 {
                     leftClicked = false;
                     Use(i - 1, "ability");
+                    return;
                 }
             }
         }
@@ -57,25 +76,34 @@ public class UseCaller : MonoBehaviour {
                 {
                     leftClicked = true;
                     Use(i + 7, "ability");
+                    return;
                 }
                 else if (Input.GetButtonDown("Off-hand Attack"))
                 {
                     leftClicked = false;
                     Use(i + 7, "ability");
+                    return;
                 }
             }
+        }
+
+        if (Input.GetButtonDown("Move"))
+        {
+            UpdateDestination();
+            return;
         }
     }
 
     private void Use(int slotIndex, string itemType)
     {
-        selectedCharacter = Server.instance.currentDefaultCharacter;
+        //selectedCharacter = Server.instance.currentDefaultCharacter;
         Server.Player player = Server.instance.currentPlayer;
 
         Debug.Log("Used: " + slotIndex.ToString());
 
         if (Server.instance.currentPlayerID != selectedCharacter.CharacterOwner)
         {
+            selectedCharacter = Server.instance.currentDefaultCharacter;
             return;
         }
         if (itemType == "consumable")
@@ -128,5 +156,38 @@ public class UseCaller : MonoBehaviour {
         itemUsage.AddField("characterID", characterID);
         itemUsage.AddField("slotID", slotID);
         socket.Emit(SocketIOEvents.Output.Knight.USE_ITEM, itemUsage);
+    }
+
+    private Camera miniMapCamera;
+    private void UpdateDestination()
+    {
+        if (Server.instance.currentPlayerID != selectedCharacter.CharacterOwner)
+        {
+            selectedCharacter = Server.instance.currentDefaultCharacter;
+        }
+
+        if (miniMapCamera && Input.mousePosition.x > (Screen.width / 10) * 7F && Input.mousePosition.y < (Screen.height / 10) * 3.5F)
+        {
+            // Minimap Camera
+            Ray ray = miniMapCamera.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                // Emitting X, Z to server for verification
+                CharacterManager.instance.AddLocation(selectedCharacter.CharacterID.ToString(), new Vector2(hit.point.x, hit.point.z));
+            }
+        }
+        else
+        {
+            // Main Camera
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                CharacterManager.instance.AddLocation(selectedCharacter.CharacterID.ToString(), new Vector2(hit.point.x, hit.point.z));
+            }
+        }
     }
 }
