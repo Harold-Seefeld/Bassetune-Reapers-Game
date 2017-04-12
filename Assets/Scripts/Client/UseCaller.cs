@@ -92,6 +92,12 @@ public class UseCaller : MonoBehaviour {
             UpdateDestination();
             return;
         }
+
+        if (Input.GetButtonDown("Selection"))
+        {
+            SelectionBehaviour.instance.CheckForSelection();
+            return;
+        }
     }
 
     private void Use(int slotIndex, string itemType)

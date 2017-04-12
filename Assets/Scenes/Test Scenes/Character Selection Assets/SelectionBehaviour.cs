@@ -13,9 +13,7 @@ public class SelectionBehaviour : MonoBehaviour {
         instance = this;
 	}
 	
-	void Update () {
-        if (!Input.GetMouseButtonUp(0)) return;
-
+	public void CheckForSelection () {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
