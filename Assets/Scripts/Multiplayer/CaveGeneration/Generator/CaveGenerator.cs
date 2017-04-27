@@ -14,7 +14,7 @@ namespace CaveGeneration.Generator {
         private int _cellularSmoothingStep;
         private int _seed;
         private IXLogger _logger;
-        private ICaveBoardPlotter<int[,]> _plotter;
+        protected ICaveBoardPlotter<int[,]> _plotter;
         private int _mapMargin;
 
         public CaveGenerator() {
@@ -24,7 +24,6 @@ namespace CaveGeneration.Generator {
             _cellularFillChance = 50;
             _cellularSmoothingStep = 5;
             setMapMargin(1);
-
         }
 
         private void checkConstraints() {

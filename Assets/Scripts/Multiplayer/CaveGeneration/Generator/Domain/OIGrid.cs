@@ -10,13 +10,33 @@ public class OIGrid : Grid {
 
     // Inverto le colonne della matrice, cosi riesco a vedere a video la mesh finale
     // nello stesso verso in cui e' la matrice (map) originale.
-    public OIGrid mirror() {
+    public OIGrid mirrorOnColumns() {
         OIGrid result = new OIGrid(rows(), columns());
         for (int x = 0; x < rows(); x++) {
             for (int y = 0; y < columns(); y++) {
                 //int invertedY = _height - 1 - y;
                 int invertedY = columns() - 1 - y;
                 result[x, invertedY] = _cells[x, y];
+            }
+        }
+        return result;
+    }
+
+    public OIGrid replace(int toBeReplace, int newValue) {
+        OIGrid result = new OIGrid(rows(), columns());
+        forEach2((row, col, value) => {
+            if (value == toBeReplace) result.setCellValue(row, col, newValue);
+            else result.setCellValue(row, col, value);
+        });
+        return result;
+    }
+
+    public OIGrid mirrorOnRows() {
+        OIGrid result = new OIGrid(rows(), columns());
+        for (int x = 0; x < rows(); x++) {
+            for (int y = 0; y < columns(); y++) {
+                int inverted = rows() - 1 - x;
+                result[inverted, y] = _cells[x, y];
             }
         }
         return result;
@@ -48,6 +68,14 @@ public class OIGrid : Grid {
             return true;
         }
         return false;
+    }
+
+    public OIGrid clone() {
+        OIGrid result = new OIGrid(rows(), columns());
+        forEach2((x, y, value) => {
+            result[x, y] = value;
+        });
+        return result;
     }
 
     //0 1
@@ -137,14 +165,13 @@ public class OIGrid : Grid {
     public void printOnConsole() {
         System.Console.WriteLine("Size: [" + rows() + ", " + columns() + "]");
         String row = "";
-        for (int x = 0; x < rows(); x++) {
+        for (int eachRow = 0; eachRow < rows(); eachRow++) {
             row = "";
-            for (int y = 0; y < columns(); y++) {
-                row += _cells[x, y];
+            for (int eachCol = 0; eachCol < columns(); eachCol++) {
+                row += _cells[eachRow, eachCol];
             }
             System.Console.WriteLine(row);
         }
-
     }
 
     public int[,] asMatrix() {

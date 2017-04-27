@@ -14,7 +14,7 @@ namespace DungeonGeneration.Generator.Pickers {
         }
 
         public int drawBetween(int min, int max) {
-            return _random.Next(min, max);
+            return _random.Next(min, max+1);
         }
     }
 }
