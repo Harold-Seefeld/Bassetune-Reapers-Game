@@ -9,7 +9,7 @@ namespace DungeonGeneration.Generator.Pickers {
             Assert.AreEqual(1, picker.draw());
             Assert.AreEqual(1, picker.draw());
             Assert.AreEqual(2, picker.draw());
-            Assert.AreEqual(4, picker.draw());
+            Assert.AreEqual(5, picker.draw());
         }
     }
 }

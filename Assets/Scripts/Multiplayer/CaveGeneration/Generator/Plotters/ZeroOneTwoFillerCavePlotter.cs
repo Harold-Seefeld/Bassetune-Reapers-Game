@@ -29,5 +29,6 @@ public class ZeroOneTwoFillerCavePlotter : ICaveBoardPlotter<int[,]> {
     public int[,] result() {
         return _grid.asMatrix();
     }
+
 }
 

@@ -31,24 +31,20 @@ public class ZeroOneCavePlotter : ICaveBoardPlotter<int[,]> {
                 populated.setCellValue(row, col, value);
             });
         }
-
-
+            
         OIGrid inverted = populated.invert();
-        
-         inverted.forEach2((row, col, value) => {
-             if (value == 1 && inverted.existsCellNeighborValue(row, col, 0)) {
-                 _grid.setCellValue(row, col, 1);
-             } else { 
-                 _grid.setCellValue(row, col, 0);
-             }
-         });
-        
-        //_grid = inverted;
-
+        inverted.forEach2((row, col, value) => {
+            if (value == 1 && inverted.existsCellNeighborValue(row, col, 0)) {
+                _grid.setCellValue(row, col, 1);
+            } else { 
+                _grid.setCellValue(row, col, 0);
+            }
+        });
     }
 
     public int[,] result() {
         return _grid.asMatrix();
     }
+
 }
 

@@ -536,5 +536,4 @@ public class CaveGenTest {
         Assert.AreEqual(0, outCells.Length);
 
     }
-
 }
