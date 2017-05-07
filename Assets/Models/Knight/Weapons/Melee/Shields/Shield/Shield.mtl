@@ -1,0 +1,26 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Shield_Material1
+Ns 37.254902
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Shield_4\Shield_4_TEX.psd
+map_Bump Shield_4\\Shield_4_NM.png
+
+newmtl Shield_Material2
+Ns 37.254902
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Shield_4\Shield_4_TEX.psd
+map_Bump Shield_4\\Shield_4_NM.png

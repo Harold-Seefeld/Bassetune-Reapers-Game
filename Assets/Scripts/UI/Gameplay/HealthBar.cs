@@ -11,13 +11,16 @@ public class HealthBar : MonoBehaviour {
     // Use this for initialization
     void Start () {
         character = GetComponent<CharacterData>();
+        if (character == null) return;
 
         healthSlider.maxValue = character.CharacterMaxHP;
         healthSlider.value = character.CharacterHP;
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
+        if (character == null) return;
+
         healthSlider.transform.LookAt(Camera.main.transform.position);
 
         healthSlider.maxValue = character.CharacterMaxHP;

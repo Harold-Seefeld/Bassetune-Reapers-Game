@@ -19,17 +19,30 @@ public class Weapon : ItemBase {
 		GreatHammer,
 		Axe,
 		HeavyAxe,
-		GreatBladedAxe,
-		GreatAxe,
 		Whip,
-		Scythes,
+		Scythe,
 		Spears,
 		Shield,
 		ShortBow,
 		LongBow,
 		LightCrossbow,
-		HeavyCrossbow
-	}
+		HeavyCrossbow,
+
+        BattleAxe,
+        Hatchet,
+        DoubleBitGreatAxe,
+        GreatBladedAxe,
+        GreatAxe,
+        WarHammer,
+        Javelin,
+        ThrowingDagger,
+        ThrowingKnife,
+        ThrowingNeddle,
+        Sling,
+        Arrow,
+        Rock,
+        Bomb
+    }
     public WeaponType weaponType;
 
     public enum TwoHanded

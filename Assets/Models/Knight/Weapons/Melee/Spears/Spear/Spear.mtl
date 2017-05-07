@@ -1,0 +1,14 @@
+# Blender MTL File: 'Spear.blend'
+# Material Count: 1
+
+newmtl Spear_MAT
+Ns 15.686275
+Ka 0.000000 0.000000 0.000000
+Kd 0.248333 0.248333 0.248333
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Bump F:\\DaveyDocuments\\Trabajos\\Basetunes Reapers\\ARMAS\\Weapons_4\\Spear\\Spear_NM.png
+map_Kd F:\\DaveyDocuments\\Trabajos\\Basetunes Reapers\\ARMAS\\Weapons_4\\Spear\\Spear_TEX.psd
+map_d F:\\DaveyDocuments\\Trabajos\\Basetunes Reapers\\ARMAS\\Weapons_4\\Spear\\Spear_TEX.psd
