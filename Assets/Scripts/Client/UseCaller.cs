@@ -167,7 +167,7 @@ public class UseCaller : MonoBehaviour {
     private Camera miniMapCamera;
     private void UpdateDestination()
     {
-        if (Server.instance.currentPlayerID != selectedCharacter.CharacterOwner)
+        if (Server.instance && Server.instance.currentPlayerID != selectedCharacter.CharacterOwner)
         {
             selectedCharacter = Server.instance.currentDefaultCharacter;
         }

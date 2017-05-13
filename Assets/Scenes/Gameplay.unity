@@ -3529,6 +3529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f00995c58a9a543a29e70b8cd6d70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentSelection: {fileID: 0}
 --- !u!4 &766461792
 Transform:
   m_ObjectHideFlags: 0
@@ -4796,7 +4797,10 @@ MonoBehaviour:
   _roomSizeMax: 15
   _corridorLengthMin: 5
   _corridorLengthMax: 8
+  _corridorWidthMin: 4
+  _corridorWidthMax: 4
   _seed: 123456
+  _devMode: 0
   _randomSeed: 0
   _floorPrefab: {fileID: 1611164220234214, guid: c869b2f566828f04cbb21dc352b5988a,
     type: 2}
@@ -5427,7 +5431,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -9.75
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.x
@@ -5435,7 +5439,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22423218, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMin.y
@@ -5451,7 +5455,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -9.75
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.x
@@ -5459,7 +5463,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22407842, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 22400004, guid: d585ab6cb62147d4a8b8018b0048523d, type: 2}
       propertyPath: m_AnchorMin.y
