@@ -19,27 +19,27 @@ namespace DungeonGeneration.Generator.Pickers {
         }
 
         public int drawBetween(int valueA, int valueB) {
-            _logger.info("seed: " + _currentSeed);
-            _logger.info("range: " + valueA + " " + valueB);
+            //_logger.info("seed: " + _currentSeed);
+            //_logger.info("range: " + valueA + " " + valueB);
 
 
             double baseNumber = Math.Sin(_currentSeed) * 10000;
-            _logger.info("base: " + baseNumber);
+            //_logger.info("base: " + baseNumber);
             double percentage = baseNumber - Math.Floor(baseNumber);
-            _logger.info("percentage: " + percentage);
+            //_logger.info("percentage: " + percentage);
 
             double rangeDiff = Math.Abs(valueB - valueA) + 1;
-            _logger.info("rangeDiff: " + rangeDiff);
+            //_logger.info("rangeDiff: " + rangeDiff);
 
             double sel = percentage * rangeDiff - 1;
-            _logger.info("selection: " + sel);
+            //_logger.info("selection: " + sel);
 
             //Can't use the enum because DuoCode (C# to JS Converter) 
             // fails converting MidpointRounding.AwayFromZero 
             int index = (int)Math.Round(sel, 0);
-            _logger.info("index before: " + index);
+            //_logger.info("index before: " + index);
             if (index < 0) index = 0;
-            _logger.info("index after: " + index);
+            //_logger.info("index after: " + index);
 
             int result;
             if (valueA <= valueB) {
@@ -47,7 +47,7 @@ namespace DungeonGeneration.Generator.Pickers {
             } else {
                 result = valueA - index;
             }
-            _logger.info("result: " + result);
+            //_logger.info("result: " + result);
             if (_originalSeed >= 0) _currentSeed++;
             else _currentSeed--;
             return result;

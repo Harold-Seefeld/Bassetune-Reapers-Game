@@ -34,7 +34,8 @@ namespace DungeonGeneration {
         private BRDungeonRenderer _renderer;
         private SocketIOComponent socket;
         void Awake() {
-            _generator = new DungeonGenerator();
+            //_generator = new DungeonGenerator();
+            _generator = new ForcedDungeonGenerator(10);
             _renderer = BRDungeonRenderer.newInstance(this);
         }
 

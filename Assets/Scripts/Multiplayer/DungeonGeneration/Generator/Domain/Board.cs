@@ -194,5 +194,9 @@ namespace DungeonGeneration.Generator.Domain {
             }
             return result.ToArray();
         }
+
+        public int roomSize() {
+            return rooms().Length;
+        }
     }
 }
