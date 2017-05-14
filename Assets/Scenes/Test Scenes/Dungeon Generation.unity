@@ -330,7 +330,7 @@ MonoBehaviour:
   _corridorWidthMin: 3
   _corridorWidthMax: 3
   _seed: 123456
-  _devMode: 0
+  _devMode: 1
   _randomSeed: 1
   _floorPrefab: {fileID: 1611164220234214, guid: c869b2f566828f04cbb21dc352b5988a,
     type: 2}

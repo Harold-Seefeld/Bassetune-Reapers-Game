@@ -1164,7 +1164,7 @@ MonoBehaviour:
   _cellularFillChance: 58
   _cellularSmoothSteps: 5
   _roomsNumberMin: 5
-  _roomsNumberMax: 5
+  _roomsNumberMax: 7
   _roomSizeMin: 30
   _roomSizeMax: 30
   _corridorLengthMin: 5

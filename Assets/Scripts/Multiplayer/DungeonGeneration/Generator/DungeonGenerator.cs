@@ -35,11 +35,25 @@ namespace DungeonGeneration.Generator {
             clearBoard();
         }
 
+        protected int getMinRoomSize() {
+            return _roomsNumberMin;
+        }
+        protected int getSeed() {
+            return _seed;
+        }
+        protected IXLogger getLogger() {
+            return _logger;
+        }
+        protected void setBoard(Board board) {
+            _board = board;
+        }
+
+
         private void clearBoard() {
             _board = null;
         }
 
-        private bool isBoardCleared() {
+        protected bool isBoardCleared() {
             return _board == null;
         }
 
@@ -83,7 +97,7 @@ namespace DungeonGeneration.Generator {
             clearBoard();
         }
 
-        public Board asBoard() {
+        public virtual Board asBoard() {
             checkConstraints();
             if (!isBoardCleared()) return _board;
             //_board = new Board(_mapRows, _mapColumns);
@@ -109,7 +123,6 @@ namespace DungeonGeneration.Generator {
             Grid grid = new Grid(roomSizePicker.draw(), roomSizePicker.draw());
             Cell topLeftVertexMin = new Cell(0, 0);
             Cell topLeftVertexMax = new Cell(_board.rows() - 1, _board.cols() - 1).minusSize(grid.rows(), grid.columns());
-            //Cell topLeftVertexMax = new Cell(_mapRows - 1, _mapColumns - 1).minusSize(grid.rows(), grid.columns()).minusCell(_mapMargin*2, _mapMargin*2);
             Cell topLeftCell = cellRangePicker.drawBetween(topLeftVertexMin, topLeftVertexMax);
             Room lastRoom = new Room(topLeftCell, grid);
             if (!_board.fitsIn(lastRoom)) {

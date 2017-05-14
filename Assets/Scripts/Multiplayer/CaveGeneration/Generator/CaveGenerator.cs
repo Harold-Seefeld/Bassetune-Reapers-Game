@@ -18,7 +18,8 @@ namespace CaveGeneration.Generator {
         private int _mapMargin;
 
         public CaveGenerator() {
-            _dunGen = new DungeonGenerator();
+            //_dunGen = new DungeonGenerator();
+            _dunGen = new ForcedDungeonGenerator(10);
             _seed = 0;
             _logger = new NullLogger();
             _cellularFillChance = 50;
