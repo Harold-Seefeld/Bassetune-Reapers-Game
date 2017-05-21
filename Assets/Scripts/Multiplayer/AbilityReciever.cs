@@ -86,7 +86,8 @@ public class AbilityReciever : MonoBehaviour {
         if (effectType == effectTypes.Heal)
         {
             // Create effect on the character
-            Instantiate(HealEffect, halfHeight, Quaternion.identity);
+            GameObject instantiatedObject = Instantiate(HealEffect, halfHeight, Quaternion.identity);
+            instantiatedObject.transform.SetParent(characterObject.transform);
         }
         else if (effectType == effectTypes.Regeneration)
         {
