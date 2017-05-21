@@ -185,38 +185,58 @@ public class CharacterManager : MonoBehaviour {
             {
                 int slotID = (int)e.data.GetField("i").n;
                 int target = (int)e.data.GetField("t").n;
+                // Find attached knight
+                GameObject knight = null;
+                foreach (CharacterData character in characterData)
+                {
+                    if (character.CharacterOwner == playerID)
+                    {
+                        knight = character.gameObject;
+                    }
+                }
+                EquippingBehaviour equippingBehaviour = knight.GetComponent<EquippingBehaviour>();
                 // Linear search array for any existing tags and overwrite them
                 foreach (JSONObject slot in player.itemInventory)
                 {
                     if ((int)slot.list[2].n == slotID)
                     {
-                        slot.list[3].n = target;
+                        if (target == 2)
+                        {
+                            // Dequip existing weapons if duplicate
+                            if ((int)slot.list[3].n == 3)
+                            {
+                                equippingBehaviour.clearEquippedWeapons();
+                            }
+                            // Equip weapon mainhand
+                            equippingBehaviour.attachWeaponToRight((int)slot.list[0].n);
+                        }
+                        else if (target == 3)
+                        {
+                            // Dequip existing weapons if duplicate
+                            if ((int)slot.list[3].n == 2)
+                            {
+                                equippingBehaviour.clearEquippedWeapons();
+                            }
+                            // Equip weapon offhand
+                            equippingBehaviour.attachWeaponToLeft((int)slot.list[0].n);
+                        }
+                        else if (target == 9)
+                        {
+                            // Dequip existing weapons
+                            equippingBehaviour.clearEquippedWeapons();
 
+                            // Equip weapon onto mainhand
+                            equippingBehaviour.attachWeaponToRight((int)slot.list[0].n);
+                        }
+                        slot.list[3].n = target;
                     }
                     else
                     {
                         if (target == 2 || target == 3 || target == 9)
                         {
-                            if (target == 2)
+                            if ((int)slot.list[3].n == 2 || (int)slot.list[3].n == 3 || (int)slot.list[3].n == 9)
                             {
-                                if ((int)slot.list[3].n == target || (int)slot.list[3].n == 3 || (int)slot.list[3].n == 9)
-                                {
-                                    slot.list[3].n = 0;
-                                }
-                            }
-                            else if (target == 3)
-                            {
-                                if ((int)slot.list[3].n == target || (int)slot.list[3].n == 2 || (int)slot.list[3].n == 9)
-                                {
-                                    slot.list[3].n = 0;
-                                }
-                            }
-                            else if (target == 9)
-                            {
-                                if ((int)slot.list[3].n == target || (int)slot.list[3].n == 3 || (int)slot.list[3].n == 2)
-                                {
-                                    slot.list[3].n = 0;
-                                }
+                                slot.list[3].n = 0;
                             }
                         }
                         else
@@ -240,6 +260,11 @@ public class CharacterManager : MonoBehaviour {
     public void StartEquipAnimation(SocketIOEvent e)
     {
         // TODO: Start Equipping Animation
+    }
+
+    IEnumerator StartEquipAnimation()
+    {
+        yield return new WaitForSeconds(3);
     }
 
 }

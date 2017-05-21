@@ -43,7 +43,15 @@ public class EquippingBehaviour : MonoBehaviour {
         }
     }
 
-    protected GameObject attachWeaponToLeft(int weaponID) {
+    public GameObject attachWeaponToLeft(int weaponID) {
+        if (_leftHand.transform.childCount != 0)
+        {
+            Destroy(_leftHand.transform.GetChild(0).gameObject);
+        }
+        if (_leftElbow.transform.childCount != 0)
+        {
+            Destroy(_leftElbow.transform.GetChild(0).gameObject);
+        }
         if (isElbowWeapon(weaponID)) {
             return instantiateWeaponByID(weaponID, "ElbowHandleLeft", null, _leftElbow);
         } else {
@@ -51,11 +59,39 @@ public class EquippingBehaviour : MonoBehaviour {
         }
     }
 
-    protected GameObject attachWeaponToRight(int weaponID) {
+    public GameObject attachWeaponToRight(int weaponID) {
+        if (_rightHand.transform.childCount != 0)
+        {
+            Destroy(_rightHand.transform.GetChild(0).gameObject);
+        }
+        if (_rightElbow.transform.childCount != 0)
+        {
+            Destroy(_rightElbow.transform.GetChild(0).gameObject);
+        }
         if (isElbowWeapon(weaponID)) {
             return instantiateWeaponByID(weaponID, "ElbowHandleRight", null, _rightElbow);
         } else {
             return instantiateWeaponByID(weaponID, "Handle", "HandleRight", _rightHand);
+        }
+    }
+
+    public void clearEquippedWeapons()
+    {
+        if (_leftHand.transform.childCount != 0)
+        {
+            Destroy(_leftHand.transform.GetChild(0).gameObject);
+        }
+        if (_rightHand.transform.childCount != 0)
+        {
+            Destroy(_rightHand.transform.GetChild(0).gameObject);
+        }
+        if (_leftElbow.transform.childCount != 0)
+        {
+            Destroy(_leftElbow.transform.GetChild(0).gameObject);
+        }
+        if (_rightElbow.transform.childCount != 0)
+        {
+            Destroy(_rightElbow.transform.GetChild(0).gameObject);
         }
     }
 

@@ -21,13 +21,20 @@ public class Weapon : ItemBase {
 		HeavyAxe,
 		Whip,
 		Scythe,
-		Spears,
+		Spear,
 		Shield,
 		ShortBow,
+        HorsebackBow,
+        CompositeBow,
 		LongBow,
+        Goatbow,
 		LightCrossbow,
+        RepeaterCrossbow,
 		HeavyCrossbow,
-
+        Arbalest,
+        AntiArmorCrossbow,
+        AssaultCrossbow,
+        HeadhunterCrossbow,
         BattleAxe,
         Hatchet,
         DoubleBitGreatAxe,
@@ -41,7 +48,12 @@ public class Weapon : ItemBase {
         Sling,
         Arrow,
         Rock,
-        Bomb
+        Bomb,
+        Halberd,
+        Lance,
+        SpikedWhip,
+        BallAndChain,
+        Flail
     }
     public WeaponType weaponType;
 
@@ -59,6 +71,4 @@ public class Weapon : ItemBase {
         LongBow,
         HeavyCrossbow
     }
-
-
 }
