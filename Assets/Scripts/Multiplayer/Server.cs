@@ -155,6 +155,33 @@ public class Server : MonoBehaviour
 
             players[i].itemInventory = socketData.GetField("i").list;
 
+            // Find attached knight
+            GameObject knight = null;
+            foreach (CharacterData character in CharacterManager.instance.characterData)
+            {
+                if (character.CharacterOwner == id)
+                {
+                    knight = character.gameObject;
+                }
+            }
+            EquippingBehaviour equippingBehaviour = knight.GetComponent<EquippingBehaviour>();
+
+            foreach (JSONObject slot in players[i].itemInventory)
+            {
+                if ((int)slot.list[3].n == 2)
+                {
+                    equippingBehaviour.attachWeaponToRight((int)slot.list[0].n);
+                }
+                else if ((int)slot.list[3].n == 3)
+                {
+                    equippingBehaviour.attachWeaponToLeft((int)slot.list[0].n);
+                }
+                else if ((int)slot.list[3].n == 9)
+                {
+                    equippingBehaviour.attachWeaponToRight((int)slot.list[0].n);
+                }
+            }
+
             if (id == currentPlayerID && players[i].side == "knight")
             {
                 KnightUIManager.instance.UpdateInventory();
