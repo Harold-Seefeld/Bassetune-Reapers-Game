@@ -5,10 +5,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 450266}
-  - 114: {fileID: 11474604}
+  - component: {fileID: 450266}
+  - component: {fileID: 11474604}
   m_Layer: 0
   m_Name: Sudden Attack
   m_TagString: Untagged
@@ -28,6 +28,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11474604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,7 +53,7 @@ MonoBehaviour:
   damageRatio: 0.7
   castTime: 2
   cooldownTime: 0.3
-  anim: 
+  anim: Sudden Attack
   startEffect: {fileID: 0}
   endEffect: {fileID: 0}
   abilityID: 2501

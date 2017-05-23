@@ -6,6 +6,9 @@ public class AbilityReciever : MonoBehaviour {
 
 	private SocketIOComponent socket;
 
+    public PrefabStore knightAbilities;
+    public PrefabStore lordSideCharacters;
+
     // Special Effect Prefabs
     public GameObject HealEffect;
 	
@@ -22,9 +25,52 @@ public class AbilityReciever : MonoBehaviour {
 	}
 
 	void StartKnightAbility (SocketIOEvent e) {
-		float characterID = e.data.GetField("i").f;
-		float abilityID = e.data.GetField("a").f;
-		// TODO: Spawn ability effects on the character
+		int characterID = (int)e.data.GetField("i").f;
+		int abilityID = (int)e.data.GetField("a").f;
+        int entityID = 0;
+
+        foreach (CharacterData character in CharacterManager.instance.characterData)
+        {
+            if (character.CharacterID == characterID)
+            {
+                entityID = character.CharacterEntity;
+            }
+        }
+
+        // TODO: Spawn ability effects on the character
+
+        // Play Animation
+        foreach (CharacterData character in CharacterManager.instance.characterData)
+        {
+            if (character.CharacterID == characterID)
+            {
+                // Get animation name
+                string animationName = "";
+                if (character.CharacterEntity == 0 || character.CharacterEntity == 1)
+                {
+                    // Animation names for knights originate from the ability
+                    foreach (GameObject abilityObject in knightAbilities.prefabs)
+                    {
+                        if (abilityObject.GetComponent<Ability>().itemID == abilityID)
+                        {
+                            animationName = abilityObject.GetComponent<Ability>().anim;
+                        }
+                    }
+                }
+                else
+                {
+                    // Animation names on lord-side characters indexed starting at 0 for each increment of abilityID
+                    foreach (GameObject lordCharacter in lordSideCharacters.prefabs)
+                    {
+                        if (lordSideCharacters.GetComponent<CharacterData>().CharacterEntity == entityID)
+                        {
+                            animationName = lordCharacter.GetComponent<CharacterData>().AnimationNames[abilityID];
+                        }
+                    }
+                }
+                character.GetComponent<Animator>().CrossFade(animationName, 0.2f);
+            }
+        }
 	}
 
 	void EndKnightAbility (SocketIOEvent e) {

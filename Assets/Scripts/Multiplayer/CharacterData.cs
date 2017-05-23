@@ -11,6 +11,9 @@ public class CharacterData : MonoBehaviour {
 	public int CharacterEntity;
     public string CharacterType;
 
+    // Animations if applicable (minions, lesser-lords, lords)
+    public string[] AnimationNames;
+
     // Gameobject Properties
     public GridPlayer gridPlayer;
 
