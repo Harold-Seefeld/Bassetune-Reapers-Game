@@ -7,7 +7,7 @@ namespace DungeonGeneration.Generator.Domain {
         public void walkableCell_oneRoom3x3() {
             Room room = new Room(new Cell(0, 0), new Grid(3, 3));
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(1,1) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -18,7 +18,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(0, 2), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorOutcoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(1, 1) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -29,7 +29,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(2, 0), new Grid(3, 3), Corridor.Orientation.vertical);
             room.setCorridorOutcoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(1, 1) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -40,7 +40,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(0, 0), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorOutcoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(1, 3) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -51,7 +51,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(0, 0), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorOutcoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(3, 1) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -62,7 +62,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(0, 2), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorIncoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(1, 1) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -73,7 +73,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(2, 0), new Grid(3, 3), Corridor.Orientation.vertical);
             room.setCorridorIncoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(1, 1) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -84,7 +84,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(0, 0), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorIncoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(1, 3) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -95,7 +95,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(0, 0), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorIncoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[1] { new Cell(3, 1) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -107,7 +107,7 @@ namespace DungeonGeneration.Generator.Domain {
             Corridor corr = new Corridor(new Cell(1, 2), new Grid(3, 3), Corridor.Orientation.horizontal);
             room.setCorridorOutcoming(corr);
 
-            Cell[] result = room.walkableCells();
+            Cell[] result = room.walkableCells(false);
             Cell[] expected = new Cell[3] { new Cell(1, 1), new Cell(2, 1), new Cell(3, 1) };
             Assert.IsTrue(XTestUtils.areEquals(expected, result));
         }
@@ -291,10 +291,28 @@ namespace DungeonGeneration.Generator.Domain {
             Assert.AreEqual(1, result.Length);
             Assert.AreEqual(new Cell(1, 6), result[0]);
 
-            Assert.AreEqual(4, room1.walkableCells().Length);
-            Assert.AreEqual(4, room2.walkableCells().Length);
-            Assert.AreEqual(3, corr.walkableCells().Length);
+            Assert.AreEqual(4, room1.walkableCells(false).Length);
+            Assert.AreEqual(4, room2.walkableCells(false).Length);
+            Assert.AreEqual(3, corr.walkableCells(false).Length);
         }
+
+        [Test]
+        public void walkableCell_ExcludingCellNextToWall_oneRoom3x3() {
+            Room room = new Room(new Cell(0, 0), new Grid(3, 3));
+
+            Cell[] result = room.walkableCells(true);
+            Assert.AreEqual(0, result.Length);
+        }
+
+        [Test]
+        public void walkableCell_ExcludingCellNextToWall_oneRoom4x4() {
+            Room room = new Room(new Cell(0, 0), new Grid(5, 5));
+
+            Cell[] result = room.walkableCells(true);
+            Cell[] expected = new Cell[1] { new Cell(2, 2) };
+            Assert.IsTrue(XTestUtils.areEquals(expected, result));
+        }
+
     }
 
 }

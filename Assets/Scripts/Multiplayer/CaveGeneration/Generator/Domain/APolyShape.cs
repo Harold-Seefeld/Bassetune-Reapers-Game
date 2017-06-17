@@ -245,12 +245,38 @@ public abstract class APolyShape : IXShape {
     }
 
     // Javascript API
-    public Cell[] walkableCells() {
+    public Cell[] walkableCells(Boolean excludeCellNextToWall) {
         List<Cell> result = new List<Cell>();
         forEachCellAbs((row, col, value) => {
-            if (value == XTile.FLOOR) result.Add(new Cell(row, col));
+            if (value == XTile.FLOOR && !excludeCellNextToWall) {
+                result.Add(new Cell(row, col));
+            } else if (value == XTile.FLOOR 
+                        && excludeCellNextToWall 
+                        && !isCellNextToWallOrToAnotValidAbs(row, col)) {
+                    result.Add(new Cell(row, col));
+            }
         });
         return result.ToArray();
+    }
+
+    private Boolean isCellNextToWallOrToAnotValidAbs(int rowAbs, int colAbs) {
+        int row = rowAbs - topLeftVertex().row();
+        int col = colAbs - topLeftVertex().col();
+
+        for (int neighbourX = row - 1; neighbourX <= row + 1; neighbourX++) {
+            for (int neighbourY = col - 1; neighbourY <= col + 1; neighbourY++) {
+                if (!isCellValid(neighbourX, neighbourY)) return true;
+
+                    //if (isCellValid(neighbourX, neighbourY)) {
+                    if (neighbourX != row || neighbourY != col) {
+                        if (hasCellValue(neighbourX, neighbourY, XTile.WALL)) {
+                            return true;
+                        }
+                    //}
+                } 
+            }
+        }
+        return false;
     }
 
     public void setIncoming(IXShape incoming) {
