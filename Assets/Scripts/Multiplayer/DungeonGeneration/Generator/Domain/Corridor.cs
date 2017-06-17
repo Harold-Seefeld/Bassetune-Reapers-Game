@@ -163,16 +163,23 @@ public class Corridor : IShape {
     }
 
     // Javascript API
-    public Cell[] walkableCells() {
+    public Cell[] walkableCells(Boolean excludeCellNextToWall) {
         Cell innerA = null;
         Cell innerB = null;
+
+        int cellExclusion = 1;
+        if (excludeCellNextToWall) cellExclusion = 2;
+
         if (isOrizontal()) {
-            innerA = topLeftVertex().plusCell(1, 0);
-            innerB = bottomRightVertex().minusCell(1, 0);
+            innerA = topLeftVertex().plusCell(cellExclusion, 0);
+            innerB = bottomRightVertex().minusCell(cellExclusion, 0);
         } else {
-            innerA = topLeftVertex().plusCell(0, 1);
-            innerB = bottomRightVertex().minusCell(0, 1);
+            innerA = topLeftVertex().plusCell(0, cellExclusion);
+            innerB = bottomRightVertex().minusCell(0, cellExclusion);
         }
+
+        if (innerA.isGreatherThan(innerB)) return new Cell[0];
+
         return innerA.cells(innerB);
     }
 

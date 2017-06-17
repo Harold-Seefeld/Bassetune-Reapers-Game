@@ -33,7 +33,7 @@ public interface IXShape {
 
 
     // Javascript API
-    Cell[] walkableCells();
+    Cell[] walkableCells(Boolean excludeCellNextToWall);
     Cell absCellFacing(Cell cell);
     bool hasAbsCellFacing(Cell cell);
 }

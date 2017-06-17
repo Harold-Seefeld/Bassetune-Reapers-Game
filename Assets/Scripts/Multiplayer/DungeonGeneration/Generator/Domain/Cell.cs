@@ -99,7 +99,6 @@ namespace DungeonGeneration.Generator.Domain {
                 min = other;
                 max = this;
             }
-
             int cellsNumber = distance(other);
             Cell[] result = new Cell[cellsNumber];
 
