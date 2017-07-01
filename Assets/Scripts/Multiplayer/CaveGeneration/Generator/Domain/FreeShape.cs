@@ -122,8 +122,15 @@ public class FreeShape : IXShape {
         }
     }
 
-    public Cell[] walkableCells() {
-        return _cells.ToArray();
+    public Cell[] walkableCells(Boolean excludeCellNextToWall) {
+        if (!excludeCellNextToWall) return _cells.ToArray();
+
+        List<Cell> edgeCells = edge();
+        List<Cell> result = new List<Cell>();
+        foreach (Cell each in _cells) {
+            if (!edgeCells.Contains(each)) result.Add(each);
+        }
+        return result.ToArray();
     }
 
     public void setIncoming(IXShape incoming) {

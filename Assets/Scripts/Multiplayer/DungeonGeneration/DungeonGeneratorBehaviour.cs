@@ -21,6 +21,7 @@ namespace DungeonGeneration {
         public int _seed = -1;
 
         public bool _devMode = false;
+        public bool _devLog = false;
         public bool _randomSeed = false;
 
         public GameObject _floorPrefab;
@@ -69,7 +70,7 @@ namespace DungeonGeneration {
             _generator.setCorridorLengthRange(_corridorLengthMin, _corridorLengthMax);
             _generator.setCorridorWidthRange(_corridorWidthMin, _corridorWidthMax);
             _generator.setPlotter(new DetailedTilesPlotter());
-            //_generator.setLogger(new UnityEngineLogger());
+            if (_devLog) _generator.setLogger(new UnityEngineLogger());
             _generator.setSeed(_seed);
 
             _tilesMap = _generator.asMatrix();

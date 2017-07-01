@@ -307,7 +307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &314428219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +331,7 @@ MonoBehaviour:
   _corridorWidthMax: 3
   _seed: 123456
   _devMode: 1
+  _devLog: 0
   _randomSeed: 1
   _floorPrefab: {fileID: 1611164220234214, guid: c869b2f566828f04cbb21dc352b5988a,
     type: 2}
@@ -1993,6 +1994,70 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1680527961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1680527963}
+  - component: {fileID: 1680527962}
+  m_Layer: 0
+  m_Name: DunGenManager_BUG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1680527962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1680527961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0558a0ef1ef14a2488b51b1cecc55ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mapHeight: 40
+  _mapWidth: 50
+  _roomsNumberMin: 4
+  _roomsNumberMax: 7
+  _roomSizeMin: 9
+  _roomSizeMax: 15
+  _corridorLengthMin: 5
+  _corridorLengthMax: 8
+  _corridorWidthMin: 4
+  _corridorWidthMax: 4
+  _seed: 9431
+  _devMode: 1
+  _devLog: 1
+  _randomSeed: 0
+  _floorPrefab: {fileID: 1611164220234214, guid: c869b2f566828f04cbb21dc352b5988a,
+    type: 2}
+  _wallPrefab: {fileID: 1842422745101804, guid: 1d5bf74d50454924d989855b29caf1e8,
+    type: 2}
+  _wallSeparatorPrefab: {fileID: 1887667808915018, guid: 309494c48d0c97045bc3e6a19011a5a7,
+    type: 2}
+  _cornerInnPrefab: {fileID: 1440367283039620, guid: 54daa35c4a8dd8c45a9c34229ae83cac,
+    type: 2}
+  _cornerOutPrefab: {fileID: 1183777331703584, guid: 602021c203330ad4ca1bd20510aa4a42,
+    type: 2}
+--- !u!4 &1680527963
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1680527961}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1688057096
 GameObject:
   m_ObjectHideFlags: 0

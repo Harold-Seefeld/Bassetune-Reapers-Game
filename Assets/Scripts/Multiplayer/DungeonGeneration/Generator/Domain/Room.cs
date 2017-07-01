@@ -97,12 +97,15 @@ public class Room : IShape {
     }
 
     // Javascript API
-    public Cell[] walkableCells() {
-        List<Cell> result = new List<Cell>();
-        Cell innerTopLeft = topLeftVertex().plusCell(1, 1);
-        Cell innerBotRight = bottomRightVertex().minusCell(1, 1);
-        result.AddRange(innerTopLeft.cells(innerBotRight));
-        return result.ToArray();
+    public Cell[] walkableCells(Boolean excludeCellNextToWall) {
+        int cellExclusion = 1;
+        if (excludeCellNextToWall) cellExclusion = 2;
+
+        Cell innerTopLeft = topLeftVertex().plusCell(cellExclusion, cellExclusion);
+        Cell innerBotRight = bottomRightVertex().minusCell(cellExclusion, cellExclusion);
+        
+        if (innerTopLeft.isGreatherThan(innerBotRight)) return new Cell[0];
+        return innerTopLeft.cells(innerBotRight);
     }
     // Javascript API
     public bool hasCorridorAtEast() {

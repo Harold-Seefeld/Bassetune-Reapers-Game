@@ -83,7 +83,7 @@ public class RectShapeTest {
         shape.setCellValue(3, 2, XTile.FLOOR);
         shape.setCellValue(3, 3, XTile.FLOOR);
 
-        Cell[] result = shape.walkableCells();
+        Cell[] result = shape.walkableCells(false);
         Assert.AreEqual(3, result.Length);
         Assert.AreEqual(new Cell(3, 1), result[0]);
         Assert.AreEqual(new Cell(3, 2), result[1]);
@@ -97,11 +97,47 @@ public class RectShapeTest {
         shape.setCellValue(3, 2, XTile.FLOOR);
         shape.setCellValue(3, 3, XTile.FLOOR);
 
-        Cell[] result = shape.walkableCells();
+        Cell[] result = shape.walkableCells(false);
         Assert.AreEqual(3, result.Length);
         Assert.AreEqual(new Cell(4, 2), result[0]);
         Assert.AreEqual(new Cell(4, 3), result[1]);
         Assert.AreEqual(new Cell(4, 4), result[2]);
+    }
+
+    [Test]
+    public void walkableCell_ExcludingCellNextToWall_leftVertexAt00() {
+        RectShape shape = new RectShape(new Cell(0, 0), new OIGrid(5, 5));
+        shape.setCellValue(1, 1, XTile.FLOOR);
+        shape.setCellValue(1, 2, XTile.FLOOR);
+        shape.setCellValue(1, 3, XTile.FLOOR);
+        shape.setCellValue(2, 1, XTile.FLOOR);
+        shape.setCellValue(2, 2, XTile.FLOOR);
+        shape.setCellValue(2, 3, XTile.FLOOR);
+        shape.setCellValue(3, 1, XTile.FLOOR);
+        shape.setCellValue(3, 2, XTile.FLOOR);
+        shape.setCellValue(3, 3, XTile.FLOOR);
+
+        Cell[] result = shape.walkableCells(true);
+        Assert.AreEqual(1, result.Length);
+        Assert.AreEqual(new Cell(2, 2), result[0]);
+    }
+
+    [Test]
+    public void walkableCell_ExcludingCellNextToWall_leftVertexAt11() {
+        RectShape shape = new RectShape(new Cell(1, 1), new OIGrid(5, 5));
+        shape.setCellValue(1, 1, XTile.FLOOR);
+        shape.setCellValue(1, 2, XTile.FLOOR);
+        shape.setCellValue(1, 3, XTile.FLOOR);
+        shape.setCellValue(2, 1, XTile.FLOOR);
+        shape.setCellValue(2, 2, XTile.FLOOR);
+        shape.setCellValue(2, 3, XTile.FLOOR);
+        shape.setCellValue(3, 1, XTile.FLOOR);
+        shape.setCellValue(3, 2, XTile.FLOOR);
+        shape.setCellValue(3, 3, XTile.FLOOR);
+
+        Cell[] result = shape.walkableCells(true);
+        Assert.AreEqual(1, result.Length);
+        Assert.AreEqual(new Cell(3, 3), result[0]);
     }
 
     [Test]
