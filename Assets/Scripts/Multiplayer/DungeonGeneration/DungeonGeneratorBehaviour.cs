@@ -18,7 +18,7 @@ namespace DungeonGeneration {
         public int _corridorLengthMax = 7;
         public int _corridorWidthMin = 3;
         public int _corridorWidthMax = 3;
-        public int _seed = 123456;
+        public int _seed = -1;
 
         public bool _devMode = false;
         public bool _randomSeed = false;
@@ -44,14 +44,6 @@ namespace DungeonGeneration {
                 devMode();
                 return;
             }
-            socket = FindObjectOfType<SocketIOComponent>();
-            socket.On("seed", SeedRecieved);
-        }
-
-        void SeedRecieved(SocketIOEvent ev)
-        {
-            _seed = (int)ev.data.GetField("s").n;
-            generateDungeon();
         }
 
         private void devMode() {
@@ -67,7 +59,7 @@ namespace DungeonGeneration {
             }
         }
         
-        private void generateDungeon() {
+        public void generateDungeon() {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             transform.localScale = Vector3.one;
 

@@ -1,0 +1,11 @@
+Idle (default)
+
+Run (default)
+
+Stagger (from Nentile Print Gladiator)
+
+Death (from Nentile Print Gladiator)
+
+Diagonal Slash (mainhand, from Breather of Life)
+
+Block (mainhand, from Nentile Print Gladiator)

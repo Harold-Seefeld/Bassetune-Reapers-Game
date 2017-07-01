@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using SocketIO;
 using System.Collections.Generic;
+using DungeonGeneration;
 
 public class Server : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class Server : MonoBehaviour
 
     // The current match ID
     public string matchID = "";
+
+    // Dungeon Settings
+    public string dungeonType;
+    public GameObject[] dungeonBehaviourPrefabs;
+    public int seed;
 
     public static Server instance;
 
@@ -39,8 +45,11 @@ public class Server : MonoBehaviour
     public bool inventoryRecieved = false;
     public bool abilitiesRecieved = false;
 
+    // Finish Game Screen
+    public GameObject finishedGameUI;
+
     private string uuid;
-    private SocketIOComponent connection = null;
+    public SocketIOComponent connection = null;
 
     void Start()
     {
@@ -61,9 +70,11 @@ public class Server : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         int level = scene.buildIndex;
-        if (level == 2)
+        if (!connection && level == 2) 
         {
-            connection = FindObjectOfType<SocketIOComponent>();
+            // Create a socketIO object
+            GameObject socketObject = new GameObject();
+            connection = socketObject.AddComponent<SocketIOComponent>();
             /*
                 TODO IMPORTANT: RE-ENABLE COMMENTED OUT CODE WHEN IN PRODUCTION MODE
             */
@@ -74,8 +85,15 @@ public class Server : MonoBehaviour
             connection.On(SocketIOEvents.Input.PLAYER, SetPlayerData);
             connection.On(SocketIOEvents.Input.Knight.ITEM_INVENTORY, SetItemInventory);
             connection.On(SocketIOEvents.Input.Knight.ABILITY_INVENTORY, SetAbilityInventory);
+            connection.On(SocketIOEvents.Input.WIN_CONDITION_MET, ProcessWinCondition);
+            connection.On("seed", SeedRecieved);
 
             uuid = GameObject.Find("Client Data").GetComponent<ClientData>().GetSession();
+        }
+        else if (level == 1 && connection)
+        {
+            // Remove connection once game is over
+            Destroy(connection.gameObject);
         }
     }
 
@@ -209,6 +227,61 @@ public class Server : MonoBehaviour
                 KnightUIManager.instance.UpdateInventory();
             }
         }
+    }
+
+    private void ProcessWinCondition(SocketIOEvent socket)
+    {
+        JSONObject socketData = socket.data;
+        string side = socket.data.GetField("side").str;
+        string type = socket.data.GetField("type").str;
+
+        if (side == "knight")
+        {
+            if (type == "progress" && dungeonType == "normal")
+            {
+                // TODO: Loading screen
+
+                // Load the lord dungeon level
+                SceneManager.LoadSceneAsync(2);
+            }
+            else if (type == "progress" && dungeonType == "lord")
+            {
+                // TODO: Loading Screen
+
+                // Load the normal dungeon level
+                SceneManager.LoadSceneAsync(2);
+            }
+            else if (type == "finish")
+            {
+                // TODO: Knight Win
+                Instantiate(finishedGameUI);
+
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            // TODO: Lord Win
+        }
+    }
+
+    void SeedRecieved(SocketIOEvent ev)
+    {
+        seed = (int)ev.data.GetField("s").n;
+        dungeonType = ev.data.GetField("t").str;
+
+        // Select Dungeon Settings
+        int generationIndex = 0;
+        if (dungeonType == "lord")
+        {
+            generationIndex = 1;
+        }
+
+        GameObject dungeonGeneratorObject = Instantiate(dungeonBehaviourPrefabs[generationIndex]);
+        DungeonGeneratorBehaviour dungeonGenerator = dungeonGeneratorObject.GetComponentInChildren<DungeonGeneratorBehaviour>();
+
+        dungeonGenerator._seed = seed;
+        dungeonGenerator.generateDungeon();
     }
 
 }

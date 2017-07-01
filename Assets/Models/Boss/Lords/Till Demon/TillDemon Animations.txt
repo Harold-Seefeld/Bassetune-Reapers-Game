@@ -1,0 +1,10 @@
+All animations are contained on character.
+
+---
+
+2handed = switching from wielding 1h to 2h
+1handed = switching from wielding 2h to 1h
+
+---
+
+Separate cage model is included in unity package (but can send separate if needed). Separate cage model is used when using the 'Summoning Creatures' abilities (spawns in cage -> cage is thrown to location)

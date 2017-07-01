@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 4156930874926020}
   - component: {fileID: 95497404817400792}
   - component: {fileID: 114705748975334724}
-  - component: {fileID: 114310267308003804}
+  - component: {fileID: 114001334711731584}
   - component: {fileID: 54762709496025856}
   - component: {fileID: 114495930359989584}
   - component: {fileID: 136143591056427490}
@@ -1856,6 +1856,25 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114001334711731584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1272223138075652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00358faf29306eb449aff13769b562a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 21300000, guid: 4086a25a6f6a4fe4cb85f2d7ceecc73d, type: 3}
+  itemName: Creature1
+  itemBuyPrice: 10
+  itemSellPrice: 10
+  itemDescription: 
+  itemCount: 0
+  itemID: 3400
+  itemType: 2
 --- !u!114 &114033398463207312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1904,26 +1923,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114310267308003804
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1272223138075652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76a9b0f10f3e1e84ab13611cfea9643c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
-  itemName: Flesh Minion
-  itemBuyPrice: 0
-  itemSellPrice: 0
-  itemDescription: Melee. Wields a sword. 1.2 * Level base damage, 1.2 * Level armor,
-    14 * Level HP. Attacks cause Bleed. Medium melee range. Medium attack speed. Slow
-    movement. Default attack is Diagonal Slash.
-  itemCount: 0
-  itemID: 3400
 --- !u!114 &114313915822768226
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -37,7 +37,7 @@ public static class SocketIOEvents {
 		public static string TRAP_TRIGGERED = "t";
 		public static string CHAR_CREATED = "nc";
 		public static string EFFECT = "e";
-		public static string MAP = "m";
+        public static string WIN_CONDITION_MET = "WCM";
 
 		// Knight
 		public static class Knight 
@@ -74,7 +74,7 @@ public static class SocketIOEvents {
 
         // Output
         public static string START_SEARCH = "s";
-        public static string DECLINE = "m";
+        public static string DECLINE = "d";
         public static string CANCEL = "c";
         public static string ACCEPT = "a";
         public static string FIND = "f";

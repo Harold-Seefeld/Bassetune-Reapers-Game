@@ -14,9 +14,8 @@ public class AbilityReciever : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		// Get socket object
-		GameObject go = GameObject.Find ("SocketIO");
-		socket = go.GetComponent<SocketIOComponent>();
+        // Get socket object
+        socket = Server.instance.connection;
 		socket.On(SocketIOEvents.Input.Knight.ABILITY_START, StartKnightAbility);	
 		socket.On(SocketIOEvents.Input.Knight.ABILITY_END, EndKnightAbility);	
 		socket.On(SocketIOEvents.Input.Boss.ABILITY_START, StartBossAbility);	

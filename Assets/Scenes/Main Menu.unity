@@ -16045,6 +16045,8 @@ MonoBehaviour:
   timeText: {fileID: 1131786663}
   buttonText: {fileID: 372987330}
   matchFoundPanel: {fileID: 1136022246}
+  matchDataObject: {fileID: 1660292320287034, guid: 3e5eb1b5135da724187413300522e6de,
+    type: 2}
 --- !u!114 &1100135880
 MonoBehaviour:
   m_ObjectHideFlags: 0

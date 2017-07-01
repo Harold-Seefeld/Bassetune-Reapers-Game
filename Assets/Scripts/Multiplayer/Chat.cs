@@ -22,9 +22,7 @@ public class Chat : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		// Get socket object
-		GameObject go = GameObject.Find ("SocketIO");
-		socket = go.GetComponent<SocketIOComponent>();
+        socket = Server.instance.connection;
 		socket.On(SocketIOEvents.talk, UpdateChatbox);
 
         chatPanel.transform.parent.gameObject.GetComponent<CanvasRenderer>().SetAlpha(1f);

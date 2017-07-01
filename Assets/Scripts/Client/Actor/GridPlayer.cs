@@ -6,9 +6,6 @@ using SocketIO;
 public class GridPlayer : MonoBehaviour
 {  
     public Vector3 currentDestination = Vector2.zero;
-
-    private List<Vector3> destinationPath = new List<Vector3>();
-    private Vector2 destination = Vector2.zero;
     private Animator animator;
 
     void Start()

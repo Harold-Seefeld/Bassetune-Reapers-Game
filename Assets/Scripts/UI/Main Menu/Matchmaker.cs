@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using SocketIO;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Matchmaker : MonoBehaviour {
 
@@ -26,6 +27,8 @@ public class Matchmaker : MonoBehaviour {
     private Text buttonText;
     [SerializeField]
     private GameObject matchFoundPanel;
+
+    public GameObject matchDataObject;
 
     // Search timer
     private float time = 0;
@@ -153,16 +156,15 @@ public class Matchmaker : MonoBehaviour {
         var matchID = socketEvent.data.GetField("id").str;
 
         // Create an object to store the data and make a new scene
-        GameObject matchObject = new GameObject();
-        matchObject.name = "Match Data";
-        Server matchData = matchObject.AddComponent<Server>();
+        GameObject matchObject = Instantiate(matchDataObject);
+        Server matchData = matchObject.GetComponent<Server>();
         matchData.serverIP = matchIP;
         matchData.serverPort = matchPort;
         matchData.matchID = matchID;
         DontDestroyOnLoad(matchObject);
 
         // Load the gameplay level
-        Application.LoadLevel(2);
+        SceneManager.LoadScene(2);
     }
 
     public void SetMatchType(string name)
