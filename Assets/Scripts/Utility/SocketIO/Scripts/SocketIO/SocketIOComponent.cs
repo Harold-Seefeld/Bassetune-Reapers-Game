@@ -141,10 +141,6 @@ namespace SocketIO
 		#endregion
 
 		#region Public Interface
-
-        public void SetHeader(string header, string value) {
-            ws.SetHeader(header, value);
-        }
 		
 		public void Connect()
 		{
