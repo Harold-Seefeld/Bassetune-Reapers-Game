@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Armor : Equipable {
+public class Armor : ItemBase {
 
     // The amount to be blocked
-    public int block = 0;
-    // Percentage boost/decrease of speed
-    public float speed_modifier = 5;
+    public int armorRating = 0;
+    // Movement speed of knight
+    public int speed = 2;
 
 }

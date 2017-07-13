@@ -181,6 +181,18 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
                         SetTag(InventorySlot.SlotTag.Mainhand, true);
                     }
                 }
+
+                if (itemBase.isArmor())
+                {
+                    if (slotTags.Count > 0 && slotTags[0] != InventorySlot.SlotTag.Armor)
+                    {
+                        SetTag(InventorySlot.SlotTag.Armor, true);
+                    }
+                    else
+                    {
+                        SetTag(InventorySlot.SlotTag.Inventory, true);
+                    }
+                }
             } 
             else if (clickType == PointerEventData.InputButton.Right)
             {
