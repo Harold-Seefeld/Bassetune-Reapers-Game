@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class InventorySetter : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class InventorySetter : MonoBehaviour
     {
         knight_slots,
         boss_slots,
-        ability_slots,
+        lord_slots,
     }
     public SlotType slotType;
 
@@ -78,6 +79,7 @@ public class InventorySetter : MonoBehaviour
 
     public JSONObject SendAbilityInventory()
     {
+        /*
         ItemBase[] itemBases = GetComponentsInChildren<ItemBase>(true);
         // Create a json object for storing the json arrays
         JSONObject jsonObject = new JSONObject(JSONObject.Type.ARRAY);
@@ -99,13 +101,13 @@ public class InventorySetter : MonoBehaviour
                 arr.Add(9 + itemBases[n].transform.GetSiblingIndex());
                 // Set the slot tag
                 InventorySlot slot = itemBases[n].GetComponent<InventorySlot>();
-                if (slot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && slot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
+                if (slot.slotTag.Contains(InventorySlot.SlotTag.Mainhand) && slot.slotTag.Contains(InventorySlot.SlotTag.Offhand))
                 {
                     arr.Add(9);
                 }
                 else
                 {
-                    arr.Add((int)slot.slotTags[0]);
+                    arr.Add((int)slot.slotTag[0]);
                 }
                 itemObject.Add(arr);
             }
@@ -128,45 +130,76 @@ public class InventorySetter : MonoBehaviour
         StartCoroutine(SetInventorySlot(w));
 
         return itemObject;
+        */
+        return null;
     }
 
     public void SendItemInventory(JSONObject items)
     {
-        ItemBase[] itemBases = GetComponentsInChildren<ItemBase>(true);
-        // Add onto the previous JSONObject (which may be null)
-        JSONObject jsonObject = items;
-        for (int n = 0; n < itemBases.Length; n++)
+        // LOOP THROUGH TO CHECK FOR CHANGES AND SEND THOSE TODO: UPDATE EXISTING INVENTORY SO THAT IT DOESENT USE OLD SLOTS WHEN CHANGING MULTIPLE TIMES
+        List<JSONObject> existingInventory = InventoryManager.instance.inventoryJSON["knight"].list;
+        Image[] slots = GetComponentsInChildren<Image>();
+        foreach (Transform slotObject in transform)
         {
-            // Create a new JSON array for storing the fields
-            JSONObject arr = new JSONObject(JSONObject.Type.ARRAY);
-            // Add the item ID
-            arr.Add(itemBases[n].itemID.ToString());
-            // TODO: Add item count
-            arr.Add(1);
-            // Set the slot number
-            int slotIndex = itemBases[n].transform.GetSiblingIndex();
-            arr.Add(itemBases[n].transform.GetSiblingIndex());
-            // Set the slot tag
-            InventorySlot slot = itemBases[n].GetComponent<InventorySlot>();
-            if (slot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && slot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
+            ItemBase item = slotObject.GetComponent<ItemBase>();
+            int itemTag = (int)slotObject.GetComponent<InventorySlot>().slotTag;
+            int itemID = 0;
+            if (item)
             {
-                arr.Add(9);
+                itemID = item.itemID;
             }
-            else
-            {
-                arr.Add((int)slot.slotTags[0]);
-            }
-            // Add the position of the inventory and add it to the main json object
-            jsonObject.Add(arr);
-        }
+            int slotID = slotObject.transform.GetSiblingIndex();
 
-        WWWForm www = new WWWForm();
-        www.AddField("uuid", clientData.GetSession());
-        www.AddField("slotType", slotType.ToString());
-        www.AddField("j", jsonObject.Print());
-        Debug.Log(jsonObject.Print());
-        WWW w = new WWW(slotInventorySite, www.data);
-        StartCoroutine(SetInventorySlot(w));
+            bool foundSlot = false;
+            for (int i = 0; i < existingInventory.Count; i++)
+            {
+                // Check if the same slot of existing inventory
+                if (existingInventory[i].list[1].n == slotID)
+                {
+                    foundSlot = true;
+
+                    // Check whether itemID has changed
+                    if (existingInventory[i].list[0].n == itemID && existingInventory[i].list[2].n == itemTag)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        WWWForm www = new WWWForm();
+                        www.AddField("uuid", clientData.GetSession());
+                        www.AddField("slotType", "knight_slots");
+                        www.AddField("itemSlot", slotID);
+                        www.AddField("itemID", itemID);
+                        www.AddField("itemTag", itemTag);
+                        WWW w = new WWW(slotInventorySite, www.data);
+                        StartCoroutine(SetInventorySlot(w));
+
+                        existingInventory[i].list[0].n = itemID;
+                        existingInventory[i].list[2].n = itemTag;
+
+                        break;
+                    }
+                }
+            }
+
+            if (!foundSlot && itemID != 0)
+            {
+                WWWForm www = new WWWForm();
+                www.AddField("uuid", clientData.GetSession());
+                www.AddField("slotType", "knight_slots");
+                www.AddField("itemSlot", slotID);
+                www.AddField("itemID", itemID);
+                www.AddField("itemTag", itemTag);
+                WWW w = new WWW(slotInventorySite, www.data);
+                StartCoroutine(SetInventorySlot(w));
+
+                JSONObject itemInfo = new JSONObject(JSONObject.Type.ARRAY);
+                itemInfo.Add(itemID);
+                itemInfo.Add(slotID);
+                itemInfo.Add(itemTag);
+                existingInventory.Add(itemInfo);
+            }
+        }
     }
 
     IEnumerator SetInventorySlot(WWW w)

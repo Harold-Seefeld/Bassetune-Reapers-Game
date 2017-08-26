@@ -47,16 +47,9 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         rectTransform.SetAsLastSibling();
 
         InventorySlot inventorySlot = item.GetComponent<InventorySlot>();
-        if (inventorySlot && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Ability))
+        if (inventorySlot && inventorySlot.slotType != InventorySlot.SlotType.Offensive_Ability && inventorySlot.slotType != InventorySlot.SlotType.Defensive_Ability)
         {
-            if (inventorySlot.slotTags.Count > 0)
-            {
-                tagText.text = inventorySlot.slotTags[0].ToString();
-            }
-            for (int i = 1; i < inventorySlot.slotTags.Count; i++)
-            {
-                tagText.text = tagText.text + " | " + inventorySlot.slotTags[i].ToString();
-            }
+            tagText.text = inventorySlot.slotTag.ToString();
 
             Button[] tButtons = gameObject.GetComponentsInChildren<Button>(true);
             for (int il = 0; il < tButtons.Length; il++)
@@ -84,7 +77,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 }
 
                 // Create indicators for equipping it as a main weapon
-                if (twoHanded && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Mainhand))
+                if (twoHanded && inventorySlot.slotTag != InventorySlot.SlotTag.Both)
                 {
                     Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
                     for (int il = 0; il < tagButtons.Length; il++)
@@ -98,8 +91,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, false);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Both);
 
                                 // Send request to update slot inventory
                                 if (InventorySetter.instance) InventorySetter.SetInventory();
@@ -117,7 +109,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         }
                     }
                 }
-                else if (!inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
+                else if (inventorySlot.slotTag != InventorySlot.SlotTag.Mainhand && inventorySlot.slotTag != InventorySlot.SlotTag.Offhand)
                 {
                     Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
                     for (int il = 0; il < tagButtons.Length; il++)
@@ -130,7 +122,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand);
 
                                 // Send request to update slot inventory
                                 if (InventorySetter.instance) InventorySetter.SetInventory();
@@ -147,7 +139,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Offhand);
 
                                 // Send request to update slot inventory
                                 if (InventorySetter.instance) InventorySetter.SetInventory();
@@ -161,7 +153,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         }
                     }
                 }
-                else if (!inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
+                else if (inventorySlot.slotTag != InventorySlot.SlotTag.Mainhand && inventorySlot.slotTag == InventorySlot.SlotTag.Offhand)
                 {
                     Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
                     for (int il = 0; il < tagButtons.Length; il++)
@@ -174,7 +166,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Mainhand);
 
                                 // Send request to update slot inventory
                                 if (InventorySetter.instance) InventorySetter.SetInventory();
@@ -192,7 +184,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         }
                     }
                 }
-                else if (inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Mainhand) && !inventorySlot.slotTags.Contains(InventorySlot.SlotTag.Offhand))
+                else if (inventorySlot.slotTag == InventorySlot.SlotTag.Mainhand && inventorySlot.slotTag != InventorySlot.SlotTag.Offhand)
                 {
                     Button[] tagButtons = gameObject.GetComponentsInChildren<Button>(true);
                     for (int il = 0; il < tagButtons.Length; il++)
@@ -209,7 +201,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                             entry.eventID = EventTriggerType.PointerClick;
                             entry.callback.AddListener((eventData) =>
                             {
-                                inventorySlot.SetTag(InventorySlot.SlotTag.Offhand, true);
+                                inventorySlot.SetTag(InventorySlot.SlotTag.Offhand);
 
                                 // Send request to update slot inventory
                                 if (InventorySetter.instance) InventorySetter.SetInventory();
@@ -258,7 +250,7 @@ public class Popup : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         entry.eventID = EventTriggerType.PointerClick;
                         entry.callback.AddListener((eventData) =>
                         {
-                            inventorySlot.SetTag(InventorySlot.SlotTag.Armor, true);
+                            inventorySlot.SetTag(InventorySlot.SlotTag.Armor);
 
                             // Send request to update slot inventory
                             if (InventorySetter.instance) InventorySetter.SetInventory();

@@ -102,12 +102,11 @@ public class KnightUIManager : MonoBehaviour {
 
                             if (item[3].n == 9)
                             {
-                                itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Mainhand, true);
-                                itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Offhand, false);
+                                itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Both);
                             }
                             else
                             {
-                                itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n, true);
+                                itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n);
                             }
 
                             ItemBase newItem = itemSlot.AddComponent<ItemBase>();
@@ -145,12 +144,11 @@ public class KnightUIManager : MonoBehaviour {
 
                     if (item[3].n == 9)
                     {
-                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Mainhand, true);
-                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Offhand, false);
+                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Both);
                     }
                     else
                     {
-                        itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n, true);
+                        itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n);
                     }
 
                     ItemBase newItem = itemSlot.AddComponent<ItemBase>();

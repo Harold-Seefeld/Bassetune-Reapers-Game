@@ -34,14 +34,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
 
     public enum SlotTag
     {
-        Inventory,
-        Ability,
-        Mainhand,
-        Offhand,
-        Armor,
-        Ammo
+        Inventory = 1,
+        Mainhand = 2,
+        Offhand = 3,
+        Both = 9,
+        Armor = 4,
+        Ammo = 5
     }
-    public List<SlotTag> slotTags = new List<SlotTag>(new SlotTag[] { SlotTag.Inventory });
+    public SlotTag slotTag = SlotTag.Inventory;
 
     public void Awake()
     {
@@ -100,43 +100,43 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
                 itemSwap.AddField("slot2", otherItemSlot.transform.GetSiblingIndex());
             }
             CharacterManager.instance.socket.Emit(SocketIOEvents.Output.Knight.CHANGE_EQUIPPED, itemSwap);
-
-            return;
-        }
-
-        if (otherItemSlot && thisItemSlot)
-        {
-            List<SlotTag> tempTags = otherItemSlot.slotTags.GetRange(0, otherItemSlot.slotTags.Count);
-            otherItemSlot.slotTags = thisItemSlot.slotTags.GetRange(0, thisItemSlot.slotTags.Count);
-            thisItemSlot.slotTags = tempTags;
-        }
-
-        if (otherDrag && swappable && thisItemBase && otherItemSlot)
-        {
-            UpdateInventorySlot(item);
-
-            ItemBase newItemBase = item.GetComponent<ItemBase>();
-            newItemBase.itemID = thisItemBase.itemID;
-            newItemBase.itemName = thisItemBase.itemName;
-            newItemBase.itemIcon = thisItemBase.itemIcon;
-            newItemBase.itemDescription = thisItemBase.itemDescription;
-            newItemBase.itemBuyPrice = thisItemBase.itemBuyPrice;
-            newItemBase.itemSellPrice = thisItemBase.itemSellPrice;
-
-            item.GetComponent<Image>().sprite = newItemBase.itemIcon;
-
-            InventoryDrag.swapped = true;
-        }
-        else if (otherDrag && otherItemSlot && swappable && !thisItemBase)
-        {
-            UpdateInventorySlot(item);
-
-            Destroy(otherDrag.gameObject.GetComponent<ItemBase>());
-            otherDrag.gameObject.GetComponent<Image>().sprite = null;
         }
         else
         {
-            UpdateInventorySlot(item);
+            if (otherItemSlot && thisItemSlot)
+            {
+                SlotTag tempTag = otherItemSlot.slotTag;
+                otherItemSlot.slotTag = thisItemSlot.slotTag;
+                thisItemSlot.slotTag = tempTag;
+            }
+
+            if (otherDrag && swappable && thisItemBase && otherItemSlot)
+            {
+                UpdateInventorySlot(item);
+
+                ItemBase newItemBase = item.GetComponent<ItemBase>();
+                newItemBase.itemID = thisItemBase.itemID;
+                newItemBase.itemName = thisItemBase.itemName;
+                newItemBase.itemIcon = thisItemBase.itemIcon;
+                newItemBase.itemDescription = thisItemBase.itemDescription;
+                newItemBase.itemBuyPrice = thisItemBase.itemBuyPrice;
+                newItemBase.itemSellPrice = thisItemBase.itemSellPrice;
+
+                item.GetComponent<Image>().sprite = newItemBase.itemIcon;
+
+                InventoryDrag.swapped = true;
+            }
+            else if (otherDrag && otherItemSlot && swappable && !thisItemBase)
+            {
+                UpdateInventorySlot(item);
+
+                Destroy(otherDrag.gameObject.GetComponent<ItemBase>());
+                otherDrag.gameObject.GetComponent<Image>().sprite = null;
+            }
+            else
+            {
+                UpdateInventorySlot(item);
+            }
         }
     }
 
@@ -172,25 +172,25 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
                     if (twoHanded)
                     {
                         // Equip two-handed
-                        SetTag(InventorySlot.SlotTag.Mainhand, true);
-                        SetTag(InventorySlot.SlotTag.Offhand, false);
+                        SetTag(InventorySlot.SlotTag.Mainhand);
+                        SetTag(InventorySlot.SlotTag.Offhand);
                     }
                     else
                     {
                         // Equip weapon as mainhand
-                        SetTag(InventorySlot.SlotTag.Mainhand, true);
+                        SetTag(InventorySlot.SlotTag.Mainhand);
                     }
                 }
 
                 if (itemBase.isArmor())
                 {
-                    if (slotTags.Count > 0 && slotTags[0] != InventorySlot.SlotTag.Armor)
+                    if (slotTag != InventorySlot.SlotTag.Armor)
                     {
-                        SetTag(InventorySlot.SlotTag.Armor, true);
+                        SetTag(InventorySlot.SlotTag.Armor);
                     }
                     else
                     {
-                        SetTag(InventorySlot.SlotTag.Inventory, true);
+                        SetTag(InventorySlot.SlotTag.Inventory);
                     }
                 }
             } 
@@ -210,13 +210,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
                     if (twoHanded)
                     {
                         // Equip two-handed
-                        SetTag(InventorySlot.SlotTag.Mainhand, true);
-                        SetTag(InventorySlot.SlotTag.Offhand, false);
+                        SetTag(InventorySlot.SlotTag.Both);
                     }
                     else
                     {
                         // Equip weapon as mainhand
-                        SetTag(InventorySlot.SlotTag.Offhand, true);
+                        SetTag(InventorySlot.SlotTag.Offhand);
                     }
                 }
             }
@@ -267,24 +266,17 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
         return new Weapon();
     }
 
-    public void SetTag(SlotTag tag, bool overwrite)
+    public void SetTag(SlotTag tag)
     {
         // Linear search array for any existing tags and overwrite them
         foreach (InventorySlot slot in FindObjectsOfType<InventorySlot>())
         {
-            if (slot.slotTags.Contains(tag))
+            if (slot.slotTag == tag)
             {
-                slot.slotTags = new List<SlotTag>(new SlotTag[] { SlotTag.Inventory });
+                slot.slotTag = SlotTag.Inventory;
             }
         }
 
-        if (overwrite)
-        {
-            slotTags = new List<SlotTag>(new SlotTag[] { tag });
-        }
-        else
-        {
-            slotTags.Add(tag);
-        }
+        slotTag = tag;
     }
 }

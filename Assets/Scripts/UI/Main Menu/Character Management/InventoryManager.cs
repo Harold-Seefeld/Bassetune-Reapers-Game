@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using System;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
@@ -69,6 +68,7 @@ public class InventoryManager : MonoBehaviour
     {
         yield return w;
         inventoryJSON = new JSONObject(w.text);
+        Debug.Log(inventoryJSON.Print());
 
         ShowInventory("ability");
 
@@ -118,7 +118,7 @@ public class InventoryManager : MonoBehaviour
 
     public void ShowInventory(string panel)
     {
-        int inventoryLength = inventoryJSON["all"].Count;
+        int inventoryLength = inventoryJSON["purchased"].Count;
         // Clear previous entries in inventory
         foreach (Transform child in inventoryPanel.transform)
         {
@@ -155,7 +155,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     // Create Entry
                     ItemBase item = items[n].prefabs[a].GetComponent<ItemBase>();
-                    if (inventoryJSON["all"].list[i][0].n != item.itemID)
+                    if (inventoryJSON["purchased"].list[i].n != item.itemID)
                     {
                         continue;
                     }
@@ -348,13 +348,13 @@ public class InventoryManager : MonoBehaviour
         for (int n = 0; n < itemInventory.Count; n++)
         {
             var item = itemInventory[n];
-            if (item[2].n >= inventorySlots.Length)
+            if (item[1].n >= inventorySlots.Length)
             {
                 // Try to display on ability inventory menu
                 DisplayAbilityItem(item);
                 continue;
             }
-            var itemSlot = inventorySlots[(int)item[2].n].gameObject;
+            var itemSlot = inventorySlots[(int)item[1].n].gameObject;
 
             if (itemSlot.GetComponent<ItemBase>())
             {
@@ -371,14 +371,13 @@ public class InventoryManager : MonoBehaviour
                     {
                         itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
 
-                        if (item[3].n == 9)
+                        if (item[2].n == 9)
                         {
-                            itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Mainhand, true);
-                            itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Offhand, false);
+                            itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Both);
                         }
                         else
                         {
-                            itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n, true);
+                            itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[2].n);
                         }
 
                         ItemBase newItem = itemSlot.AddComponent<ItemBase>();
@@ -401,13 +400,13 @@ public class InventoryManager : MonoBehaviour
     {
         Image[] abilitySlots = abilitySlotPanel.GetComponentsInChildren<Image>();
 
-        item[2].n = item[2].n - 9;
+        item[1].n = item[1].n - 9;
 
-        if (item[2].n >= abilitySlots.Length)
+        if (item[1].n >= abilitySlots.Length)
         {
             return;
         }
-        var itemSlot = abilitySlots[(int)item[2].n].gameObject;
+        var itemSlot = abilitySlots[(int)item[1].n].gameObject;
 
         if (itemSlot.GetComponent<ItemBase>())
         {
@@ -424,14 +423,13 @@ public class InventoryManager : MonoBehaviour
                 {
                     itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
 
-                    if (item[3].n == 9)
+                    if (item[2].n == 9)
                     {
-                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Mainhand, true);
-                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Offhand, false);
+                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Both);
                     }
                     else
                     {
-                        itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n, true);
+                        itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[2].n);
                     }
 
                     ItemBase newItem = itemSlot.AddComponent<ItemBase>();
@@ -456,7 +454,7 @@ public class InventoryManager : MonoBehaviour
         for (int n = 0; n < itemInventory.Count; n++)
         {
             var item = itemInventory[n];
-            if (item[2].n >= inventorySlots.Length)
+            if (item[1].n >= inventorySlots.Length)
             {
                 continue;
             }
@@ -504,14 +502,14 @@ public class InventoryManager : MonoBehaviour
         }
 
 
-        if (inventoryJSON["boss"].list.Count <= index) return;
+        if (inventoryJSON["lord"].list.Count <= index) return;
 
-        List<JSONObject> itemInventory = inventoryJSON["boss"].list[index].list;
+        List<JSONObject> itemInventory = inventoryJSON["lord"].list;
         if (itemInventory == null) return;
 
         for (int n = 0; n < itemInventory.Count; n++)
         {
-            var item = itemInventory[n];
+            var item = itemInventory[n].list;
             if (item[2].n >= inventorySlots.Length)
             {
                 continue;
