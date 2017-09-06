@@ -77,6 +77,7 @@ public class InventoryManager : MonoBehaviour
         DisplayAbility();
         DisplayDungeonSelector();
         DisplayDungeon(0);
+        Debug.Log(inventoryJSON.Print());
 
         Debug.Log("Downloaded Inventory Successfully.");
     }
@@ -400,13 +401,13 @@ public class InventoryManager : MonoBehaviour
     {
         Image[] abilitySlots = abilitySlotPanel.GetComponentsInChildren<Image>();
 
-        item[1].n = item[1].n - 9;
+        int slotID = (int)item[1].n - 9;
 
-        if (item[1].n >= abilitySlots.Length)
+        if (slotID >= abilitySlots.Length)
         {
             return;
         }
-        var itemSlot = abilitySlots[(int)item[1].n].gameObject;
+        var itemSlot = abilitySlots[slotID].gameObject;
 
         if (itemSlot.GetComponent<ItemBase>())
         {
@@ -458,7 +459,7 @@ public class InventoryManager : MonoBehaviour
             {
                 continue;
             }
-            var itemSlot = inventorySlots[(int)item[2].n].gameObject;
+            var itemSlot = inventorySlots[(int)item[1].n].gameObject;
 
             if (itemSlot.GetComponent<ItemBase>())
             {
