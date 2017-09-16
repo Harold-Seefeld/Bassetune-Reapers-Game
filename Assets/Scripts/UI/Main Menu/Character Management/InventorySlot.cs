@@ -43,9 +43,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
     }
     public SlotTag slotTag = SlotTag.Inventory;
 
+    public Sprite defaultSlotImage;
+
     public void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        defaultSlotImage = GetComponent<Image>().sprite;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -131,7 +134,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerClickHandler {
                 UpdateInventorySlot(item);
 
                 Destroy(otherDrag.gameObject.GetComponent<ItemBase>());
-                otherDrag.gameObject.GetComponent<Image>().sprite = null;
+                otherDrag.gameObject.GetComponent<Image>().sprite = defaultSlotImage;
             }
             else
             {

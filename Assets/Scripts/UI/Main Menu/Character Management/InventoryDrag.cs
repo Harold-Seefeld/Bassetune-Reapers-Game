@@ -69,12 +69,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             if (swapped || InventorySlot.recievedParentName != null)
             {
                 // Send request to update slot inventory after delay
-                if (InventorySlot.recievedParentName != "Dungeon List")
-                {
-                    Debug.Log(transform.parent.name);
-                    StartCoroutine(OnEndDrag());
-                }
-                else StartCoroutine(OnDungeonEndDrag());
+                StartCoroutine(OnDungeonEndDrag());
             }
             else if (!swapped && inventorySlot && inventorySlot.clearOnDrop && !droppedOnParent)
             {
@@ -85,12 +80,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 if (image) image.sprite = null;
 
                 // Send request to update slot inventory after delay
-                if (InventorySlot.recievedParentName == "Dungeon List" || transform.parent.name == "Dungeon List")
-                {
-                    Debug.Log(inventorySlot.transform.parent.name);
-                    StartCoroutine(OnDungeonEndDrag());
-                }
-                else StartCoroutine(OnEndDrag());
+                StartCoroutine(OnEndDrag());
             }
         }
 
@@ -116,7 +106,7 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         yield return new WaitForEndOfFrame();
         // Send request to update slot inventory
-        if (InventorySetter.instance) InventorySetter.SetDungeonInventory();
+        if (InventorySetter.instance) InventorySetter.SetInventory();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

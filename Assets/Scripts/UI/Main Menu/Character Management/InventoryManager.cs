@@ -77,7 +77,6 @@ public class InventoryManager : MonoBehaviour
         DisplayAbility();
         DisplayDungeonSelector();
         DisplayDungeon(0);
-        Debug.Log(inventoryJSON.Print());
 
         Debug.Log("Downloaded Inventory Successfully.");
     }
@@ -502,20 +501,17 @@ public class InventoryManager : MonoBehaviour
             Destroy(image.GetComponent<ItemBase>());
         }
 
-
-        if (inventoryJSON["lord"].list.Count <= index) return;
-
         List<JSONObject> itemInventory = inventoryJSON["lord"].list;
         if (itemInventory == null) return;
 
         for (int n = 0; n < itemInventory.Count; n++)
         {
             var item = itemInventory[n].list;
-            if (item[2].n >= inventorySlots.Length)
+            if (item[1].n >= inventorySlots.Length || item[2].n != index)
             {
                 continue;
             }
-            var itemSlot = inventorySlots[(int)item[2].n].gameObject;
+            var itemSlot = inventorySlots[(int)item[1].n].gameObject;
 
             if (itemSlot.GetComponent<ItemBase>())
             {
@@ -597,46 +593,12 @@ public class InventoryManager : MonoBehaviour
             entry.callback.AddListener((eventData) =>
             {
                 // TODO: Display dialogue for purchase
-
-                BuyFeature();
+                BuyItem(dungeonCount + 9999, 1);
+                Debug.Log("sent");
             });
             eventTrigger.triggers.Add(entry);
 
             selector.GetComponentInChildren<Text>().text = "+";
-        }
-    }
-
-    public void BuyFeature()
-    {
-        WWWForm www = new WWWForm();
-        www.AddField("uuid", clientData.GetSession());
-        www.AddField("feature", "dungeon");
-        WWW w = new WWW(buyFeatureSite, www.data);
-        StartCoroutine(BuyFeature(w));
-    }
-
-    IEnumerator BuyFeature(WWW w)
-    {
-        yield return w;
-
-        Debug.Log(w.text);
-
-        if (w.text == "Success")
-        {
-            notificationRect.transform.gameObject.SetActive(true);
-            notificationRect.SetAsLastSibling();
-            notificationText.text = "Successfully Purchased.";
-            notificationButton.onClick.RemoveAllListeners();
-            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
-            UpdateInventory();
-        }
-        else
-        {
-            notificationRect.transform.gameObject.SetActive(true);
-            notificationRect.SetAsLastSibling();
-            notificationText.text = "An error occurred";
-            notificationButton.onClick.RemoveAllListeners();
-            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
         }
     }
 }

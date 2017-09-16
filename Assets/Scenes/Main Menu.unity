@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 7
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -25,6 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -41,7 +42,7 @@ RenderSettings:
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 7
+  serializedVersion: 11
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -53,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 4
+    serializedVersion: 9
     m_Resolution: 1
     m_BakeResolution: 50
     m_TextureWidth: 1024
@@ -66,13 +67,27 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 0
-    m_DirectLightInLightProbes: 1
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
+    m_MixedBakeMode: 1
+    m_BakeBackend: 0
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 500
+    m_PVRBounces: 2
+    m_PVRFiltering: 0
+    m_PVRFilteringMode: 1
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 5
+    m_PVRFilteringGaussRadiusAO: 2
+    m_PVRFilteringAtrousColorSigma: 1
+    m_PVRFilteringAtrousNormalSigma: 1
+    m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
-  m_RuntimeCPUUsage: 25
+  m_UseShadowmask: 0
 --- !u!196 &5
 NavMeshSettings:
   serializedVersion: 2
@@ -89,6 +104,8 @@ NavMeshSettings:
     minRegionArea: 2
     manualCellSize: 0
     cellSize: 0.16666666
+    manualTileSize: 0
+    tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &8346378
@@ -167,7 +184,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &8346383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +449,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &27356718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,7 +754,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &44518135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1012,7 +1032,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &60314793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1196,7 +1217,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &78285289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,7 +1328,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &81633836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,7 +1523,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &87490484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2093,7 +2117,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &138604227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2345,7 +2370,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &156557511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2455,7 +2481,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &183639365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2639,7 +2666,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &198384263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3510,7 +3538,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &223535997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3666,7 +3695,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &233605470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3885,7 +3915,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &238377563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3995,7 +4026,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &244468767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4105,7 +4137,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &246457922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4362,8 +4395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45cc031bdcccd7540b7524bf9d21904c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotType: 1
-  defaultImage: {fileID: 21300000, guid: 11cd02e08b539bf459e147b883d2f325, type: 3}
+  slotType: 2
   inventoryManager: {fileID: 1100135878}
 --- !u!222 &254517962
 CanvasRenderer:
@@ -4503,7 +4535,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &259945342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4775,7 +4808,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &296744058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5056,7 +5090,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &309120966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5176,7 +5211,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &311256841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5530,7 +5566,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &338645026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5921,7 +5958,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &366493405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6276,7 +6314,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &377818893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6386,7 +6425,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &383542831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6496,7 +6536,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &399723118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6583,7 +6624,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &415235506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6921,7 +6963,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotType: 0
-  defaultImage: {fileID: 21300000, guid: 11cd02e08b539bf459e147b883d2f325, type: 3}
   inventoryManager: {fileID: 1100135878}
 --- !u!114 &423244807
 MonoBehaviour:
@@ -7210,7 +7251,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &435882538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7320,7 +7362,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &436112504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7504,7 +7547,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &469393024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7762,7 +7806,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &481898123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7872,7 +7917,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &490354055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8056,7 +8102,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &500607720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8166,7 +8213,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &509168459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8276,7 +8324,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &514598126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8457,7 +8506,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &526640953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8618,7 +8668,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &533076766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8809,7 +8860,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &557407276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8929,7 +8981,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &568626311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9499,7 +9552,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &627493062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9971,7 +10025,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &668306226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10214,7 +10269,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &675722275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10398,7 +10454,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 7
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &680317624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10508,7 +10565,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &680739342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10910,7 +10968,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &721149384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11100,8 +11159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45cc031bdcccd7540b7524bf9d21904c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotType: 2
-  defaultImage: {fileID: 21300000, guid: 11cd02e08b539bf459e147b883d2f325, type: 3}
+  slotType: 1
   inventoryManager: {fileID: 1100135878}
 --- !u!222 &738371877
 CanvasRenderer:
@@ -11162,7 +11220,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &749075137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11314,7 +11373,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &758076224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11531,7 +11591,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &784201013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11881,7 +11942,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &819770225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12281,7 +12343,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &841706897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12706,7 +12769,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &865879618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12965,7 +13029,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &874953794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13203,7 +13268,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &893247932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13290,7 +13356,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &899443702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13670,7 +13737,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &911739337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13780,7 +13848,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &913063406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13890,7 +13959,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &913494506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14000,7 +14070,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &920939445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14087,7 +14158,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &923674265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14220,7 +14292,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 8
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &933559788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14404,7 +14477,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &951444997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14625,7 +14699,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &955324311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14735,7 +14810,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &976010811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14862,7 +14938,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &985023467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14972,7 +15049,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1002173153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15082,7 +15160,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1007038237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15303,7 +15382,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1028701894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15728,7 +15808,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1068216063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15838,7 +15919,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1093599225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16140,7 +16222,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1124350521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16358,7 +16441,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1133381555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16515,7 +16599,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1137510054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16658,7 +16743,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1154977783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16758,7 +16844,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1185897221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16868,7 +16955,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1191569660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16978,7 +17066,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1204051678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17088,7 +17177,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1210624061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17175,7 +17265,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1218905448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17378,7 +17469,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1245169261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17732,7 +17824,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1298394887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17842,7 +17935,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1308859833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17952,7 +18046,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1315085985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18072,7 +18167,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1324085316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18177,7 +18273,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1333382647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18287,7 +18384,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1334124177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18471,7 +18569,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1351953182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18591,7 +18690,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1353310592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18760,7 +18860,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1357092674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19349,7 +19450,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1437398901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19449,7 +19551,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1443509098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19633,7 +19736,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1462478712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19743,7 +19847,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1475109321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20033,7 +20138,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1488709864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20143,7 +20249,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1489443400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20321,7 +20428,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1531893008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20747,7 +20855,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1562754607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20857,7 +20966,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1569168866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20967,7 +21077,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1574670733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21485,7 +21596,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1586847744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21595,7 +21707,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1599901103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21999,7 +22112,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1625881878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22124,7 +22238,7 @@ Canvas:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1637045553}
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
@@ -22133,6 +22247,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -22426,7 +22541,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1655594154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22690,7 +22806,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1665344080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22790,7 +22907,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1668404256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22877,7 +22995,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1668606671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23179,7 +23298,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1684127409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23289,7 +23409,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1690025816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23512,7 +23633,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1718759032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23622,7 +23744,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1721406247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23732,7 +23855,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1724124461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23923,7 +24047,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1747340905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24000,7 +24125,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1749241843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24384,7 +24510,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1775902141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24504,7 +24631,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1776336910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24604,7 +24732,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1786882811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24691,7 +24820,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1792627501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24967,7 +25097,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1849378153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25231,7 +25362,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1879561105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25410,7 +25542,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1888665770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25604,7 +25737,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1904395138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25704,7 +25838,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1910667365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26032,7 +26167,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1917364276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26142,7 +26278,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 2
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1937449349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26326,7 +26463,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1953303535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26614,7 +26752,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1970527233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26860,7 +26999,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1982059471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26960,7 +27100,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &1990172126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27070,7 +27211,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &2026310426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27291,7 +27433,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &2054397395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27401,7 +27544,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &2055010388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27511,7 +27655,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 9
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &2061834487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27631,7 +27776,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 1
-  slotTags: 01000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &2070657258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27731,7 +27877,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &2072965245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27882,7 +28029,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 0
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &2102324060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28361,7 +28509,8 @@ MonoBehaviour:
   swappable: 1
   clearOnDrop: 1
   slotType: 10
-  slotTags: 00000000
+  slotTag: 1
+  defaultSlotImage: {fileID: 0}
 --- !u!114 &2136626779
 MonoBehaviour:
   m_ObjectHideFlags: 0
