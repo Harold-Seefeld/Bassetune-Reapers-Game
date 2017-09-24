@@ -137,7 +137,7 @@ public class UseCaller : MonoBehaviour {
 
             for (int n = 0; n < player.abilityInventory.Count; n++)
             {
-                if (player.abilityInventory[n].list[2].n == slotIndex && player.abilityInventory[n].list[0].n != 0)
+                if (player.abilityInventory[n].list[1].n == slotIndex && player.abilityInventory[n].list[0].n != 0)
                     UseAbility(slotIndex, direction, selectedCharacter.CharacterID);
             }
         }

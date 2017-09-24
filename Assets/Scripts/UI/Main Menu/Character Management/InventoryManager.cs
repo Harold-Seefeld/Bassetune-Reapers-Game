@@ -255,7 +255,7 @@ public class InventoryManager : MonoBehaviour
     {
         yield return w;
 
-        if (w.text == "Successfully purchased.")
+        if (w.text == "Successfully Purchased.")
         {
             notificationRect.transform.gameObject.SetActive(true);
             notificationRect.SetAsLastSibling();
@@ -594,7 +594,6 @@ public class InventoryManager : MonoBehaviour
             {
                 // TODO: Display dialogue for purchase
                 BuyItem(dungeonCount + 9999, 1);
-                Debug.Log("sent");
             });
             eventTrigger.triggers.Add(entry);
 

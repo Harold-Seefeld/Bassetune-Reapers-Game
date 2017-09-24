@@ -42,7 +42,6 @@ public class KnightUIManager : MonoBehaviour {
             if (!inventorySlots[k].GetComponent<ItemBase>())
             {
                 inventorySlots[k].gameObject.AddComponent<ItemBase>();
-                inventorySlots[k].sprite = null;
             }
         }
 
@@ -52,7 +51,6 @@ public class KnightUIManager : MonoBehaviour {
             if (!abilitySlots[n].GetComponent<ItemBase>())
             {
                 abilitySlots[n].gameObject.AddComponent<ItemBase>();
-                abilitySlots[n].sprite = null;
             }
         }
     }
@@ -84,12 +82,12 @@ public class KnightUIManager : MonoBehaviour {
             for (int n = 0; n < player.itemInventory.Count; n++)
             {
                 var item = player.itemInventory[n];
-                if (item[2].n >= inventorySlots.Length)
+                if (item[1].n >= inventorySlots.Length)
                 {
                     UpdateAbilityItemBar(item, abilitySlots);
                     continue;
                 }
-                var itemSlot = inventorySlots[(int)item[2].n].gameObject;
+                var itemSlot = inventorySlots[(int)item[1].n].gameObject;
 
                 for (int k = 0; k < items.Length; k++)
                 {
@@ -100,13 +98,13 @@ public class KnightUIManager : MonoBehaviour {
                         {
                             itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
 
-                            if (item[3].n == 9)
+                            if (item[2].n == 9)
                             {
                                 itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Both);
                             }
                             else
                             {
-                                itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n);
+                                itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[2].n);
                             }
 
                             ItemBase newItem = itemSlot.AddComponent<ItemBase>();
@@ -127,7 +125,7 @@ public class KnightUIManager : MonoBehaviour {
     public void UpdateAbilityItemBar(JSONObject item, List<Image> abilitySlots)
     {
         // Item slot is (-20 + i + 11)
-        var itemSlot = abilitySlots[(int)item[2].n - 9].gameObject;
+        var itemSlot = abilitySlots[(int)item[1 ].n - 9].gameObject;
         if (itemSlot.GetComponent<ItemBase>())
         {
             Destroy(itemSlot.GetComponent<ItemBase>());
@@ -142,13 +140,13 @@ public class KnightUIManager : MonoBehaviour {
                 {
                     itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
 
-                    if (item[3].n == 9)
+                    if (item[2].n == 9)
                     {
                         itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Both);
                     }
                     else
                     {
-                        itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[3].n);
+                        itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[2].n);
                     }
 
                     ItemBase newItem = itemSlot.AddComponent<ItemBase>();
@@ -183,12 +181,12 @@ public class KnightUIManager : MonoBehaviour {
             for (int n = 0; n < player.abilityInventory.Count; n++)
             {
                 var item = player.abilityInventory[n];
-                if (item[2].n >= abilitySlots.Count)
+                if (item[1].n >= abilitySlots.Count)
                 {
                     continue;
                 }
 
-                GameObject itemSlot = abilitySlots[(int)item[2].n].gameObject;
+                GameObject itemSlot = abilitySlots[(int)item[1].n].gameObject;
 
                 if (itemSlot.GetComponent<ItemBase>())
                 {

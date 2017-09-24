@@ -149,7 +149,7 @@ public class Server : MonoBehaviour
                     UseCaller.isKnight = true;
                 }
                 // For bosses
-                if (characterData.CharacterEntity >= 3000 || characterData.CharacterEntity < 3200)
+                if (characterData.CharacterEntity >= 3000 && characterData.CharacterEntity < 3400)
                 {
                     currentDefaultCharacter = characterData;
                     UseCaller.isKnight = false;
