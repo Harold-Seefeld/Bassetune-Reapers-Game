@@ -497,7 +497,6 @@ public class InventoryManager : MonoBehaviour
         Image[] inventorySlots = dungeonSlotPanel.GetComponentsInChildren<Image>();
         foreach (Image image in inventorySlots)
         {
-            image.sprite = null;
             Destroy(image.GetComponent<ItemBase>());
         }
 

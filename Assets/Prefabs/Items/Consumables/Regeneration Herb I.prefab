@@ -5,10 +5,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 411852}
-  - 114: {fileID: 11429414}
+  - component: {fileID: 411852}
+  - component: {fileID: 11429414}
   m_Layer: 0
   m_Name: Regeneration Herb I
   m_TagString: Untagged
@@ -28,6 +28,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11429414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39,7 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a9b0f10f3e1e84ab13611cfea9643c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 4086a25a6f6a4fe4cb85f2d7ceecc73d, type: 3}
+  itemIcon: {fileID: 21300000, guid: 97a2f7bef66c157409630a82e6dfcad5, type: 3}
   itemName: Regeneration Herb I
   itemBuyPrice: 10
   itemSellPrice: 5

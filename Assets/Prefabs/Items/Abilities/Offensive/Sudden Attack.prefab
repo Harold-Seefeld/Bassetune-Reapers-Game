@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe6e941e592f984f92f511e207d7e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 4086a25a6f6a4fe4cb85f2d7ceecc73d, type: 3}
+  itemIcon: {fileID: 21300000, guid: 24bdec22c09e0994497e52bb26201f94, type: 3}
   itemName: Sudden Attack
   itemBuyPrice: 10
   itemSellPrice: 10

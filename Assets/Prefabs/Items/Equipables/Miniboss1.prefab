@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00358faf29306eb449aff13769b562a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 4086a25a6f6a4fe4cb85f2d7ceecc73d, type: 3}
+  itemIcon: {fileID: 21300000, guid: 01e38ef979d74d04a9731c67350561cb, type: 3}
   itemName: Miniboss1
   itemBuyPrice: 10
   itemSellPrice: 10
