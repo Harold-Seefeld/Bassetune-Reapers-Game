@@ -9,7 +9,7 @@ public class InGameCanvas : MonoBehaviour {
 
 	void Awake(){
 		// Cache reference
-		abilities = transform.FindChild("Skill Panel").GetComponentsInChildren<AbilityIcon>();
+		abilities = transform.Find("Skill Panel").GetComponentsInChildren<AbilityIcon>();
 
 		// TODO : Helper for Health, Time and Ally info
 	}

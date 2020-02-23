@@ -15,7 +15,7 @@ public class PlayerBase : MonoBehaviour {
 	public GameObject targetCursor;
 	public InGameCanvas inGameCanvas = null;
 	
-	public NavMeshAgent agent;
+	public UnityEngine.AI.NavMeshAgent agent;
 	
 	protected float mouseDownTimer = 0f;
 	protected bool useDirectMouseControl = false;
@@ -38,7 +38,7 @@ public class PlayerBase : MonoBehaviour {
 	}
 	
 	protected void BaseStart(){
-		agent = GetComponent<NavMeshAgent> ();
+		agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		targetCursor = Instantiate (targetCursor, Vector3.zero, targetCursor.transform.rotation) as GameObject;
 		targetCursor.SetActive (false);
 		

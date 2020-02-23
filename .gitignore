@@ -4,21 +4,31 @@
 [Tt]emp/
 [Oo]bj/
 [Bb]uild
-[Ll]ibrary/
+/[Bb]uilds/
+/[Ll]ibrary/
 sysinfo.txt
+*.stackdump
+/Assets/AssetStoreTools*
+*.apk
+*.unitypackage
  
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #
 [Ee]xported[Oo]bj/
+.vs/
 /*.userprefs
 /*.csproj
 /*.pidb
+*.pidb.meta
 /*.suo
 /*.sln*
 /*.user
 /*.unityproj
 /*.booproj
+.consulo/
+/*.tmp
+/*.svd
  
 # ============ #
 # OS generated #
@@ -30,11 +40,6 @@ sysinfo.txt
 Icon?
 ehthumbs.db
 [Tt]humbs.db
-
-# ================= #
-# Program generated #
-# ================= #
-*.blend1
-
-# SSH
-.ssh/
+[Dd]esktop.ini
+Corridor/Library/ShaderCache/
+Corridor/Library/metadata/

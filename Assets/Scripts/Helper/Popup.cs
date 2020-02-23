@@ -18,9 +18,9 @@ public class Popup : MonoBehaviour {
 		}
 		instance = this;
 		rectTransform = GetComponent<RectTransform> ();
-		nameText = transform.FindChild ("Name").GetComponent<Text>();
-		typeText = transform.FindChild ("Type").GetComponent<Text>();
-		descriptionText = transform.FindChild ("Description").GetComponent<Text>();
+		nameText = transform.Find ("Name").GetComponent<Text>();
+		typeText = transform.Find ("Type").GetComponent<Text>();
+		descriptionText = transform.Find ("Description").GetComponent<Text>();
 		gameObject.SetActive (false);
 	}
 
