@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 /*
@@ -10,176 +11,186 @@ using UnityEngine.UI;
 [AddComponentMenu("Actor/PlayerBase")]
 public class PlayerBase : MonoBehaviour
 {
+    public NavMeshAgent agent;
 
-	public GameObject movecursor;
-	public GameObject targetCursor;
-	public InGameCanvas inGameCanvas = null;
+    // for debugging purposes
+    public GameObject debugLabel;
+    protected Text debugLabelText;
+    public InGameCanvas inGameCanvas = null;
 
-	public UnityEngine.AI.NavMeshAgent agent;
+    protected float mouseDownTimer;
 
-	protected float mouseDownTimer = 0f;
-	protected bool useDirectMouseControl = false;
+    public GameObject movecursor;
+    protected bool settingTargetLegacy;
 
-	//using these vars to set in the options which target system to use
-	public bool useLegacySystem;
-	protected bool settingTargetLegacy;
+    // Used for target reference cache
+    protected Transform target;
+    public GameObject targetCursor;
+    protected Vector3 targetPos;
+    protected bool useDirectMouseControl;
 
-	// Used for target reference cache
-	protected Transform target;
-	protected Vector3 targetPos;
-
-	// for debugging purposes
-	public GameObject debugLabel;
-	protected Text debugLabelText;
+    //using these vars to set in the options which target system to use
+    public bool useLegacySystem;
 
 
-	void Start()
-	{
-		BaseStart();
-	}
+    private void Start()
+    {
+        BaseStart();
+    }
 
-	protected void BaseStart()
-	{
-		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-		targetCursor = Instantiate(targetCursor, Vector3.zero, targetCursor.transform.rotation) as GameObject;
-		targetCursor.SetActive(false);
+    protected void BaseStart()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        targetCursor = Instantiate(targetCursor, Vector3.zero, targetCursor.transform.rotation);
+        targetCursor.SetActive(false);
 
 #if UNITY_EDITOR
-		debugLabel = Instantiate(debugLabel) as GameObject;
-		debugLabelText = debugLabel.GetComponent<Text>();
-		debugLabel.transform.SetParent(GameObject.Find("InGameCanvas").transform);
+        debugLabel = Instantiate(debugLabel);
+        debugLabelText = debugLabel.GetComponent<Text>();
+        debugLabel.transform.SetParent(GameObject.Find("InGameCanvas").transform);
 #else
 		debugLabel.SetActive(false);
 		debugLabelText.text = "";
 #endif
-	}
+    }
 
-	void Update()
-	{
-		BaseUpdate();
-	}
+    private void Update()
+    {
+        BaseUpdate();
+    }
 
-	protected void BaseUpdate()
-	{
-		bool smartcast = Input.GetButton("SmartCast");
-		targetPos = Vector3.zero;
+    protected void BaseUpdate()
+    {
+        var smartcast = Input.GetButton("SmartCast");
+        targetPos = Vector3.zero;
 
-		if (smartcast)
-		{
-			// Update target and cursor position
-			ScreenToNavPos(Input.mousePosition, ref targetPos, ref target);
-			// Reset path
-			agent.ResetPath();
-			// Rotate actor toward cursor
-			Vector3 direction = (targetPos - transform.position).normalized;
-			if (direction != Vector3.zero)
-			{
-				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5);
-			}
+        if (smartcast)
+        {
+            // Update target and cursor position
+            ScreenToNavPos(Input.mousePosition, ref targetPos, ref target);
+            // Reset path
+            agent.ResetPath();
+            // Rotate actor toward cursor
+            var direction = (targetPos - transform.position).normalized;
+            if (direction != Vector3.zero)
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction),
+                    Time.deltaTime * 5);
 #if UNITY_EDITOR
-			debugLabelText.text = "SmartCast Mode";
+            debugLabelText.text = "SmartCast Mode";
 #endif
-		}
-		else if (Input.GetMouseButtonDown(0))
-		{
-			if (ScreenToNavPos(Input.mousePosition, ref targetPos, ref target))
-			{
-				agent.SetDestination(targetPos);
-				mouseDownTimer = 0f;
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (ScreenToNavPos(Input.mousePosition, ref targetPos, ref target))
+            {
+                agent.SetDestination(targetPos);
+                mouseDownTimer = 0f;
 
-				Destroy((GameObject)GameObject.Instantiate(movecursor, targetPos, Quaternion.identity), 0.5f);
-
-#if UNITY_EDITOR
-				debugLabelText.text = "Move To " + targetPos;
-#endif
-			}
-		}
-		else if (Input.GetMouseButtonUp(0) && useDirectMouseControl)
-		{
-			// Stop following cursor since mouse already up
-			// If it's using direct mouse control and the mouse button no longer down. reset the path
-			useDirectMouseControl = false;
-			agent.ResetPath();
+                Destroy(Instantiate(movecursor, targetPos, Quaternion.identity), 0.5f);
 
 #if UNITY_EDITOR
-			debugLabelText.text = "Unfollow Cursor";
+                debugLabelText.text = "Move To " + targetPos;
 #endif
-		}
-		else if (Input.GetMouseButton(0) && mouseDownTimer > 0.25f)
-		{
-			// Start following cursor
-			// Update new path every 0.25 second
-			useDirectMouseControl = true;
-			if (ScreenToNavPos(Input.mousePosition, ref targetPos, ref target))
-			{
-				// Uncomment this code if you want to directly manipulate the move and comment the code below this. not recomended
-				// agent.Move((destination - transform.position).normalized * agent.speed * Time.deltaTime);
-
-				agent.SetDestination(targetPos);
-				mouseDownTimer = 0f;    // only calculate path every 0.25f seconds
+            }
+        }
+        else if (Input.GetMouseButtonUp(0) && useDirectMouseControl)
+        {
+            // Stop following cursor since mouse already up
+            // If it's using direct mouse control and the mouse button no longer down. reset the path
+            useDirectMouseControl = false;
+            agent.ResetPath();
 
 #if UNITY_EDITOR
-				debugLabelText.text = "Follow Cursor";
+            debugLabelText.text = "Unfollow Cursor";
 #endif
-			}
-		}
-		else if (useLegacySystem)
-		{
-			OnCastLegacy();
-		}
+        }
+        else if (Input.GetMouseButton(0) && mouseDownTimer > 0.25f)
+        {
+            // Start following cursor
+            // Update new path every 0.25 second
+            useDirectMouseControl = true;
+            if (ScreenToNavPos(Input.mousePosition, ref targetPos, ref target))
+            {
+                // Uncomment this code if you want to directly manipulate the move and comment the code below this. not recomended
+                // agent.Move((destination - transform.position).normalized * agent.speed * Time.deltaTime);
 
-		if (target || smartcast)
-		{
-			OnCastHotkey(target, targetPos);
-			targetCursor.SetActive(true);
-			targetCursor.transform.position = target ? target.transform.position : targetPos + new Vector3(0, 0.01f);
-		}
-		else
-		{
-			targetCursor.SetActive(false);
-		}
-
-		Debug.DrawRay(transform.position, agent.velocity);
-		mouseDownTimer += Time.deltaTime;
+                agent.SetDestination(targetPos);
+                mouseDownTimer = 0f; // only calculate path every 0.25f seconds
 
 #if UNITY_EDITOR
-		// Update Debug Label position
-		Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, gameObject.transform.position);
-		debugLabelText.rectTransform.anchoredPosition = screenPoint - debugLabelText.canvas.GetComponent<RectTransform>().sizeDelta / 2f;
+                debugLabelText.text = "Follow Cursor";
 #endif
-	}
+            }
+        }
+        else if (useLegacySystem)
+        {
+            OnCastLegacy();
+        }
 
-	// Override this function to provide different keybind setup
-	protected virtual void OnCastHotkey(Transform target, Vector3 position) { }
-	protected virtual void OnCastLegacy() { }
-	protected virtual void setTarget(ref Transform target, ref Vector3 position) { }
+        if (target || smartcast)
+        {
+            OnCastHotkey(target, targetPos);
+            targetCursor.SetActive(true);
+            targetCursor.transform.position = target ? target.transform.position : targetPos + new Vector3(0, 0.01f);
+        }
+        else
+        {
+            targetCursor.SetActive(false);
+        }
 
-	protected bool ScreenToNavPos(Vector3 pos, ref Vector3 position, ref Transform target)
-	{
-		Ray r = Camera.main.ScreenPointToRay(pos);
-		RaycastHit hit;
-		if (Physics.Raycast(r, out hit, 100, 1 << 8 | 1 << 9))
-		{   // Terrain and Character layer mask
-			target = null;
-			// Check wheter it's cast to another actor
-			if ((hit.transform.tag == "Boss" ||
-				hit.transform.tag == "Knight" ||
-				hit.transform.tag == "Creature"))
-			{
-				target = hit.transform;
-				position = hit.transform.position;
-			}
-			else if (hit.transform.GetInstanceID() == transform.GetInstanceID())
-			{
-				position = hit.transform.position;
-				return false;
-			}
-			else
-			{
-				position = hit.point;
-			}
-			return true;
-		}
-		return false;
-	}
+        Debug.DrawRay(transform.position, agent.velocity);
+        mouseDownTimer += Time.deltaTime;
+
+#if UNITY_EDITOR
+        // Update Debug Label position
+        var screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, gameObject.transform.position);
+        debugLabelText.rectTransform.anchoredPosition =
+            screenPoint - debugLabelText.canvas.GetComponent<RectTransform>().sizeDelta / 2f;
+#endif
+    }
+
+    // Override this function to provide different keybind setup
+    protected virtual void OnCastHotkey(Transform target, Vector3 position)
+    {
+    }
+
+    protected virtual void OnCastLegacy()
+    {
+    }
+
+    protected virtual void setTarget(ref Transform target, ref Vector3 position)
+    {
+    }
+
+    protected bool ScreenToNavPos(Vector3 pos, ref Vector3 position, ref Transform target)
+    {
+        var r = Camera.main.ScreenPointToRay(pos);
+        RaycastHit hit;
+        if (Physics.Raycast(r, out hit, 100, (1 << 8) | (1 << 9)))
+        {
+            // Terrain and Character layer mask
+            target = null;
+            // Check wheter it's cast to another actor
+            if (hit.transform.tag == "Boss" ||
+                hit.transform.tag == "Knight" ||
+                hit.transform.tag == "Creature")
+            {
+                target = hit.transform;
+                position = hit.transform.position;
+            }
+            else if (hit.transform.GetInstanceID() == transform.GetInstanceID())
+            {
+                position = hit.transform.position;
+                return false;
+            }
+            else
+            {
+                position = hit.point;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }

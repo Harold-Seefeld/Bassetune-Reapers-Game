@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 /*
@@ -12,258 +13,266 @@ using UnityEngine.UI;
 [AddComponentMenu("Actor/CreatureBase")]
 public class CreatureBase : MonoBehaviour
 {
-	// List of patrol waypoint for character, leave it empty to use random waypoint
-	public Transform[] patrolWaypoints;
-	// Anchor of randomization waypoint, it act as chain that makes random patrol only randomized in certain area
-	public Transform creatureAnchor;
-	// Max length of anchor chain
-	public float anchorRange = 20f;
-	// Sight distance of creatures
-	public float sightDistance = 10f;
-	// Attack range of creatures
-	public float attackRange = 1f;
-	// Idle time between waypoint
-	public float idleTime = 1f;
-	// Time needed to do attack movement
-	public float attackTime = 0.1f;
-	// Cool down time between attack movement
-	public float cooldownTime = 1.5f;
+    // Agent for pathfinding and movement
+    private NavMeshAgent agent;
 
-	// This hold all characters that currently inside creature sight
-	public List<Transform> target = new List<Transform>();
-	// Current target
-	Transform currentTarget = null;
-	// Agent for pathfinding and movement
-	UnityEngine.AI.NavMeshAgent agent;
-	// Obstacle for avoidance
-	UnityEngine.AI.NavMeshObstacle obstacle;
-	// Attacking flag
-	bool isAttacking = false;
-	// Track current waypoint index
-	int currentWaypoint = 0;
-	// Timer for used internally
-	float timer = 0f;
-	// Picking Target Couroutine flag
-	bool isPickTargetRunning = false;
-	// Debug AI
-	public GameObject debugLabel;
-	protected Text debugLabelText;
+    // Max length of anchor chain
+    public float anchorRange = 20f;
 
-	// Unity Start function
-	void Start()
-	{
-		BaseStart();
-	}
+    // Attack range of creatures
+    public float attackRange = 1f;
 
-	// Base function of Start
-	protected void BaseStart()
-	{
-		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-		obstacle = GetComponent<UnityEngine.AI.NavMeshObstacle>();
-		agent.stoppingDistance = attackRange;
+    // Time needed to do attack movement
+    public float attackTime = 0.1f;
+
+    // Cool down time between attack movement
+    public float cooldownTime = 1.5f;
+
+    // Anchor of randomization waypoint, it act as chain that makes random patrol only randomized in certain area
+    public Transform creatureAnchor;
+
+    // Current target
+    private Transform currentTarget;
+
+    // Track current waypoint index
+    private int currentWaypoint;
+
+    // Debug AI
+    public GameObject debugLabel;
+
+    protected Text debugLabelText;
+
+    // Idle time between waypoint
+    public float idleTime = 1f;
+
+    // Attacking flag
+    private bool isAttacking;
+
+    // Picking Target Couroutine flag
+    private bool isPickTargetRunning;
+
+    // Obstacle for avoidance
+    private NavMeshObstacle obstacle;
+
+    // List of patrol waypoint for character, leave it empty to use random waypoint
+    public Transform[] patrolWaypoints;
+
+    // Sight distance of creatures
+    public float sightDistance = 10f;
+
+    // This hold all characters that currently inside creature sight
+    public List<Transform> target = new List<Transform>();
+
+    // Timer for used internally
+    private float timer;
+
+    // Unity Start function
+    private void Start()
+    {
+        BaseStart();
+    }
+
+    // Base function of Start
+    protected void BaseStart()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        obstacle = GetComponent<NavMeshObstacle>();
+        agent.stoppingDistance = attackRange;
 
 #if UNITY_EDITOR
-		debugLabel = Instantiate(debugLabel) as GameObject;
-		debugLabelText = debugLabel.GetComponent<Text>();
-		debugLabel.transform.SetParent(GameObject.Find("InGameCanvas").transform);
+        debugLabel = Instantiate(debugLabel);
+        debugLabelText = debugLabel.GetComponent<Text>();
+        debugLabel.transform.SetParent(GameObject.Find("InGameCanvas").transform);
 #else
 		debugLabel.SetActive(false);
 		debugLabelText.text = "";
 #endif
-	}
+    }
 
-	// Unity Update function
-	void Update()
-	{
-		BaseUpdate();
-	}
+    // Unity Update function
+    private void Update()
+    {
+        BaseUpdate();
+    }
 
-	// Base function of update
-	protected void BaseUpdate()
-	{
-		if (currentTarget)
-		{
-			if (Vector3.Distance(currentTarget.position, transform.position) > attackRange)
-			{
-				// Disable obstacle and activate agent since this actor will move around
-				agent.enabled = true;
-				obstacle.enabled = false;
+    // Base function of update
+    protected void BaseUpdate()
+    {
+        if (currentTarget)
+        {
+            if (Vector3.Distance(currentTarget.position, transform.position) > attackRange)
+            {
+                // Disable obstacle and activate agent since this actor will move around
+                agent.enabled = true;
+                obstacle.enabled = false;
 
-				// Chase
-				Chase();
-
-#if UNITY_EDITOR
-				debugLabelText.text = "Chasing";
-#endif
-			}
-			else
-			{
-				// Agent will now stay in place, we'll treat it as obstacle
-				agent.enabled = false;
-				obstacle.enabled = true;
-
-				bool status = Attack();
+                // Chase
+                Chase();
 
 #if UNITY_EDITOR
-				debugLabelText.text = status ? "Attack " : "Cooldown";
+                debugLabelText.text = "Chasing";
 #endif
-			}
-		}
-		else
-		{
-			// Disable obstacle and activate agent since this actor will move around
-			agent.enabled = true;
-			obstacle.enabled = false;
+            }
+            else
+            {
+                // Agent will now stay in place, we'll treat it as obstacle
+                agent.enabled = false;
+                obstacle.enabled = true;
 
-			Patrol();
+                var status = Attack();
 
 #if UNITY_EDITOR
-			debugLabelText.text = "Patrol";
+                debugLabelText.text = status ? "Attack " : "Cooldown";
 #endif
-		}
+            }
+        }
+        else
+        {
+            // Disable obstacle and activate agent since this actor will move around
+            agent.enabled = true;
+            obstacle.enabled = false;
+
+            Patrol();
 
 #if UNITY_EDITOR
-		// Update Debug Label position
-		Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, gameObject.transform.position);
-		debugLabelText.rectTransform.anchoredPosition = screenPoint - debugLabelText.canvas.GetComponent<RectTransform>().sizeDelta / 2f;
+            debugLabelText.text = "Patrol";
 #endif
-	}
+        }
 
-	protected virtual bool Attack()
-	{
-		if ((isAttacking && timer < attackTime) || (!isAttacking && timer < cooldownTime))
-		{
-			timer += Time.deltaTime;
-			return isAttacking;
-		}
+#if UNITY_EDITOR
+        // Update Debug Label position
+        var screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, gameObject.transform.position);
+        debugLabelText.rectTransform.anchoredPosition =
+            screenPoint - debugLabelText.canvas.GetComponent<RectTransform>().sizeDelta / 2f;
+#endif
+    }
 
-		// TODO: Attack Code
-		timer = 0f;
-		isAttacking = !isAttacking;
+    protected virtual bool Attack()
+    {
+        if (isAttacking && timer < attackTime || !isAttacking && timer < cooldownTime)
+        {
+            timer += Time.deltaTime;
+            return isAttacking;
+        }
 
-		return isAttacking;
-	}
+        // TODO: Attack Code
+        timer = 0f;
+        isAttacking = !isAttacking;
 
-	protected virtual void Chase()
-	{
-		if (timer < 0.25f)
-		{
-			timer += Time.deltaTime;
-			return;
-		}
+        return isAttacking;
+    }
 
-		agent.SetDestination(currentTarget.position);
-	}
+    protected virtual void Chase()
+    {
+        if (timer < 0.25f)
+        {
+            timer += Time.deltaTime;
+            return;
+        }
 
-	protected virtual void Patrol()
-	{
-		if (agent.remainingDistance <= agent.stoppingDistance)
-		{
-			if (timer > idleTime)
-			{
-				if (patrolWaypoints.Length > 1)
-				{
-					currentWaypoint = (currentWaypoint + 1) < patrolWaypoints.Length ? currentWaypoint + 1 : 0;
-					agent.SetDestination(patrolWaypoints[currentWaypoint].position);
-					timer = 0f;
-				}
-				else
-				{
-					if (!creatureAnchor)
-					{
-						Debug.LogWarning("Warning, Creature Anchor is not set");
-						return;
-					}
-					RaycastHit rHit;
-					Vector3 randomPosition = Random.insideUnitSphere * anchorRange;
-					randomPosition.Set(randomPosition.x, 0, randomPosition.z);
-					if (Physics.Raycast(creatureAnchor.position, randomPosition, out rHit))
-					{
-						randomPosition = rHit.point;
-					}
-					else
-					{
-						randomPosition += creatureAnchor.position;
-					}
+        agent.SetDestination(currentTarget.position);
+    }
 
-					UnityEngine.AI.NavMeshHit hit;
-					UnityEngine.AI.NavMesh.SamplePosition(randomPosition, out hit, anchorRange, 1);
-					agent.SetDestination(hit.position);
-					timer = 0f;
-				}
-			}
-			timer += Time.deltaTime;
-		}
+    protected virtual void Patrol()
+    {
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            if (timer > idleTime)
+            {
+                if (patrolWaypoints.Length > 1)
+                {
+                    currentWaypoint = currentWaypoint + 1 < patrolWaypoints.Length ? currentWaypoint + 1 : 0;
+                    agent.SetDestination(patrolWaypoints[currentWaypoint].position);
+                    timer = 0f;
+                }
+                else
+                {
+                    if (!creatureAnchor)
+                    {
+                        Debug.LogWarning("Warning, Creature Anchor is not set");
+                        return;
+                    }
 
-		// Look for target
-		if (!isPickTargetRunning && target.Count > 0)
-		{
-			StartCoroutine("PickTarget");
-		}
-		Debug.DrawLine(transform.position, agent.destination, Color.red);
-	}
+                    RaycastHit rHit;
+                    var randomPosition = Random.insideUnitSphere * anchorRange;
+                    randomPosition.Set(randomPosition.x, 0, randomPosition.z);
+                    if (Physics.Raycast(creatureAnchor.position, randomPosition, out rHit))
+                        randomPosition = rHit.point;
+                    else
+                        randomPosition += creatureAnchor.position;
 
-	IEnumerator PickTarget()
-	{
-		isPickTargetRunning = true;
-		Transform t = null;
-		float closestDistance = float.MaxValue;
-		IEnumerator<Transform> e = target.GetEnumerator();
+                    NavMeshHit hit;
+                    NavMesh.SamplePosition(randomPosition, out hit, anchorRange, 1);
+                    agent.SetDestination(hit.position);
+                    timer = 0f;
+                }
+            }
 
-		while (e.MoveNext())
-		{
-			RaycastHit hit;
-			if (Physics.Linecast(transform.position, e.Current.position, out hit))
-			{
-				if (hit.transform.tag == "Knight" && hit.distance < closestDistance)
-				{
-					t = e.Current.transform;
-					closestDistance = hit.distance;
-				}
-			}
+            timer += Time.deltaTime;
+        }
 
-			yield return null;
-		}
-		currentTarget = t;
-		isPickTargetRunning = false;
-	}
+        // Look for target
+        if (!isPickTargetRunning && target.Count > 0) StartCoroutine("PickTarget");
+        Debug.DrawLine(transform.position, agent.destination, Color.red);
+    }
 
-	void OnTriggerEnter(Collider other)
-	{
-		BaseOnTriggerEnter(other);
-	}
+    private IEnumerator PickTarget()
+    {
+        isPickTargetRunning = true;
+        Transform t = null;
+        var closestDistance = float.MaxValue;
+        IEnumerator<Transform> e = target.GetEnumerator();
 
-	protected void BaseOnTriggerEnter(Collider other)
-	{
-		if (other.tag == "Knight")
-		{
-			target.Add(other.transform);
+        while (e.MoveNext())
+        {
+            RaycastHit hit;
+            if (Physics.Linecast(transform.position, e.Current.position, out hit))
+                if (hit.transform.tag == "Knight" && hit.distance < closestDistance)
+                {
+                    t = e.Current.transform;
+                    closestDistance = hit.distance;
+                }
 
-			// Stop Couroutine
-			StopCoroutine("PickTarget");
-			isPickTargetRunning = false;
-		}
-	}
+            yield return null;
+        }
 
-	void OnTriggerExit(Collider other)
-	{
-		BaseOnTriggerExit(other);
-	}
+        currentTarget = t;
+        isPickTargetRunning = false;
+    }
 
-	protected void BaseOnTriggerExit(Collider other)
-	{
-		if (other.tag == "Knight")
-		{
-			target.Remove(other.transform);
+    private void OnTriggerEnter(Collider other)
+    {
+        BaseOnTriggerEnter(other);
+    }
 
-			// Stop Couroutine
-			StopCoroutine("PickTarget");
-			isPickTargetRunning = false;
+    protected void BaseOnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Knight")
+        {
+            target.Add(other.transform);
 
-			if (currentTarget && currentTarget.gameObject == other.gameObject)
-			{
-				currentTarget = null;
-			}
-		}
-	}
+            // Stop Couroutine
+            StopCoroutine("PickTarget");
+            isPickTargetRunning = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        BaseOnTriggerExit(other);
+    }
+
+    protected void BaseOnTriggerExit(Collider other)
+    {
+        if (other.tag == "Knight")
+        {
+            target.Remove(other.transform);
+
+            // Stop Couroutine
+            StopCoroutine("PickTarget");
+            isPickTargetRunning = false;
+
+            if (currentTarget && currentTarget.gameObject == other.gameObject) currentTarget = null;
+        }
+    }
 }

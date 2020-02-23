@@ -1,6 +1,5 @@
 ﻿public static class SocketIOEvents
 {
-
     // General Input/Output
     public static string talk = "c";
     public static string leave = "e";
@@ -32,5 +31,4 @@
         // General Input
         public static string PLAYER_LEAVES = "e";
     }
-
 }

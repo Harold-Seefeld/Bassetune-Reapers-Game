@@ -5,32 +5,16 @@ using UnityEngine.UI;
 public class AbilityIcon : MonoBehaviour
 {
     public static Sprite iconNone;
-
-    public RectTransform rectTransform;
+    private AbilityBase _ability;
     public Image icon;
     public Outline outline;
+
+    public RectTransform rectTransform;
     public Text timer;
-    AbilityBase _ability;
-
-    void Awake()
-    {
-        if (iconNone == null)
-        {
-            iconNone = Resources.Load<Sprite>("Materials/UI/Ability/_none");
-        }
-
-        rectTransform = GetComponent<RectTransform>();
-        icon = GetComponentInChildren<Image>();
-        outline = GetComponent<Outline>();
-        timer = GetComponentInChildren<Text>();
-    }
 
     public AbilityBase ability
     {
-        get
-        {
-            return _ability;
-        }
+        get => _ability;
         set
         {
             _ability = value;
@@ -39,6 +23,16 @@ public class AbilityIcon : MonoBehaviour
             else
                 icon.sprite = iconNone;
         }
+    }
+
+    private void Awake()
+    {
+        if (iconNone == null) iconNone = Resources.Load<Sprite>("Materials/UI/Ability/_none");
+
+        rectTransform = GetComponent<RectTransform>();
+        icon = GetComponentInChildren<Image>();
+        outline = GetComponent<Outline>();
+        timer = GetComponentInChildren<Text>();
     }
 
     public void OnPointerEnter()
@@ -50,9 +44,9 @@ public class AbilityIcon : MonoBehaviour
 
         Popup.instance.gameObject.SetActive(true);
         Popup.instance.Display(rectTransform.position + new Vector3(0, 70),
-                                _ability.abilityName,
-                                _ability.abilityType.ToString(),
-                                _ability.description);
+            _ability.abilityName,
+            _ability.abilityType.ToString(),
+            _ability.description);
     }
 
     public void OnPointerExit()

@@ -4,11 +4,10 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(CanvasGroup))]
 public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-
     public static GameObject itemBeingDragged;
+    private Transform startParent;
 
     private Vector3 startPosition;
-    private Transform startParent;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -27,9 +26,6 @@ public class InventoryDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-        if (transform.parent == startParent)
-        {
-            transform.position = startPosition;
-        }
+        if (transform.parent == startParent) transform.position = startPosition;
     }
 }

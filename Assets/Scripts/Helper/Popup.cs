@@ -4,20 +4,21 @@ using UnityEngine.UI;
 [AddComponentMenu("Helper/Popup")]
 public class Popup : MonoBehaviour
 {
-    public static Popup instance = null;
+    public static Popup instance;
+    public Text descriptionText;
+    public Text nameText;
 
     public RectTransform rectTransform;
-    public Text nameText;
     public Text typeText;
-    public Text descriptionText;
 
-    void Awake()
+    private void Awake()
     {
         if (instance)
         {
             Destroy(gameObject);
             return;
         }
+
         instance = this;
         rectTransform = GetComponent<RectTransform>();
         nameText = transform.Find("Name").GetComponent<Text>();

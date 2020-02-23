@@ -2,14 +2,6 @@
 
 public class ItemBase : MonoBehaviour
 {
-
-    public enum ItemSide
-    {
-        Knight,
-        Boss
-    }
-    public ItemSide itemSide;
-
     public enum BossItemType
     {
         Boss,
@@ -17,14 +9,21 @@ public class ItemBase : MonoBehaviour
         Trap,
         Creature
     }
+
+    public enum ItemSide
+    {
+        Knight,
+        Boss
+    }
+
     public BossItemType bossItemType;
+    public string itemAnimation;
+    public string itemBuyPrice;
+    public string itemDescription;
 
     public Sprite itemIcon;
-    public string itemAnimation;
     public string itemName;
-    public string itemBuyPrice;
     public string itemSellPrice;
-    public string itemDescription;
+    public ItemSide itemSide;
     public string itemType;
-
 }

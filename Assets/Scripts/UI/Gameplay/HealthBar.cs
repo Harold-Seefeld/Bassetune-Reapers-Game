@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    public Slider healthSlider;
 
     public LifeSystem lifeSystem;
     public Text lifeText;
-    public Slider healthSlider;
 
-    void Update()
+    private void Update()
     {
         // Set value each frame
         healthSlider.maxValue = lifeSystem.maxHealth;

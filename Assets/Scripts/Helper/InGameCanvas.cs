@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [AddComponentMenu("Helper/InGameCanvas")]
 public class InGameCanvas : MonoBehaviour
 {
-    [System.NonSerialized] public AbilityIcon[] abilities;
+    [NonSerialized] public AbilityIcon[] abilities;
 
-    void Awake()
+    private void Awake()
     {
         // Cache reference
         abilities = transform.Find("Skill Panel").GetComponentsInChildren<AbilityIcon>();

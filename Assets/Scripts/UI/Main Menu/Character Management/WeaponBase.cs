@@ -2,7 +2,6 @@
 
 public class WeaponBase : MonoBehaviour
 {
-
     public enum WeaponType
     {
         Dagger,
@@ -31,12 +30,12 @@ public class WeaponBase : MonoBehaviour
         LightCrossbow,
         HeavyCrossbow
     }
-    public WeaponType weaponType;
+
+    public string weaponBuyPrice;
+    public string weaponDescription;
 
     public Sprite weaponIcon;
     public string weaponName;
-    public string weaponDescription;
-    public string weaponBuyPrice;
     public string weaponSellPrice;
-
+    public WeaponType weaponType;
 }

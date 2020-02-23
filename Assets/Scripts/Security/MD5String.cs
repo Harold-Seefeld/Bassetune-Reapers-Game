@@ -1,25 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Security.Cryptography;
+using System.Text;
+using UnityEngine;
 
 public class MD5String : MonoBehaviour
 {
-
     public static string Md5Sum(string strToEncrypt, string salt = null)
     {
         strToEncrypt += salt;
-        System.Text.UTF8Encoding ue = new System.Text.UTF8Encoding();
-        byte[] bytes = ue.GetBytes(strToEncrypt);
+        var ue = new UTF8Encoding();
+        var bytes = ue.GetBytes(strToEncrypt);
 
         // Encrypt bytes
-        System.Security.Cryptography.MD5CryptoServiceProvider md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-        byte[] hashBytes = md5.ComputeHash(bytes);
+        var md5 = new MD5CryptoServiceProvider();
+        var hashBytes = md5.ComputeHash(bytes);
 
         // Convert the encrypted bytes back to a string (base 16)
-        string hashString = "";
+        var hashString = "";
 
-        for (int i = 0; i < hashBytes.Length; i++)
-        {
-            hashString += System.Convert.ToString(hashBytes[i], 16).PadLeft(2, '0');
-        }
+        for (var i = 0; i < hashBytes.Length; i++) hashString += Convert.ToString(hashBytes[i], 16).PadLeft(2, '0');
 
         return hashString.PadLeft(32, '0');
     }

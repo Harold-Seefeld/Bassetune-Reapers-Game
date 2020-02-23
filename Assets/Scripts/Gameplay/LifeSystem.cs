@@ -1,15 +1,36 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class LifeSystem : MonoBehaviour
 {
+    public Animator anim;
+
+    // Check if Ally or Enemy
+    public string currentTeam; // Team that this player is on.
+    public string deathAnimation;
 
     // Health
     public float health = 100; // 100 by Default
-    public float maxHealth = 100; // The maximum amount of health
+
+    public float healthRegenAmount = 5.0f; // How much health should be regenerated per second?
+
+    // Automatic Health Rengeneration
+    [NonSerialized]
+    public bool healthRegenerating = true; // Is the player regenerating?
+
+    public float healthRegenWaitTime = 3.0f; // How long is the cooldown until health starts being regenerated?
 
     public bool isDead;
-    public string deathAnimation;
+    public float maxHealth = 100; // The maximum amount of health
+
+    // Friendly Fire
+    public bool recieveFriendlyFire;
+
+    /// -------------------------------------------
+    /// Allows a dialog to access remaining seconds
+    /// -------------------------------------------		
+    public int respawnTime;
 
     /// --------------------
     /// Instant Health Regen
@@ -19,12 +40,6 @@ public class LifeSystem : MonoBehaviour
         health = Mathf.Clamp(health + amount, 0, maxHealth);
     }
 
-    // Automatic Health Rengeneration
-    [System.NonSerialized]
-    public bool healthRegenerating = true; // Is the player regenerating?
-
-    public float healthRegenAmount = 5.0f; // How much health should be regenerated per second?
-    public float healthRegenWaitTime = 3.0f; // How long is the cooldown until health starts being regenerated?
     /// 
 
     /// -------------------
@@ -46,23 +61,16 @@ public class LifeSystem : MonoBehaviour
     public void AutoHealthRegen()
     {
         if (!isDead)
-            health = Mathf.Clamp(health + (healthRegenAmount * Time.deltaTime), 0, maxHealth);
+            health = Mathf.Clamp(health + healthRegenAmount * Time.deltaTime, 0, maxHealth);
     }
 
-    // Friendly Fire
-    public bool recieveFriendlyFire;
-
-    // Check if Ally or Enemy
-    public string currentTeam; // Team that this player is on.
     public bool isEnemy(string attackingTeam)
     {
-        if (currentTeam != attackingTeam)
-        {
-            return true;
-        }
+        if (currentTeam != attackingTeam) return true;
 
         return false;
     }
+
     ///
 
     /// ------------
@@ -105,7 +113,6 @@ public class LifeSystem : MonoBehaviour
         }
     }
 
-    public Animator anim;
     private void playerDeath(string killingTeam)
     {
         anim.Play(deathAnimation);
@@ -113,10 +120,6 @@ public class LifeSystem : MonoBehaviour
         StartCoroutine(RespawnTimer(10));
     }
 
-    /// -------------------------------------------
-    /// Allows a dialog to access remaining seconds
-    /// -------------------------------------------		
-    public int respawnTime;
     private IEnumerator RespawnTimer(int length)
     {
         respawnTime = length;
@@ -133,15 +136,12 @@ public class LifeSystem : MonoBehaviour
     /// ------------------
     /// Called Every Frame
     /// ------------------
-    void Update()
+    private void Update()
     {
-        if (healthRegenerating)
-        {
-            AutoHealthRegen();
-        }
+        if (healthRegenerating) AutoHealthRegen();
     }
 
-    void Start()
+    private void Start()
     {
         if (!anim)
             anim = GetComponent<Animator>();

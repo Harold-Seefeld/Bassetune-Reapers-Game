@@ -6,31 +6,30 @@ using UnityEngine.UI;
 
 public class SessionManager : MonoBehaviour
 {
-
-    [SerializeField] string loginSite = "ec2-52-0-51-109.compute-1.amazonaws.com/login";
-    [SerializeField] string registerSite = "ec2-52-0-51-109.compute-1.amazonaws.com/register";
-
-    // Reference
-    public Text usernameText;
-    public InputField passwordText;
-    public Text nicknameText;
-    public Text emailText;
-    public Text bDayYText;
-    public Text bDayMText;
+    [SerializeField] private readonly string loginSite = "ec2-52-0-51-109.compute-1.amazonaws.com/login";
+    [SerializeField] private readonly string registerSite = "ec2-52-0-51-109.compute-1.amazonaws.com/register";
     public Text bDayDText;
+    public Text bDayMText;
+    public Text bDayYText;
+
+    public Canvas current;
+    public Text emailText;
+
+    public InventoryManager inventoryManager;
+    public Canvas next;
+    public Text nicknameText;
     public Text notification;
+    public InputField passwordText;
+
+    // About Session : 0 means not in session, positive = auth success, negative failed to auth
+    private string SessionId = "0";
     public Text textHelp1;
     public Text textHelp2;
     public Text textHelp3;
     public Text textHelp4;
 
-    public Canvas current;
-    public Canvas next;
-
-    public InventoryManager inventoryManager;
-
-    // About Session : 0 means not in session, positive = auth success, negative failed to auth
-    private string SessionId = "0";
+    // Reference
+    public Text usernameText;
 
     public string GetSession()
     {
@@ -41,7 +40,7 @@ public class SessionManager : MonoBehaviour
     {
         // Return true if strIn is in valid e-mail format.
         return Regex.IsMatch(strIn, @"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" +
-                             "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$");
+                                    "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$");
     }
 
     private bool IsValidUsername(string strIn)
@@ -69,14 +68,11 @@ public class SessionManager : MonoBehaviour
 
             return;
         }
+
         if (string.IsNullOrEmpty(usernameText.text) || string.IsNullOrEmpty(passwordText.text))
-        {
             notification.text = "Username or Password can't be blank";
-        }
         else
-        {
             StartCoroutine(_CreateSession(usernameText.text, passwordText.text));
-        }
     }
 
     public void CreateSession(string username, string password)
@@ -89,7 +85,7 @@ public class SessionManager : MonoBehaviour
         StartCoroutine(_DestroySession());
     }
 
-    IEnumerator _CreateSession(string username, string password)
+    private IEnumerator _CreateSession(string username, string password)
     {
         yield return new WaitForEndOfFrame();
         notification.text = "Contacting Server !";
@@ -98,23 +94,23 @@ public class SessionManager : MonoBehaviour
         DoLogin(usernameText.text, passwordText.text);
     }
 
-    IEnumerator _DestroySession()
+    private IEnumerator _DestroySession()
     {
         // 
         SessionId = "0";
         yield return 0;
     }
 
-    void DoLogin(string User, string Pass)
+    private void DoLogin(string User, string Pass)
     {
-        WWWForm www = new WWWForm();
+        var www = new WWWForm();
         www.AddField("username", User);
         www.AddField("password", Pass);
-        WWW w = new WWW(loginSite, www.data);
+        var w = new WWW(loginSite, www.data);
         StartCoroutine(Login(w));
     }
 
-    IEnumerator Login(WWW w)
+    private IEnumerator Login(WWW w)
     {
         yield return w;
         if (w.text == "Unsuccessful Login." || w.text == "error")
@@ -158,9 +154,12 @@ public class SessionManager : MonoBehaviour
             return;
         }
 
-        if (bDayDText.text == "" || bDayMText.text == "" || bDayYText.text == "" || Convert.ToInt16(bDayYText.text) < 1920 ||
-            bDayDText.text.Length != 2 || bDayMText.text.Length != 2 || bDayYText.text.Length != 4 || bDayDText.text.Contains("-") ||
-            bDayYText.text.Contains("-") || bDayMText.text.Contains("-") || Convert.ToInt16(bDayMText.text) > 12 || Convert.ToInt16(bDayDText.text) > 31)
+        if (bDayDText.text == "" || bDayMText.text == "" || bDayYText.text == "" ||
+            Convert.ToInt16(bDayYText.text) < 1920 ||
+            bDayDText.text.Length != 2 || bDayMText.text.Length != 2 || bDayYText.text.Length != 4 ||
+            bDayDText.text.Contains("-") ||
+            bDayYText.text.Contains("-") || bDayMText.text.Contains("-") || Convert.ToInt16(bDayMText.text) > 12 ||
+            Convert.ToInt16(bDayDText.text) > 31)
         {
             notification.text = "Please specify a valid birthdate.";
             return;
@@ -184,12 +183,14 @@ public class SessionManager : MonoBehaviour
             return;
         }
 
-        DoRegister(usernameText.text, nicknameText.text, passwordText.text, emailText.text, bDayYText.text, bDayMText.text, bDayDText.text);
+        DoRegister(usernameText.text, nicknameText.text, passwordText.text, emailText.text, bDayYText.text,
+            bDayMText.text, bDayDText.text);
     }
 
-    public void DoRegister(string User, string Nickname, string Pass, string Email, string BdayY, string BdayM, string BdayD)
+    public void DoRegister(string User, string Nickname, string Pass, string Email, string BdayY, string BdayM,
+        string BdayD)
     {
-        WWWForm www = new WWWForm();
+        var www = new WWWForm();
         www.AddField("username", User);
         www.AddField("nickname", Nickname);
         www.AddField("email", Email);
@@ -197,25 +198,19 @@ public class SessionManager : MonoBehaviour
         www.AddField("BdayY", BdayY);
         www.AddField("BdayM", BdayM);
         www.AddField("BdayD", BdayD);
-        WWW w = new WWW(registerSite, www.data);
+        var w = new WWW(registerSite, www.data);
         StartCoroutine(Register(w));
     }
 
-    IEnumerator Register(WWW w)
+    private IEnumerator Register(WWW w)
     {
         yield return w;
         if (w.text == "Registration Succeeded.")
-        {
-            notification.text = "Registration Complete. A verification email has been sent to the email address provided.";
-        }
+            notification.text =
+                "Registration Complete. A verification email has been sent to the email address provided.";
         if (w.text.Contains("username_UNIQUE"))
-        {
             notification.text = "This username already exists. Please choose another one.";
-        }
-        if (w.text.Contains("email_UNIQUE"))
-        {
-            notification.text = "This email already exists!";
-        }
+        if (w.text.Contains("email_UNIQUE")) notification.text = "This email already exists!";
         if (w.error != null)
         {
             Debug.Log(w.error);

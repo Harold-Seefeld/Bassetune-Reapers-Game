@@ -29,38 +29,47 @@ public enum AbilityState
 [AddComponentMenu("Ability/AbilityBase")]
 public class AbilityBase : MonoBehaviour
 {
-    // About the ability, used in UI
-    public Sprite icon;
+    private int abilityIndex;
     public string abilityName;
     public AbilityType abilityType;
+
+    protected PlayerBase actor;
+
+    // Animation for this ability, TODO: Adjust with actor animator
+    public string anim;
+
+    public string buyPrice = "1000";
+
+    // Time needed during cast
+    public float castTime;
+
+    // Time needed for cooling down
+    public float cooldownTime;
+
+    // % of damage ratio
+    public float damageRatio;
+
     public string description;
+
+    // Prefabs for effects
+    public GameObject effect;
+
+    // About the ability, used in UI
+    public Sprite icon;
     public bool onMainMenu = false;
 
     // Required weapons, use bitwise format
     public int requiredWeapons;
-    // % of damage ratio
-    public float damageRatio;
-    // Time needed during cast
-    public float castTime;
-    // Time needed for cooling down
-    public float cooldownTime;
-    // Animation for this ability, TODO: Adjust with actor animator
-    public string anim;
-    // Prefabs for effects
-    public GameObject effect;
-
-    public string buyPrice = "1000";
     public string sellPrice = "1000";
+    private AbilityState state = AbilityState.Idle;
+    protected Transform target;
 
-    protected PlayerBase actor = null;
-    protected Transform target = null;
     protected Vector3 targetPos;
-    int abilityIndex;
-    AbilityState state = AbilityState.Idle;
-    // Timer for use internally
-    float timer = 0f;
 
-    void Update()
+    // Timer for use internally
+    private float timer;
+
+    private void Update()
     {
         if (!onMainMenu)
             BaseUpdate();
@@ -88,6 +97,7 @@ public class AbilityBase : MonoBehaviour
                     // Begin Casting
                     OnCastBegin();
                 }
+
                 break;
             case AbilityState.Cast:
                 OnCast();
@@ -99,20 +109,17 @@ public class AbilityBase : MonoBehaviour
                     actor.inGameCanvas.abilities[abilityIndex].icon.color = new Color(0.4f, 0.4f, 0.4f);
                     OnCastEnd();
                 }
+
                 break;
             case AbilityState.Cooldown:
-                if (timer < 0)
-                {
-                    state = AbilityState.Idle;
-                }
+                if (timer < 0) state = AbilityState.Idle;
                 break;
         }
 
         // Update UI Timer
         if (timer >= 0)
-        {
-            actor.inGameCanvas.abilities[abilityIndex].timer.text = timer > 60 ? Mathf.CeilToInt(timer / 60) + "m" : Mathf.CeilToInt(timer) + "s";
-        }
+            actor.inGameCanvas.abilities[abilityIndex].timer.text =
+                timer > 60 ? Mathf.CeilToInt(timer / 60) + "m" : Mathf.CeilToInt(timer) + "s";
     }
 
     public void Cast(Transform _target, Vector3 _targetPos)
@@ -132,11 +139,9 @@ public class AbilityBase : MonoBehaviour
     public void CancelCast()
     {
         Debug.Log("Abort Cast");
-        if (state == AbilityState.Idle)
-        {
-            return;
-        }
-        else if (state == AbilityState.Prepare)
+        if (state == AbilityState.Idle) return;
+
+        if (state == AbilityState.Prepare)
         {
             state = AbilityState.Idle;
         }
@@ -147,6 +152,7 @@ public class AbilityBase : MonoBehaviour
             actor.inGameCanvas.abilities[abilityIndex].outline.enabled = false;
             actor.inGameCanvas.abilities[abilityIndex].icon.color = new Color(0.4f, 0.4f, 0.4f);
         }
+
         OnCastCancel();
     }
 
@@ -166,12 +172,23 @@ public class AbilityBase : MonoBehaviour
 
     public bool IsUsable(int weaponBits)
     {
-        return ((weaponBits & requiredWeapons) == requiredWeapons);
+        return (weaponBits & requiredWeapons) == requiredWeapons;
     }
 
     // Logic for casting : Override below function
-    protected virtual void OnCastBegin() { }
-    protected virtual void OnCast() { }
-    protected virtual void OnCastEnd() { }
-    protected virtual void OnCastCancel() { }
+    protected virtual void OnCastBegin()
+    {
+    }
+
+    protected virtual void OnCast()
+    {
+    }
+
+    protected virtual void OnCastEnd()
+    {
+    }
+
+    protected virtual void OnCastCancel()
+    {
+    }
 }
