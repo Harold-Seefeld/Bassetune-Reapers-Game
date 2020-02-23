@@ -37,14 +37,13 @@
  */
 #endregion
 
-using System;
 
 namespace WebSocketSharp.Net
 {
-  internal enum LineState
-  {
-    None,
-    CR,
-    LF
-  }
+    internal enum LineState
+    {
+        None,
+        CR,
+        LF
+    }
 }

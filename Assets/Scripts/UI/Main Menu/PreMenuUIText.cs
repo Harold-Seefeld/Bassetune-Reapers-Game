@@ -1,39 +1,39 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class PreMenuUIText : MonoBehaviour {
+public class PreMenuUIText : MonoBehaviour
+{
 
-	private CanvasRenderer canvasRenderer;
-	private bool keyPressed;
+    private CanvasRenderer canvasRenderer;
+    private bool keyPressed;
 
-	public AudioClip keyPressSound;
+    public AudioClip keyPressSound;
 
-	// Use this for initialization
-	void Start () 
-	{
-		canvasRenderer = GetComponent<CanvasRenderer> ();
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		if (Input.anyKeyDown && !keyPressed)
-		{
-			keyPressed = true;
+    // Use this for initialization
+    void Start()
+    {
+        canvasRenderer = GetComponent<CanvasRenderer>();
+    }
 
-			AudioSource audioSource = this.GetComponent<AudioSource>();
-			audioSource.clip = keyPressSound;
-			audioSource.Play();
-		}
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.anyKeyDown && !keyPressed)
+        {
+            keyPressed = true;
 
-		if (keyPressed)
-		{
-			canvasRenderer.SetAlpha(canvasRenderer.GetAlpha() - Time.deltaTime);
-		}
+            AudioSource audioSource = this.GetComponent<AudioSource>();
+            audioSource.clip = keyPressSound;
+            audioSource.Play();
+        }
 
-		if (canvasRenderer.GetAlpha() <= 0f)
-		{
-			this.enabled = false;
-		}
-	}
+        if (keyPressed)
+        {
+            canvasRenderer.SetAlpha(canvasRenderer.GetAlpha() - Time.deltaTime);
+        }
+
+        if (canvasRenderer.GetAlpha() <= 0f)
+        {
+            this.enabled = false;
+        }
+    }
 }

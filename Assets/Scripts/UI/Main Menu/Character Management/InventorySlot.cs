@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System.Collections;
 
-public class InventorySlot : MonoBehaviour, IDropHandler {
+public class InventorySlot : MonoBehaviour, IDropHandler
+{
 
 	public void OnDrop(PointerEventData eventData)
 	{
