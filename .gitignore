@@ -38,3 +38,5 @@ ehthumbs.db
 
 # SSH
 .ssh/
+.vs/
+.idea/

@@ -1,462 +1,602 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using System;
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
-public class InventoryManager : MonoBehaviour {
+public class InventoryManager : MonoBehaviour
+{
 
-	[SerializeField] string getInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/getinventory";
-	[SerializeField] string setInventorySite = "ec2-52-0-51-109.compute-1.amazonaws.com/setinventory";
-	public JSONObject inventoryJSON;
+    public string server = "bassetune.com";
+    private string getInventorySite = "";
+    private string setInventorySite = "";
+    private string buyFeatureSite = "";
 
-	public GameObject[] itemList;
-	public GameObject[] weaponList;
-	public GameObject[] abilityList; 
+    // Stores current JSON from the server
+    public JSONObject inventoryJSON;
 
-	public GameObject equipmentShop;
-	public GameObject equipmentInventory;
-	public GameObject abilityShop;
-	public GameObject abilityInventory;
-	public GameObject weaponShop;
-	public GameObject weaponInventory;
-	public GameObject bossShop;
-	public GameObject bossInventory;
-	public GameObject minibossShop;
-	public GameObject minibossInventory;
-	public GameObject trapShop;
-	public GameObject trapInventory;
-	public GameObject creatureShop;
-	public GameObject creatureInventory;
-	public Text notificationText;
-	public Button notificationButton;
-	public RectTransform notificationRect;
-	public GameObject inventoryLabel;
-	public GameObject shopLabel;
+    // UI References
+    public GameObject shopPanel;
+    public GameObject inventoryPanel;
+    public GameObject inventorySetPanel;
+    public Text notificationText;
+    public Button notificationButton;
+    public RectTransform notificationRect;
+    public GameObject abilitySlotPanel;
+    public GameObject dungeonSelectorPanel;
+    public GameObject dungeonSlotPanel;
 
-	public SessionManager sessionManager;
+    // Label to create an entry
+    public GameObject labelPrefab;
 
-	public void UpdateInventory() 
-	{
-		WWWForm www = new WWWForm();
-		www.AddField("uuid", sessionManager.GetSession());
-		WWW w = new WWW (getInventorySite, www.data);
-		StartCoroutine(UpdateInventory(w));
-	}
-	
-	IEnumerator UpdateInventory(WWW w) 
-	{
-		yield return w;
-		inventoryJSON = new JSONObject(w.text);
+    // Buttons for selecting between dungeon compositions
+    public GameObject compositionSelectorPrefab;
 
-		Debug.Log("Downloaded Inventory Successfully.");
+    // All items and abilities
+    public PrefabStore[] items;
 
-		Debug.Log(inventoryJSON.Print());
+    public static InventoryManager instance = null;
 
-		// Clear all existing texts
-		ClearText(abilityShop.GetComponentsInChildren<Text>());
-		ClearText(weaponShop.GetComponentsInChildren<Text>());
-		ClearText(creatureShop.GetComponentsInChildren<Text>());
-		ClearText(equipmentShop.GetComponentsInChildren<Text>());
-		ClearText(minibossShop.GetComponentsInChildren<Text>());
-		ClearText(bossShop.GetComponentsInChildren<Text>());
-		ClearText(trapShop.GetComponentsInChildren<Text>());
-		ClearText(abilityInventory.GetComponentsInChildren<Text>());
-		ClearText(weaponInventory.GetComponentsInChildren<Text>());
-		ClearText(creatureInventory.GetComponentsInChildren<Text>());
-		ClearText(equipmentInventory.GetComponentsInChildren<Text>());
-		ClearText(minibossInventory.GetComponentsInChildren<Text>());
-		ClearText(bossInventory.GetComponentsInChildren<Text>());
-		ClearText(trapInventory.GetComponentsInChildren<Text>());
-		
-		// Set Shop Text
-		SetShopText(equipmentShop, itemList);
-		SetShopText(abilityShop, abilityList);
-		SetShopText(weaponShop, weaponList);
-		SetShopText(bossShop, itemList, ItemBase.BossItemType.Boss);
-		SetShopText(minibossShop, itemList, ItemBase.BossItemType.Miniboss);
-		SetShopText(trapShop, itemList, ItemBase.BossItemType.Trap);
-		SetShopText(creatureShop, itemList, ItemBase.BossItemType.Creature);
-		
-		// Set Inventory Text
-		SetInventory(equipmentShop, equipmentInventory, itemList);
-		SetInventory(abilityShop, abilityInventory, abilityList);
-		SetInventory(weaponShop, weaponInventory, weaponList);
-		SetInventory(bossShop, bossInventory, itemList, ItemBase.BossItemType.Boss);
-		SetInventory(minibossShop, minibossInventory, itemList, ItemBase.BossItemType.Miniboss);
-		SetInventory(trapShop, trapInventory, itemList, ItemBase.BossItemType.Trap);
-		SetInventory(creatureShop, creatureInventory, itemList, ItemBase.BossItemType.Creature);
+    [SerializeField]
+    private ClientData clientData;
 
-		Debug.Log ("Filtered Inventory Successfully.");
-	}
+    public int selectedDungeon = 0;
 
-	void ClearText(Text[] textsToClear)
-	{
-		for (int i = 0; i < textsToClear.Length; i++)
-		{
-			Destroy(textsToClear[i].gameObject);
-		}
-	}
+    void Start()
+    {
+        instance = this;
 
-	void SetShopText(GameObject shopList, GameObject[] items)
-	{
-		for (int i = 0; i < items.Length; i++)
-		{
-			if (items[i].GetComponent<ItemBase>() && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
-				newObject.transform.SetParent(shopList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[i].GetComponent<ItemBase>().itemName;
+        setInventorySite = server + "/setInventory";
+        getInventorySite = server + "/getInventory";
+        buyFeatureSite = server + "/purchaseFeature";
 
-				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-				for (int il = 0; il < newObjectButtons.Length; il++)
-				{
-					int itemIndex = i;
-					if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
-					{
-						newObjectButtons[il].onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButtons[il].onClick.AddListener(() => {BuyItem(itemIndex, 1, "Item");});;
-						newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemBuyPrice;
-					}
-				}
-			}
-			else if (items[i].GetComponent<WeaponBase>())
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
-				newObject.transform.SetParent(shopList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[i].GetComponent<WeaponBase>().weaponName;
+        clientData = FindObjectOfType<ClientData>() as ClientData;
+        UpdateInventory();
 
-				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-				for (int il = 0; il < newObjectButtons.Length; il++)
-				{
-					int itemIndex = i;
-					if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
-					{
-						newObjectButtons[il].onClick.RemoveAllListeners();
-						newObjectButtons[il].onClick.AddListener(() => {BuyItem(itemIndex, 1, "Weapon");});;
-						newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponBuyPrice.ToString();
-					}
-				}
-			}
-			else if (items[i].GetComponent<AbilityBase>())
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
-				newObject.transform.SetParent(shopList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[i].GetComponent<AbilityBase>().abilityName;
+        ShowShop("ability");
+    }
 
-				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-				for (int il = 0; il < newObjectButtons.Length; il++)
-				{
-					int itemIndex = i;
-					if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
-					{
-						newObjectButtons[il].onClick.RemoveAllListeners();
-						newObjectButtons[il].onClick.AddListener(() => {BuyItem(itemIndex, 1, "Ability");});;
-						newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().buyPrice.ToString();
-					}
-				}
-			}
-		}
-		
-		RectTransform rectTransform = shopList.GetComponent<RectTransform>();
-		if (shopList.GetComponentsInChildren<Text>(true).Length > 5)
-		{
-			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (shopList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
-		}
-	}
+    public void UpdateInventory()
+    {
+        WWWForm www = new WWWForm();
+        www.AddField("uuid", clientData.GetSession());
+        WWW w = new WWW(getInventorySite, www.data);
+        StartCoroutine(UpdateInventory(w));
+    }
 
-	void SetShopText(GameObject shopList, GameObject[] items, ItemBase.BossItemType itemType)
-	{
-		for (int i = 0; i < items.Length; i++)
-		{
-			if (items[i].GetComponent<ItemBase>().bossItemType == itemType && items[i].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss)
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(shopLabel);
-				newObject.transform.SetParent(shopList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[i].GetComponent<ItemBase>().itemName;
+    IEnumerator UpdateInventory(WWW w)
+    {
+        yield return w;
+        inventoryJSON = new JSONObject(w.text);
+        Debug.Log(inventoryJSON.Print());
 
-				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-				for (int il = 0; il < newObjectButtons.Length; il++)
-				{
-					int itemIndex = i;
-					if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Buy")
-					{
-						newObjectButtons[il].onClick.RemoveAllListeners(); // TODO Get Item Purchase Amount
-						newObjectButtons[il].onClick.AddListener(() => {BuyItem(itemIndex, 1, "Item");});;
-						newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemBuyPrice;
-					}
-				}
-			}
-		}
-		
-		RectTransform rectTransform = shopList.GetComponent<RectTransform>();
-		if (shopList.GetComponentsInChildren<Text>(true).Length > 5)
-		{
-			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (shopList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
-		}
-	}
+        ShowInventory("ability");
 
-	void SetInventory(GameObject shopList, GameObject inventoryList, GameObject[] items)
-	{
-		for (int i = 0; i < inventoryJSON.Count; i++)
-		{
-			if (inventoryJSON[i][0].ToString() != "null" && items == itemList && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Knight)
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
-				newObject.transform.SetParent(inventoryList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
-				ItemBase itemBase = newObject.AddComponent<ItemBase>();
-				CopyItemBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>(), itemBase);
-				
-			    Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-				for (int il = 0; il < newObjectButtons.Length; il++)
-				{
-					int itemIndex = Convert.ToInt16(inventoryJSON[i][0]) - 1;
-					if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Sell")
-					{
-						newObjectButtons[il].onClick.RemoveAllListeners();
-						newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<ItemBase>().itemSellPrice.ToString();
-						newObjectButtons[il].onClick.AddListener(() => {SellItem(itemIndex, 1, "Item");});;
-					}
-				}
-			}
-			else if (inventoryJSON[i][2].ToString() != "null" && items == weaponList)
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
-				newObject.transform.SetParent(inventoryList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][2]) - 1].GetComponent<WeaponBase>().weaponName;
-				WeaponBase weaponBase = newObject.AddComponent<WeaponBase>();
-				CopyWeaponBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<WeaponBase>(), weaponBase);
-				
-				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-				for (int il = 0; il < newObjectButtons.Length; il++)
-				{
-					int itemIndex = Convert.ToInt16(inventoryJSON[i][2]) - 1;
-					if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Sell")
-					{
-						newObjectButtons[il].onClick.RemoveAllListeners();
-						newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<WeaponBase>().weaponSellPrice.ToString();
-						newObjectButtons[il].onClick.AddListener(() => {SellItem(itemIndex, 1, "Weapon");});;
-					}
-				}
-			}
-			else if (inventoryJSON[i][3].ToString() != "null" && items == abilityList)
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
-				newObject.transform.SetParent(inventoryList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][3]) - 1].GetComponent<AbilityBase>().abilityName;
-				AbilityBase abilityBase = newObject.AddComponent<AbilityBase>();
-				abilityBase.onMainMenu = true;
-				CopyAbilityBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<AbilityBase>(), abilityBase);
-				
-				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-				for (int il = 0; il < newObjectButtons.Length; il++)
-				{
-					int itemIndex = Convert.ToInt16(inventoryJSON[i][3]) - 1;
-					if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Sell")
-					{
-						newObjectButtons[il].onClick.RemoveAllListeners();
-						newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
-						newObjectButtons[il].onClick.AddListener(() => {SellItem(itemIndex, 1, "Ability");});;
-					}
-				}
-			}
-		}
+        // Update Selector slots (dungeon defaults to show dungeon 1)
+        DisplayInventory();
+        DisplayAbility();
+        DisplayDungeonSelector();
+        DisplayDungeon(0);
 
-		RectTransform rectTransform = inventoryList.GetComponent<RectTransform>();
-		if (inventoryList.GetComponentsInChildren<Text>(true).Length > 5)
-		{
-			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, (inventoryList.GetComponentsInChildren<Text>(true).Length - 180) * 4);
-		}
-	}
+        Debug.Log("Downloaded Inventory Successfully.");
+    }
 
-	void SetInventory(GameObject shopList, GameObject inventoryList, GameObject[] items, ItemBase.BossItemType itemType)
-	{
-		for (int i = 0; i < inventoryJSON.Count; i++)
-		{
-			if (inventoryJSON[i][0].ToString() != "null" && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemSide == ItemBase.ItemSide.Boss && items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().bossItemType == itemType)
-			{
-				GameObject newObject = (GameObject)UnityEngine.Object.Instantiate(inventoryLabel);
-				newObject.transform.SetParent(inventoryList.transform);
-				newObject.GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
-				newObject.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
-				newObject.GetComponent<Text>().text = items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>().itemName;
-				ItemBase itemBase = newObject.AddComponent<ItemBase>();
-				CopyItemBase(items[Convert.ToInt16(inventoryJSON[i][0]) - 1].GetComponent<ItemBase>(), itemBase);
+    private ItemBase GetItemInfo(string panel, int id)
+    {
+        for (int n = 0; n < items.Length; n++)
+        {
+            if (items[n].prefabs.Length > 0)
+            {
+                if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
+                {
+                    continue;
+                }
+                if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
+                {
+                    continue;
+                }
+                if (panel == "equipable" && !items[n].prefabs[0].GetComponent<Equipable>())
+                {
+                    continue;
+                }
+                if (panel == "ability" && !items[n].prefabs[0].GetComponent<Ability>())
+                {
+                    continue;
+                }
+                for (int i = 0; i < items[n].prefabs.Length; i++)
+                {
+                    ItemBase item = items[n].prefabs[i].GetComponent<ItemBase>();
+                    if (items[n].prefabs[i].GetComponent<ItemBase>().itemID == id)
+                    {
+                        return item;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-				Button[] newObjectButtons = newObject.GetComponentsInChildren<Button>(true);
-				for (int il = 0; il < newObjectButtons.Length; il++)
-				{
-					int itemIndex = Convert.ToInt16(inventoryJSON[i][0]) - 1;
-					if (newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text == "Sell")
-					{
-						newObjectButtons[il].onClick.RemoveAllListeners();
-						newObjectButtons[il].GetComponentsInChildren<Text>(true)[0].text = "G| " + items[i].GetComponent<AbilityBase>().sellPrice.ToString();
-						newObjectButtons[il].onClick.AddListener(() => {SellItem(itemIndex, 1, "Item");});;
-					}
-				}
-			}
-		}
-		
-		RectTransform rectTransform = inventoryList.GetComponent<RectTransform>();
-		if (inventoryList.GetComponentsInChildren<Text>(true).Length > 5)
-		{
-			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, rectTransform.offsetMax.x - (inventoryList.GetComponentsInChildren<Text>(true).Length - 150 * 30));
-			rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, rectTransform.offsetMax.y);
-		}
-	}
+    public void ShowInventory(string panel)
+    {
+        int inventoryLength = inventoryJSON["purchased"].Count;
+        // Clear previous entries in inventory
+        foreach (Transform child in inventoryPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        // Add all items based on respective list
+        for (int n = 0; n < items.Length; n++)
+        {
+            if (items[n].prefabs.Length <= 0)
+            {
+                continue;
+            }
 
-	void BuyItem(int itemIndex, int itemAmount, string itemType)
-	{
-		WWWForm www = new WWWForm();
-		www.AddField("uuid", sessionManager.GetSession());
-		www.AddField("itemAmount", itemAmount);
-		www.AddField("commandType", "Buy");
-		www.AddField("itemType", itemType);
-		www.AddField("item", itemIndex + 1);
-		WWW w = new WWW (setInventorySite, www.data);
-		StartCoroutine(BuyItem(w));
-	}
+            if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
+            {
+                continue;
+            }
+            if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
+            {
+                continue;
+            }
+            if (panel == "equipable" && !items[n].prefabs[0].GetComponent<Equipable>())
+            {
+                continue;
+            }
+            if (panel == "ability" && !items[n].prefabs[0].GetComponent<Ability>())
+            {
+                continue;
+            }
 
-	IEnumerator BuyItem(WWW w)
-	{
-		yield return w;
+            for (int a = 0; a < items[n].prefabs.Length; a++)
+            {
+                for (int i = 0; i < inventoryLength; i++)
+                {
+                    // Create Entry
+                    ItemBase item = items[n].prefabs[a].GetComponent<ItemBase>();
+                    if (inventoryJSON["purchased"].list[i].n != item.itemID)
+                    {
+                        continue;
+                    }
 
-		if (w.text == "Successfully purchased.")
-		{
-			notificationRect.transform.gameObject.SetActive(true);
-			notificationRect.SetAsLastSibling();
-			notificationText.text = "Successfully Purchased.";
-			notificationButton.onClick.RemoveAllListeners();
-			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
-			UpdateInventory();
-		}
-		else if (w.text == "Account ID is undefined.")
-		{
-			sessionManager.next.enabled = false;
-			sessionManager.current.enabled = true;
-			sessionManager.notification.text = "You have been logged out. Please log in again.";
-		}
-		else if (w.text == "Not enough gold.")
-		{
-			notificationRect.transform.gameObject.SetActive(true);
-			notificationRect.SetAsLastSibling();
-			notificationText.text = "Not enough gold.";
-			notificationButton.onClick.RemoveAllListeners();
-			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
-		}
-		else
-		{
-			notificationRect.transform.gameObject.SetActive(true);
-			notificationRect.SetAsLastSibling();
-			notificationText.text = "An error occurred";
-			notificationButton.onClick.RemoveAllListeners();
-			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
-		}
-		Debug.Log(w.text);
-	}
+                    GameObject newObject = Instantiate(labelPrefab);
+                    newObject.transform.SetParent(inventoryPanel.transform);
 
-	void SellItem(int itemIndex, int itemAmount, string itemType)
-	{
-		WWWForm www = new WWWForm();
-		www.AddField("uuid", sessionManager.GetSession());
-		www.AddField("itemAmount", itemAmount);
-		www.AddField("commandType", "Sell");
-		www.AddField("itemType", itemType);
-		www.AddField("item", itemIndex + 1);
-		Debug.Log(itemIndex +1);
-		WWW w = new WWW (setInventorySite, www.data);
-		StartCoroutine(SellItem(w));
-	}
+                    newObject.GetComponentInChildren<Text>().text = item.itemName;
+                    newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
+                    ItemBase itemBase = newObject.AddComponent<ItemBase>();
+                    itemBase.itemID = item.itemID;
+                    itemBase.itemName = item.itemName;
+                    itemBase.itemIcon = item.itemIcon;
+                    itemBase.itemDescription = item.itemDescription;
+                    itemBase.itemCount = item.itemCount;
+                    itemBase.itemBuyPrice = item.itemBuyPrice;
+                    itemBase.itemSellPrice = item.itemSellPrice;
+                }
+            }
+        }
+    }
 
-	IEnumerator SellItem(WWW w)
-	{
-		yield return w;
+    public void ShowShop(string panel)
+    {
+        // Clear previous entries in inventory
+        foreach (Transform child in shopPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        // Add all items based on respective list
+        for (int n = 0; n < items.Length; n++)
+        {
+            if (items[n].prefabs.Length > 0)
+            {
+                if (panel == "weapon" && !items[n].prefabs[0].GetComponent<Weapon>())
+                {
+                    continue;
+                }
+                if (panel == "consumable" && !items[n].prefabs[0].GetComponent<Consumable>())
+                {
+                    continue;
+                }
+                if (panel == "equipable" && !items[n].prefabs[0].GetComponent<Equipable>())
+                {
+                    continue;
+                }
+                if (panel == "ability" && !items[n].prefabs[0].GetComponent<Ability>())
+                {
+                    continue;
+                }
+                for (int i = 0; i < items[n].prefabs.Length; i++)
+                {
+                    // Create Entry
+                    ItemBase item = items[n].prefabs[i].GetComponent<ItemBase>();
+                    GameObject newObject = Instantiate(labelPrefab);
+                    newObject.transform.SetParent(shopPanel.transform);
 
-		if (w.text == "Successfully sold.")
-		{
-			notificationRect.transform.gameObject.SetActive(true);
-			notificationRect.SetAsLastSibling();
-			notificationText.text = "Successfully Sold.";
-			notificationButton.onClick.RemoveAllListeners();
-			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
-			UpdateInventory();
-		}
-		else if (w.text == "Account ID is undefined.")
-		{
-			sessionManager.next.enabled = false;
-			sessionManager.current.enabled = true;
-			sessionManager.notification.text = "You have been logged out. Please log in again.";
-		}
-		else if (w.text == "Couldn't find item." || w.text == "Could not retrieve any item results.")
-		{
-			notificationRect.transform.gameObject.SetActive(true);
-			notificationRect.SetAsLastSibling();
-			notificationText.text = "Item doesn't exist.";
-			notificationButton.onClick.RemoveAllListeners();
-			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
-			UpdateInventory();
-		}
-		else if (w.text == "Sell amount too big.")
-		{
-			notificationRect.transform.gameObject.SetActive(true);
-			notificationRect.SetAsLastSibling();
-			notificationText.text = "You don't have enough items.";
-			notificationButton.onClick.RemoveAllListeners();
-			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
-		}
-		else
-		{
-			notificationRect.transform.gameObject.SetActive(true);
-			notificationRect.SetAsLastSibling();
-			notificationText.text = "An error occurred";
-			notificationButton.onClick.RemoveAllListeners();
-			notificationButton.onClick.AddListener(() => {notificationRect.transform.gameObject.SetActive(false);});;
-		}
+                    newObject.GetComponentInChildren<Text>().text = item.itemName;
+                    newObject.GetComponentsInChildren<Image>()[1].sprite = item.itemIcon;
+                    ItemBase itemBase = newObject.AddComponent<ItemBase>();
+                    itemBase.itemID = item.itemID;
+                    itemBase.itemName = item.itemName;
+                    itemBase.itemIcon = item.itemIcon;
+                    itemBase.itemDescription = item.itemDescription;
+                    itemBase.itemCount = item.itemCount;
+                    itemBase.itemBuyPrice = item.itemBuyPrice;
+                    itemBase.itemSellPrice = item.itemSellPrice;
 
-		Debug.Log(w.text);
-	}
+                    newObject.GetComponent<InventoryDrag>().draggable = false;
+                }
+            }
+        }
+    }
 
-	public void CopyItemBase(ItemBase oldBase, ItemBase newBase)
-	{
-		newBase.itemIcon = oldBase.itemIcon;
-		newBase.itemName = oldBase.itemName;
-		newBase.itemSide = oldBase.itemSide;
-		newBase.itemDescription = oldBase.itemDescription;
-		newBase.itemSellPrice = oldBase.itemSellPrice;
-		newBase.itemBuyPrice = oldBase.itemBuyPrice;
-		newBase.itemAnimation = oldBase.itemAnimation;
-	}
+    public void SortInventory(string filter)
+    {
+        // TODO: Edit to include filters for sorting the inventory
+    }
 
-	public void CopyWeaponBase(WeaponBase oldBase, WeaponBase newBase)
-	{
-		newBase.weaponIcon = oldBase.weaponIcon;
-		newBase.weaponName = oldBase.weaponName;
-		newBase.weaponDescription = oldBase.weaponDescription;
-		newBase.weaponSellPrice = oldBase.weaponSellPrice;
-		newBase.weaponBuyPrice = oldBase.weaponBuyPrice;
-	}
+    public void SortShop(string filter)
+    {
+        // TODO: Edit to include filters for sorting the inventory
+    }
 
-	public void CopyAbilityBase(AbilityBase oldBase, AbilityBase newBase)
-	{
-		newBase.icon = oldBase.icon;
-		newBase.abilityName = oldBase.abilityName;
-		newBase.buyPrice = oldBase.buyPrice;
-		newBase.sellPrice = oldBase.sellPrice;
-		newBase.description = oldBase.description;
-		newBase.abilityType = oldBase.abilityType;
-	}
+    public void BuyItem(int itemIndex, int itemAmount)
+    {
+        WWWForm www = new WWWForm();
+        www.AddField("uuid", clientData.GetSession());
+        www.AddField("amount", itemAmount);
+        www.AddField("commandType", "Buy");
+        www.AddField("item", itemIndex);
+        WWW w = new WWW(setInventorySite, www.data);
+        StartCoroutine(BuyItem(w));
+    }
+
+    IEnumerator BuyItem(WWW w)
+    {
+        yield return w;
+
+        if (w.text == "Successfully Purchased.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Successfully Purchased.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+            UpdateInventory();
+        }
+        else if (w.text == "Account ID is undefined.")
+        {
+            Application.Quit();
+        }
+        else if (w.text == "Not enough gold.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Not enough gold.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+        else
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "An error occurred";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+    }
+
+    public void SellItem(int itemIndex, int itemAmount)
+    {
+        WWWForm www = new WWWForm();
+        www.AddField("uuid", clientData.GetSession());
+        www.AddField("amount", itemAmount);
+        www.AddField("commandType", "Sell");
+        www.AddField("item", itemIndex);
+        WWW w = new WWW(setInventorySite, www.data);
+        StartCoroutine(SellItem(w));
+    }
+
+    IEnumerator SellItem(WWW w)
+    {
+        yield return w;
+
+        if (w.text == "Successfully sold.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Successfully Sold.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+            UpdateInventory();
+        }
+        else if (w.text == "Account ID is undefined.")
+        {
+            Application.Quit();
+        }
+        else if (w.text == "Couldn't find item." || w.text == "Could not retrieve any item results.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "Item doesn't exist.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+            UpdateInventory();
+        }
+        else if (w.text == "Sell amount too big.")
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "You don't have enough items.";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+        else
+        {
+            notificationRect.transform.gameObject.SetActive(true);
+            notificationRect.SetAsLastSibling();
+            notificationText.text = "An error occurred";
+            notificationButton.onClick.RemoveAllListeners();
+            notificationButton.onClick.AddListener(() => { notificationRect.transform.gameObject.SetActive(false); }); ;
+        }
+    }
+
+    private void DisplayInventory()
+    {
+        Image[] inventorySlots = inventorySetPanel.GetComponentsInChildren<Image>();
+        List<JSONObject> itemInventory = inventoryJSON["knight"].list;
+        for (int n = 0; n < itemInventory.Count; n++)
+        {
+            var item = itemInventory[n];
+            if (item[1].n >= inventorySlots.Length)
+            {
+                // Try to display on ability inventory menu
+                DisplayAbilityItem(item);
+                continue;
+            }
+            var itemSlot = inventorySlots[(int)item[1].n].gameObject;
+
+            if (itemSlot.GetComponent<ItemBase>())
+            {
+                Destroy(itemSlot.GetComponent<ItemBase>());
+            }
+ 
+            for (int k = 0; k < items.Length; k++)
+            {
+                for (int p = 0; p < items[k].prefabs.Length; p++)
+                {
+                    ItemBase itemBase = items[k].prefabs[p].GetComponent<ItemBase>();
+
+                    if (itemBase.itemID == item[0].n)
+                    {
+                        itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
+
+                        if (item[2].n == 9)
+                        {
+                            itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Both);
+                        }
+                        else
+                        {
+                            itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[2].n);
+                        }
+
+                        ItemBase newItem = itemSlot.AddComponent<ItemBase>();
+                        newItem.itemID = itemBase.itemID;
+                        newItem.itemName = itemBase.itemName;
+                        newItem.itemIcon = itemBase.itemIcon;
+                        newItem.itemDescription = itemBase.itemDescription;
+                        newItem.itemBuyPrice = itemBase.itemBuyPrice;
+                        newItem.itemSellPrice = itemBase.itemSellPrice;
+
+                        k = items.Length;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void DisplayAbilityItem(JSONObject item)
+    {
+        Image[] abilitySlots = abilitySlotPanel.GetComponentsInChildren<Image>();
+
+        int slotID = (int)item[1].n - 9;
+
+        if (slotID >= abilitySlots.Length)
+        {
+            return;
+        }
+        var itemSlot = abilitySlots[slotID].gameObject;
+
+        if (itemSlot.GetComponent<ItemBase>())
+        {
+            Destroy(itemSlot.GetComponent<ItemBase>());
+        }
+
+        for (int k = 0; k < items.Length; k++)
+        {
+            for (int p = 0; p < items[k].prefabs.Length; p++)
+            {
+                ItemBase itemBase = items[k].prefabs[p].GetComponent<ItemBase>();
+
+                if (itemBase.itemID == item[0].n)
+                {
+                    itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
+
+                    if (item[2].n == 9)
+                    {
+                        itemSlot.GetComponent<InventorySlot>().SetTag(InventorySlot.SlotTag.Both);
+                    }
+                    else
+                    {
+                        itemSlot.GetComponent<InventorySlot>().SetTag((InventorySlot.SlotTag)(int)item[2].n);
+                    }
+
+                    ItemBase newItem = itemSlot.AddComponent<ItemBase>();
+                    newItem.itemID = itemBase.itemID;
+                    newItem.itemName = itemBase.itemName;
+                    newItem.itemIcon = itemBase.itemIcon;
+                    newItem.itemDescription = itemBase.itemDescription;
+                    newItem.itemBuyPrice = itemBase.itemBuyPrice;
+                    newItem.itemSellPrice = itemBase.itemSellPrice;
+
+                    k = items.Length;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void DisplayAbility()
+    {
+        Image[] inventorySlots = abilitySlotPanel.GetComponentsInChildren<Image>();
+        List<JSONObject> itemInventory = inventoryJSON["ability"].list;
+        for (int n = 0; n < itemInventory.Count; n++)
+        {
+            var item = itemInventory[n];
+            if (item[1].n >= inventorySlots.Length)
+            {
+                continue;
+            }
+            var itemSlot = inventorySlots[(int)item[1].n].gameObject;
+
+            if (itemSlot.GetComponent<ItemBase>())
+            {
+                Destroy(itemSlot.GetComponent<ItemBase>());
+            }
+
+            for (int k = 0; k < items.Length; k++)
+            {
+                for (int p = 0; p < items[k].prefabs.Length; p++)
+                {
+                    ItemBase itemBase = items[k].prefabs[p].GetComponent<ItemBase>();
+
+                    if (itemBase.itemID == item[0].n)
+                    {
+                        itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
+
+                        ItemBase newItem = itemSlot.AddComponent<ItemBase>();
+                        newItem.itemID = itemBase.itemID;
+                        newItem.itemName = itemBase.itemName;
+                        newItem.itemIcon = itemBase.itemIcon;
+                        newItem.itemDescription = itemBase.itemDescription;
+                        newItem.itemBuyPrice = itemBase.itemBuyPrice;
+                        newItem.itemSellPrice = itemBase.itemSellPrice;
+
+                        k = items.Length;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void DisplayDungeon(int index)
+    {
+        // Clear existing slots
+        Image[] inventorySlots = dungeonSlotPanel.GetComponentsInChildren<Image>();
+        foreach (Image image in inventorySlots)
+        {
+            Destroy(image.GetComponent<ItemBase>());
+        }
+
+        List<JSONObject> itemInventory = inventoryJSON["lord"].list;
+        if (itemInventory == null) return;
+
+        for (int n = 0; n < itemInventory.Count; n++)
+        {
+            var item = itemInventory[n].list;
+            if (item[1].n >= inventorySlots.Length || item[2].n != index)
+            {
+                continue;
+            }
+            var itemSlot = inventorySlots[(int)item[1].n].gameObject;
+
+            if (itemSlot.GetComponent<ItemBase>())
+            {
+                Destroy(itemSlot.GetComponent<ItemBase>());
+            }
+
+            for (int k = 0; k < items.Length; k++)
+            {
+                for (int p = 0; p < items[k].prefabs.Length; p++)
+                {
+                    ItemBase itemBase = items[k].prefabs[p].GetComponent<ItemBase>();
+
+                    if (itemBase.itemID == item[0].n)
+                    {
+                        itemSlot.GetComponent<Image>().sprite = itemBase.itemIcon;
+
+                        ItemBase newItem = itemSlot.AddComponent<ItemBase>();
+                        newItem.itemID = itemBase.itemID;
+                        newItem.itemName = itemBase.itemName;
+                        newItem.itemIcon = itemBase.itemIcon;
+                        newItem.itemDescription = itemBase.itemDescription;
+                        newItem.itemBuyPrice = itemBase.itemBuyPrice;
+                        newItem.itemSellPrice = itemBase.itemSellPrice;
+
+                        k = items.Length;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void DisplayDungeonSelector()
+    {
+        int dungeonCount = (int)inventoryJSON["count"].n;
+
+        // Clear existing children
+        foreach (Transform child in dungeonSelectorPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i <= dungeonCount - 1; i++)
+        {
+            int index = i;
+
+            GameObject selector = (GameObject)Instantiate(compositionSelectorPrefab, dungeonSelectorPanel.transform);
+            EventTrigger eventTrigger = selector.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((eventData) =>
+            {
+                selectedDungeon = index;
+                DisplayDungeon(index);
+                // Set current one to inactive button and rest to active
+                foreach (Transform child in dungeonSelectorPanel.transform)
+                {
+                    child.GetComponent<Button>().interactable = true;
+                }
+                selector.GetComponent<Button>().interactable = false;
+            });
+            eventTrigger.triggers.Add(entry);
+
+            selector.GetComponentInChildren<Text>().text = (i + 1).ToString();
+
+            if (i == 0)
+            {
+                selector.GetComponent<Button>().interactable = false;
+            }
+        }
+
+        if (dungeonCount != 4)
+        {
+            GameObject selector = (GameObject)Instantiate(compositionSelectorPrefab, dungeonSelectorPanel.transform);
+            EventTrigger eventTrigger = selector.GetComponent<EventTrigger>();
+            eventTrigger.triggers.Clear();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((eventData) =>
+            {
+                // TODO: Display dialogue for purchase
+                BuyItem(dungeonCount + 9999, 1);
+            });
+            eventTrigger.triggers.Add(entry);
+
+            selector.GetComponentInChildren<Text>().text = "+";
+        }
+    }
 }
