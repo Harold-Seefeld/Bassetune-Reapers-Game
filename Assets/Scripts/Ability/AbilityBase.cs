@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 /*
  * This is base Ability class, to create custom ability simply override this class.
@@ -11,184 +12,147 @@
  * If you overriding Unity function from this class, don't forget to call Base[FunctionToOverride] before writing your scripts.
  * Remember base.[FunctionToOverride] won't work due to unity reflection architectures.
  */
-public enum AbilityType
-{
-    Offensive,
-    Defensive,
-    Special
+public enum AbilityType{
+	Offensive,
+	Defensive,
+	Special
 }
 
-public enum AbilityState
-{
-    Idle,
-    Prepare,
-    Cast,
-    Cooldown
+public enum AbilityState{
+	Idle,
+	Prepare,
+	Cast,
+	Cooldown
 }
 
 [AddComponentMenu("Ability/AbilityBase")]
-public class AbilityBase : MonoBehaviour
-{
-    private int abilityIndex;
-    public string abilityName;
-    public AbilityType abilityType;
+public class AbilityBase : MonoBehaviour {
+	// About the ability, used in UI
+	public Sprite icon;
+	public string abilityName;
+	public AbilityType abilityType;
+	public string description;
+	public bool onMainMenu = false;
 
-    protected PlayerBase actor;
+	// Required weapons, use bitwise format
+	public int requiredWeapons;
+	// % of damage ratio
+	public float damageRatio;
+	// Time needed during cast
+	public float castTime;
+	// Time needed for cooling down
+	public float cooldownTime;
+	// Animation for this ability, TODO: Adjust with actor animator
+	public string anim;
+	// Prefabs for effects
+	public GameObject effect;
 
-    // Animation for this ability, TODO: Adjust with actor animator
-    public string anim;
+	public string buyPrice = "1000";
+	public string sellPrice = "1000";
+	
+	protected PlayerBase actor = null;
+	protected Transform target = null;
+	protected Vector3 targetPos;
+	int abilityIndex;
+	AbilityState state = AbilityState.Idle;
+	// Timer for use internally
+	float timer = 0f;
+	
+	void Update(){
+		if (!onMainMenu)
+			BaseUpdate ();
+	}
+	
+	protected void BaseUpdate(){
+		timer -= Time.deltaTime;
 
-    public string buyPrice = "1000";
+		switch (state){
+		case AbilityState.Idle:
+			actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (1f, 1f, 1f);
+			actor.inGameCanvas.abilities [abilityIndex].timer.text = "";
+			break;
+		case AbilityState.Prepare:
 
-    // Time needed during cast
-    public float castTime;
+			if (!actor.agent.hasPath){
+				state = AbilityState.Cast;
+				actor.inGameCanvas.abilities [abilityIndex].outline.enabled = true;
+				actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (1f, 1f, 1f);
+				timer = castTime;
+				
+				// Begin Casting
+				OnCastBegin ();
+			}
+			break;
+		case AbilityState.Cast:
+			OnCast();
+			if (timer < 0){
+				state = AbilityState.Cooldown;
+				timer = cooldownTime;
+				actor.inGameCanvas.abilities [abilityIndex].outline.enabled = false;
+				actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (0.4f, 0.4f, 0.4f);
+				OnCastEnd();
+			}
+			break;
+		case AbilityState.Cooldown:
+			if (timer < 0){
+				state = AbilityState.Idle;
+			}
+			break;
+		}
 
-    // Time needed for cooling down
-    public float cooldownTime;
+		// Update UI Timer
+		if (timer >= 0){
+			actor.inGameCanvas.abilities [abilityIndex].timer.text = timer > 60 ? Mathf.CeilToInt(timer/60) + "m" : Mathf.CeilToInt(timer) + "s";
+		}
+	}
+	
+	public void Cast(Transform _target, Vector3 _targetPos){
+		// Check if ability is usable. TODO: replace 10 with weapon flags
+//		if (!IsUsable(10)) return;
 
-    // % of damage ratio
-    public float damageRatio;
+		if (state != AbilityState.Idle)
+			return;
 
-    public string description;
+		target = _target;
+		targetPos = _targetPos;
+		actor.agent.SetDestination (target.position);
+		state = AbilityState.Prepare;
+	}
 
-    // Prefabs for effects
-    public GameObject effect;
+	public void CancelCast(){
+		Debug.Log ("Abort Cast");
+		if (state == AbilityState.Idle){
+			return;
+		} else if (state == AbilityState.Prepare){
+			state = AbilityState.Idle;
+		} else if (state == AbilityState.Cast){
+			state = AbilityState.Cooldown;
+			timer = cooldownTime;
+			actor.inGameCanvas.abilities [abilityIndex].outline.enabled = false;
+			actor.inGameCanvas.abilities [abilityIndex].icon.color = new Color (0.4f, 0.4f, 0.4f);
+		}
+		OnCastCancel ();
+	}
 
-    // About the ability, used in UI
-    public Sprite icon;
-    public bool onMainMenu = false;
+	public void OnEquipBegin(PlayerBase a, int i){
+		actor = a;
+		abilityIndex = i;
+		actor.inGameCanvas.abilities [abilityIndex].ability = this;
+	}
 
-    // Required weapons, use bitwise format
-    public int requiredWeapons;
-    public string sellPrice = "1000";
-    private AbilityState state = AbilityState.Idle;
-    protected Transform target;
+	public void OnEquipEnd(){
+		actor.inGameCanvas.abilities [abilityIndex].ability = null;
+		actor = null;
+		abilityIndex = 0;
+	}
 
-    protected Vector3 targetPos;
+	public bool IsUsable(int weaponBits){
+		return ((weaponBits & requiredWeapons) == requiredWeapons);
+	}
 
-    // Timer for use internally
-    private float timer;
-
-    private void Update()
-    {
-        if (!onMainMenu)
-            BaseUpdate();
-    }
-
-    protected void BaseUpdate()
-    {
-        timer -= Time.deltaTime;
-
-        switch (state)
-        {
-            case AbilityState.Idle:
-                actor.inGameCanvas.abilities[abilityIndex].icon.color = new Color(1f, 1f, 1f);
-                actor.inGameCanvas.abilities[abilityIndex].timer.text = "";
-                break;
-            case AbilityState.Prepare:
-
-                if (!actor.agent.hasPath)
-                {
-                    state = AbilityState.Cast;
-                    actor.inGameCanvas.abilities[abilityIndex].outline.enabled = true;
-                    actor.inGameCanvas.abilities[abilityIndex].icon.color = new Color(1f, 1f, 1f);
-                    timer = castTime;
-
-                    // Begin Casting
-                    OnCastBegin();
-                }
-
-                break;
-            case AbilityState.Cast:
-                OnCast();
-                if (timer < 0)
-                {
-                    state = AbilityState.Cooldown;
-                    timer = cooldownTime;
-                    actor.inGameCanvas.abilities[abilityIndex].outline.enabled = false;
-                    actor.inGameCanvas.abilities[abilityIndex].icon.color = new Color(0.4f, 0.4f, 0.4f);
-                    OnCastEnd();
-                }
-
-                break;
-            case AbilityState.Cooldown:
-                if (timer < 0) state = AbilityState.Idle;
-                break;
-        }
-
-        // Update UI Timer
-        if (timer >= 0)
-            actor.inGameCanvas.abilities[abilityIndex].timer.text =
-                timer > 60 ? Mathf.CeilToInt(timer / 60) + "m" : Mathf.CeilToInt(timer) + "s";
-    }
-
-    public void Cast(Transform _target, Vector3 _targetPos)
-    {
-        // Check if ability is usable. TODO: replace 10 with weapon flags
-        //		if (!IsUsable(10)) return;
-
-        if (state != AbilityState.Idle)
-            return;
-
-        target = _target;
-        targetPos = _targetPos;
-        actor.agent.SetDestination(target.position);
-        state = AbilityState.Prepare;
-    }
-
-    public void CancelCast()
-    {
-        Debug.Log("Abort Cast");
-        if (state == AbilityState.Idle) return;
-
-        if (state == AbilityState.Prepare)
-        {
-            state = AbilityState.Idle;
-        }
-        else if (state == AbilityState.Cast)
-        {
-            state = AbilityState.Cooldown;
-            timer = cooldownTime;
-            actor.inGameCanvas.abilities[abilityIndex].outline.enabled = false;
-            actor.inGameCanvas.abilities[abilityIndex].icon.color = new Color(0.4f, 0.4f, 0.4f);
-        }
-
-        OnCastCancel();
-    }
-
-    public void OnEquipBegin(PlayerBase a, int i)
-    {
-        actor = a;
-        abilityIndex = i;
-        actor.inGameCanvas.abilities[abilityIndex].ability = this;
-    }
-
-    public void OnEquipEnd()
-    {
-        actor.inGameCanvas.abilities[abilityIndex].ability = null;
-        actor = null;
-        abilityIndex = 0;
-    }
-
-    public bool IsUsable(int weaponBits)
-    {
-        return (weaponBits & requiredWeapons) == requiredWeapons;
-    }
-
-    // Logic for casting : Override below function
-    protected virtual void OnCastBegin()
-    {
-    }
-
-    protected virtual void OnCast()
-    {
-    }
-
-    protected virtual void OnCastEnd()
-    {
-    }
-
-    protected virtual void OnCastCancel()
-    {
-    }
+	// Logic for casting : Override below function
+	protected virtual void OnCastBegin(){}
+	protected virtual void OnCast(){}
+	protected virtual void OnCastEnd(){}
+	protected virtual void OnCastCancel(){}
 }

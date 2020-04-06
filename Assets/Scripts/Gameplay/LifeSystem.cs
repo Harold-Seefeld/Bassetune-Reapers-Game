@@ -1,149 +1,148 @@
-using System;
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
-public class LifeSystem : MonoBehaviour
-{
-    public Animator anim;
+public class LifeSystem : MonoBehaviour {
+	
+	// Health
+	public float health = 100; // 100 by Default
+	public float maxHealth = 100; // The maximum amount of health
 
-    // Check if Ally or Enemy
-    public string currentTeam; // Team that this player is on.
-    public string deathAnimation;
+	public bool isDead;
+	public string deathAnimation;
+	
+	/// --------------------
+	/// Instant Health Regen
+	/// --------------------
+	public void healthRegen (float amount) 
+	{
+		health = Mathf.Clamp (health + amount, 0, maxHealth);
+	}
+	
+	// Automatic Health Rengeneration
+	[System.NonSerialized]
+	public bool healthRegenerating = true; // Is the player regenerating?
 
-    // Health
-    public float health = 100; // 100 by Default
+	public float healthRegenAmount = 5.0f; // How much health should be regenerated per second?
+	public float healthRegenWaitTime = 3.0f; // How long is the cooldown until health starts being regenerated?
+	/// 
 
-    public float healthRegenAmount = 5.0f; // How much health should be regenerated per second?
+	/// -------------------
+	/// Toggle Health Regen
+	/// -------------------
+	public IEnumerator AutoHealthRegenToggle () 
+	{
 
-    // Automatic Health Rengeneration
-    [NonSerialized]
-    public bool healthRegenerating = true; // Is the player regenerating?
+		healthRegenerating = false;
+		
+		yield return new WaitForSeconds (healthRegenWaitTime);
+		
+		healthRegenerating = true;
+	}
 
-    public float healthRegenWaitTime = 3.0f; // How long is the cooldown until health starts being regenerated?
+	/// -----------------------------
+	/// Restores Health Automatically
+	/// -----------------------------
+	public void AutoHealthRegen()
+	{
+		if (!isDead)
+			health = Mathf.Clamp (health + (healthRegenAmount * Time.deltaTime), 0, maxHealth);
+	}
+	
+	// Friendly Fire
+	public bool recieveFriendlyFire;
 
-    public bool isDead;
-    public float maxHealth = 100; // The maximum amount of health
+	// Check if Ally or Enemy
+	public string currentTeam; // Team that this player is on.
+	public bool isEnemy (string attackingTeam) 
+	{	
+		if (currentTeam != attackingTeam)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	///
+	
+	/// ------------
+	/// Damage Input
+	/// ------------
+	public void damageTaken(float damage, string attackingTeam) 
+	{
+		// Reset automatic regeneration
+		StopCoroutine("AutoHealthRegenToggle");
+		StartCoroutine ("AutoHealthRegenToggle");
+		///
+		
+		if (recieveFriendlyFire) 
+		{
+			health = Mathf.Clamp(health - damage, 0, maxHealth);
 
-    // Friendly Fire
-    public bool recieveFriendlyFire;
+			// Kill player on low health
+			if (health <= 0.49f)
+			{
+				playerDeath(attackingTeam);
+				isDead = true;
+			}
+			///
+		}
+		
+		else if (!recieveFriendlyFire) 
+		{
+			if (isEnemy(attackingTeam)) 
+			{
+				health = Mathf.Clamp(health - damage, 0, maxHealth);
+				
+				// Kill player on low health
+				if (health <= 0.49f)
+				{
+					playerDeath(attackingTeam);
+					isDead = true;
+				}
+				///
+			}
+		}
+	}
 
-    /// -------------------------------------------
-    /// Allows a dialog to access remaining seconds
-    /// -------------------------------------------		
-    public int respawnTime;
+	public Animator anim;
+	private void playerDeath (string killingTeam) 
+	{
+		anim.Play (deathAnimation);
 
-    /// --------------------
-    /// Instant Health Regen
-    /// --------------------
-    public void healthRegen(float amount)
-    {
-        health = Mathf.Clamp(health + amount, 0, maxHealth);
-    }
+		StartCoroutine(RespawnTimer(10));
+	}
 
-    /// 
+	/// -------------------------------------------
+	/// Allows a dialog to access remaining seconds
+	/// -------------------------------------------		
+	public int respawnTime;
+	private IEnumerator RespawnTimer(int length)
+	{
+		respawnTime = length;
 
-    /// -------------------
-    /// Toggle Health Regen
-    /// -------------------
-    public IEnumerator AutoHealthRegenToggle()
-    {
+		while (respawnTime > 0)
+		{
+			yield return new WaitForSeconds(1);
+			respawnTime--;
+		}
 
-        healthRegenerating = false;
+		Destroy (gameObject);
+	}
+	
+	/// ------------------
+	/// Called Every Frame
+	/// ------------------
+	void Update() 
+	{
+		if (healthRegenerating) 
+		{
+			AutoHealthRegen ();
+		}
+	}
 
-        yield return new WaitForSeconds(healthRegenWaitTime);
-
-        healthRegenerating = true;
-    }
-
-    /// -----------------------------
-    /// Restores Health Automatically
-    /// -----------------------------
-    public void AutoHealthRegen()
-    {
-        if (!isDead)
-            health = Mathf.Clamp(health + healthRegenAmount * Time.deltaTime, 0, maxHealth);
-    }
-
-    public bool isEnemy(string attackingTeam)
-    {
-        if (currentTeam != attackingTeam) return true;
-
-        return false;
-    }
-
-    ///
-
-    /// ------------
-    /// Damage Input
-    /// ------------
-    public void damageTaken(float damage, string attackingTeam)
-    {
-        // Reset automatic regeneration
-        StopCoroutine("AutoHealthRegenToggle");
-        StartCoroutine("AutoHealthRegenToggle");
-        ///
-
-        if (recieveFriendlyFire)
-        {
-            health = Mathf.Clamp(health - damage, 0, maxHealth);
-
-            // Kill player on low health
-            if (health <= 0.49f)
-            {
-                playerDeath(attackingTeam);
-                isDead = true;
-            }
-            ///
-        }
-
-        else if (!recieveFriendlyFire)
-        {
-            if (isEnemy(attackingTeam))
-            {
-                health = Mathf.Clamp(health - damage, 0, maxHealth);
-
-                // Kill player on low health
-                if (health <= 0.49f)
-                {
-                    playerDeath(attackingTeam);
-                    isDead = true;
-                }
-                ///
-            }
-        }
-    }
-
-    private void playerDeath(string killingTeam)
-    {
-        anim.Play(deathAnimation);
-
-        StartCoroutine(RespawnTimer(10));
-    }
-
-    private IEnumerator RespawnTimer(int length)
-    {
-        respawnTime = length;
-
-        while (respawnTime > 0)
-        {
-            yield return new WaitForSeconds(1);
-            respawnTime--;
-        }
-
-        Destroy(gameObject);
-    }
-
-    /// ------------------
-    /// Called Every Frame
-    /// ------------------
-    private void Update()
-    {
-        if (healthRegenerating) AutoHealthRegen();
-    }
-
-    private void Start()
-    {
-        if (!anim)
-            anim = GetComponent<Animator>();
-    }
+	void Start()
+	{
+		if (!anim)
+			anim = GetComponent<Animator> ();
+	}
 }

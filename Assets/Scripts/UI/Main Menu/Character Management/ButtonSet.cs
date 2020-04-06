@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 
-public class ButtonSet : MonoBehaviour, IPointerClickHandler
-{
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        var parentObject = transform.parent.gameObject;
-        var buttons = parentObject.GetComponentsInChildren<Button>();
+public class ButtonSet : MonoBehaviour, IPointerClickHandler {
 
-        for (var i = 0; i < buttons.Length; i++) buttons[i].interactable = true;
+	public void OnPointerClick (PointerEventData eventData)
+	{
+		GameObject parentObject = transform.parent.gameObject;
+		Button[] buttons = parentObject.GetComponentsInChildren<Button>() as Button[];
 
-        gameObject.GetComponent<Button>().interactable = false;
-    }
+		for (int i = 0; i < buttons.Length; i++)
+		{
+			buttons[i].interactable = true;
+		}
+
+		gameObject.GetComponent<Button>().interactable = false;
+	}
+	
 }

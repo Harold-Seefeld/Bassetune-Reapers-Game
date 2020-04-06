@@ -1,58 +1,71 @@
-﻿using System.Security.Cryptography;
+﻿using UnityEngine;
 using System.Text;
-using UnityEngine;
+using System.Collections;
+using System.Security.Cryptography;
 
-public class SHAString : MonoBehaviour
-{
-    public string GetSHA1HashData(string data)
-    {
-        var sha1 = SHA1.Create();
+public class SHAString : MonoBehaviour {
 
-        var hashData = sha1.ComputeHash(Encoding.Default.GetBytes(data));
+	public string GetSHA1HashData(string data)
+	{
+		SHA1 sha1 = SHA1.Create();
 
-        var returnValue = new StringBuilder();
+		byte[] hashData = sha1.ComputeHash(Encoding.Default.GetBytes(data));
 
-        for (var i = 0; i < hashData.Length; i++) returnValue.Append(hashData[i].ToString());
+		StringBuilder returnValue = new StringBuilder();
 
-        return returnValue.ToString();
-    }
+		for (int i = 0; i < hashData.Length; i++)
+		{
+			returnValue.Append(hashData[i].ToString());
+		}
 
-    public string GetSHA256HashData(string data)
-    {
-        var sha256 = SHA256.Create();
+		return returnValue.ToString();
+	}
 
-        var hashData = sha256.ComputeHash(Encoding.Default.GetBytes(data));
+	public string GetSHA256HashData(string data)
+	{
+		SHA256 sha256 = SHA256.Create();
 
-        var returnValue = new StringBuilder();
+		byte[] hashData = sha256.ComputeHash(Encoding.Default.GetBytes(data));
 
-        for (var i = 0; i < hashData.Length; i++) returnValue.Append(hashData[i].ToString());
+		StringBuilder returnValue = new StringBuilder();
 
-        return returnValue.ToString();
-    }
+		for (int i = 0; i < hashData.Length; i++)
+		{
+			returnValue.Append(hashData[i].ToString());
+		}
 
-    public string GetSHA384HashData(string data)
-    {
-        var sha384 = SHA384.Create();
+		return returnValue.ToString();
+	}
 
-        var hashData = sha384.ComputeHash(Encoding.Default.GetBytes(data));
+	public string GetSHA384HashData(string data)
+	{
+		SHA384 sha384 = SHA384.Create();
+		
+		byte[] hashData = sha384.ComputeHash(Encoding.Default.GetBytes(data));
+		
+		StringBuilder returnValue = new StringBuilder();
+		
+		for (int i = 0; i < hashData.Length; i++)
+		{
+			returnValue.Append(hashData[i].ToString());
+		}
+		
+		return returnValue.ToString();
+	}
 
-        var returnValue = new StringBuilder();
-
-        for (var i = 0; i < hashData.Length; i++) returnValue.Append(hashData[i].ToString());
-
-        return returnValue.ToString();
-    }
-
-    public string GetSHA512HashData(string data)
-    {
-        var sha512 = SHA512.Create();
-
-        var hashData = sha512.ComputeHash(Encoding.Default.GetBytes(data));
-
-        var returnValue = new StringBuilder();
-
-        for (var i = 0; i < hashData.Length; i++) returnValue.Append(hashData[i].ToString());
-
-        return returnValue.ToString();
-    }
+	public string GetSHA512HashData(string data)
+	{
+		SHA512 sha512 = SHA512.Create();
+		
+		byte[] hashData = sha512.ComputeHash(Encoding.Default.GetBytes(data));
+		
+		StringBuilder returnValue = new StringBuilder();
+		
+		for (int i = 0; i < hashData.Length; i++)
+		{
+			returnValue.Append(hashData[i].ToString());
+		}
+		
+		return returnValue.ToString();
+	}
 }

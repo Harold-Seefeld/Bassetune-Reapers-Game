@@ -37,14 +37,15 @@
  */
 #endregion
 
+using System;
 
 namespace WebSocketSharp.Net
 {
-    internal enum InputChunkState
-    {
-        None,
-        Body,
-        BodyFinished,
-        Trailer
-    }
+  internal enum InputChunkState
+  {
+    None,
+    Body,
+    BodyFinished,
+    Trailer
+  }
 }

@@ -29,98 +29,93 @@
 using System;
 using System.Collections.Specialized;
 using System.Text;
+using WebSocketSharp.Net;
 
 namespace WebSocketSharp
 {
-    internal abstract class HandshakeBase
+  internal abstract class HandshakeBase
+  {
+    #region Private Fields
+
+    private NameValueCollection _headers;
+    private Version             _version;
+
+    #endregion
+
+    #region Internal Fields
+
+    internal byte[] EntityBodyData;
+
+    #endregion
+
+    #region Protected Const Fields
+
+    protected const string CrLf = "\r\n";
+
+    #endregion
+
+    #region Protected Constructors
+
+    protected HandshakeBase (Version version, NameValueCollection headers)
     {
-        #region Private Fields
-
-        private NameValueCollection _headers;
-        private Version _version;
-
-        #endregion
-
-        #region Internal Fields
-
-        internal byte[] EntityBodyData;
-
-        #endregion
-
-        #region Protected Const Fields
-
-        protected const string CrLf = "\r\n";
-
-        #endregion
-
-        #region Protected Constructors
-
-        protected HandshakeBase(Version version, NameValueCollection headers)
-        {
-            _version = version;
-            _headers = headers;
-        }
-
-        #endregion
-
-        #region Public Properties
-
-        public string EntityBody
-        {
-            get
-            {
-                return EntityBodyData != null && EntityBodyData.LongLength > 0
-                       ? getEncoding(_headers["Content-Type"]).GetString(EntityBodyData)
-                       : String.Empty;
-            }
-        }
-
-        public NameValueCollection Headers
-        {
-            get
-            {
-                return _headers;
-            }
-        }
-
-        public Version ProtocolVersion
-        {
-            get
-            {
-                return _version;
-            }
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private static Encoding getEncoding(string contentType)
-        {
-            if (contentType == null || contentType.Length == 0)
-                return Encoding.UTF8;
-
-            var i = contentType.IndexOf("charset=", StringComparison.Ordinal);
-            if (i == -1)
-                return Encoding.UTF8;
-
-            var charset = contentType.Substring(i + 8);
-            i = charset.IndexOf(';');
-            if (i != -1)
-                charset = charset.Substring(0, i);
-
-            return Encoding.GetEncoding(charset);
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        public byte[] ToByteArray()
-        {
-            return Encoding.UTF8.GetBytes(ToString());
-        }
-
-        #endregion
+      _version = version;
+      _headers = headers;
     }
+
+    #endregion
+
+    #region Public Properties
+
+    public string EntityBody {
+      get {
+        return EntityBodyData != null && EntityBodyData.LongLength > 0
+               ? getEncoding (_headers["Content-Type"]).GetString (EntityBodyData)
+               : String.Empty;
+      }
+    }
+
+    public NameValueCollection Headers {
+      get {
+        return _headers;
+      }
+    }
+
+    public Version ProtocolVersion {
+      get {
+        return _version;
+      }
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private static Encoding getEncoding (string contentType)
+    {
+      if (contentType == null || contentType.Length == 0)
+        return Encoding.UTF8;
+
+      var i = contentType.IndexOf ("charset=", StringComparison.Ordinal);
+      if (i == -1)
+        return Encoding.UTF8;
+
+      var charset = contentType.Substring (i + 8);
+      i = charset.IndexOf (';');
+      if (i != -1)
+        charset = charset.Substring (0, i);
+
+      return Encoding.GetEncoding (charset);
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public byte[] ToByteArray ()
+    {
+      return Encoding.UTF8.GetBytes (ToString ());
+    }
+    
+    #endregion
+  }
 }
